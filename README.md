@@ -2,7 +2,7 @@
 
 **Issue-first · Risk-Gated · Verification Strategy · Device QA · Bounded Exploration**
 
-![Adaptive Agentic SDD workflow](assets/workflow-ko.svg)
+![Adaptive Agentic SDD workflow](assets/workflow-en.svg)
 
 Adaptive Agentic SDD is a working methodology for using AI coding agents with enough structure to prevent expensive mistakes without forcing heavyweight process on every change.
 
@@ -157,7 +157,7 @@ Epic   -> Breakdown + Deep + Independent Review
 adaptive-agentic-sdd/
 ├─ README.md
 ├─ assets/
-│  └─ workflow-ko.svg
+│  └─ workflow-en.svg
 ├─ docs/
 │  ├─ concepts.md
 │  ├─ workflow.md
