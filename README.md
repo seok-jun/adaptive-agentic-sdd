@@ -2,7 +2,9 @@
 
 **Issue-first · Risk-Gated · Verification Strategy · Device QA · Bounded Exploration**
 
-![Adaptive Agentic SDD workflow](assets/workflow-en.svg)
+[![Adaptive Agentic SDD overview](assets/workflow-overview-en.svg)](assets/workflow-overview-en.svg)
+
+**[Open the detailed workflow diagram →](assets/workflow-detailed-en.svg)**
 
 Adaptive Agentic SDD is a working methodology for using AI coding agents with enough structure to prevent expensive mistakes without forcing heavyweight process on every change.
 
@@ -62,6 +64,10 @@ Adaptive Agentic SDD addresses these by making the work **issue-driven, risk-ada
    The work is not finished until final behavior is verified, durable product documentation is synchronized when needed, temporary SDD artifacts are removed, and the work lane is released.
 
 ## Workflow
+
+The overview above is intentionally compact for quick scanning. The detailed diagram expands the same lifecycle with Source of Truth, Trade-off Capture, review gates, Device QA triggers, and token-efficiency rules.
+
+**[Open detailed workflow →](assets/workflow-detailed-en.svg)**
 
 ```mermaid
 flowchart TD
@@ -157,7 +163,8 @@ Epic   -> Breakdown + Deep + Independent Review
 adaptive-agentic-sdd/
 ├─ README.md
 ├─ assets/
-│  └─ workflow-en.svg
+│  ├─ workflow-overview-en.svg
+│  └─ workflow-detailed-en.svg
 ├─ docs/
 │  ├─ concepts.md
 │  ├─ workflow.md
