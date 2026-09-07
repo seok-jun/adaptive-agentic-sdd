@@ -69,7 +69,7 @@ flowchart TD
     A[Work Item] --> B[Preflight]
     B --> C{Grade}
     C -->|Trivial| T[Targeted Change + Validation]
-    C -->|Small| S[Lean AS-IS + Implement]
+    C -->|Small| S[Lean AS-IS + Plan]
     C -->|Medium/Large/Epic| D[Bounded AS-IS]
     D --> E[TO-BE + Verification Strategy]
     E --> F{Design Review / Approval Required?}
