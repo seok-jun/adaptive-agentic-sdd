@@ -1,171 +1,129 @@
 # Adaptive Agentic SDD
 
-**Issue-first · Risk-Gated · Verification Strategy · Device QA · Bounded Exploration**
+**Work-item-first · Risk-Gated · Progressive Disclosure · Revision-Bound Approval · Evidence-Based Completion**
 
-[![Adaptive Agentic SDD overview](assets/workflow-overview-en.svg)](assets/workflow-overview-en.svg)
+Adaptive Agentic SDD is a practical workflow for using AI coding agents with enough structure to prevent expensive mistakes without forcing heavyweight process on every change.
 
-**[Open the detailed workflow diagram →](assets/workflow-detailed-en.svg)**
-
-Adaptive Agentic SDD is a working methodology for using AI coding agents with enough structure to prevent expensive mistakes without forcing heavyweight process on every change.
-
-It combines ideas from specification-driven development, legacy-system AS-IS analysis, risk-based quality gates, test/verification planning, architecture governance, and agent orchestration.
+The methodology combines specification-driven development, observed legacy-system analysis, risk-based quality gates, verification planning, bounded agent exploration, review provenance, and lifecycle completion.
 
 > The goal is not to maximize process.  
 > The goal is to apply the **minimum process that reliably prevents costly mistakes**.
 
-## Why this exists
+## What changed in v0.2
 
-AI coding agents can move quickly, but speed creates a few recurring failure modes:
+v0.2 keeps the original methodology but adds a portable agent-runtime layer learned from repeated real repository use:
 
-- implementing the wrong interpretation of a requirement,
-- changing files outside the intended scope,
-- treating stale documentation as current behavior,
-- exploring too much of the repository and wasting context/tokens,
-- passing tests while missing device/runtime behavior,
-- performing review only after a risky design is already implemented,
-- leaving temporary planning artifacts behind after the product behavior has changed.
-
-Adaptive Agentic SDD addresses these by making the work **issue-driven, risk-adaptive, evidence-gated, and bounded in exploration**.
+- a **Trivial** fast-track for non-behavioral changes,
+- **progressive disclosure**: small root instructions route agents to task Skills, which conditionally load deeper policy,
+- explicit separation between **portable workflow rules** and **project-local safeguards**,
+- phase-aware review packets instead of broad repository rediscovery,
+- review findings separated into decision, execution-contract, implementation, and non-blocking classes,
+- **revision-bound Human approval**: review PASS is not approval, and approval is tied to a phase, artifact revision, and decision scope,
+- a bootstrap path for adopting the workflow in an existing repository without importing every gate at once,
+- starter `AGENTS.md` and implementation Skill examples under `starter/`.
 
 ## Core principles
 
-1. **Issue-first**  
-   The current issue is the execution specification for goal, scope, boundaries, dependencies, and acceptance criteria.
+1. **Work-item-first**  
+   The current work item (GitHub Issue, Jira ticket, or equivalent) is the execution specification for goal, scope, boundaries, dependencies, and acceptance criteria.
 
 2. **Observed AS-IS**  
-   Current behavior is determined from the current mainline code, not from old design documents.
+   Current behavior is determined from current mainline code and runtime evidence, not from stale design prose.
 
 3. **Information-specific Source of Truth**  
-   There is no universal single authority for every kind of information. Requirement, current behavior, architecture, UI, and product rules can have different authoritative sources.
+   Requirement, current behavior, architecture, UI, and product rules can have different authoritative sources.
 
 4. **Risk-adaptive depth**  
-   Process depth scales with change risk.
+   Process depth scales with change risk, not ticket size alone.
 
    | Grade | Default depth |
    | --- | --- |
+   | Trivial | Fast-track |
    | Small | Lean |
    | Medium | Standard |
-   | Large | Deep + design review |
-   | Epic | Breakdown + deep design/review |
+   | Large | Deep + independent design review |
+   | Epic | Breakdown + deep review of risky lanes |
 
-5. **Verification Strategy before implementation**  
-   Each important acceptance criterion should have a known way to prove it.
+5. **Progressive disclosure**  
+   Agents should read the smallest stable entry contract first, then load task-specific Skill/process documents only when the current task requires them.
 
-6. **Trade-off Capture, not Trade-off Discovery**  
-   Do not brainstorm alternatives just to fill a document. Capture trade-offs only when real competing options already appear during bounded analysis.
+6. **Verification Strategy before implementation**  
+   Important acceptance criteria should have a known way to prove them before code is changed.
 
 7. **Bounded exploration**  
-   Start from the issue, direct paths, symbols, public contracts, callers/callees, and only expand when concrete evidence requires it.
+   Start from the work item, direct paths/symbols, public contracts, and direct callers/callees. Expand only when evidence requires it.
 
-8. **Evidence-based completion**  
-   Tests, CI, review, and device QA are evidence. Unrun verification is not a pass.
+8. **Review is falsification, not redesign**  
+   Reviewers should primarily look for concrete ways the proposed change can be wrong, unsafe, inconsistent, or unverifiable.
 
-9. **Lifecycle completion**  
-   The work is not finished until final behavior is verified, durable product documentation is synchronized when needed, temporary SDD artifacts are removed, and the work lane is released.
+9. **Revision-bound Human approval**  
+   When Human approval is required, bind it to the exact phase, artifact revision, and decision scope presented to the Human. A materially changed artifact requires fresh review/approval.
+
+10. **Evidence-based lifecycle completion**  
+    Unrun checks are not PASS. Work is complete only when required verification, review, durable documentation sync, merge/cleanup, and lane release are actually complete.
 
 ## Workflow
 
-The overview above is intentionally compact for quick scanning. The detailed diagram expands the same lifecycle with Source of Truth, Trade-off Capture, review gates, Device QA triggers, and token-efficiency rules.
-
-**[Open detailed workflow →](assets/workflow-detailed-en.svg)**
-
 ```mermaid
 flowchart TD
-    A[Issue Definition] --> B[Preflight]
-    B --> C[Claim / Isolation]
-    C --> D[AS-IS Analysis]
+    A[Work Item] --> B[Preflight]
+    B --> C{Grade}
+    C -->|Trivial| T[Targeted Change + Validation]
+    C -->|Small| S[Lean AS-IS + Implement]
+    C -->|Medium/Large/Epic| D[Bounded AS-IS]
     D --> E[TO-BE + Verification Strategy]
-
-    E --> F{Real competing options?}
-    F -- Yes --> G[Bounded Trade-off Capture]
-    F -- No --> H[No extra exploration]
-
-    G --> I[Risk Grade Gate]
+    E --> F{Design Review / Approval Required?}
+    F -->|Yes| G[Revision-addressed Review]
+    G --> H[Human Approval if policy requires]
+    F -->|No| I[Implement]
     H --> I
-
-    I --> J[Implement]
-    J --> K[Targeted Verification]
-    K --> L[Self Review]
-    L --> M[Product Docs Sync + Final Verification]
-    M --> N[PR + Code Review]
-
-    N --> O{Device QA Required?}
-    O -- No --> P[Merge]
-    O -- Yes --> Q[AC-based Device QA Checklist]
-    Q --> R[Observation Collection]
-    R --> S{Required evidence passes?}
-    S -- No --> T[Merge Blocked]
-    S -- Yes --> P
-
-    P --> U[Cleanup / Close / Release]
+    S --> I
+    T --> J[Self Review]
+    I --> K[Targeted Verification]
+    K --> J
+    J --> L{Independent Code Review Required?}
+    L -->|Yes| M[Independent Review]
+    L -->|No| N[PR / Merge Gate]
+    M --> N
+    N --> O[Conditional Device/Runtime QA]
+    O --> P[Merge / Cleanup / Release]
 ```
 
-## Risk grades
+See [docs/workflow.md](docs/workflow.md) for the canonical lifecycle.
 
-### Small — Lean
-Use when the change stays within one implementation boundary and has no high-risk characteristics.
+## Portable runtime architecture
 
-- no separate SDD package required,
-- issue body can serve as the change plan,
-- targeted verification,
-- self-review.
-
-### Medium — Standard
-Use when multiple implementation boundaries or shared contracts are involved but the change is not high-risk.
-
-- AS-IS / TO-BE / change plan,
-- verification strategy,
-- bounded review when useful,
-- no mandatory repository-wide rediscovery.
-
-### Large — Deep
-Use for high-impact changes such as security/privacy, schema migration, retry/scheduling policy, cost/quota enforcement, or similarly expensive failure modes.
-
-- AS-IS gate,
-- TO-BE/change-plan gate,
-- design review before implementation,
-- independent code review before merge,
-- broader verification.
-
-### Epic — Breakdown first
-Use when the work changes module boundaries, creates modules, or contains multiple independently deliverable capabilities.
-
-- break down first,
-- define integration ownership,
-- then apply Large-level rigor to the relevant implementation lanes.
-
-## Token / context efficiency
-
-Adaptive Agentic SDD deliberately avoids the assumption that “more context is always better.”
-
-Default rules:
-
-- do not read unrelated issues or domains,
-- start from direct path/symbol,
-- reuse unchanged context within the same run,
-- do not re-discover requirements already fixed by the issue,
-- run targeted checks before broad checks,
-- do not ask review/QA agents to redesign the product,
-- do not perform repository-wide alternative discovery for trade-off documentation.
-
-The intended reasoning budget is adaptive:
+A mature repository does not need every workflow rule in `AGENTS.md`.
 
 ```text
-Small  -> Lean
-Medium -> Standard
-Large  -> Deep
-Epic   -> Breakdown + Deep + Independent Review
+AGENTS.md
+   -> task routing + always-on hard guards
+        -> task Skill
+             -> conditional process/domain documents
 ```
+
+This keeps initial context small while preserving hard entry paths to the rules that matter.
+
+The `starter/` directory contains a deliberately small example that can be adapted to an existing repository. It is not a universal drop-in configuration: replace placeholders, remove irrelevant guards, and add project-local rules only after the repository actually demonstrates the need.
+
+## Adoption path
+
+For an existing project, start with [docs/bootstrap.md](docs/bootstrap.md):
+
+1. observe the repository before changing workflow,
+2. establish a lean root agent contract,
+3. add one implementation Skill,
+4. define risk grades and verification expectations,
+5. pilot on Trivial/Small work,
+6. add deeper review/approval gates only where failure cost justifies them.
 
 ## Repository structure
 
 ```text
 adaptive-agentic-sdd/
 ├─ README.md
-├─ assets/
-│  ├─ workflow-overview-en.svg
-│  └─ workflow-detailed-en.svg
 ├─ docs/
+│  ├─ bootstrap.md
 │  ├─ concepts.md
 │  ├─ workflow.md
 │  ├─ source-of-truth.md
@@ -175,23 +133,38 @@ adaptive-agentic-sdd/
 │  ├─ device-qa.md
 │  ├─ token-efficiency.md
 │  └─ trade-off-capture.md
+├─ starter/
+│  ├─ AGENTS.md
+│  ├─ .agents/skills/implementing-issue/SKILL.md
+│  └─ docs/sdd-workflow.md
 ├─ templates/
-│  ├─ issue.md
-│  ├─ as-is.md
-│  ├─ to-be.md
-│  ├─ change-plan.md
-│  ├─ pull-request.md
-│  └─ device-qa.md
 └─ examples/
-   ├─ small/
-   ├─ medium/
-   └─ large/
 ```
+
+## Portable core vs project-local policy
+
+Keep these generally portable:
+
+- work-item-first execution,
+- risk grading,
+- bounded exploration,
+- progressive disclosure,
+- verification mapping,
+- revision-aware review/approval,
+- evidence-based completion.
+
+Keep these local unless they generalize across projects:
+
+- module names and forbidden paths,
+- build-tool quirks,
+- device/emulator setup,
+- shell/encoding workarounds,
+- product vocabulary,
+- provider-specific secrets/media rules,
+- model/provider qualification matrices.
 
 ## Status
 
-**v0.1 — Working Methodology**
+**v0.2 — Portable Working Methodology**
 
-This is intentionally presented as a practical workflow, not a universal standard. A key part of operating it is removing gates that do not prevent real failures.
-
-A healthy workflow should become **smaller and sharper** over time, not endlessly accumulate rules.
+This is a practical workflow, not a universal standard. A healthy workflow should become **smaller and sharper** over time, not endlessly accumulate rules.

@@ -1,25 +1,46 @@
-# Pull Request Template
+## Work item
+
+- 
 
 ## Summary
-- What changed.
 
-## Issue alignment
-- Goal:
-- Scope:
-- Acceptance criteria covered:
+- 
 
-## Verification
-- [ ] Targeted tests
-- [ ] Required broader verification
-- [ ] Required review
-- [ ] Device QA, if required
+## Scope
 
-## Device QA
-- Required: YES / NO
-- If YES, checklist is derived from issue acceptance criteria.
+- In scope:
+- Explicitly not changed:
 
-## Unverified
-- Explicitly list anything not run or not proven.
+## Decisions / contract notes
 
-## Follow-up
-- Out-of-scope issues discovered during implementation.
+- 
+
+## Verification evidence
+
+- [ ] targeted tests
+- [ ] broader tests if required
+- [ ] lint/static checks if required
+- [ ] runtime/device/browser QA if required
+
+### Results
+
+- PASS:
+- FAIL:
+- BLOCKED:
+- UNVERIFIED:
+
+## Review / approval provenance
+
+- Design review target/revision:
+- Design review result:
+- Human approval target/decision scope (if required):
+- Independent code review:
+
+## Risk / rollback notes
+
+- 
+
+## Durable documentation sync
+
+- Updated:
+- Not required because:
