@@ -1,35 +1,54 @@
 # Workflow
 
-## 1. Issue definition
+## 0. Repository bootstrap contract
 
-Define Priority, SDD grade, user impact, goal, scope/non-scope, allowed/forbidden paths, acceptance criteria, and dependencies/blockers.
+Before adopting the workflow, identify the repository's actual build/test paths, module boundaries, work-item system, and existing development rules.
 
-The issue narrows the problem before the implementation agent starts.
+Do not start by copying a large policy set from another project. Establish a small root agent contract and add local safeguards only when the repository needs them.
+
+See `docs/bootstrap.md`.
+
+## 1. Work-item definition
+
+Define:
+
+- Priority,
+- SDD grade,
+- user/business impact,
+- goal,
+- scope and non-scope,
+- allowed/forbidden paths when path boundaries matter,
+- acceptance criteria,
+- dependencies/blockers,
+- authoritative requirement/design references.
+
+The work item narrows the problem before implementation starts. GitHub Issue, Jira, Linear, or another tracker can fill this role.
 
 ## 2. Preflight
 
 Before code edits:
 
-- confirm required issue fields exist,
-- confirm labels/metadata match the body,
+- confirm required work-item fields exist,
 - confirm blockers are resolved,
 - confirm the requested work is allowed to start,
-- confirm scope boundaries are usable.
+- confirm scope boundaries are usable,
+- confirm the agent can access a current work-item revision or snapshot,
+- resolve the grade before selecting process depth.
 
 Fail closed when a required boundary or dependency cannot be determined safely.
 
-## 3. Claim / isolation
+## 3. Claim / isolation when needed
 
 For parallel agent work:
 
-- claim the issue/lane,
+- claim the lane/work item,
 - check overlap with active work,
-- create an isolated branch/worktree/sandbox,
+- use an isolated branch/worktree/sandbox when supported,
 - keep product changes inside the allowed boundary.
 
-Shared or integration-owned paths should be separated rather than silently modified by an ordinary lane.
+Parallel isolation is an operational extension, not a requirement for every repository.
 
-## 4. AS-IS analysis
+## 4. Bounded AS-IS analysis
 
 Start from current mainline code.
 
@@ -39,49 +58,125 @@ Prefer:
 2. target symbols,
 3. direct public contracts,
 4. direct callers/callees,
-5. only then broader exploration if evidence requires it.
+5. related durable documentation,
+6. only then broader exploration when concrete evidence requires it.
 
-Record observed behavior, relevant code locations, and meaningful drift.
+Record observed behavior, relevant evidence, scope, unknowns, and meaningful drift.
 
-## 5. TO-BE design
+Trivial changes normally skip a separate AS-IS artifact. Small changes may keep AS-IS in the work item or implementation notes.
 
-Define desired behavior, behavior that must remain unchanged, failure/error behavior, state transitions when relevant, verification strategy, and change plan.
+## 5. TO-BE design + Verification Strategy
 
-## 6. Trade-off capture
+Define:
 
-Only when actual competing options are already visible. Do not create alternatives merely to satisfy a template.
+- desired behavior,
+- behavior that must remain unchanged,
+- failure/error behavior,
+- state transitions when relevant,
+- concrete change plan,
+- acceptance-criterion-to-evidence mapping.
 
-## 7. Risk grade gate
+Do not create alternatives merely to satisfy a template. Capture trade-offs only when real competing options already exist.
+
+## 6. Grade gate
 
 Apply the minimum process needed for the risk grade.
 
-## 8. Implementation
+- **Trivial**: targeted change + targeted validation + self-review.
+- **Small**: lean analysis/implementation + targeted verification + self-review.
+- **Medium**: written AS-IS/TO-BE/change plan and bounded review when contract risk warrants it.
+- **Large**: explicit AS-IS and plan, independent design/contract review, required Human approval when local policy says the decision is Human-owned, independent code review before merge.
+- **Epic**: break down first; define integration ownership; apply Large-level rigor to risky child/integration lanes.
+
+## 7. Revision-addressed design review
+
+When a design artifact requires independent review or Human approval, the candidate should be addressable as an immutable or unambiguous revision when the collaboration environment supports it (for example, a commit SHA or versioned document revision).
+
+The review packet should be phase-aware and bounded to:
+
+- work item / acceptance criteria,
+- target phase artifact,
+- approved upstream decisions,
+- direct public contracts and invariants,
+- allowed/forbidden boundaries,
+- relevant verification evidence.
+
+A review PASS is not Human approval.
+
+If the reviewed artifact changes in a way that affects decisions, scope, contracts, or acceptance semantics, review/approval must be repeated for the new revision.
+
+See `docs/review-gates.md`.
+
+## 8. Human approval when required
+
+Human approval is a policy gate, not a synonym for reviewer PASS.
+
+When approval is required, bind it to:
+
+- one phase,
+- the exact artifact/revision shown to the Human,
+- the decision scope being approved,
+- approval time/actor according to local audit needs.
+
+Do not silently reuse vague or stale approval after a material revision.
+
+## 9. Implementation
 
 - change only allowed files,
 - do not add unrelated refactors/features,
-- add direct regression coverage,
+- preserve approved decisions and contracts,
+- add direct regression coverage where useful,
 - keep implementation aligned with acceptance criteria.
 
-## 9. Verification
+## 10. Verification
 
-Run targeted verification first. Broader verification is required when the change surface warrants it.
+Run targeted verification first. Broader verification is required when the changed surface warrants it.
 
-## 10. Self review
+Unrun verification must be reported as unverified, not PASS.
 
-Compare the final diff against issue scope, acceptance criteria, allowed/forbidden boundaries, and unintended behavior changes.
+## 11. Self review
 
-## 11. Durable product documentation + final verification
+Compare the final diff against:
 
-When runtime/product behavior changed, update durable product documentation from **final code behavior**, not by copying SDD prose. Then run the required final verification.
+- work-item scope,
+- acceptance criteria,
+- allowed/forbidden boundaries,
+- approved decisions,
+- unintended behavior changes.
 
-## 12. PR / code review
+## 12. Independent code review when required
 
-The PR should match issue scope, state verification evidence, state unverified items, and apply grade-appropriate review gates.
+The reviewer should falsify the implementation against the approved contract and evidence rather than rediscover the entire product.
 
-## 13. Conditional device QA
+Large/Epic require independent code review by default. Medium may use bounded independent review when shared contracts or failure cost justify it.
 
-If the change requires real-device evidence, the PR is blocked until the required observations are collected and judged against acceptance criteria.
+## 13. Durable documentation + final verification
 
-## 14. Merge / cleanup / release
+When runtime/product behavior changed, update durable documentation from **final observed code behavior**, not by copying planning prose.
 
-After required evidence passes: merge, close the issue, remove temporary SDD artifacts, clean isolated workspaces, and release the work lane.
+Then run required final verification.
+
+## 14. PR / merge gate
+
+The PR should state:
+
+- work item,
+- scope,
+- meaningful decisions,
+- verification evidence,
+- review/approval evidence when required,
+- unverified or blocked items.
+
+## 15. Conditional device/runtime QA
+
+If real-device, browser, integration-environment, permission, lifecycle, background, media, or other runtime evidence is required, merge remains blocked until the required observations are collected and judged against acceptance criteria.
+
+## 16. Merge / cleanup / release
+
+After required evidence passes:
+
+- merge,
+- close/update the work item,
+- remove temporary SDD artifacts when local policy treats them as disposable,
+- clean isolated workspaces,
+- release the lane.

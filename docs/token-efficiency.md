@@ -1,49 +1,52 @@
-# Token and Context Efficiency
+# Token / Context Efficiency
 
-Adaptive Agentic SDD treats context/reasoning cost as an engineering constraint.
+Adaptive Agentic SDD treats context as a budget, not a proof of diligence.
 
-## Principles
+## Progressive disclosure
 
-### 1. Read only what is directly relevant
-
-Avoid loading unrelated issues, unrelated domains, historical reviews by default, and broad architecture documents when no boundary question exists.
-
-### 2. Start narrow
-
-Use:
+Prefer this instruction architecture:
 
 ```text
-issue
--> direct path
--> direct symbol
--> public contract
--> direct callers/callees
--> broaden only if concrete evidence requires it
+small root contract
+  -> task router
+      -> canonical task Skill
+          -> conditional process/domain documents
 ```
 
-### 3. Reuse context in the same run
+The root contract should contain only always-on hard guards, task routing, and a few stable invariants. Repeated procedures belong in Skills/process documents.
 
-Do not re-read unchanged issue bodies, process rules, source files, or environment resolution.
+## Default rules
 
-### 4. Do not re-discover fixed requirements
+- read the current work item before unrelated backlog items,
+- start from direct path/symbol instead of repository-wide browsing,
+- inspect declarations plus the surrounding lines needed for the decision rather than dumping full files,
+- load domain/architecture/process documents only when the current path or decision requires them,
+- reuse unchanged context within the same run,
+- do not rediscover requirements already fixed by the work item,
+- run targeted checks before broad checks,
+- summarize successful logs and expand only failures,
+- inspect changed-file lists and relevant hunks before full diffs,
+- do not ask review/QA agents to redesign the product,
+- do not create trade-off exploration when no real competing option exists.
 
-Once the issue has explicitly decided a requirement, the implementation agent should not repeat product discovery unless a conflict appears.
+## Never optimize away evidence
 
-### 5. Targeted verification first
+Token savings must not remove:
 
-Run the smallest useful check during development. Run expensive broad checks at the appropriate completion gate.
+- required first reads,
+- scope/grade gates,
+- verification,
+- independent review required by grade,
+- Human approval required by policy,
+- runtime/device QA required by acceptance criteria,
+- completion evidence.
 
-### 6. Review/QA should not redesign
+The rule is **less irrelevant context, not less proof**.
 
-Independent agents should receive a bounded evidence package and check correctness, not restart product exploration.
+## Same-run reuse
 
-## Adaptive reasoning budget
+When an agent moves through planning -> implementation -> finishing in one run, unchanged work-item metadata, root instructions, source excerpts, and verification state should be reused rather than repeatedly fetched.
 
-```text
-Small  = Lean
-Medium = Standard
-Large  = Deep
-Epic   = Breakdown + Deep + Independent Review
-```
+## Project-local exceptions
 
-The goal is not “low token usage at any cost.” The goal is **spending reasoning where failure is expensive**.
+Some repositories need extra preflight for build tools, shells, encoding, emulators, environments, or model/provider routing. Keep those rules local unless they generalize across projects.

@@ -1,34 +1,64 @@
-# Issue Template
+# Title
 
 ## Priority
-P?
+
+P0 / P1 / P2 / P3
 
 ## SDD grade
-Small | Medium | Large | Epic
 
-## User impact
-- Observable impact.
+Trivial / Small / Medium / Large / Epic
+
+## User / business impact
+
+- 
 
 ## Goal
-- Observable result after completion.
+
+- 
 
 ## Scope
-- Included behavior.
 
-## Work boundary
+### In scope
 
-Allowed:
-- path/or/module
+- 
 
-Forbidden:
-- path/or/module
+### Out of scope
 
-## Non-scope
-- Explicit exclusions.
+- 
 
-## Acceptance criteria
-- [ ] Verifiable condition.
-- [ ] Verifiable condition.
+## Work boundaries
+
+### Allowed
+
+- 
+
+### Forbidden
+
+- 
+
+## Source of Truth / linked specs
+
+- 
 
 ## Dependencies / blockers
-None
+
+- 
+
+## Decisions already fixed
+
+- 
+
+## Acceptance criteria
+
+- [ ] 
+
+## Verification strategy
+
+- AC -> evidence:
+
+## Review / approval requirement
+
+- Design review:
+- Human approval:
+- Code review:
+- Runtime/device QA:
