@@ -1,197 +1,92 @@
 # Adaptive Agentic SDD
 
-**Issue-first · Risk-Gated · Verification Strategy · Device QA · Bounded Exploration**
+**English** | [한국어](https://github.com/seok-jun/adaptive-agentic-sdd-ko)
 
-[![Adaptive Agentic SDD overview](assets/workflow-overview-en.svg)](assets/workflow-overview-en.svg)
+**Work-item-first · Risk-Gated · Progressive Disclosure · Revision-Bound Approval · Evidence-Based Completion**
 
-**[Open the detailed workflow diagram →](assets/workflow-detailed-en.svg)**
+Adaptive Agentic SDD is a practical workflow for AI coding agents. It combines specification-driven development, observed AS-IS analysis, risk-based review, bounded exploration, and evidence-based completion.
 
-Adaptive Agentic SDD is a working methodology for using AI coding agents with enough structure to prevent expensive mistakes without forcing heavyweight process on every change.
+> Apply the minimum process that reliably prevents costly mistakes, not the maximum process the tooling can support.
 
-It combines ideas from specification-driven development, legacy-system AS-IS analysis, risk-based quality gates, test/verification planning, architecture governance, and agent orchestration.
+## Start here
 
-> The goal is not to maximize process.  
-> The goal is to apply the **minimum process that reliably prevents costly mistakes**.
+- Adopting the workflow: [Bootstrap](docs/bootstrap.md).
+- Running a task: [Developer guide](docs/developer-guide.md).
+- Canonical lifecycle: [Workflow](docs/workflow.md).
+- Grade definitions and required depth: [Risk grades](docs/risk-grades.md).
 
-## Why this exists
+## Workflow at a glance
 
-AI coding agents can move quickly, but speed creates a few recurring failure modes:
+[![Risk-adaptive workflow overview, with separate review and final authorization gates](assets/workflow-overview-en.svg)](assets/workflow-overview-en.svg)
 
-- implementing the wrong interpretation of a requirement,
-- changing files outside the intended scope,
-- treating stale documentation as current behavior,
-- exploring too much of the repository and wasting context/tokens,
-- passing tests while missing device/runtime behavior,
-- performing review only after a risky design is already implemented,
-- leaving temporary planning artifacts behind after the product behavior has changed.
+**[Open the detailed workflow diagram](assets/workflow-detailed-en.svg)**
 
-Adaptive Agentic SDD addresses these by making the work **issue-driven, risk-adaptive, evidence-gated, and bounded in exploration**.
+The overview is a reading aid, not a substitute for the lifecycle contract. The detailed diagram shows separate Large AS-IS and PLAN reviews, evidence blockers, optional Blind Audit, and final Human authorization. Both are editable SVGs; [diagram maintenance](assets/README.md) explains their scope.
+
+## What changed in v0.2
+
+The portable runtime layer adds:
+
+- a Trivial fast-track for non-behavioral changes;
+- progressive disclosure: a small root contract routes to a task Skill and conditional documents;
+- portable-core versus project-local policy separation;
+- phase-aware, revision-addressed review and approval;
+- starter files and a gradual bootstrap path.
+
+The pre-merge hardening connects those principles to execution:
+
+- separate Large AS-IS and PLAN review decisions;
+- explicit independent-review and optional Blind Audit contracts;
+- acceptance-criterion-to-result traceability;
+- design approval separated from final integration authorization;
+- bounded agent handoffs and revision-aware context reuse;
+- a developer guide and updated workflow diagrams.
+
+The [restricted-environment verification draft](docs/restricted-environment-verification.md) is optional and **not an implemented or operationally validated API/DB automation capability**.
 
 ## Core principles
 
-1. **Issue-first**  
-   The current issue is the execution specification for goal, scope, boundaries, dependencies, and acceptance criteria.
+1. **Work-item-first.** The current work item defines goal, scope, acceptance criteria, dependencies, and fixed decisions. The tracker is replaceable.
+2. **Observed AS-IS.** Current mainline code and direct runtime evidence describe current behavior; stale plans do not.
+3. **Information-specific Source of Truth.** Requirements, behavior, architecture, verification, review, and approval have different authoritative sources. See [Source of Truth](docs/source-of-truth.md).
+4. **Risk-adaptive depth.** Risk, reversibility, contract surface, and failure cost determine the grade, not coding time or file count alone.
+5. **Progressive disclosure.** Load the smallest stable entry contract, then only the Skill and documents relevant to the current phase.
+6. **Verification before implementation.** Important ACs need a proof method; actual results must be linked back to them.
+7. **Bounded exploration.** Start from direct paths, symbols, contracts, and callers/callees. Expand only for concrete uncertainty.
+8. **Review is falsification, not redesign.** Self-review is not independent review. Blind means prior verdicts are withheld, not requirements.
+9. **Revision-bound approval.** A review PASS is not Human approval. Design approval is not final merge authorization.
+10. **Evidence-based completion.** Unrun checks are not PASS. Required verification, review, authorization, and applicable lifecycle work must actually be completed.
 
-2. **Observed AS-IS**  
-   Current behavior is determined from the current mainline code, not from old design documents.
+Capture real trade-offs; do not invent alternatives just to fill a template. See [Trade-off Capture](docs/trade-off-capture.md).
 
-3. **Information-specific Source of Truth**  
-   There is no universal single authority for every kind of information. Requirement, current behavior, architecture, UI, and product rules can have different authoritative sources.
-
-4. **Risk-adaptive depth**  
-   Process depth scales with change risk.
-
-   | Grade | Default depth |
-   | --- | --- |
-   | Small | Lean |
-   | Medium | Standard |
-   | Large | Deep + design review |
-   | Epic | Breakdown + deep design/review |
-
-5. **Verification Strategy before implementation**  
-   Each important acceptance criterion should have a known way to prove it.
-
-6. **Trade-off Capture, not Trade-off Discovery**  
-   Do not brainstorm alternatives just to fill a document. Capture trade-offs only when real competing options already appear during bounded analysis.
-
-7. **Bounded exploration**  
-   Start from the issue, direct paths, symbols, public contracts, callers/callees, and only expand when concrete evidence requires it.
-
-8. **Evidence-based completion**  
-   Tests, CI, review, and device QA are evidence. Unrun verification is not a pass.
-
-9. **Lifecycle completion**  
-   The work is not finished until final behavior is verified, durable product documentation is synchronized when needed, temporary SDD artifacts are removed, and the work lane is released.
-
-## Workflow
-
-The overview above is intentionally compact for quick scanning. The detailed diagram expands the same lifecycle with Source of Truth, Trade-off Capture, review gates, Device QA triggers, and token-efficiency rules.
-
-**[Open detailed workflow →](assets/workflow-detailed-en.svg)**
-
-```mermaid
-flowchart TD
-    A[Issue Definition] --> B[Preflight]
-    B --> C[Claim / Isolation]
-    C --> D[AS-IS Analysis]
-    D --> E[TO-BE + Verification Strategy]
-
-    E --> F{Real competing options?}
-    F -- Yes --> G[Bounded Trade-off Capture]
-    F -- No --> H[No extra exploration]
-
-    G --> I[Risk Grade Gate]
-    H --> I
-
-    I --> J[Implement]
-    J --> K[Targeted Verification]
-    K --> L[Self Review]
-    L --> M[Product Docs Sync + Final Verification]
-    M --> N[PR + Code Review]
-
-    N --> O{Device QA Required?}
-    O -- No --> P[Merge]
-    O -- Yes --> Q[AC-based Device QA Checklist]
-    Q --> R[Observation Collection]
-    R --> S{Required evidence passes?}
-    S -- No --> T[Merge Blocked]
-    S -- Yes --> P
-
-    P --> U[Cleanup / Close / Release]
-```
-
-## Risk grades
-
-### Small — Lean
-Use when the change stays within one implementation boundary and has no high-risk characteristics.
-
-- no separate SDD package required,
-- issue body can serve as the change plan,
-- targeted verification,
-- self-review.
-
-### Medium — Standard
-Use when multiple implementation boundaries or shared contracts are involved but the change is not high-risk.
-
-- AS-IS / TO-BE / change plan,
-- verification strategy,
-- bounded review when useful,
-- no mandatory repository-wide rediscovery.
-
-### Large — Deep
-Use for high-impact changes such as security/privacy, schema migration, retry/scheduling policy, cost/quota enforcement, or similarly expensive failure modes.
-
-- AS-IS gate,
-- TO-BE/change-plan gate,
-- design review before implementation,
-- independent code review before merge,
-- broader verification.
-
-### Epic — Breakdown first
-Use when the work changes module boundaries, creates modules, or contains multiple independently deliverable capabilities.
-
-- break down first,
-- define integration ownership,
-- then apply Large-level rigor to the relevant implementation lanes.
-
-## Token / context efficiency
-
-Adaptive Agentic SDD deliberately avoids the assumption that “more context is always better.”
-
-Default rules:
-
-- do not read unrelated issues or domains,
-- start from direct path/symbol,
-- reuse unchanged context within the same run,
-- do not re-discover requirements already fixed by the issue,
-- run targeted checks before broad checks,
-- do not ask review/QA agents to redesign the product,
-- do not perform repository-wide alternative discovery for trade-off documentation.
-
-The intended reasoning budget is adaptive:
+## Portable runtime architecture
 
 ```text
-Small  -> Lean
-Medium -> Standard
-Large  -> Deep
-Epic   -> Breakdown + Deep + Independent Review
+AGENTS.md: routing + always-on guards
+  -> task Skill: execution procedure
+      -> conditional process/domain documents
 ```
+
+The [starter](starter/AGENTS.md) is an adoption snapshot, not a universal drop-in configuration. Replace placeholders, reconcile local policy, and keep its local contract internally consistent. Do not assume copying the Skill also copies all methodology documents.
+
+## Portable core vs project-local policy
+
+Keep work-item boundaries, risk grading, bounded exploration, verification mapping, revision-aware review/approval, and evidence-based completion portable.
+
+Keep module names, environment quirks, actual commands, organization-specific approval systems, model/provider routing, credentials, and business vocabulary local. Do not make every grade use separate SDD files, independent review, or Blind Audit.
 
 ## Repository structure
 
 ```text
-adaptive-agentic-sdd/
-├─ README.md
-├─ assets/
-│  ├─ workflow-overview-en.svg
-│  └─ workflow-detailed-en.svg
-├─ docs/
-│  ├─ concepts.md
-│  ├─ workflow.md
-│  ├─ source-of-truth.md
-│  ├─ risk-grades.md
-│  ├─ verification.md
-│  ├─ review-gates.md
-│  ├─ device-qa.md
-│  ├─ token-efficiency.md
-│  └─ trade-off-capture.md
-├─ templates/
-│  ├─ issue.md
-│  ├─ as-is.md
-│  ├─ to-be.md
-│  ├─ change-plan.md
-│  ├─ pull-request.md
-│  └─ device-qa.md
-└─ examples/
-   ├─ small/
-   ├─ medium/
-   └─ large/
+assets/       editable overview and detailed workflow SVGs
+docs/        canonical policies, bootstrap, developer guide, optional draft
+starter/     lean root contract, implementation Skill, local workflow contract
+templates/   work item, AS-IS, TO-BE, change plan, PR, device QA
+examples/    fictional Trivial, Small, Medium, and Large walkthroughs
 ```
 
 ## Status
 
-**v0.1 — Working Methodology**
+**v0.2 — Portable Working Methodology**
 
-This is intentionally presented as a practical workflow, not a universal standard. A key part of operating it is removing gates that do not prevent real failures.
-
-A healthy workflow should become **smaller and sharper** over time, not endlessly accumulate rules.
+This is a practical workflow, not a universal standard or a claim that all integrations have been implemented. A healthy workflow becomes smaller and sharper through observed use.
