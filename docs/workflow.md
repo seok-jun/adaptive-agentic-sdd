@@ -1,182 +1,79 @@
 # Workflow
 
-## 0. Repository bootstrap contract
+This is the canonical lifecycle. [Risk Grades](risk-grades.md), [Review Gates](review-gates.md), and [Verification](verification.md) define their respective contracts. Diagrams, examples, and the developer guide explain them; they do not override them.
 
-Before adopting the workflow, identify the repository's actual build/test paths, module boundaries, work-item system, and existing development rules.
+## 0. Bootstrap
 
-Do not start by copying a large policy set from another project. Establish a small root agent contract and add local safeguards only when the repository needs them.
+Identify actual module boundaries, work-item system, build/test paths, and existing rules before adopting a small root contract and task Skill. Keep environment-specific safeguards local. See [Bootstrap](bootstrap.md).
 
-See `docs/bootstrap.md`.
+## 1. Work item and preflight
 
-## 1. Work-item definition
+Before edits, resolve:
 
-Define:
+- current work-item identity/revision or trustworthy snapshot;
+- goal, user/business impact, priority, grade, and fixed decisions;
+- scope/non-scope, allowed/forbidden modification boundaries;
+- ACs, proof methods, dependencies/blockers, and authoritative references;
+- requested action and available capabilities: plan, implement, verify, review, commit, or integrate.
 
-- Priority,
-- SDD grade,
-- user/business impact,
-- goal,
-- scope and non-scope,
-- allowed/forbidden paths when path boundaries matter,
-- acceptance criteria,
-- dependencies/blockers,
-- authoritative requirement/design references.
+Missing required boundaries, conflicting authoritative requirements, unresolved dependencies, or missing phase permission block edits. Grade follows risk, not file type or implementation time.
 
-The work item narrows the problem before implementation starts. GitHub Issue, Jira, Linear, or another tracker can fill this role.
+Read scope and write scope differ: inspect direct dependencies needed to understand a change, but do not modify outside authorized boundaries. Stop and obtain a scope update if such edits become necessary.
 
-## 2. Preflight
+## 2. Claim / isolation when needed
 
-Before code edits:
+Parallel work may require lane ownership, overlap checks, and an isolated branch/worktree/sandbox. These are local operational extensions, not mandatory ceremony for every repository. Preserve unrelated user/team changes.
 
-- confirm required work-item fields exist,
-- confirm blockers are resolved,
-- confirm the requested work is allowed to start,
-- confirm scope boundaries are usable,
-- confirm the agent can access a current work-item revision or snapshot,
-- resolve the grade before selecting process depth.
+## 3. Bounded AS-IS
 
-Fail closed when a required boundary or dependency cannot be determined safely.
+Start from current mainline code and direct runtime evidence. Prefer direct target path, symbols, public contracts, callers/callees, then relevant durable docs. Broaden only for concrete uncertainty.
 
-## 3. Claim / isolation when needed
+Record observed behavior, evidence, unknowns, boundaries, and meaningful drift. Trivial skips a separate artifact; Small can use the work item or notes.
 
-For parallel agent work:
+**Large gate:** independent AS-IS review must resolve blocking observation/contract gaps before its conclusions are used as the settled PLAN baseline. Record the AS-IS target revision and verdict.
 
-- claim the lane/work item,
-- check overlap with active work,
-- use an isolated branch/worktree/sandbox when supported,
-- keep product changes inside the allowed boundary.
+## 4. TO-BE + change plan + verification strategy
 
-Parallel isolation is an operational extension, not a requirement for every repository.
+Define desired and preserved behavior, failure behavior, relevant state transitions, ordered changes, AC-to-evidence mapping, and rollback inspection. Capture trade-offs only when real competing options exist.
 
-## 4. Bounded AS-IS analysis
+Medium+ uses explicit sections; separate files are optional. Epic first breaks down independently verifiable children and assigns integration ownership.
 
-Start from current mainline code.
+**Large gate:** independently review PLAN (TO-BE and change plan) at its own target revision. Resolve blockers and obtain design approval when the decision is Human-owned. An AS-IS PASS is not a PLAN PASS or implementation authorization.
 
-Prefer:
+## 5. Implementation
 
-1. direct target path,
-2. target symbols,
-3. direct public contracts,
-4. direct callers/callees,
-5. related durable documentation,
-6. only then broader exploration when concrete evidence requires it.
+Implement only the authorized work. Preserve approved decisions/contracts; avoid unrelated refactors, features, renames, and dependency changes. Add direct regression coverage where useful. Escalate grade or stop for approval when new risk or scope changes appear.
 
-Record observed behavior, relevant evidence, scope, unknowns, and meaningful drift.
+## 6. Verification and self-review
 
-Trivial changes normally skip a separate AS-IS artifact. Small changes may keep AS-IS in the work item or implementation notes.
+Run targeted checks first, then broader checks warranted by the changed surface. Connect each important AC to expected behavior, actual observation, target revision/environment, status, and evidence.
 
-## 5. TO-BE design + Verification Strategy
+Compare the diff against ACs, scope, allowed/forbidden boundaries, fixed decisions, and unintended changes. Self-review is not independent review. Unrun checks are never PASS.
 
-Define:
+## 7. Durable documentation and final candidate
 
-- desired behavior,
-- behavior that must remain unchanged,
-- failure/error behavior,
-- state transitions when relevant,
-- concrete change plan,
-- acceptance-criterion-to-evidence mapping.
+When product/runtime behavior changes, synchronize durable docs from final observed code behavior, not copied planning prose. Run final required checks against the candidate. If documentation changes execution/contract meaning, include that change in verification and review scope.
 
-Do not create alternatives merely to satisfy a template. Capture trade-offs only when real competing options already exist.
+## 8. Independent CODE review when required
 
-## 6. Grade gate
+Large and Large-like Epic lanes require independent code review. Medium uses bounded independent review when contract/integration risk warrants it. Apply [Review Gates](review-gates.md); do not ask the author to certify independence.
 
-Apply the minimum process needed for the risk grade.
+Material changes after review require fresh affected checks/review. Optional Blind Audit has a separate initial verdict before findings are reconciled.
 
-- **Trivial**: targeted change + targeted validation + self-review.
-- **Small**: lean analysis/implementation + targeted verification + self-review.
-- **Medium**: written AS-IS/TO-BE/change plan and bounded review when contract risk warrants it.
-- **Large**: explicit AS-IS and plan, independent design/contract review, required Human approval when local policy says the decision is Human-owned, independent code review before merge.
-- **Epic**: break down first; define integration ownership; apply Large-level rigor to risky child/integration lanes.
+## 9. Required runtime evidence and readiness
 
-## 7. Revision-addressed design review
+Collect device/browser/integration/runtime observations whenever ACs require them. This can happen during verification; it must finish before final authorization. See [Device QA](device-qa.md).
 
-When a design artifact requires independent review or Human approval, the candidate should be addressable as an immutable or unambiguous revision when the collaboration environment supports it (for example, a commit SHA or versioned document revision).
+Prepare the PR or equivalent candidate report with scope, AC results, review evidence, meaningful decisions, documentation sync, and limitations. Required FAIL, BLOCKED, UNVERIFIED, missing review, or unresolved contract findings block readiness. Commands generated for someone else to execute are not execution evidence.
 
-The review packet should be phase-aware and bounded to:
+## 10. Final Human Review / authorization
 
-- work item / acceptance criteria,
-- target phase artifact,
-- approved upstream decisions,
-- direct public contracts and invariants,
-- allowed/forbidden boundaries,
-- relevant verification evidence.
+Submit the final target revision and requested integration action for explicit Human approval. Design approval and reviewer PASS do not authorize merge/close/release. A documented, applicable low-risk delegation is the only policy alternative; record its reference and eligibility.
 
-A review PASS is not Human approval.
+Approval cannot replace required evidence. If the candidate changes materially, revisit affected verification, review, and approval. Until authorized, report **ready for Human Review**, not merged or fully complete.
 
-If the reviewed artifact changes in a way that affects decisions, scope, contracts, or acceptance semantics, review/approval must be repeated for the new revision.
+## 11. Authorized integration / cleanup
 
-See `docs/review-gates.md`.
+Only within the actual authorization: merge, update/close the work item, clean disposable SDD artifacts and isolated workspaces, and release the lane. Preserve evidence required by local retention policy; never remove unrelated changes. Release/deployment needs its own authority when not covered.
 
-## 8. Human approval when required
-
-Human approval is a policy gate, not a synonym for reviewer PASS.
-
-When approval is required, bind it to:
-
-- one phase,
-- the exact artifact/revision shown to the Human,
-- the decision scope being approved,
-- approval time/actor according to local audit needs.
-
-Do not silently reuse vague or stale approval after a material revision.
-
-## 9. Implementation
-
-- change only allowed files,
-- do not add unrelated refactors/features,
-- preserve approved decisions and contracts,
-- add direct regression coverage where useful,
-- keep implementation aligned with acceptance criteria.
-
-## 10. Verification
-
-Run targeted verification first. Broader verification is required when the changed surface warrants it.
-
-Unrun verification must be reported as unverified, not PASS.
-
-## 11. Self review
-
-Compare the final diff against:
-
-- work-item scope,
-- acceptance criteria,
-- allowed/forbidden boundaries,
-- approved decisions,
-- unintended behavior changes.
-
-## 12. Independent code review when required
-
-The reviewer should falsify the implementation against the approved contract and evidence rather than rediscover the entire product.
-
-Large/Epic require independent code review by default. Medium may use bounded independent review when shared contracts or failure cost justify it.
-
-## 13. Durable documentation + final verification
-
-When runtime/product behavior changed, update durable documentation from **final observed code behavior**, not by copying planning prose.
-
-Then run required final verification.
-
-## 14. PR / merge gate
-
-The PR should state:
-
-- work item,
-- scope,
-- meaningful decisions,
-- verification evidence,
-- review/approval evidence when required,
-- unverified or blocked items.
-
-## 15. Conditional device/runtime QA
-
-If real-device, browser, integration-environment, permission, lifecycle, background, media, or other runtime evidence is required, merge remains blocked until the required observations are collected and judged against acceptance criteria.
-
-## 16. Merge / cleanup / release
-
-After required evidence passes:
-
-- merge,
-- close/update the work item,
-- remove temporary SDD artifacts when local policy treats them as disposable,
-- clean isolated workspaces,
-- release the lane.
+Report what actually happened. Approved implementation work can be delivered as a candidate without claiming the entire integration lifecycle is complete.

@@ -1,40 +1,34 @@
 # Information-specific Source of Truth
 
-Adaptive Agentic SDD does **not** use one global Source of Truth for every kind of information.
-
-Different questions have different authoritative sources.
+There is no global Source of Truth for every information category.
 
 | Information | Typical authoritative source |
 | --- | --- |
-| Current user instruction | Current user/session request |
-| Goal / scope / acceptance criteria | Current work item (GitHub Issue, Jira, Linear, etc.) |
+| Current user instruction / authorized action | Current explicit user/session request, within applicable guards |
+| Goal / scope / ACs | Current work item or trustworthy revisioned snapshot |
 | Global agent guardrails | Repository root agent policy |
-| Workflow / gates | Canonical workflow/process/Skill definitions |
+| Lifecycle / gates | Canonical workflow and review/verification definitions |
+| Grade semantics / depth | Risk-grade matrix, or the explicitly adopted local contract |
 | Module ownership / dependency rules | Architecture boundary document |
 | Current behavior (AS-IS) | Current mainline code and direct runtime evidence |
-| Durable product rules after implementation | Product/business documentation synchronized to final code |
+| Durable product rules | Product/business docs synchronized to final behavior |
 | UI layout/state | Work-item-linked visual specification |
 | Historical rationale | Decision records / ADRs |
-| Temporary implementation plan | SDD working documents |
-| Review result | Review record bound to the reviewed revision when available |
-| Human approval | Approval record bound to phase + artifact revision + decision scope |
+| Temporary implementation plan | Current SDD working document |
+| Verification result | AC-linked execution/observation record for the actual revision/environment |
+| Review result | Review record for the target phase/revision |
+| Human approval / integration authority | Explicit approval or applicable delegation record for target revision and action scope |
 
-## Why not one SSOT?
-
-A single universal authority creates contradictions in legacy and evolving systems.
-
-For example:
-
-- the **work item** describes what should change,
-- the **code** describes what currently happens,
-- the **architecture policy** describes what boundaries may not be crossed,
-- the **visual spec** describes UI state/layout,
-- a **review record** describes the verdict for one reviewed candidate.
-
-These are not competing sources when their information domains are explicit.
+The work item states what should change; code shows current implementation; architecture defines allowed boundaries; a review records a verdict for one candidate. These sources answer different questions.
 
 ## Conflict handling
 
-When two sources conflict within the **same information category**, stop and resolve the conflict before implementation if it affects scope, architecture, acceptance criteria, approval, or durable contract meaning.
+Resolve same-category conflicts before implementation when they affect scope, architecture, ACs, approval, or durable contract meaning. Code is evidence of current behavior, not permission to overwrite a requirement. A user request does not silently repeal a guardrail.
 
-Do not use historical comments, stale copied tickets, old planning artifacts, or review verdicts for an older revision to silently override a current authoritative source.
+Do not use stale copied tickets, historical comments, old plans, or old review verdicts to override a current authority. Identify a snapshot's revision boundary when live access is unavailable.
+
+## Explain once, reference elsewhere
+
+The developer guide, diagrams, and examples explain canonical policy; they do not redefine it. Root instructions route to Skills; avoid multiple independently maintained definitions of one gate.
+
+The starter local contract is a deliberately self-contained adoption snapshot. After adoption, the repository owns its local policy and must reconcile any upgrades explicitly; it does not automatically inherit future public-repository changes.

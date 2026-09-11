@@ -1,27 +1,36 @@
 # TO-BE
 
-## Desired behavior
-- ...
+## Basis and target
 
-## Behavior that must remain unchanged
-- ...
+- Work item / AC references:
+- AS-IS revision and required review result:
+- PLAN target revision (TO-BE and change plan):
 
-## Failure / error behavior
-- ...
+## Behavior
 
-## State transitions
-- Only when relevant.
+- Desired:
+- Must remain unchanged:
+- Failure / error handling:
+- State transitions, only when relevant:
 
-## Verification Strategy
+## Verification strategy
 
-| Acceptance criterion | Evidence |
-| --- | --- |
-| ... | unit / integration / build / CI / device QA |
+| AC ID | Method / expected result | Required capability |
+| --- | --- | --- |
+| AC-01 | | |
 
-## Trade-off
-Include only if real competing choices were already identified.
+Actual execution results belong in the AC-linked result record; planning is not PASS.
 
-- Selected:
-- Alternative:
-- Why selected:
-- Cost accepted:
+## Trade-off, only for real competing choices
+
+- Selected / alternative:
+- Reason / accepted cost:
+
+## PLAN review and design approval, when required
+
+- Independent reviewer/session / target revision:
+- Verdict / findings / evidence:
+- Contract blockers resolved:
+- Human-owned decision: phase / revision / scope / approver / time:
+
+An AS-IS PASS does not approve PLAN. Design approval does not authorize final integration.

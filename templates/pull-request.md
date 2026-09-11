@@ -1,46 +1,47 @@
-## Work item
+## Work item / candidate
 
-- 
+- Work item and revision:
+- Final candidate revision:
+- Requested integration action:
 
-## Summary
+## Summary / scope
 
-- 
-
-## Scope
-
-- In scope:
+- Changed:
 - Explicitly not changed:
+- Material decisions / preserved contracts:
 
-## Decisions / contract notes
+## AC-linked verification evidence
 
-- 
+| AC ID | Method / expected | Target revision / environment | Actual | Status | Evidence / reason |
+| --- | --- | --- | --- | --- | --- |
+| AC-01 | | | | UNVERIFIED | not yet executed |
 
-## Verification evidence
+Use PASS / FAIL / BLOCKED / UNVERIFIED. Replace the placeholder with actual observations. Required non-PASS results block completion. Omit non-applicable methods with a reason, not PASS. Build, lint, tests, and runtime checks prove only the claims their evidence supports.
 
-- [ ] targeted tests
-- [ ] broader tests if required
-- [ ] lint/static checks if required
-- [ ] runtime/device/browser QA if required
+## Review records
 
-### Results
+| Required phase | Target revision | Independent reviewer/session | Verdict / evidence |
+| --- | --- | --- | --- |
+| AS-IS, if required | | | |
+| PLAN, if required | | | |
+| CODE, if required | | | |
 
-- PASS:
-- FAIL:
-- BLOCKED:
-- UNVERIFIED:
+- Self-review (not independent):
+- Optional Blind Audit: reason, initial result, reconciliation; omit when unused.
 
-## Review / approval provenance
+## Approval / authorization
 
-- Design review target/revision:
-- Design review result:
-- Human approval target/decision scope (if required):
-- Independent code review:
+- Design approval: phase / target / decision scope / approver / time, if required:
+- Final integration: candidate / requested action / explicit Human approval record:
+- Or applicable low-risk delegation: policy reference and eligibility:
 
-## Risk / rollback notes
+Implementation or design approval is not merge/close/release approval. Reviewer PASS does not create Human approval. Leave final authority pending until actually granted.
 
-- 
+## Risk / documentation / readiness
 
-## Durable documentation sync
+- Risk and rollback inspection:
+- Durable docs updated, or not required because:
+- Unresolved limitations / required blockers:
+- State: blocked / ready for Human Review / authorized for the recorded action.
 
-- Updated:
-- Not required because:
+Do not mark integrated/closed/released until that authorized action actually occurs. Revisit affected evidence, review, and approval after material changes.

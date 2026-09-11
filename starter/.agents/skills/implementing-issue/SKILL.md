@@ -1,104 +1,46 @@
 ---
 name: implementing-issue
-description: Implement an approved repository work item using bounded analysis, risk-adaptive SDD gates, scoped edits, verification, and review.
+description: Implement an approved work item with bounded analysis, risk-adaptive review, AC-linked evidence, and explicit integration authorization.
 ---
 
 # Implementing Issue — Starter
 
-## Inputs
+## Required inputs and preflight
 
-Required:
+Read the current work item/snapshot and `docs/sdd-workflow.md`, then target code/direct contracts and linked domain docs only when relevant.
 
-1. current work-item identity and current body/snapshot,
-2. `docs/sdd-workflow.md`,
-3. target code and direct contracts,
-4. linked architecture/product docs only when relevant.
+Resolve goal, user/business impact, ACs, scope/non-scope, allowed/forbidden modifications, fixed decisions, dependencies, grade, requested action, and current permissions. Identify important AC proof methods. Stop edits when required information or authority cannot be resolved safely.
 
-Do not read unrelated domains for general project understanding.
+## Grade route
 
-## Preflight
+Use the local matrix without redefining it:
 
-Before product edits:
+- Trivial: direct non-behavioral change, targeted validation, self-review; no SDD package.
+- Small: bounded analysis and plan in the work item/notes; targeted verification and self-review.
+- Medium: explicit AS-IS, TO-BE/change plan, and risk-based independent review.
+- Large: AS-IS -> independent AS-IS review -> PLAN -> independent PLAN review -> applicable design approval -> implementation. Independent CODE review follows final verification.
+- Epic: breakdown/integration ownership first; apply Large gates to risky lanes.
 
-1. confirm goal, scope/non-scope, acceptance criteria, dependencies/blockers,
-2. resolve grade,
-3. confirm allowed/forbidden boundaries when path ownership matters,
-4. confirm required approvals are present for the current phase,
-5. identify a verification strategy for important acceptance criteria.
+Promote grade when new risk appears. Separate phases need distinct verdicts, not necessarily separate files. Required independent review must be another invocation/session or person; do not count the author's self-review.
 
-If required information cannot be resolved safely, stop edits and report the blocker.
+## Bounded analysis and PLAN
 
-## Grade gate
+Explore direct path, symbol, public contract, callers/callees, relevant durable docs, then broader sources only for concrete uncertainty. Record observations, evidence, unknowns, and drift. Direct-dependency reads do not widen write permission.
 
-- **Trivial**: no separate SDD artifact; targeted change + targeted validation + self-review.
-- **Small**: work item can serve as plan; bounded inspection + targeted verification + self-review.
-- **Medium**: explicit AS-IS / TO-BE / change plan; bounded review when contract/integration risk warrants it.
-- **Large**: explicit AS-IS + PLAN, independent design/contract review, Human approval when local policy requires it, independent code review before merge.
-- **Epic**: break down first; define integration ownership; do not create one giant implementation lane.
+Define desired/preserved behavior, failure handling, relevant state transitions, change order, AC-to-evidence mapping, and genuine trade-offs only. Bind required review/approval to phase and target revision. Pass bounded packets; do not preload entire parent transcripts. Blind Audit, when justified, follows the local separation contract.
 
-Promote the grade if analysis reveals higher risk.
+## Implement and verify
 
-## Bounded AS-IS
+Edit only authorized scope; preserve fixed contracts and unrelated work. Add useful direct regression coverage. Run targeted checks before broader relevant checks.
 
-Explore in this order:
+For important ACs record method/expected result, actual observation, target revision/environment, PASS / FAIL / BLOCKED / UNVERIFIED, and evidence/reason. Never infer runtime PASS from generated commands or intended behavior.
 
-1. direct target path,
-2. target symbol,
-3. direct public contract,
-4. direct callers/callees,
-5. relevant durable docs,
-6. broader search only when concrete evidence requires it.
+Self-review the final diff against ACs, boundaries, decisions, and unintended effects. Sync durable docs from observed final behavior when relevant. Run final checks and obtain required independent CODE review and runtime evidence. Material candidate changes require affected checks/review again.
 
-Record observed behavior and unknowns. Do not treat stale planning documents as current runtime truth.
+## Finish boundary
 
-## TO-BE + verification
+Report final candidate, AC evidence, required review results, documentation sync, remaining limitations, and requested integration action. Missing required evidence or review blocks readiness; self-review is not a fallback certification.
 
-For Medium+ work, define:
+Wait for explicit final Human authorization of the candidate/action, unless a documented applicable low-risk delegation is recorded. Approval to implement or commit is not approval to merge/close/release. Approval does not make missing evidence PASS.
 
-- desired behavior,
-- preserved behavior,
-- failure behavior,
-- ordered change plan,
-- acceptance-criterion-to-evidence mapping,
-- real trade-offs only when competing options exist.
-
-## Review / approval
-
-When design review is required, provide a bounded phase-aware packet. If the environment supports immutable/revisioned artifacts, bind review to the exact revision.
-
-Review PASS is not Human approval.
-
-When Human approval is required, it applies only to the phase, artifact revision, and decision scope actually presented. Material revision changes require fresh review/approval.
-
-## Implementation
-
-- modify only in scope,
-- preserve approved decisions/contracts,
-- avoid unrelated cleanup,
-- add direct regression coverage where useful.
-
-## Verification
-
-Run targeted checks first, then broader checks only when the change surface warrants them.
-
-Report every required check as PASS, FAIL, BLOCKED, or UNVERIFIED. Never infer PASS from intention.
-
-## Self review
-
-Compare the final diff against:
-
-- work-item scope,
-- acceptance criteria,
-- boundaries,
-- approved decisions,
-- unintended changes.
-
-## Finish
-
-Before calling the work complete:
-
-- update durable docs when runtime/product behavior changed,
-- complete required independent review,
-- state verification evidence and unverified items,
-- create/update the PR according to repository policy,
-- clean temporary artifacts/workspaces when applicable.
+Until authorized, report ready for Human Review, not fully integrated/complete. After authorization, perform only allowed integration and cleanup, retaining required evidence and unrelated changes. State what actually ran and what remains unverified.

@@ -1,16 +1,15 @@
 # Medium Example
 
-**Change:** Add a new shared request field used by two implementation modules.
+**Fictional change:** add a shared request field used by two implementation modules, with backward-compatible behavior and without Large-level failure cost.
 
-Process:
+1. Define boundaries, contract intent, ACs, and fixed decisions in the work item.
+2. Record AS-IS: current contract and direct consumers.
+3. Define TO-BE, preserved compatibility, and the change plan's files/symbols.
+4. Map ACs to expected unit/integration evidence before implementation.
+5. Use bounded independent design/contract review for the shared-contract risk.
+6. Implement only authorized boundaries; collect targeted/final AC-linked results.
+7. Obtain independent CODE review of compatibility, evidence, and diff scope.
+8. Present the final candidate for explicit Human integration authorization.
+9. Merge only after required evidence/review and that authorization are satisfied.
 
-1. Issue defines boundary and contract intent.
-2. AS-IS identifies current contract and direct consumers.
-3. TO-BE defines the new field and backward-compatible behavior.
-4. Verification strategy maps contract behavior to unit/integration tests.
-5. Change plan names concrete files/symbols.
-6. Implementation modifies only approved boundaries.
-7. Bounded review checks contract compatibility and diff scope.
-8. PR merges after required tests/review.
-
-Repository-wide rediscovery is not required unless a concrete compile/dependency failure expands the impact surface.
+Separate sections are sufficient; repository-wide rediscovery is not required unless a concrete dependency, contract conflict, or failure expands the impact surface. Regrade if analysis reveals Large-level risk. This is a walkthrough, not evidence that checks or approvals occurred.

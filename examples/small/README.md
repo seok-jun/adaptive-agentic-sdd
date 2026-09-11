@@ -1,14 +1,13 @@
 # Small Example
 
-**Change:** Adjust a formatting rule in one module.
+**Fictional change:** adjust a formatting rule inside one owner module, without a shared-contract or high-cost behavior change.
 
-Process:
+1. Define scope, preserved behavior, and the AC in the work item.
+2. Keep bounded AS-IS and the plan in the work item; no separate SDD package.
+3. Modify only the owner module and directly relevant tests.
+4. Run targeted tests and record AC-linked actual results, revision, and evidence.
+5. Self-review the diff. Independent review is optional for concrete risk.
+6. Present the final candidate for explicit Human integration authorization, or record an applicable pre-authorized low-risk policy.
+7. Merge/close only within that authority and after required checks pass.
 
-1. Issue defines scope and acceptance criterion.
-2. No separate SDD package.
-3. Modify the single owner module.
-4. Add/update direct unit test.
-5. Self-review the diff.
-6. Open PR and merge after required checks.
-
-No trade-off section is created unless a real competing implementation choice appears.
+Do not invent a trade-off section when no real competing choice exists. This is a fictional process walkthrough; no executed check or approval is asserted.
