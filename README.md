@@ -1,5 +1,7 @@
 # Adaptive Agentic SDD
 
+**English** | [한국어](https://github.com/seok-jun/adaptive-agentic-sdd-ko)
+
 **Work-item-first · Risk-Gated · Progressive Disclosure · Revision-Bound Approval · Evidence-Based Completion**
 
 Adaptive Agentic SDD is a practical workflow for AI coding agents. It combines specification-driven development, observed AS-IS analysis, risk-based review, bounded exploration, and evidence-based completion.

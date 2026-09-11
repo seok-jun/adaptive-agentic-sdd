@@ -22,3 +22,9 @@ State proposed features as draft. Separate observed evidence, static/self-review
 Keep lifecycle, grades, review, and verification in their canonical documents. Update affected starter contracts, templates, examples, and diagrams together. Human-oriented guides should link to policy rather than establish competing rules.
 
 For workflow-semantic edits, do not classify by the `.md` extension alone. Explain the intended risk grade and validate both the deep and lean paths. XML/link checks and walkthroughs are not proof of actual agent execution.
+
+## English / Korean synchronization
+
+The English `adaptive-agentic-sdd` repository is the canonical policy source; `adaptive-agentic-sdd-ko` is its Korean edition. When policy, guides, templates, examples, or diagrams change, review and update both repositories together. Preserve mandatory/optional conditions, phase ordering, statuses, and authorization semantics across languages.
+
+Record the English source revision in the Korean changelog or PR and check both editions' document/diagram links. If one edition is pending, state that explicitly rather than reporting synchronization complete.
