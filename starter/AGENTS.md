@@ -1,51 +1,39 @@
 # AGENTS.md — Starter
 
-This file should remain small. It defines always-on guards and task routing; repeated procedures belong in Skills.
-
-Replace placeholders and delete irrelevant sections before adopting it.
+Keep this file small: always-on guards and routing live here; procedures live in the Skill/local contract. Replace placeholders and remove irrelevant examples before adoption.
 
 ## Start order
 
 1. Read this file once per run unless it changes.
-2. For work-item tasks, read the current Jira/GitHub/other ticket before unrelated backlog items.
-3. Route implementation work to `.agents/skills/implementing-issue/SKILL.md`.
-4. Load deeper process/domain docs only when the Skill or current change surface requires them.
-5. Reuse unchanged context within the same run.
+2. Read the current work item or a trustworthy current snapshot.
+3. Route implementation to `.agents/skills/implementing-issue/SKILL.md`.
+4. Load deeper process/domain docs only when the task requires them.
+5. Reuse context only while its revision and relevance remain unchanged.
 
 ## Always-on guards
 
-- Do not reset, clean, revert, or overwrite unrelated user/team changes.
-- Do not invent files, APIs, labels, module names, commands, or architecture rules.
-- Do not mix unrelated refactors, renames, formatting sweeps, dependency upgrades, or features into the current work item.
-- Respect explicit allowed/forbidden path boundaries.
-- If a required dependency, approval, or ownership boundary cannot be determined safely, stop product edits and report the blocker.
-- Never report an unrun test/build/lint/runtime check as PASS.
-- Keep secrets, production credentials, and private customer/user data out of commits, issue comments, PRs, and logs.
+- Preserve unrelated user/team changes; do not reset, clean, revert, or overwrite them.
+- Do not invent files, APIs, commands, schemas, labels, or architecture rules.
+- Respect allowed/forbidden modification boundaries. Direct-dependency reads do not authorize edits outside scope.
+- Do not mix unrelated cleanup, refactors, upgrades, or features into the work item.
+- Stop edits for unresolved required dependencies, authority, ownership, or scope.
+- Never report an unrun check as PASS or self-review as independent review.
+- Approval to plan, implement, or commit is not approval to merge, close, or release.
+- Keep secrets, private organizational/customer details, and sensitive data out of commits, public work items, PRs, and logs.
 
 ## Task routing
 
-| Task | Canonical path |
+| Task | Canonical local path |
 | --- | --- |
 | Implement an approved work item | `.agents/skills/implementing-issue/SKILL.md` |
-| Risk/grade semantics | `docs/sdd-workflow.md` |
+| Grade / review / approval / evidence semantics | `docs/sdd-workflow.md` |
 
-Add more Skills only after repeated workflow use shows a real need.
+Add Skills only when observed use justifies them. The local contract is an adoption snapshot; reconcile upgrades explicitly.
 
 ## Project invariants
 
-Document only stable, high-value invariants here, for example:
-
-- `<module A>` must not depend on `<module B>`.
-- shared/generated/vendor paths require explicit ownership.
-- `<build command>` is the canonical targeted build entry point.
-
-Do not turn this section into a full architecture manual.
+Add only stable, high-value facts, such as `<module A>` must not depend on `<module B>`, explicit ownership of generated/shared paths, and a verified build-command reference. These placeholders are not real repository facts.
 
 ## Context efficiency
 
-- prefer direct path/symbol reads,
-- avoid repository-wide dumps,
-- reuse unchanged work-item/rule context in the same run,
-- summarize successful command output,
-- expand only failures or concrete uncertainty,
-- never trade away required evidence for token savings.
+Prefer direct paths/symbols and bounded packets. Summarize successes, expose failures and uncertainty, retain evidence references, and never remove required verification/review/authorization to save tokens.

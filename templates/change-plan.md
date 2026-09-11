@@ -1,14 +1,23 @@
 # Change Plan
 
-## Changes
+- Work-item / PLAN revision:
+- Allowed / forbidden modifications:
 
-| File / module | Symbol | Change |
-| --- | --- | --- |
-| ... | ... | ... |
+## Ordered changes
+
+| File / module | Symbol | Change | AC reference |
+| --- | --- | --- | --- |
+| | | | |
 
 ## Verification
-- Targeted:
-- Final:
 
-## Failure / rollback check
-- What should be inspected first if verification fails?
+- Targeted methods / expected results:
+- Required final checks and runtime evidence:
+- Actual results: reference the AC-linked record, not assumed success.
+
+## Gates and recovery
+
+- Required PLAN review / applicable design approval:
+- Scope or grade escalation trigger:
+- Failure / rollback inspection:
+- Final integration authorization is separate from implementation permission.

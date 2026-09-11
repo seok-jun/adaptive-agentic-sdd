@@ -1,52 +1,42 @@
 # Token / Context Efficiency
 
-Adaptive Agentic SDD treats context as a budget, not a proof of diligence.
+Context is a budget, not proof of diligence.
 
 ## Progressive disclosure
 
-Prefer this instruction architecture:
-
 ```text
-small root contract
-  -> task router
-      -> canonical task Skill
-          -> conditional process/domain documents
+small root contract -> task router -> task Skill -> conditional process/domain docs
 ```
 
-The root contract should contain only always-on hard guards, task routing, and a few stable invariants. Repeated procedures belong in Skills/process documents.
+Keep always-on guards, routing, and stable invariants at the root. Repeated procedures belong in Skills/process docs. Load one canonical definition rather than several prose copies.
 
-## Default rules
+## Default reads
 
-- read the current work item before unrelated backlog items,
-- start from direct path/symbol instead of repository-wide browsing,
-- inspect declarations plus the surrounding lines needed for the decision rather than dumping full files,
-- load domain/architecture/process documents only when the current path or decision requires them,
-- reuse unchanged context within the same run,
-- do not rediscover requirements already fixed by the work item,
-- run targeted checks before broad checks,
-- summarize successful logs and expand only failures,
-- inspect changed-file lists and relevant hunks before full diffs,
-- do not ask review/QA agents to redesign the product,
-- do not create trade-off exploration when no real competing option exists.
+- Read the current work item before unrelated backlog.
+- Start from direct path/symbol, declarations and needed surrounding lines, then direct contracts/callers/callees.
+- Load domain and architecture rules when the actual path or decision requires them.
+- Inspect changed-file lists and relevant hunks before full diffs.
+- Reuse unchanged context; summarize successful logs and expand failures/uncertainty.
+- Run targeted checks before broad checks; do not rediscover fixed requirements or invent trade-off exploration.
+
+## Agent handoff budget
+
+Pass the task, phase, target revision, AC references, authorized modification boundaries, fixed decisions, direct evidence, and known unknowns. Do not preload the parent's entire conversation or unrelated history.
+
+Return a concise verdict/result, concrete findings, evidence locations, changed surface, and unverified/blocked items. Keep source evidence available; a summary must not conceal uncertainty or prevent auditing.
+
+For Blind Audit, withhold the primary review verdict/findings until its initial result is fixed. Do not omit ACs or safety boundaries. See [Review Gates](review-gates.md).
+
+## Reuse and expansion
+
+Reuse work-item, rules, source excerpts, and verification context only while their versions and relevance are unchanged. If the requirement, artifact, scope, or governing rule changes, refresh affected parts and revisit dependent gates. A previous session's summary is not proof of current state.
+
+Record a concrete reason for widening exploration (for example, a caller contradicts a claimed invariant). Allowed/forbidden **edits** are not a ban on reading a direct dependency. Broader reads do not grant broader write permission.
+
+No universal token cap or provider/model matrix belongs in the portable core. Tune local budgets from observed use, without claiming unmeasured savings.
 
 ## Never optimize away evidence
 
-Token savings must not remove:
+Do not remove required first reads, scope/grade gates, independent review, verification, applicable runtime QA, Human authorization, or completion evidence to save tokens. The rule is less irrelevant context, not less proof.
 
-- required first reads,
-- scope/grade gates,
-- verification,
-- independent review required by grade,
-- Human approval required by policy,
-- runtime/device QA required by acceptance criteria,
-- completion evidence.
-
-The rule is **less irrelevant context, not less proof**.
-
-## Same-run reuse
-
-When an agent moves through planning -> implementation -> finishing in one run, unchanged work-item metadata, root instructions, source excerpts, and verification state should be reused rather than repeatedly fetched.
-
-## Project-local exceptions
-
-Some repositories need extra preflight for build tools, shells, encoding, emulators, environments, or model/provider routing. Keep those rules local unless they generalize across projects.
+Keep build-tool, shell, encoding, device, environment, and model-routing exceptions local.
