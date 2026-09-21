@@ -31,6 +31,8 @@ Required FAIL, BLOCKED, or UNVERIFIED results block completion/integration. If a
 
 Separate task delivery (for example, a prepared candidate or verification plan) from completing the full approved behavior/integration lifecycle.
 
+Closing a test case (TC) for a user-stated reason is administrative, not evidence. If its required AC remains in scope, provide another valid proof or leave the AC unmet. If scope/ACs are explicitly changed through the authorized path, preserve the old requirement and result references, record the decision and revised contract, and reassess affected gates. Do not relabel the old result as PASS.
+
 ## Targeted first
 
 ```text
@@ -42,5 +44,7 @@ Do not repeat expensive broad checks when nothing relevant changed. Bind evidenc
 ## Observation and judgment
 
 An authorized person or runner may collect evidence that an agent cannot obtain. Preserve expected versus actual observations, target identity, and safe evidence references; judge them against ACs without inventing requirements. Do not publish raw sensitive output.
+
+If a result exposes an incorrect TC expectation, distinguish correcting the test against an unchanged authoritative AC from changing the requirement itself. Retain the previous expectation, observation, and verdict; record the authoritative reason, corrected expectation or approved AC revision, and resulting assessment. A change log alone does not justify fitting expectations to observations. Reuse earlier observations only when they remain sufficient for the corrected claim and candidate; otherwise collect fresh evidence. After code changes, rerun affected checks under the targeted-first rule.
 
 [Device QA](device-qa.md) is an existing conditional pattern. The [restricted-environment API/DB handoff](restricted-environment-verification.md) is an optional draft, not a working connector or validated automation.
