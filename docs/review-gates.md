@@ -24,6 +24,8 @@ The packet is an entry point, not a ban on reading direct callers/callees or evi
 
 Review should falsify, not redesign. A PASS applies only to the reviewed candidate and is not Human approval.
 
+The optional [review briefing template](../templates/review-briefing.md) provides a five-section packet and an abbreviated correction packet. Use the same required inputs without imposing a separate document on small work.
+
 ## Large phase gates
 
 1. **AS-IS review:** verify observed behavior, evidence, direct dependencies, unknowns, and significant drift. Do not substitute an unapproved future design for current observations. Resolve blocking findings before depending on the analysis for PLAN.
@@ -92,3 +94,5 @@ Approval does not turn FAIL, BLOCKED, or UNVERIFIED evidence into PASS. Unmet re
 ## Revision changes
 
 Use an immutable or unambiguous target (commit, versioned document, or identifiable snapshot). Material changes to scope, contracts, decisions, acceptance semantics, or implementation invalidate the affected verdict/approval. Re-verify and re-review affected evidence and present the new candidate for required approval. Unchanged evidence may be reused only when its relevance remains demonstrable.
+
+The optional [review-target identity example](../examples/review-identity/README.md) illustrates code and work-item snapshots, including relevant untracked/deleted files, and `identical / head-only / changed` comparisons. These are not additional verdicts. A failed or incomplete comparison does not establish identity; `head-only` does not automatically transfer approval or prove that runtime evidence still applies.
