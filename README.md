@@ -81,9 +81,18 @@ Keep module names, environment quirks, actual commands, organization-specific ap
 assets/       editable overview and detailed workflow SVGs
 docs/        canonical policies, bootstrap, developer guide, optional draft
 starter/     lean root contract, implementation Skill, local workflow contract
-templates/   work item, AS-IS, TO-BE, change plan, PR, device QA
-examples/    fictional Trivial, Small, Medium, and Large walkthroughs
+templates/   work item, design, PR, QA, review briefing, verification handoff
+examples/    fictional grade walkthroughs, review identity, completion evidence
 ```
+
+## Optional practice aids
+
+- [Review-target identity](examples/review-identity/README.md): snapshot coverage and `identical / head-only / changed` comparisons.
+- [Verification handoff](templates/verification-handoff.md): planned expectations, returned observations, judgments, and correction/rerun history; remains **DRAFT / OPTIONAL**.
+- [Review briefing](templates/review-briefing.md): full five-section and abbreviated correction forms.
+- [Completion evidence](examples/completion-evidence/README.md): retained design/candidate evidence and authorized cleanup.
+
+These templates and fictional examples explain the existing policies. They do not claim operational validation or require additional artifacts for every task.
 
 ## Status
 

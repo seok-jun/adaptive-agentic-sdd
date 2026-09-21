@@ -27,6 +27,8 @@ Return a concise verdict/result, concrete findings, evidence locations, changed 
 
 For Blind Audit, withhold the primary review verdict/findings until its initial result is fixed. Do not omit ACs or safety boundaries. See [Review Gates](review-gates.md).
 
+Use the optional [full and abbreviated review briefings](../templates/review-briefing.md) when a reusable form helps. After corrections, carry forward the prior packet reference, new candidate, finding-to-fix/evidence mapping, remaining unknowns, and reasons for evidence reuse. Expand again when the contract changes or a new reviewer lacks the needed context; fewer words must not hide unresolved findings.
+
 ## Reuse and expansion
 
 Reuse work-item, rules, source excerpts, and verification context only while their versions and relevance are unchanged. If the requirement, artifact, scope, or governing rule changes, refresh affected parts and revisit dependent gates. A previous session's summary is not proof of current state.

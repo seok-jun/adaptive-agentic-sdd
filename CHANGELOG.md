@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Adds optional review-target identity and completion-evidence walkthroughs, with explicit comparison and retention limits.
+- Adds full/correction review briefings and a draft human-executed verification handoff form.
+- Clarifies TC expectation corrections, approved AC changes, administrative TC closure, and affected reruns without weakening required evidence or authorization.
+- Keeps restricted-environment handoff DRAFT / OPTIONAL. The new examples are fictional; static checks are not operational validation.
+- Updates the English source and Korean edition together; the Korean changelog records its matching English source revision.
+
 ## 0.2.0
 
 Portable agent-runtime update based on repeated repository operation.

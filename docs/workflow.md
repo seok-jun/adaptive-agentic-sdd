@@ -77,3 +77,5 @@ Approval cannot replace required evidence. If the candidate changes materially, 
 Only within the actual authorization: merge, update/close the work item, clean disposable SDD artifacts and isolated workspaces, and release the lane. Preserve evidence required by local retention policy; never remove unrelated changes. Release/deployment needs its own authority when not covered.
 
 Report what actually happened. Approved implementation work can be delivered as a candidate without claiming the entire integration lifecycle is complete.
+
+The optional [completion-evidence example](../examples/completion-evidence/README.md) connects an approved design checkpoint, the final candidate's AC/review/risk summary, authorized integration, and issue-only cleanup. It illustrates checking that retained evidence remains retrievable before its disposable source is removed; it does not prescribe a universal storage system or add Large artifacts to small work.
