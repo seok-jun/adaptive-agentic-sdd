@@ -12,6 +12,65 @@ Adaptive Agentic SDD combines observed AS-IS analysis, bounded exploration, risk
 
 > Apply the minimum process that reliably prevents costly mistakes, not the maximum process the tooling can support.
 
+## 5-minute Quick Start
+
+**No new CLI. No mandatory tracker. Start with three files and your existing coding agent.**
+
+### Option A — Give this repository to your agent
+
+If your coding agent can read GitHub repositories or URLs, paste this:
+
+```text
+Adopt Adaptive SDD from:
+https://github.com/seok-jun/adaptive-agentic-sdd
+
+Use the starter as a template, not a drop-in configuration.
+Before modifying product code, analyze this repository and propose the minimum bootstrap.
+
+Adapt the starter to observed repository facts:
+- project and module boundaries
+- actual build and test commands
+- CI capabilities
+- important shared or generated paths
+- existing development rules
+
+Do not invent missing capabilities or rules.
+Keep the bootstrap minimal and preserve existing repository instructions.
+```
+
+### Option B — Copy the minimal starter
+
+Copy and adapt these three files into your repository:
+
+```text
+starter/AGENTS.md
+  -> AGENTS.md
+
+starter/.agents/skills/implementing-issue/SKILL.md
+  -> .agents/skills/implementing-issue/SKILL.md
+
+starter/docs/sdd-workflow.md
+  -> docs/sdd-workflow.md
+```
+
+Reconcile existing files instead of overwriting them. Replace starter placeholders only with facts observed in the target repository.
+
+Then ask your agent:
+
+```text
+Analyze this repository and adapt the Adaptive SDD starter to it.
+Do not modify product code yet.
+Keep the bootstrap minimal, preserve existing rules, and show the proposed changes.
+```
+
+Once the bootstrap is accepted, the first real task can be as small as:
+
+```text
+Implement issue #123 using Adaptive SDD.
+```
+
+The workflow starts lean and increases analysis, review, and verification only when the change risk requires it.
+
 ## Start here
 
 - Adopting the workflow: [Bootstrap](docs/bootstrap.md).
