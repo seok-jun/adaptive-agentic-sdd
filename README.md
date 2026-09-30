@@ -1,10 +1,14 @@
-# Adaptive Agentic SDD
+# Adaptive Agentic SDD — Adaptive SDD for AI Coding Agents
 
 **English** | [한국어](https://github.com/seok-jun/adaptive-agentic-sdd-ko)
 
+> **Stop overengineering SDD.** Scale planning, review, and verification with the risk of each change.
+
 **Work-item-first · Risk-Gated · Progressive Disclosure · Revision-Bound Approval · Evidence-Based Completion**
 
-Adaptive Agentic SDD is a practical workflow for AI coding agents. It combines specification-driven development, observed AS-IS analysis, risk-based review, bounded exploration, and evidence-based completion.
+Adaptive SDD is a risk-adaptive **Spec-Driven Development (SDD)** workflow for **AI coding agents** such as **OpenAI Codex** and **Claude Code**. It is designed for practical **agentic coding**: start with the smallest safe process, then increase analysis, review, and verification only when the change risk justifies it.
+
+Adaptive Agentic SDD combines observed AS-IS analysis, bounded exploration, risk-based review, revision-bound approval, and evidence-based completion.
 
 > Apply the minimum process that reliably prevents costly mistakes, not the maximum process the tooling can support.
 
