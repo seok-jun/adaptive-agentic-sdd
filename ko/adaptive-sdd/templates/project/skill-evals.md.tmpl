@@ -1,0 +1,9 @@
+<!-- 생성 파일. 직접 고치지 않는다. 값은 P/.adaptive-sdd/project.json을 고치고 다시 생성한다. -->
+# {{project.name}} Skill 평가 적용
+
+eval 종류·채점·결과 기록·변경 시 갱신 규칙은 W `process/skill-evals.md`가 원본이다. 이 문서는 프로젝트가 소유한 사례 위치와 실행 명령만 선언한다.
+
+- 프로젝트 사례 위치: {{#if skill_eval.cases_dir}}`{{skill_eval.cases_dir}}`{{else}}미정 — 실제 작업에서 나온 사건 사례를 둘 위치를 정해야 사건 사례를 만들 수 있다{{/if}}
+- 정적 검사 명령: {{#if skill_eval.command}}`{{skill_eval.command}}`{{else}}`python -I -B .adaptive-sdd/tools/install.py check-evals --project-root .`{{/if}}
+
+W 사례(`P/.adaptive-sdd/workflow/skills/*/evals/cases.json`)는 고정 사본이며 프로젝트가 고치지 않는다. 실제 작업에서 나온 사건 사례는 위 프로젝트 사례 위치에 두고, 원 사건 기록을 가리킨다. 사건 사례는 진단용이며 W 사례의 기대값을 바꾸지 않는다.

@@ -1,0 +1,30 @@
+<!-- 생성 파일. 직접 고치지 않는다. 값은 P/.adaptive-sdd/project.json을 고치고 다시 생성한다. -->
+# {{project.name}} 모듈 경계
+
+공통 경계 적용·lifecycle artifact·병렬 lane 계약은 W `process/module-boundaries.md`가 원본이다. 이 문서는 실제 모듈·공유 contract·integration 전용 경로를 선언한다.{{#if modules.architecture_doc}} 상세 구조는 `{{modules.architecture_doc}}`를 함께 읽는다.{{/if}}
+
+## 모듈
+
+| 경로 | 역할 |
+| --- | --- |
+{{#each modules.list}}| `{{.path}}` | {{.role}} |
+{{else}}| 미정 | 모듈 목록이 없으면 여러 모듈 변경 판정을 할 수 없다. 관찰 단계에서 채운다 |
+{{/each}}
+
+## 공유 contract (자동 격상 Medium 대상)
+
+{{#each modules.shared_contracts}}- `{{this}}`
+{{else}}- 없음
+{{/each}}
+
+## root·integration 전용 경로 (일반 lane에서 수정 금지)
+
+{{#each modules.root_integration}}- `{{this}}`
+{{else}}- 없음
+{{/each}}
+
+## 의존성 규칙
+
+{{#each modules.dependency_rules}}- {{this}}
+{{else}}- 없음
+{{/each}}

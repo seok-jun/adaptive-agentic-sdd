@@ -1,0 +1,34 @@
+<!-- 생성 파일. 직접 고치지 않는다. 값은 P/.adaptive-sdd/project.json을 고치고 다시 생성한다. -->
+# {{project.name}} 이슈 작성 적용
+
+공통 표현 수단·Mermaid/HTML 조건·Issue 본문 구조는 W `process/issue-writing-guide.md`가 원본이다. 이 문서는 근거 기록의 허용·금지 범위와 Visual Spec 저장 위치를 선언한다.
+
+## 근거 기록 규칙
+
+근거는 원본을 옮겨 적지 않고 원본을 가리킨다. 이 규칙은 Issue·기록·commit 메시지·소스·테스트/eval fixture·문서·로그·tool 출력·screenshot·임시 파일에 모두 적용한다.
+
+### 그대로 적을 수 있는 것
+
+{{#each evidence.allowed}}- {{this}}
+{{/each}}- `파일:라인`과 저장소에 이미 commit된 소스 문자열
+- 파일 크기, 문자 수, 발생 건수 같은 측정값
+- 내용을 재구성할 수 없는 **범주명**
+
+### 옮기지 않는 것
+
+{{#each evidence.forbidden}}- {{this}}
+{{/each}}- 사용자와 assistant의 대화 내용(원문 전체, 일부 인용, 말줄임표 인용, 번역, 재구성 가능한 요약)
+- API key, token, 비밀번호, 개인정보
+
+재현이 원문과 같은 형태를 요구하면 같은 구조의 합성 데이터를 만든다. 기록하기 직전에 금지 내용을 검사하고, 기록한 뒤 다시 읽어 확인한다. 이미 기록된 금지 내용은 작업 관리 방식이 허용하는 방법으로 제거하고, 제거할 수 없으면 사람에게 알린다.
+
+## Visual Spec
+
+{{#if visual_spec.repository}}- 저장소: `{{visual_spec.repository}}`
+- 경로: `{{visual_spec.path}}`
+- 검사 명령: {{#if visual_spec.check_command}}`{{visual_spec.check_command}}`{{else}}없음{{/if}}
+- 미리보기: {{#if visual_spec.preview}}{{visual_spec.preview}}{{else}}없음{{/if}}
+
+W의 HTML Visual Spec·디자인 PR·링크 규칙을 위 저장소에 적용한다. 구현 기준은 immutable commit HTML이다.
+{{else}}선언한 Visual Spec 저장소가 없다. HTML Visual Spec을 만들지 않고, UI 변경은 Mermaid·표·짧은 설명으로 보여준다.
+{{/if}}

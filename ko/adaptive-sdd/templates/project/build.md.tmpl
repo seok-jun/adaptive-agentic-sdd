@@ -1,0 +1,28 @@
+<!-- 생성 파일. 직접 고치지 않는다. 값은 P/.adaptive-sdd/project.json을 고치고 다시 생성한다. -->
+# {{project.name}} 빌드·검증 선언
+
+W `skills/_shared/build-preflight.md`와 스킬의 검증 절이 이 값을 사용한다. 빈 값은 추정하지 않고 미검증으로 남긴다.
+
+| 항목 | 값 |
+| --- | --- |
+| 빌드 도구 | {{#if build.tool}}{{build.tool}}{{else}}미정{{/if}} |
+| JDK major | {{#if build.jdk_major}}{{build.jdk_major}}{{else}}미정 — JVM 빌드가 아니면 비워 둔다{{/if}} |
+| 추가 JDK 후보 | {{#each build.jdk_candidates}}`{{this}}` {{else}}없음{{/each}} |
+| 모듈 단위 | {{#if build.module_unit}}{{build.module_unit}}{{else}}미정{{/if}} |
+| Windows 실행 | {{#if build.windows_wrapper}}`{{build.windows_wrapper}}`{{else}}미정{{/if}} |
+| 그 외 OS 실행 | {{#if build.unix_wrapper}}`{{build.unix_wrapper}}`{{else}}미정{{/if}} |
+| 정리 명령 | {{#if build.clean}}`{{build.clean}}`{{else}}없음 — worktree 정리 때 빌드 정리를 건너뛰고 이유를 남긴다{{/if}} |
+| 정적 분석 | {{#if build.static_analysis}}{{build.static_analysis}}{{else}}없음{{/if}} |
+| 계측·기기 테스트 경로 | {{#each build.instrumentation_paths}}`{{this}}` {{else}}없음{{/each}} |
+| 기기 절차 | {{#if build.device_procedure}}{{build.device_procedure}}{{else}}없음 — 기기·에뮬레이터 작업을 하지 않는다{{/if}} |
+| CI | {{#if build.ci}}{{build.ci}}{{else}}없음 — 아래 로컬 명령이 검증 기준이다{{/if}} |
+
+## 검증 기준
+
+| 변경 범위 | 최소 검증 |
+| --- | --- |
+{{#each build.verification}}| {{.scope}} | {{.commands}} |
+{{else}}| 미정 | 검증 명령이 없으면 완료 기준을 증명할 수 없으므로 구현 전에 `BLOCKED` |
+{{/each}}
+
+검증 기준 명령을 실행하지 못하면 로컬 성공으로 대체하지 않는다. 실행하지 못한 명령을 종료 요약의 `미검증`에 적는다.

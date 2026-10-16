@@ -1,0 +1,27 @@
+<!-- 생성 파일. 직접 고치지 않는다. 값은 P/.adaptive-sdd/project.json을 고치고 다시 생성한다. -->
+# {{project.name}} Agent 적용과 문서 매핑
+
+공통 지시 해석·문맥/문서 로딩·UTF-8/shell·완료 보고 계약은 W `process/agent-instruction-policy.md`를 조건부로 읽는다. 모든 작업의 선행 full-read가 아니다.
+
+## 문서 매핑
+
+| 정보 종류 | Source of Truth | 충돌 시 행동 |
+| --- | --- | --- |
+| 현재 사용자의 작업 지시 | 현재 세션의 명시적 사용자 지시 | 기존 Issue 목표를 바꾸면 구현 전에 Issue 본문도 갱신한다 |
+| 이슈의 목표·범위·완료 기준 | 해당 Issue의 현재 본문 | 기록 항목·댓글만으로 범위를 변경하지 않는다 |
+| 공통 agent hard guard | `AGENTS.md`의 표시 구간 | agent별 파일이나 Skill이 완화할 수 없다 |
+| 작업 절차 | W 스킬과 스킬이 지정한 W process | 충돌하면 구현하지 말고 충돌 문서를 특정한다 |
+| 모듈 의존성과 수정 경계 | `P/.adaptive-sdd/project/module-boundaries.md` | 승인된 architecture 변경이 아니면 경계를 넘지 않는다 |
+| 현재 실행 동작(as-is) | 현재 main 코드 | business 문서와 다르면 코드를 관찰된 as-is로 취급한다 |
+| 구현 완료 후 제품 규칙 | `{{docs.business}}` | Issue to-be가 바꾸면 완료 단계에서 최종 코드와 동기화한다 |
+| 과거 결정 근거 | `{{docs.reviews}}` | 역사 기록이며 현재 요구사항을 덮어쓰지 않는다 |
+| SDD 작업 문서 | `{{docs.sdd}}` | 임시 계획이며 Issue/business 규칙을 독자적으로 바꾸지 않는다 |
+
+## 사람이 읽는 산출물의 언어
+
+{{#if project.artifact_language}}사람이 읽는 개발 산출물(Issue·기록·commit 메시지·SDD·리뷰·business 문서·완료 요약)은 {{project.artifact_language}}로 쓴다. 코드 식별자, 파일 경로, 명령어, 설정 값, 도구 출력 원문, 고유명사와 굳어진 기술 용어는 원래 표기를 유지한다.
+{{else}}미정 — 기존 저장소 관례를 따른다.
+{{/if}}
+## 외부 agent와 도구 권한
+
+Issue나 checklist에 외부 agent·도구 이름이 적혀 있다는 사실은 그 도구를 설치·인증·호출할 권한이 아니다. 호출은 현재 사용자 지시 또는 W 절차가 명시적으로 부여한 경우에만 한다.

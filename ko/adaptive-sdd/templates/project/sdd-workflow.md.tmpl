@@ -1,0 +1,79 @@
+<!-- 생성 파일. 직접 고치지 않는다. 값은 P/.adaptive-sdd/project.json을 고치고 다시 생성한다. -->
+# {{project.name}} SDD 적용 선언
+
+공통 단계·검증·리뷰 계약은 고정 W `P/.adaptive-sdd/workflow/process/sdd-workflow.md`를 따른다. 이 문서는 프로젝트의 적용 프로필·실제 경로·권한·필수 검증 값을 소유한다. 공통 규칙을 복제하거나 별도 gate를 만들지 않는다.
+
+## 문서 역할
+
+| 종류 | 위치 | 수명 | 역할 |
+| --- | --- | --- | --- |
+| business 문서 | `{{docs.business}}` | 영속 | 구현 완료 후 유지되는 현재 동작 |
+| SDD 작업 문서 | `{{docs.sdd}}` | 작업 중 | AS-IS 근거, Human Decision Contract, Agent Execution Spec |
+| 결정 기록 | `{{docs.reviews}}` | 영속 | 과거 의사결정의 근거와 대안 |
+| 구조 문서 | `{{docs.architecture}}` | 영속 | 모듈 책임, 의존성, 작업 경계 |
+| 문서 목차 | `{{docs.index}}` | 영속 | SDD 링크 정리 대상 |
+
+## SDD grade
+
+공통 다섯 등급과 일반 자동 격상은 W가 원본이다. 이 프로젝트는 아래 구체 매핑을 더한다.
+
+### 자동 격상
+
+W의 일반 자동 격상에 다음 매핑을 더하고 **해당하는 가장 높은 grade**를 적용한다. 공통 보안·DB·비용·모듈 신설 기준도 그대로 적용한다.
+
+| 변경 행위 | 최소 grade |
+| --- | --- |
+{{#each grade_mapping}}| {{.change}} | {{.min_grade}} |
+{{else}}| 미정 — 프로젝트 매핑 없음. 공통 기준만 적용 | — |
+{{/each}}
+
+이 매핑은 공통 위험 기준을 낮추지 않는다.
+
+## 구현 시작 조건
+
+W의 `## 구현 시작 조건`을 적용한다. Issue·라벨·claim·blocked 상태는 `tracker.md`가 선언한 작업 관리 방식에서 읽는다.
+
+## grade별 산출물과 게이트
+
+W의 grade별 산출물과 게이트를 그대로 적용한다. Large/Epic에는 AS-IS·PLAN·BREAKDOWN의 설계 단계 사람 승인 단계를 두지 않는다. 사람 판단은 아래 지점에서 한다.
+
+### 사람 판단 지점
+
+M `core.md`의 `사람 판단` 요건(미해결 사람 판단에서 멈춤, 판단 지점 명시, Agent의 사람 결정 생성 금지)은 이 선언으로 면제되지 않는다. 이 프로젝트의 판단 지점은 다음과 같다.
+
+1. **Human Decision blocker**: 새 중요한 제품/설계 Decision, 기존 Decision 범위 변경, 제품 의미·ownership·failure behavior·acceptance 해석의 경쟁 선택지가 확인되면 `[HUMAN DECISION REQUIRED]`로 영향 작업을 멈춘다. 사람이 결정을 밝히면 Agent는 그 결정을 Issue 본문 또는 해당 SDD에 반영하고 재개한다. Agent 합의·review PASS·일반 진행 지시로 이 결정을 대신하지 않는다.
+{{#if human_judgment.large_epic_merge}}2. **Large/Epic 병합**: Large/Epic 변경은 사람이 직접 병합하거나 그 변경의 병합을 명시적으로 지시한 경우에만 병합한다. review PASS·CI 통과·일반 진행 지시만으로 병합하지 않는다.
+{{/if}}{{#each human_judgment.points}}- **추가 판단 지점**: {{this}}
+{{/each}}
+
+Review B reviewer의 model·reasoning을 사람이 고르는 일은 승인 단계가 아니라 W 이중 독립 리뷰 규칙의 일부이며 그대로 유지한다.
+
+### 기록된 위임
+
+사람이 범위·날짜·확인자를 적어 둔 위임만 그 범위 안에서 사람의 결정으로 본다. 범위 없는 진행 지시는 결정이 아니다. Agent는 위임을 새로 만들거나 넓히거나 확정하지 않는다. 위임은 사람이 `project.json`에 적고 다시 생성한다.
+
+| 범위 | 날짜 | 확인한 사람 |
+| --- | --- | --- |
+{{#each human_judgment.delegations}}| {{.scope}} | {{.date}} | {{.confirmed_by}} |
+{{else}}| 없음 | — | — |
+{{/each}}
+
+## Verification Strategy
+
+W의 `## Verification Strategy`·`## Grade별 review gate`·검증 시퀀싱을 적용한다. 실제 최소 명령은 `build.md`의 검증 기준을 따른다.
+
+## 병렬 작업
+
+W의 parallel-development 스킬을 적용한다. 실제 module/path ownership은 `module-boundaries.md`다.
+
+- worktree root: `{{#if worktree_root}}{{worktree_root}}{{else}}미정 — 짧은 절대 경로를 정해야 병렬 lane을 만든다{{/if}}`
+
+## 안정화 기간 token diagnostic
+
+`Token diagnostic mode: {{token_diagnostic}}`
+
+`ENABLED`이고 host의 authoritative goal tracker 값이 있을 때만 W의 START/BLOCKED/RESUME/END checkpoint를 기록한다.
+
+## 외부 절차와 프로젝트의 경계
+
+프로젝트 hard guard·구체 모듈/기술 적용·위 사람 판단 지점·필수 검증은 프로젝트 소유다. W·M 사본의 고정 정보가 확인되지 않으면 최신판으로 대체하지 않는다(`P/.adaptive-sdd/install.lock.json`).

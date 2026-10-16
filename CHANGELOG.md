@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.0.0-preview.2
+
+Adds executable procedures, skills, an eval structure, and an installer to the Korean edition, and fixes three human-judgment gaps in the common methodology for both editions.
+
+- `methodology/core.md` (both editions): human-judgment requirements cannot be waived by host or project rules; lists the minimum questions that need human judgment; a delegation counts as a human decision only when a human records it with its scope, date, and confirmer, and the Agent never creates, extends, or finalizes one; when a human cannot be asked, the dependent work stops and the question is recorded as unresolved; the adapter gains a slot for the work-record reference location and how to find earlier records.
+- `methodology/adaptation.md` (both editions): adds `awaiting human confirmation` to the re-evaluation dispositions.
+- `methodology/supports/ordered-changes.md` (both editions): progress that depends on human judgment stops and asks a human under `core.md`.
+- `docs/customization.md`: adds the new adapter slot and the delegation rule, and points to preview.2.
+- Korean edition: `ko/methodology/` is replaced by the full pinned copy `ko/adaptive-sdd/`:
+  - `workflow/` — workflow procedures and four skills (organizing and creating work items, isolating work, design and implementation, verification and closing), extracted from procedures used in one product with product-specific parts moved out; tracker mappings for local documents and GitHub.
+  - `workflow/process/skill-evals.md` and `workflow/skills/*/evals/` — eval kinds, grading, result records, 30 fictional seed cases, turning recorded incidents into diagnostic cases, and validity conditions for comparing and adopting a change.
+  - `templates/` and `tools/install.py` — generate project documents, skill entry files for Claude Code and Codex, and marked blocks in `AGENTS.md`, `CLAUDE.md`, and `.gitattributes` from `project.json`; check the copy and generated files against their hashes.
+  - `MANIFEST.json` — sha256 of every file in the copy.
+- Known limitations: the local-documents tracker mapping replaces GitHub issues and pull requests only; git still needs a code remote named `origin`. Squash and rebase merges are confirmed from a recorded merge entry rather than from git ancestry. The guidance for re-evaluating observations is condensed until its skill ships, and no deterministic routing validator is included. Some workflow references point to project-document sections that the generated documents do not carry yet.
+- Pending: the English edition of `workflow/`, `templates/`, `tools/`, and the installer guide. Until then the Korean edition is the only source for them. A skill for re-evaluating observations is also deferred.
+
+Checked: manifest hashes, the installer's unit tests, one install rehearsal on Windows into a fictional project using a locally built archive, and one independent review whose should-fix findings were addressed before publication. Effect on outcomes has not been measured.
+
 ## 1.0.0-preview.1
 
 First preview of the next-generation methodology, published on the `v1-preview` branch. `main` still carries v0.2.

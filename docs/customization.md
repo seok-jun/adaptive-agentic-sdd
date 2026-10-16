@@ -1,6 +1,6 @@
 # Customization guide (1.0 preview)
 
-This guide explains how to place a copy of the methodology in a project, adjust it to the project, and give work to an Agent. It is not part of the copy. The Korean edition is `ko/docs/customization.md`; Korean users copy `ko/methodology/` instead of `methodology/`.
+This guide explains how to place a copy of the methodology in a project, adjust it to the project, and give work to an Agent. It is not part of the copy. The Korean edition is `ko/docs/customization.md`. In this preview the Korean edition installs a fuller copy, `ko/adaptive-sdd/` (methodology plus workflow procedures, skills, evals, and an installer), and follows its own guide; the English edition of those parts is pending.
 
 ## What this preview is
 
@@ -33,11 +33,12 @@ Some slots are required by `core.md`; others are chosen by the project. Do not l
 | Slot | Type | Example |
 | --- | --- | --- |
 | Task identification method | Required | Issue number; otherwise date and task name |
+| Work-record reference location and how to find earlier records | Required | Task document per task under `docs/work/`; find earlier ones by task ID |
 | Problem record location | Required | Events section of the task document |
 | Closing summary location | Required | End of the same task document |
 | Final close decision | Required | Merge confirmed, deployment confirmed |
 | Allowed query/write means and scope | Required | Local repository and development DB only; no production writes |
-| Human judgment points | Required (`core.md` "Human judgment" 2). The project decides how many and where | Merge and deployment; whether to have design approval. If there are no fixed points, write "No fixed points — stop at unresolved judgment" |
+| Human judgment points | Required (`core.md` "Human judgment" 2). The project decides how many and where | Merge and deployment; whether to have design approval. If there are no fixed points, write "No fixed points — stop at unresolved judgment". A delegation counts as a human decision only when a human records it here with its scope, date, and confirmer |
 | Checks to run and prohibited scope | Optional | Build and unit tests; commands that must not be run |
 | Review path | Optional | When and how many times to get an independent review |
 | Repository layout | Optional | Whether code and documents live in one repository |
@@ -49,13 +50,14 @@ Starting shape of the adapter:
 # Methodology adapter
 
 ## Pin
-- Source: <repository URL> tag v1.0.0-preview.1
+- Source: <repository URL> tag v1.0.0-preview.2
 - Tag commit: <SHA>
 - Manifest hash: <sha256 of the manifest.json file>
 - Copy location: .adaptive-sdd/methodology/
 
 ## Required slots
 - Task identification method:
+- Work-record reference location and how to find earlier records:
 - Problem record location:
 - Closing summary location:
 - Final close decision:
@@ -71,12 +73,12 @@ Starting shape of the adapter:
 
 ## 1. Getting the copy and recording the pin
 
-1. Download the tag's source archive: `https://github.com/seok-jun/adaptive-agentic-sdd/archive/refs/tags/v1.0.0-preview.1.zip`. The archive contains one top-level folder.
+1. Download the tag's source archive: `https://github.com/seok-jun/adaptive-agentic-sdd/archive/refs/tags/v1.0.0-preview.2.zip`. The archive contains one top-level folder.
 2. Copy the archive's `methodology/` contents (`core.md`, `adaptation.md`, `supports/`, `manifest.json`) to `.adaptive-sdd/methodology/` and `LICENSE` to `.adaptive-sdd/LICENSE`, **byte for byte**. Keep the LICENSE (MIT) with the copy because it requires the copyright and permission notice to be retained. Do not rewrite the files with a text editor or an Agent's file-writing tool; a BOM or CRLF would change the hashes. Windows PowerShell example:
 
 ```powershell
-$zip = "v1.0.0-preview.1.zip"
-Invoke-WebRequest "https://github.com/seok-jun/adaptive-agentic-sdd/archive/refs/tags/v1.0.0-preview.1.zip" -OutFile $zip
+$zip = "v1.0.0-preview.2.zip"
+Invoke-WebRequest "https://github.com/seok-jun/adaptive-agentic-sdd/archive/refs/tags/v1.0.0-preview.2.zip" -OutFile $zip
 $tmp = Join-Path $env:TEMP "adaptive-sdd-preview"
 Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
 Expand-Archive $zip -DestinationPath $tmp
@@ -86,7 +88,7 @@ Remove-Item .adaptive-sdd/methodology -Recurse -Force -ErrorAction SilentlyConti
 Copy-Item "$src/methodology" .adaptive-sdd/methodology -Recurse
 Copy-Item "$src/LICENSE" .adaptive-sdd/LICENSE
 ```
-3. Find the commit the tag points to: `git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.1^{}"`. Without git, check the commit on the repository's tag page.
+3. Find the commit the tag points to: `git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.2^{}"`. Without git, check the commit on the repository's tag page.
 4. Compare the hashes. The sha256 of each of the three documents must equal the value in `manifest.json`. The **manifest hash** is the sha256 of the `manifest.json` file itself.
 
 Windows PowerShell:
@@ -129,7 +131,7 @@ Do not edit `.adaptive-sdd/methodology/`. Put project adjustments only in the ad
 
 ## 3. Order of work for the Agent
 
-The first time, give the Agent the steps below in order. Look at each step's result before moving on. This guide is not in the copy, so give the Agent its address: https://raw.githubusercontent.com/seok-jun/adaptive-agentic-sdd/v1.0.0-preview.1/docs/customization.md
+The first time, give the Agent the steps below in order. Look at each step's result before moving on. This guide is not in the copy, so give the Agent its address: https://raw.githubusercontent.com/seok-jun/adaptive-agentic-sdd/v1.0.0-preview.2/docs/customization.md
 
 **① Observe.** Collect facts without changing code.
 
@@ -142,7 +144,7 @@ existing rule files, and risky shared paths, and summarize them as facts. List w
 **② Draft the adapter.**
 
 ```text
-For each adapter slot in core.md and the customization guide (https://raw.githubusercontent.com/seok-jun/adaptive-agentic-sdd/v1.0.0-preview.1/docs/customization.md),
+For each adapter slot in core.md and the customization guide (https://raw.githubusercontent.com/seok-jun/adaptive-agentic-sdd/v1.0.0-preview.2/docs/customization.md),
 show the proposed value, the evidence (files, commands), and what you could not confirm, separately. Collect what I need to decide in one place.
 ```
 
@@ -152,7 +154,7 @@ show the proposed value, the evidence (files, commands), and what you could not 
 
 ```text
 Write .adaptive-sdd/adapter.md as just decided, and add the lines from the customization guide
-(https://raw.githubusercontent.com/seok-jun/adaptive-agentic-sdd/v1.0.0-preview.1/docs/customization.md) to the entry file and .gitattributes.
+(https://raw.githubusercontent.com/seok-jun/adaptive-agentic-sdd/v1.0.0-preview.2/docs/customization.md) to the entry file and .gitattributes.
 Do not modify .adaptive-sdd/methodology/. For the pin, recompute and record the confirmed hashes,
 and take the commit SHA from git ls-remote. Do not overwrite existing entry-file content.
 ```

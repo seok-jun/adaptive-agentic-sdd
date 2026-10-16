@@ -1,0 +1,22 @@
+<!-- 생성 파일. 직접 고치지 않는다. 값은 P/.adaptive-sdd/project.json을 고치고 다시 생성한다. -->
+# {{project.name}} 실행 프로필
+
+공통 두 축 routing·qualification·packet 계약은 W `skills/_shared/execution-routing.md`를 적용한다. 이 문서는 프로젝트의 모델 제한과 영향 분석 도구만 선언한다.
+
+## 모델 제한
+
+다음 safety deny는 host mapping이나 qualification PASS 주장보다 우선한다. 모든 development role에서 `DENIED`다.
+
+{{#each routing.deny_models}}- `{{this}}`
+{{else}}- 없음
+{{/each}}
+
+### qualification probe 예외
+
+차단 모델은 사람이 명시적으로 지시한 별도 probe 작업에서, synthetic/docs-only fixture로, orchestrator가 claim·격리·lifecycle을 소유하고, main 직접 push와 Issue/PR/merge/release 권한 없이, 실패 결과를 raw observation으로 보존할 때만 호출한다. 하나라도 없으면 deny를 유지한다.
+
+## 영향 분석
+
+{{#if routing.impact_tool}}영향 분석 도구: `{{routing.impact_tool}}`. 그 결과는 검증 의무의 하한이며, stale·불완전하면 재계산하거나 전체 검증으로 확장한다. 영향 집합으로 Issue·grade 필수 명령을 삭제하지 않는다.
+{{else}}선언한 영향 분석 도구가 없다. W의 `공통 영향 결과 참조와 로컬 소비` 절은 적용하지 않고, `build.md`의 검증 기준을 그대로 따른다.
+{{/if}}

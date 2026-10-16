@@ -2,7 +2,7 @@
 
 This document is the 1.0 preview of a working methodology that a project activates explicitly. Its effect has not yet been verified, and its structure may change. It is not a port of, or an equivalent replacement for, the whole of the earlier public methodology (v0.2).
 
-Follow the current host's permissions and the project's product requirements, approval conditions, write scope, and required verification first. The methodology grants no new permissions, budget, or model calls. If a conflict cannot be resolved, stop the activation or the edit and record the evidence.
+Follow the current host's permissions and the project's product requirements, approval conditions, write scope, and required verification first. However, the three requirements in `Human judgment` below cannot be waived by host or project rules. The methodology grants no new permissions, budget, or model calls. If a conflict cannot be resolved, stop the activation or the edit and record the evidence.
 
 1. Confirm the task goal, the current code, and the information, execution tools, and verification environment you need. Do not wait for a failure when you already know a condition is needed.
 2. Before changing anything, connect each requirement's target and verification method to a short, observable list of files, symbols, and order. Reuse connections that an existing plan already makes; details follow `supports/ordered-changes.md`. This is the default support of the current preview; do not remove it because of a single success or a model name.
@@ -13,11 +13,11 @@ Concrete work units and product facts are managed by the project. Do not require
 
 ## Human judgment
 
-1. When an unresolved question that needs human judgment arises, stop the work that depends on that judgment and ask a human. Work that does not depend on it may continue.
+1. When an unresolved question that needs human judgment arises, stop the work that depends on that judgment and ask a human. Work that does not depend on it may continue. Questions that need human judgment include at least: judgment points the project designates, actions outside the scope allowed by project settings or working instructions, requirement interpretations that diverge into two or more readings, and choices that change a settled decision or contract. If you are unsure whether judgment is needed, ask.
 2. The project specifies the points where a human judges (for example, design-stage approval, merge, deployment) in its own settings or working instructions. The project decides which points, how many, and how the judgment is received.
-3. The Agent does not create decisions a human did not make. A passing review, passing tests, a general instruction to proceed, or silence does not stand in for a human decision.
+3. The Agent does not create decisions a human did not make. A passing review, passing tests, a general instruction to proceed, or silence does not stand in for a human decision. A delegation that a human has recorded in project settings with its scope, date, and confirmer is a human decision within that scope. A general instruction to proceed without a scope is not a delegation. The Agent does not create, extend, or finalize delegations.
 
-These three are the common minimum requirements. Host and project rules may make them stricter but may not waive them. On conflict, stop the work that depends on that judgment and ask a human.
+These three are the common minimum requirements. Host and project rules may make them stricter but may not waive them. On conflict, stop the work that depends on that judgment and ask a human. If the execution environment cannot ask a human, stop that work and record the question as unresolved.
 
 ## Application and improvement observation
 
@@ -27,7 +27,7 @@ The project defines one reference location for work records and the relation use
 
 | When | What to record |
 | --- | --- |
-| Start of application, before actual changes | Task/run identifier, the pinned version and documents read, the supports and interval actually applied, and the project location where observations are retained. If earlier observations exist, read the source and link the evidence and actions relevant to this task. If there are none or they cannot be retrieved, record that. |
+| Start of application, before actual changes | Task/run identifier, the pinned version and documents read, the supports and interval to be applied, and the project location where observations are retained. If earlier observations exist, read the source and link the evidence and actions relevant to this task. If there are none or they cannot be retrieved, record that. |
 | Handoff or interruption | Direct reference to the start source, current state, supports performed and observation evidence, uncollected items and why, and where the next owner should continue reading. Record in the existing record, as separate items, whether the source is accessible and whether it was actually read after the handoff. Do not reset to a new task or retroactively apply past intervals because the owner changed. |
 | End of implementation and final close of the task | Direct reference to the start source, supports actually performed and differences from the plan, final requirement–verification results and gaps, observations and evidence of missed requirements, verification failures, rework, control triggers/false positives, and human intervention, available cost sources and their scope, collection gaps, and the next judgment under `adaptation.md`. If the same result is already in an existing record, reference it directly. Update the existing closing record or preserve the final state in a follow-up record, while keeping earlier failures and the target at that time distinct from the final correction. |
 
@@ -47,7 +47,7 @@ Application state and collection state are separate. Check version reading, supp
 
 Record an event in the existing work record only when an actual problem is found during execution, verification, or review, such as a missed requirement, a verification gap, a failure, or unnecessary rework. Do not automatically count expected failing tests or normal design exploration as problems. Do not add rows for normal steps, empty event lists, `no problems` reports, or exhaustive execution traces. The existing start, handoff, and closing obligations remain; this section adds only conditional problem recording. Apply the same principle to tasks without a separate design document (for example, small tasks), and do not create a design document just to record.
 
-The project adapter connects **the task identification method, the problem record location, the closing summary location, the final close decision, and the allowed query/write means and scope** to existing settings or working instructions. It does not require a separate configuration file or service. Closing tags, comment markers, and host APIs are not common required values.
+The project adapter connects **the task identification method, the work-record reference location (including the start record) and how to find earlier records, the problem record location, the closing summary location, the final close decision, and the allowed query/write means and scope** to existing settings or working instructions. It does not require a separate configuration file or service. Closing tags, comment markers, and host APIs are not common required values.
 
 | Connection example | Problem record and summary | Close and query |
 | --- | --- | --- |

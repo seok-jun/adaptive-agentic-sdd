@@ -21,8 +21,8 @@ State proposed features as draft. Separate observed evidence, static/self-review
 
 ## Common layer consistency
 
-- The documents in `methodology/` and `ko/methodology/` are the common layer that projects copy and pin. `docs/customization.md` explains how to use them and must not establish competing rules.
-- Any change to a document in `methodology/` or `ko/methodology/` regenerates that folder's `manifest.json` in the same change. Its exact bytes are `json.dumps({"files": {<path>: <sha256 hex>, ...}, "schema": 1}, ensure_ascii=False, indent=2, sort_keys=True) + "\n"` encoded as UTF-8.
+- The documents in `methodology/` and `ko/adaptive-sdd/` are the common layer that projects copy and pin. `docs/customization.md` explains how to use them and must not establish competing rules.
+- Any change to a document in `methodology/` or `ko/adaptive-sdd/methodology/` regenerates that folder's `manifest.json` in the same change, and any change under `ko/adaptive-sdd/` also regenerates `ko/adaptive-sdd/MANIFEST.json`. Its exact bytes are `json.dumps({"files": {<path>: <sha256 hex>, ...}, "schema": 1}, ensure_ascii=False, indent=2, sort_keys=True) + "\n"` encoded as UTF-8.
 - Explain whether a change alters meaning. Wording fixes and meaning changes are reviewed differently; a meaning change states which project behavior changes.
 - Project-specific facts and adjustments belong in the project's adapter, not in the common layer.
 - Published tags are never moved. Fixes are released as new preview tags.
@@ -31,4 +31,4 @@ State proposed features as draft. Separate observed evidence, static/self-review
 
 The English text at the repository root is canonical; `ko/` holds the Korean edition. When the methodology or the guide changes, update both editions in the same change. Preserve mandatory/optional conditions, ordering, statuses, and authorization semantics across languages. If the editions differ in meaning, the English text is authoritative and the Korean edition is corrected.
 
-Each edition has its own `manifest.json` (`methodology/manifest.json` and `ko/methodology/manifest.json`). If one edition is pending, state that explicitly rather than reporting synchronization complete.
+Each edition has its own `manifest.json` (`methodology/manifest.json` and `ko/adaptive-sdd/methodology/manifest.json`). If one edition is pending, state that explicitly rather than reporting synchronization complete. In this preview, `ko/adaptive-sdd/` `workflow/`, `templates/`, and `tools/` have no English edition yet; that is a known pending state, not a completed synchronization.

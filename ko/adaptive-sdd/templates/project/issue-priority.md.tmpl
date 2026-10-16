@@ -1,0 +1,25 @@
+<!-- 생성 파일. 직접 고치지 않는다. 값은 P/.adaptive-sdd/project.json을 고치고 다시 생성한다. -->
+# {{project.name}} 이슈 분류 적용 조건
+
+공통 Priority 판정·증거 부족 처리·본문/라벨 규약은 W `process/issue-priority.md`가 원본이다. 이 문서는 현재 단계와 구체적인 제품 영향만 선언한다.
+
+## 현재 단계와 구현 queue
+
+- 현재 단계: {{#if priority.current_stage}}{{priority.current_stage}}{{else}}미정{{/if}}
+- 구현 queue 규칙: {{#if priority.queue_rule}}{{priority.queue_rule}}{{else}}미정 — 사용자가 지시한 Issue만 구현한다{{/if}}
+
+## 제품별 Priority 적용 사례
+
+| 분류 입력 | 이 프로젝트의 사례 |
+| --- | --- |
+{{#each priority.product_examples}}| {{.input}} | {{.examples}} |
+{{else}}| 미정 | 공통 판정만 적용한다 |
+{{/each}}
+
+보안 노출·데이터 손실 등 공통 P0 조건은 그대로 적용한다. 위 사례가 공통 위험 조건을 낮추는 예외는 아니다.
+
+## 구현 선택 규칙
+
+- 현재 Issue 완료 기준에 없는 개선은 같은 변경에 추가하지 않는다.
+- P0/P1 Issue 본문의 `의존성 / 차단 요소`가 선행으로 명시한 Issue는 그 작업의 prerequisite다. 선행 Issue의 Priority는 의존성만을 이유로 승격하지 않는다.
+- Issue 작업 중 발견한 별도 문제는 현재 완료 기준에 필수인 경우만 같은 Issue에 포함하며, 먼저 Issue 본문의 목표·범위·경계를 갱신하고 grade를 다시 판정한다.

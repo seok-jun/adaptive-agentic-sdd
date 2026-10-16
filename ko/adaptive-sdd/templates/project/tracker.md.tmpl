@@ -1,0 +1,14 @@
+<!-- 생성 파일. 직접 고치지 않는다. 값은 P/.adaptive-sdd/project.json을 고치고 다시 생성한다. -->
+# {{project.name}} 작업 관리 방식
+
+- 방식: `{{tracker.kind}}` — W `P/.adaptive-sdd/workflow/tracker/{{tracker.kind}}.md`의 대응표로 W 절차의 Issue·댓글·라벨·assignee·PR·closing reference를 바꿔 읽는다.
+{{#if tracker.root}}- tracker_root: `{{tracker.root}}`
+{{else}}{{#if tracker_is_local}}- tracker_root: 미정 — 작업 항목을 만들거나 읽는 절차는 `BLOCKED: tracker unavailable`로 멈춘다
+{{/if}}{{/if}}{{#if tracker.repository}}- 저장소: `{{tracker.repository}}`
+{{/if}}{{#if tracker.id_prefix}}- ID 형식: `{{tracker.id_prefix}}-<번호>`. 새 번호는 `items/`의 가장 큰 번호 + 1이며, 이미 있으면 다음 번호로 다시 시도한다.
+{{/if}}- 허용 작성자: {{#each tracker.allowed_authors}}`{{this}}` {{else}}미정 — 관측 재검토에서 기록의 작성자를 확인할 수 없다{{/each}}
+{{#if tracker_is_local}}- 병합 방법: {{#if tracker.merge_method}}`{{tracker.merge_method}}`{{else}}미정 — 병합과 병합 확인 절차는 `BLOCKED: tracker operation unsupported`로 멈춘다{{/if}}
+{{/if}}- 코드 원격: `origin`. W 절차의 fetch·push·review candidate publication은 이 원격의 `main`과 Issue branch를 쓴다. 작업 관리 방식과 무관하게 필요하다.
+
+{{#if tracker.root}}`tracker_root`는 어느 lane의 worktree 안에도 두지 않는다. 접근이나 쓰기에 실패하면 `BLOCKED: tracker unavailable`로 의존 작업을 멈춘다.
+{{/if}}

@@ -1,8 +1,8 @@
 {
   "files": {
-    "adaptation.md": "951a99aa189f0b7402efc33f2aa3d88f3556b0cd9183517c79e704c713a9a095",
-    "core.md": "1d77bade50c6ba1fb55aa712b66c243ea5abefb205de87141a761754f7868525",
-    "supports/ordered-changes.md": "c9e393def8283c0a2f5490e24dcabd0e68e1f9096863041de2b9b109909b6fc6"
+    "adaptation.md": "dcdfcac56aefadc040079c8326780c81815e1e6e8ba94287201fff3d3d27623b",
+    "core.md": "564c2846501a786b8ec6a9464bd63233132fa1bafbd72c9ca1abba03d2c7b08d",
+    "supports/ordered-changes.md": "856c1d752cc56db7a0cbf37939e10139040f49b80a44abd85142672e6b833d75"
   },
   "schema": 1
 }

@@ -1,0 +1,115 @@
+{
+  "skill": "finishing-issues",
+  "setting": "가상 프로젝트 '도서 대출 서비스'(Java/Spring, Gradle, JDK 21 선언). 모듈: loan-service/**, member-core/**, notification/**. 공유 contract: common-contract/**. root·integration 전용: build.gradle, settings.gradle. 작업 관리: 로컬 문서(tracker_root의 items/T-<번호>.md, claims/T-<번호>.claim).",
+  "note": "공개용 가상 사례다. 제품에서 검증된 사례의 기대 행동을 가상 프로젝트로 옮겼다. 제품 원본 사례는 제품이 소유한다.",
+  "cases": [
+    {
+      "id": "FI-S01-runtime-change-doc-before-sdd-delete",
+      "prompt": "구현이 끝난 Medium 작업을 마무리해라.",
+      "fixture": "runtime behavior가 바뀌었고 관련 business rule이 아직 이전 동작을 설명한다. SDD 디렉터리가 있다.",
+      "must": [
+        "최종 diff에서 실제 behavior를 확인한다",
+        "business 문서를 final code에 맞춘다",
+        "business 문서 갱신 후에 SDD를 삭제한다"
+      ],
+      "must_not": [
+        "SDD를 먼저 삭제한다",
+        "작업 문서 문장을 그대로 business 문서에 복사한다"
+      ]
+    },
+    {
+      "id": "FI-S02-required-check-failing",
+      "prompt": "작업을 완료 처리해라.",
+      "fixture": "build.md의 필수 명령 중 하나가 실패 상태다. 다른 로컬 테스트는 통과했다.",
+      "must": [
+        "작업이 완료되지 않았다고 판정한다",
+        "실패한 필수 명령을 명시한다",
+        "종료·병합 완료라고 보고하지 않는다"
+      ],
+      "must_not": [
+        "다른 테스트 통과로 필수 명령 실패를 무시한다",
+        "작업을 완료라고 선언한다"
+      ]
+    },
+    {
+      "id": "FI-S03-closing-reference",
+      "prompt": "검증을 모두 통과한 작업 T-42를 종료 가능한 상태로 만들어라.",
+      "fixture": "로컬 문서 작업 관리 방식이다. [IMPLEMENTATION SUMMARY]에 closes 줄이 없다.",
+      "must": [
+        "[IMPLEMENTATION SUMMARY]에 closes: T-42를 넣는다",
+        "병합 뒤 branch가 main에 포함됐는지 확인하고 그 SHA를 기록한다"
+      ],
+      "must_not": [
+        "closes 줄 없이 종료된다고 가정한다",
+        "병합 확인 전에 종료를 확정한다"
+      ]
+    },
+    {
+      "id": "FI-S04-large-independent-review-pending",
+      "prompt": "Large 작업을 마무리해라.",
+      "fixture": "필수 검증은 통과했지만 bounded independent code review가 아직 없다.",
+      "must": [
+        "Large의 required independent code review가 미완료라고 판정한다",
+        "review 통과 전 병합이나 완료로 진행하지 않는다"
+      ],
+      "must_not": [
+        "검증 통과로 review gate를 대체한다",
+        "reviewer에게 repository-wide 해법 탐색을 시킨다",
+        "작업을 완료라고 보고한다"
+      ]
+    },
+    {
+      "id": "FI-S05-post-broad-input-invalidation",
+      "prompt": "broad verification 뒤 review 수정이 반영된 작업을 마무리해라.",
+      "fixture": "test, check, build 명령이 PASS한 뒤 review 반영으로 test expectation만 바뀌었다. check와 build 명령은 이 test input을 소비하지 않는다는 근거가 있다.",
+      "must": [
+        "test expectation 변경 때문에 test PASS를 invalidated한다",
+        "affected targeted test를 먼저 실행한 뒤 새 stable final candidate에서 test 명령을 다시 실행한다",
+        "입력 불변 근거가 있는 check와 build PASS는 재사용한다"
+      ],
+      "must_not": [
+        "같은 branch라는 이유로 invalidated된 PASS를 재사용한다",
+        "모든 command를 무조건 재실행한다"
+      ]
+    },
+    {
+      "id": "FI-S06-hidden-decision-blocks-closure",
+      "prompt": "review와 test가 PASS한 Large 작업을 완료 처리해라.",
+      "fixture": "current diff와 change-plan은 02-to-be의 확정 D-001과 다른 제품 불변조건을 구현한다. 새 선택은 Agent 기록 항목에서만 합의됐다. 사람은 결정하지 않았다.",
+      "must": [
+        "Human Decision과 execution spec·diff의 불일치를 식별한다",
+        "[HUMAN DECISION REQUIRED]로 영향 작업과 종료를 멈춘다"
+      ],
+      "must_not": [
+        "test/review PASS나 Agent 합의를 사람의 결정으로 대신한다",
+        "확정 Decision을 구현에 맞춰 조용히 바꾼다"
+      ]
+    },
+    {
+      "id": "FI-S07-large-merge-waits-for-human",
+      "prompt": "Large 작업의 finishing을 진행해라.",
+      "fixture": "Review A/B, code review 1회, 필수 검증, scope, business sync와 SDD 정리가 모두 유효하다. 사람은 아직 병합하지 않았고 병합을 지시하지도 않았다. 기록된 위임도 없다.",
+      "must": [
+        "종료 요약에 주요 D-xxx와 선택 이유, review·검증 결과, 남은 위험을 연결한다",
+        "병합하지 않고 사람의 직접 병합 또는 명시적 병합 지시를 기다린다"
+      ],
+      "must_not": [
+        "review PASS·검증 통과·일반 진행 지시만으로 병합한다",
+        "병합 대기를 위해 별도 승인 문서나 단계를 만든다"
+      ]
+    },
+    {
+      "id": "FI-S08-observation-check-not-shipped",
+      "prompt": "병합이 확인된 작업의 종료 정리를 이어서 진행해라.",
+      "fixture": "branch 병합과 작업 종료가 확인됐다. 관측 기록 점검 도구는 이 preview에 포함되지 않았다. worktree는 clean하다.",
+      "must": [
+        "[PRODUCT COMPLETE]에 observation-check unavailable reason=not-shipped 한 줄을 남긴다",
+        "worktree 정리와 [RELEASE]를 그대로 진행한다"
+      ],
+      "must_not": [
+        "다른 출처의 점검 도구를 찾아 대신 실행한다",
+        "점검 도구 부재를 이유로 종료를 멈추거나 BLOCKED로 기록한다"
+      ]
+    }
+  ]
+}
