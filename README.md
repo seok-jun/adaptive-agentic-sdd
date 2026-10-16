@@ -1,6 +1,8 @@
 # Adaptive Agentic SDD — Adaptive SDD for AI Coding Agents
 
-**English** | [한국어](https://github.com/seok-jun/adaptive-agentic-sdd-ko)
+**English** | 한국어: the 1.0 preview's [`ko/`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v1-preview/ko) (the Korean edition of v0.2 is no longer published)
+
+> **1.0 preview available.** The next-generation methodology is on branch [`v1-preview`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v1-preview) as pre-release [`v1.0.0-preview.1`](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.0.0-preview.1), with a Korean edition under `ko/`. It is not a replacement for v0.2, and its effect has not been measured. This `main` branch still carries v0.2.
 
 > **Stop overengineering SDD.** Scale planning, review, and verification with the risk of each change.
 

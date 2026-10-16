@@ -25,6 +25,4 @@ For workflow-semantic edits, do not classify by the `.md` extension alone. Expla
 
 ## English / Korean synchronization
 
-The English `adaptive-agentic-sdd` repository is the canonical policy source; `adaptive-agentic-sdd-ko` is its Korean edition. When policy, guides, templates, examples, or diagrams change, review and update both repositories together. Preserve mandatory/optional conditions, phase ordering, statuses, and authorization semantics across languages.
-
-Record the English source revision in the Korean changelog or PR and check both editions' document/diagram links. If one edition is pending, state that explicitly rather than reporting synchronization complete.
+The Korean edition of v0.2 (`adaptive-agentic-sdd-ko`) is no longer published. The 1.0 preview keeps its Korean edition under `ko/` on the `v1-preview` branch; see that branch's CONTRIBUTING for synchronization rules.
