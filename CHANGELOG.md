@@ -1,6 +1,22 @@
 # Changelog
 
+## 1.0.0-preview.1
+
+First preview of the next-generation methodology, published on the `v1-preview` branch. `main` still carries v0.2.
+
+- Adds `methodology/core.md`: a minimal workflow, human-judgment requirements, and work records and observation.
+- Adds `methodology/adaptation.md`: choosing and re-evaluating supports from observed evidence.
+- Adds `methodology/supports/ordered-changes.md`: the default ordered change list support.
+- Adds `methodology/manifest.json`: sha256 of the three documents.
+- Adds `docs/customization.md`: placing a pinned copy, filling the adapter, and instructing an Agent.
+- Includes the Korean edition under `ko/` (README, methodology, guide). The separate Korean repository is retired, and the Korean v0.2 edition is no longer published. The English text at the root is canonical.
+- Removes the v0.2 documents, starter, templates, examples, and assets from this branch. They remain on `main` and at tag `v0.2.0`.
+
+This preview does not replace v0.2. Its effect has not been measured, and its structure may change before 1.0.
+
 ## Unreleased
+
+_v0.2 line: unreleased changes on `main`, not part of this preview._
 
 - Adds optional review-target identity and completion-evidence walkthroughs, with explicit comparison and retention limits.
 - Adds full/correction review briefings and a draft human-executed verification handoff form.

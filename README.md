@@ -1,164 +1,41 @@
-# Adaptive Agentic SDD — Adaptive SDD for AI Coding Agents
+# Adaptive Agentic SDD — 1.0 preview
 
-**English** | [한국어](https://github.com/seok-jun/adaptive-agentic-sdd-ko)
+**English** | [한국어](ko/README.md)
 
-> **Stop overengineering SDD.** Scale planning, review, and verification with the risk of each change.
+> **Preview.** This branch (`v1-preview`) carries the 1.0 preview of the next-generation methodology. Its effect has not been measured, and its structure may change before 1.0. The v0.2 methodology remains on `main` and at tag [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0).
 
-**Work-item-first · Risk-Gated · Progressive Disclosure · Revision-Bound Approval · Evidence-Based Completion**
+## What this is
 
-Adaptive SDD is a risk-adaptive **Spec-Driven Development (SDD)** workflow for **AI coding agents** such as **OpenAI Codex** and **Claude Code**. It is designed for practical **agentic coding**: start with the smallest safe process, then increase analysis, review, and verification only when the change risk justifies it.
+A thin common layer that a project copies, pins, and adjusts through its own adapter.
 
-Adaptive Agentic SDD combines observed AS-IS analysis, bounded exploration, risk-based review, revision-bound approval, and evidence-based completion.
+- `methodology/core.md` — a minimal workflow, the human-judgment requirements, and how work records and observations are kept.
+- `methodology/adaptation.md` — rules for choosing and re-evaluating supports based on observed evidence rather than model names or confidence.
+- `methodology/supports/ordered-changes.md` — one default support: an ordered change list tied to requirements.
+- `methodology/manifest.json` — sha256 of the three documents, used to check a copy.
+- `docs/customization.md` — how to place the copy in a project, fill the adapter, and instruct an Agent.
+- `ko/` — the Korean edition of the README, methodology, and guide. The English text at the root is canonical.
 
-> Apply the minimum process that reliably prevents costly mistakes, not the maximum process the tooling can support.
+## What this is not
 
-## 5-minute Quick Start
+- **Not a replacement for v0.2.** It has no risk grades, review gates, starter, or templates. Everything outside the common layer belongs to the project.
+- **Not a verified result.** No effect on outcomes, rework, or cost has been measured. The only checks for this preview are file integrity (the manifest hashes) and one pre-publication rehearsal on Windows, using a locally built archive, of copying, hash checking, line-ending pinning, and the first two Agent prompts (observe, draft the adapter).
+- **Not an enforcement mechanism.** It is guidance for agents and people; it is not a security boundary or an agent runner.
 
-**No new CLI. No mandatory tracker. Start with three files and your existing coding agent.**
+## Getting started
 
-### Option A — Give this repository to your agent
+Read [docs/customization.md](docs/customization.md). In short:
 
-If your coding agent can read GitHub repositories or URLs, paste this:
+1. Download the tag archive and copy `methodology/` (or `ko/methodology/` for the Korean edition) and `LICENSE` into the project byte for byte.
+2. Check the hashes against `manifest.json` and record the tag, commit SHA, and manifest hash.
+3. Pin line endings with `.gitattributes`, add a few lines to the entry file, and write the adapter.
+4. Let an Agent observe the repository and draft the adapter; a human decides the human-judgment points.
 
-```text
-Adopt Adaptive SDD from:
-https://github.com/seok-jun/adaptive-agentic-sdd
+## Versions
 
-Use the starter as a template, not a drop-in configuration.
-Before modifying product code, analyze this repository and propose the minimum bootstrap.
+- Preview tags: `v1.0.0-preview.N`. Published tags are never moved; fixes come as new tags.
+- Pin a copy by tag, commit SHA, and manifest hash, not by tag name alone.
+- Upgrading replaces only the copy; the adapter and work records stay.
 
-Adapt the starter to observed repository facts:
-- project and module boundaries
-- actual build and test commands
-- CI capabilities
-- important shared or generated paths
-- existing development rules
+## License
 
-Do not invent missing capabilities or rules.
-Keep the bootstrap minimal and preserve existing repository instructions.
-```
-
-### Option B — Copy the minimal starter
-
-Copy and adapt these three files into your repository:
-
-```text
-starter/AGENTS.md
-  -> AGENTS.md
-
-starter/.agents/skills/implementing-issue/SKILL.md
-  -> .agents/skills/implementing-issue/SKILL.md
-
-starter/docs/sdd-workflow.md
-  -> docs/sdd-workflow.md
-```
-
-Reconcile existing files instead of overwriting them. Replace starter placeholders only with facts observed in the target repository.
-
-Then ask your agent:
-
-```text
-Analyze this repository and adapt the Adaptive SDD starter to it.
-Do not modify product code yet.
-Keep the bootstrap minimal, preserve existing rules, and show the proposed changes.
-```
-
-Once the bootstrap is accepted, the first real task can be as small as:
-
-```text
-Implement issue #123 using Adaptive SDD.
-```
-
-The workflow starts lean and increases analysis, review, and verification only when the change risk requires it.
-
-## Start here
-
-- Adopting the workflow: [Bootstrap](docs/bootstrap.md).
-- Running a task: [Developer guide](docs/developer-guide.md).
-- Canonical lifecycle: [Workflow](docs/workflow.md).
-- Grade definitions and required depth: [Risk grades](docs/risk-grades.md).
-
-## Workflow at a glance
-
-[![Risk-adaptive workflow overview, with separate review and final authorization gates](assets/workflow-overview-en.svg)](assets/workflow-overview-en.svg)
-
-**[Open the detailed workflow diagram](assets/workflow-detailed-en.svg)**
-
-The overview is a reading aid, not a substitute for the lifecycle contract. The detailed diagram shows separate Large AS-IS and PLAN reviews, evidence blockers, optional Blind Audit, and final Human authorization. Both are editable SVGs; [diagram maintenance](assets/README.md) explains their scope.
-
-## What changed in v0.2
-
-The portable runtime layer adds:
-
-- a Trivial fast-track for non-behavioral changes;
-- progressive disclosure: a small root contract routes to a task Skill and conditional documents;
-- portable-core versus project-local policy separation;
-- phase-aware, revision-addressed review and approval;
-- starter files and a gradual bootstrap path.
-
-The pre-merge hardening connects those principles to execution:
-
-- separate Large AS-IS and PLAN review decisions;
-- explicit independent-review and optional Blind Audit contracts;
-- acceptance-criterion-to-result traceability;
-- design approval separated from final integration authorization;
-- bounded agent handoffs and revision-aware context reuse;
-- a developer guide and updated workflow diagrams.
-
-The [restricted-environment verification draft](docs/restricted-environment-verification.md) is optional and **not an implemented or operationally validated API/DB automation capability**.
-
-## Core principles
-
-1. **Work-item-first.** The current work item defines goal, scope, acceptance criteria, dependencies, and fixed decisions. The tracker is replaceable.
-2. **Observed AS-IS.** Current mainline code and direct runtime evidence describe current behavior; stale plans do not.
-3. **Information-specific Source of Truth.** Requirements, behavior, architecture, verification, review, and approval have different authoritative sources. See [Source of Truth](docs/source-of-truth.md).
-4. **Risk-adaptive depth.** Risk, reversibility, contract surface, and failure cost determine the grade, not coding time or file count alone.
-5. **Progressive disclosure.** Load the smallest stable entry contract, then only the Skill and documents relevant to the current phase.
-6. **Verification before implementation.** Important ACs need a proof method; actual results must be linked back to them.
-7. **Bounded exploration.** Start from direct paths, symbols, contracts, and callers/callees. Expand only for concrete uncertainty.
-8. **Review is falsification, not redesign.** Self-review is not independent review. Blind means prior verdicts are withheld, not requirements.
-9. **Revision-bound approval.** A review PASS is not Human approval. Design approval is not final merge authorization.
-10. **Evidence-based completion.** Unrun checks are not PASS. Required verification, review, authorization, and applicable lifecycle work must actually be completed.
-
-Capture real trade-offs; do not invent alternatives just to fill a template. See [Trade-off Capture](docs/trade-off-capture.md).
-
-## Portable runtime architecture
-
-```text
-AGENTS.md: routing + always-on guards
-  -> task Skill: execution procedure
-      -> conditional process/domain documents
-```
-
-The [starter](starter/AGENTS.md) is an adoption snapshot, not a universal drop-in configuration. Replace placeholders, reconcile local policy, and keep its local contract internally consistent. Do not assume copying the Skill also copies all methodology documents.
-
-## Portable core vs project-local policy
-
-Keep work-item boundaries, risk grading, bounded exploration, verification mapping, revision-aware review/approval, and evidence-based completion portable.
-
-Keep module names, environment quirks, actual commands, organization-specific approval systems, model/provider routing, credentials, and business vocabulary local. Do not make every grade use separate SDD files, independent review, or Blind Audit.
-
-## Repository structure
-
-```text
-assets/       editable overview and detailed workflow SVGs
-docs/        canonical policies, bootstrap, developer guide, optional draft
-starter/     lean root contract, implementation Skill, local workflow contract
-templates/   work item, design, PR, QA, review briefing, verification handoff
-examples/    fictional grade walkthroughs, review identity, completion evidence
-```
-
-## Optional practice aids
-
-- [Review-target identity](examples/review-identity/README.md): snapshot coverage and `identical / head-only / changed` comparisons.
-- [Verification handoff](templates/verification-handoff.md): planned expectations, returned observations, judgments, and correction/rerun history; remains **DRAFT / OPTIONAL**.
-- [Review briefing](templates/review-briefing.md): full five-section and abbreviated correction forms.
-- [Completion evidence](examples/completion-evidence/README.md): retained design/candidate evidence and authorized cleanup.
-
-These templates and fictional examples explain the existing policies. They do not claim operational validation or require additional artifacts for every task.
-
-## Status
-
-**v0.2 — Portable Working Methodology**
-
-This is a practical workflow, not a universal standard or a claim that all integrations have been implemented. A healthy workflow becomes smaller and sharper through observed use.
+[MIT](LICENSE)
