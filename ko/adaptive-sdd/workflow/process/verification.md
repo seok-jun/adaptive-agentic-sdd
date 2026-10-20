@@ -53,14 +53,14 @@ required review가 미완료이거나 boundary 위반, 완료 기준 미충족, 
 - **Verification-affecting input**: production/test source, resource, manifest, runtime asset, build/dependency/configuration, schema/migration/contract, fixture/snapshot/generated input/test expectation처럼 검증 command가 소비하거나 assertion하는 입력이다. 확장자나 `docs` 경로만으로 판정하지 않으며 runtime에서 소비되는 Markdown과 asset도 포함한다.
 - **Owning module**: verification-affecting changed file을 실제 path로 포함하는 빌드 모듈(P가 선언한 모듈 단위. Gradle이면 Gradle module)이다. test 이름이나 다른 domain 용어가 아니라 파일 위치로 판정한다.
 - **Direct-impact module**: 변경된 public/behavioral contract의 immediate consumer, Issue Verification Strategy가 지정한 영향 module, 또는 구체적 compile/test failure가 직접 영향을 증명한 module이다.
-- **Stable final candidate**: current diff와 required review finding이 안정화되어 required broad verification 뒤 verification-affecting input을 더 수정할 계획이 없는 candidate다.
+- **Stable final candidate**: 예정된 파일 변경과 이미 확인된 review finding의 필수 수정을 마쳐 더 수정할 계획이 없는 candidate다. 최종 CODE Review PASS는 검증 근거를 준비하는 선행 조건이 아니다. 검증·리뷰에서 추가 수정이 생기면 새 candidate로 갱신한다.
 - **Required broad command set**: 이 문서의 grade/change-scope 기준과 Issue Verification Strategy가 요구하는 test/lint/build command 전체다. 특정 root 명령 하나로 고정하지 않으며 Issue의 명시적 요구가 우선한다.
 
 구현 루프에서는 verification-affecting changed file의 owning module을 식별하고 직접 관련 test class 또는 owning-module test를 먼저 실행한다. 여러 module 또는 public/behavioral contract가 바뀌면 changed module과 근거가 있는 direct-impact module까지만 확장한다. transitive consumer 전체를 찾기 위한 repository-wide 추측은 하지 않으며 더 넓은 회귀 범위는 stable final candidate의 required broad command set이 담당한다. targeted failure는 전체 suite보다 실패 test 또는 owning module부터 수정·재실행한다. P가 선언한 계측·기기 테스트 경로는 Issue Verification Strategy나 repository command contract가 명시적으로 요구할 때만 기본 targeted 범위에 포함한다.
 
 각 PASS는 실행한 command와 그 command가 검증한 candidate input 집합에 귀속된다. command가 소비하거나 assertion하는 verification-affecting input이 바뀌면 해당 PASS는 invalidated된다. rebase/base merge나 dependency/build input 변경도 command 결과에 영향을 주면 같은 규칙을 적용한다. Issue/PR comment, review discussion, PR 설명 또는 non-runtime documentation만 바뀌면 runtime 빌드 검증 PASS는 유지할 수 있지만, 그 입력을 사용하는 static validator나 Skill behavior eval은 다시 실행한다.
 
-stable final candidate에서는 required broad command set의 각 command가 current candidate에서 실행된 PASS 또는 입력 불변 근거로 재사용 가능한 PASS를 가져야 한다. broad verification 뒤 input이 바뀌면 affected targeted verification부터 수행하고, 새 stable final candidate에서 invalidated된 broad command를 다시 실행한다. 입력이 바뀌지 않은 command는 반복하지 않지만 `완료 시 한 번`을 다른 candidate의 stale PASS 재사용으로 해석하지 않는다.
+stable final candidate에서는 required broad command set의 각 command가 current candidate에서 실행된 PASS 또는 입력 불변 근거로 재사용 가능한 PASS를 가져야 한다. 최종 CODE Review/self-review는 이 근거를 확보한 뒤 수행하고, 종료 시 같은 후보에서 리뷰·검증 근거가 모두 유효한지 확인한다. broad verification 뒤 input이 바뀌면 affected targeted verification부터 수행하고, 새 stable final candidate에서 invalidated된 broad command를 다시 실행한 뒤 그 근거로 리뷰한다. 입력이 바뀌지 않은 command는 반복하지 않지만 `완료 시 한 번`을 다른 candidate의 stale PASS 재사용으로 해석하지 않는다.
 
 P가 영향 분석 도구를 선언했으면 그 결과 참조·freshness·소비 조건은 [공통 영향 결과 참조와 로컬 소비](../skills/_shared/execution-packets.md#공통-영향-결과-참조와-로컬-소비) 및 P 적용 문서 `execution-routing.md`를 따르고, 그 결과는 위 검증 의무의 하한이다. 개발 중 부분 PASS와 이전 SHA의 리뷰를 현재 최종 후보의 완료 근거로 승계하지 않는다.
 

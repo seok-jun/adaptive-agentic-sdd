@@ -75,9 +75,10 @@ Trivial/Small은 해당 없음이다. SDD가 있으면:
 
 business 동기화, 현재 SDD 삭제, 링크·review status 정리처럼 예정된 저장소 파일 변경을 먼저 마친다. 그 결과를 commit하고 현재 base/head·전체 diff·inventory를 최종 리뷰 후보로 고정한다. 과거 CODE Review의 target과 다른 후보를 기존 PASS로 완료 처리하지 않는다.
 
-1. `verification.md`의 `Grade별 review gate`를 현재 후보에 적용한다. Trivial·Small은 해당 self-review, Medium은 `Independent Review` 판정, Large는 bounded independent code review 1회의 유효한 결과를 확인한다. Trivial 조건을 벗어나면 최소 Small로 재판정한다. 이미 같은 후보에서 유효한 리뷰는 재사용하며 기본 CODE review에 B를 추가하지 않는다.
-2. required reviewer에게 `execution-packets.md`의 current CODE Review Packet을 제공한다. reviewer는 전체 inventory와 PLAN handoff의 완전성·current code/fixture 해결을 독립 확인한다. 삭제한 SDD의 검토 원문은 삭제 전 exact commit으로 참조한다. 필요한 근거가 없거나 필수 해결 finding·INVALID/STALE이 남으면 merge/complete로 진행하지 않는다.
-3. 리뷰 finding 반영 후 안정화된 최종 후보에서 `verification.md`의 required broad command set을 확인한다. 3단계의 입력 불변 PASS는 실행 identity를 보존해 재사용하고, 정리한 문서를 소비하는 static validator 등 누락·무효화된 검증만 실행한다. 리뷰·검증 보정으로 저장소 파일을 다시 바꾸면 이 최종 후보 확인부터 갱신한다. 빌드 PASS 재사용을 이전 CODE Review target의 자동 승계로 확대하지 않는다.
+1. CODE Review/self-review 전에 `verification.md`의 required broad command set에 대해 현재 후보에 유효한 PASS 근거를 확보한다. 3단계의 입력 불변 PASS는 실행 identity를 보존해 재사용하고, 정리한 문서를 소비하는 static validator 등 누락·무효화된 검증만 해당 계약의 순서로 실행한다. 검증 보정으로 파일이 바뀌면 새 후보와 그 검증 근거를 먼저 확정한다.
+2. `verification.md`의 `Grade별 review gate`를 현재 후보에 적용한다. Trivial·Small은 해당 self-review, Medium은 `Independent Review` 판정, Large는 bounded independent code review 1회의 유효한 결과를 확인한다. Trivial 조건을 벗어나면 최소 Small로 재판정한다. 이미 같은 후보에서 유효한 리뷰는 재사용하며 기본 CODE review에 B를 추가하지 않는다.
+3. required reviewer에게 앞서 확보한 검증 근거를 포함한 `execution-packets.md`의 current CODE Review Packet을 제공한다. reviewer는 검증 근거의 유효성·재사용 조건, 전체 inventory와 PLAN handoff의 완전성·current code/fixture 해결을 독립 확인한다. 삭제한 SDD의 검토 원문은 삭제 전 exact commit으로 참조한다. 필요한 근거가 없거나 필수 해결 finding·INVALID/STALE이 남으면 merge/complete로 진행하지 않는다.
+4. 리뷰 후 현재 후보의 리뷰·검증 근거가 모두 유효한지 확인한다. 리뷰 finding 반영 등으로 저장소 파일이 바뀌면 새 후보를 고정하고 영향받은 검증을 갱신한 뒤 그 후보의 CODE Review/self-review 근거를 확보한다. 입력이 바뀌지 않은 검증은 반복하지 않으며 빌드 PASS 재사용을 이전 CODE Review target의 자동 승계로 확대하지 않는다.
 
 아래 PR·SUMMARY 기록은 위 후보의 유효한 리뷰·검증 근거에 연결한다. PR metadata만 바뀌고 저장소 후보가 불변이면 같은 CODE Review를 다시 실행하지 않는다.
 
