@@ -1,7 +1,7 @@
 <!-- 생성 파일. 직접 고치지 않는다. 값은 P/.adaptive-sdd/project.json을 고치고 다시 생성한다. -->
 # {{project.name}} SDD 적용 선언
 
-공통 단계·검증·리뷰 계약은 고정 W `P/.adaptive-sdd/workflow/process/sdd-workflow.md`를 따른다. 이 문서는 프로젝트의 적용 프로필·실제 경로·권한·필수 검증 값을 소유한다. 공통 규칙을 복제하거나 별도 gate를 만들지 않는다.
+공통 분류·진입은 고정 W `P/.adaptive-sdd/workflow/process/sdd-workflow.md`를 따르고, 현재 단계의 상세 계약은 그 문서의 읽기 표로 찾는다. 이 문서는 프로젝트의 적용 프로필·실제 경로·권한·필수 검증 값을 소유한다. 공통 규칙을 복제하거나 별도 gate를 만들지 않는다.
 
 ## 문서 역할
 
@@ -48,7 +48,7 @@ M `core.md`의 `사람 판단` 요건(미해결 사람 판단에서 멈춤, 판�
 {{/if}}{{#each human_judgment.points}}- **추가 판단 지점**: {{this}}
 {{/each}}
 
-Review B reviewer의 model·reasoning을 사람이 고르는 일은 승인 단계가 아니라 W 이중 독립 리뷰 규칙의 일부이며 그대로 유지한다.
+Review B reviewer의 model·reasoning을 사람이 고르는 일은 승인 단계가 아니라 W [설계 리뷰](../workflow/process/design-review.md#large-설계-이중-독립-리뷰)의 일부이며 그대로 유지한다.
 
 ### 기록된 위임
 
@@ -62,7 +62,7 @@ Review B reviewer의 model·reasoning을 사람이 고르는 일은 승인 단�
 
 ## Verification Strategy
 
-W의 `## Verification Strategy`·`## Grade별 review gate`·검증 시퀀싱을 적용한다. 실제 최소 명령은 `build.md`의 검증 기준을 따른다.
+W [검증 계약](../workflow/process/verification.md)의 Verification Strategy·등급별 review gate·검증 시퀀싱을 현재 단계에 적용한다. 실제 최소 명령은 `build.md`의 검증 기준을 따른다.
 
 ## 병렬 작업
 
@@ -74,7 +74,7 @@ W의 parallel-development 스킬을 적용한다. 실제 module/path ownership�
 
 `Token diagnostic mode: {{token_diagnostic}}`
 
-`ENABLED`이고 host의 authoritative goal tracker 값이 있을 때만 W의 START/BLOCKED/RESUME/END checkpoint를 기록한다.
+`ENABLED`이고 host의 authoritative goal tracker 값이 있을 때만 W [token-diagnostic](../workflow/process/token-diagnostic.md)의 해당 START/BLOCKED/RESUME/END를 기록한다. 일반 시작·인계·종료 관측은 [observations](../workflow/process/observations.md)를 따르며 이 mode와 무관하게 유지한다.
 
 ## 외부 절차와 프로젝트의 경계
 

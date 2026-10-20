@@ -31,7 +31,7 @@ W 문서에 나오는 `docs/domains/**`(business 문서), `docs/sdd/{feature}/`(
 
 1. M의 `core.md`(공통 원칙과 사람 판단 요건)
 2. P 적용 문서의 hard guard와 해당 단계 적용 선언
-3. 해당 단계의 W 스킬과 그 스킬이 가리키는 W process 절
+3. 해당 단계의 W 스킬과 그 입력 조건에 해당하는 W process 절. 같은 run에서 확인한 동일 버전은 재사용하며 링크를 따라 모든 문서를 선행 로딩하지 않는다.
 
 스킬은 `skills/<이름>/SKILL.md`에 있다.
 
@@ -45,6 +45,21 @@ W 문서에 나오는 `docs/domains/**`(business 문서), `docs/sdd/{feature}/`(
 실행 grade는 Trivial·Small·Medium·Large다. Epic은 선택적 관리 단위이며 생성·분해·전체 완료 조율은 `managing-issues`에서 수행한다. 하위 실행 Issue는 각각의 grade를 따르고 분해 리뷰를 조사 착수 조건으로 요구하지 않는다. 정책 원본은 [Epic 관리 단위](process/sdd-workflow.md#epic-관리-단위)다.
 
 관측 재검토 스킬(`reviewing-observations`)은 다음 preview에서 옮긴다. 그 전까지 관측 재검토는 M의 `adaptation.md` 절차를 직접 따른다.
+
+## 상세 규칙의 원본
+
+[sdd-workflow](process/sdd-workflow.md#현재-단계에서-읽을-규칙)는 분류·진입·Epic 관리와 현재 단계의 읽기 경로를 소유한다. 스킬은 실행 순서와 필요한 결과를 연결하며 아래 규칙을 복제하지 않는다.
+
+| 규칙 | 원본 |
+| --- | --- |
+| SDD 문서의 역할과 필수 내용 | [sdd-artifacts](process/sdd-artifacts.md) |
+| 완료 기준·등급별 검증·PASS 재사용·검증 환경 | [verification](process/verification.md) |
+| Large 설계 리뷰·원격 후보·재검토 | [design-review](process/design-review.md) |
+| model·floor·qualification·fallback | [execution-routing](skills/_shared/execution-routing.md) |
+| packet 필드·guard 근거·최신성·결과 소비 | [execution-packets](skills/_shared/execution-packets.md) |
+| 시작·인계·종료 관측·실제 문제의 기록 | [observations](process/observations.md) |
+| 활성화한 기간의 token checkpoint | [token-diagnostic](process/token-diagnostic.md) |
+| Skill 평가·합성 packet 측정 | [skill-evals](process/skill-evals.md) |
 
 ## 원본과 변경
 

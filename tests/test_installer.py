@@ -1,4 +1,4 @@
-"""Installer regression checks for execution-grade / Epic policy migration.
+"""Installer regression checks for grade policy and installed workflow references.
 
 Run with: python -I -B -m unittest discover -s tests -v
 Only synthetic projects under this checkout are written.
@@ -9,9 +9,12 @@ import importlib.util
 import io
 import json
 from pathlib import Path
+import re
 import shutil
 import tempfile
+import unicodedata
 import unittest
+from urllib.parse import unquote
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +22,35 @@ SOURCE = ROOT / "ko" / "adaptive-sdd"
 SPEC = importlib.util.spec_from_file_location("installer", SOURCE / "tools" / "install.py")
 installer = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(installer)
+
+
+def markdown_body(text):
+    """Exclude examples in fenced code blocks from link/heading checks."""
+    lines, fence = [], None
+    for line in text.splitlines():
+        marker = re.match(r"^\s*(`{3,}|~{3,})", line)
+        if marker:
+            char = marker.group(1)[0]
+            fence = char if fence is None else (None if fence == char else fence)
+        elif fence is None:
+            lines.append(line)
+    return "\n".join(lines)
+
+
+def markdown_anchors(text):
+    body = markdown_body(text)
+    anchors = set(re.findall(r'<a\s+(?:id|name)=["\']([^"\']+)["\']', body))
+    seen = {}
+    for heading in re.findall(r"^#{1,6}\s+(.+?)(?:\s+#+)?$", body, re.MULTILINE):
+        plain = re.sub(r"<[^>]+>", "", heading).lower()
+        slug = "".join(
+            char for char in plain
+            if char in "-_ " or unicodedata.category(char)[0] not in "PS"
+        ).replace(" ", "-")
+        count = seen.get(slug, 0)
+        seen[slug] = count + 1
+        anchors.add(slug + (f"-{count}" if count else ""))
+    return anchors
 
 
 class InstallerPolicyTests(unittest.TestCase):
@@ -102,6 +134,23 @@ class InstallerPolicyTests(unittest.TestCase):
                     self.assertEqual(installer.load_values(self.project)["human_judgment"]["large_epic_merge"], manual_merge)
                     for tool in (".agents", ".claude"):
                         self.assertTrue((self.project / tool / "skills" / "managing-issues" / "SKILL.md").is_file())
+
+    def test_installed_workflow_and_project_links_resolve(self):
+        code, output = self.command("render")
+        self.assertEqual(code, 0, output)
+        documents = list((self.copy / "workflow").rglob("*.md"))
+        documents += list((self.copy / "project").rglob("*.md"))
+        for document in documents:
+            body = markdown_body(document.read_text(encoding="utf-8"))
+            for reference in re.findall(r"\[[^\]\n]+\]\(([^)\s]+)\)", body):
+                if re.match(r"\w+://|mailto:", reference) or any(c in reference for c in "{}<>"):
+                    continue
+                path, separator, fragment = unquote(reference).partition("#")
+                target = (document.parent / path).resolve() if path else document
+                with self.subTest(document=document.relative_to(self.copy), reference=reference):
+                    self.assertTrue(target.is_file(), f"Missing installed target: {target}")
+                    if separator:
+                        self.assertIn(fragment, markdown_anchors(target.read_text(encoding="utf-8")))
 
 
 if __name__ == "__main__":

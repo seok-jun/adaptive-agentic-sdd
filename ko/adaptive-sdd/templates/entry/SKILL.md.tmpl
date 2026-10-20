@@ -12,4 +12,4 @@ description: {{skill.description}}
 1. 현재 run에서 `AGENTS.md`의 `## 항상 적용 hard guard` 적용을 보장할 수 없으면 그 절을 먼저 읽는다.
 2. `P`는 이 저장소 최상위, `W`는 `P/.adaptive-sdd/workflow`, `M`은 `P/.adaptive-sdd/methodology`다. cwd로 다른 root를 추정하지 않는다.
 3. 같은 run에서 아직 확인하지 않았으면 `python -I -B .adaptive-sdd/tools/install.py check --project-root .`로 고정 사본과 생성물을 확인한다. 실패하면 `BLOCKED: pinned workflow unavailable`로 의존 작업을 멈추고 최신판이나 다른 절차로 대체하지 않는다. Python을 쓸 수 없으면 같은 `BLOCKED`로 멈추고 사람에게 알린다.
-4. `W/skills/{{skill.name}}/SKILL.md`를 읽고 따른다. 절차 내용을 이 파일에 복제하지 않는다.
+4. `W/skills/{{skill.name}}/SKILL.md`를 읽고 그 입력 조건에 따라 현재 단계의 process 절만 읽는다. 같은 run의 동일 버전은 재사용하며 연결 문서를 모두 선행 로딩하지 않는다. 절차 내용을 이 파일에 복제하지 않는다.

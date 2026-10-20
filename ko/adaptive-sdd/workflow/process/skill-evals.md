@@ -73,6 +73,19 @@ python -I -B .adaptive-sdd/tools/install.py check-evals --project-root .
 
 routing·packet 계약을 합성 fixture로 결정적으로 검증하는 도구는 이 preview에 포함하지 않는다. P가 그런 도구를 선언하면 그 결과를 여기에 연결하고, 없으면 미실행으로 기록한다. 미실행을 PASS로 바꾸지 않는다.
 
+#### Packet 직렬화와 측정
+
+이 절은 routing/packet fixture의 유지보수·측정 시에만 적용한다. 운영 packet 인계에 추가 gate를 만들지 않는다. 평가 대상의 입력·유효성은 [Execution Packet과 인계 계약](../skills/_shared/execution-packets.md)이 원본이다.
+
+paired Large fixture는 동일 issue/PLAN/contract의 `full_source_handoff`와 `execution_packet`을 함께 둔다. canonical JSON은 UTF-8에서 `sort_keys=True`, `separators=(",", ":")`, `ensure_ascii=False`로 직렬화한다.
+
+- `input_bytes = len(serialized.encode("utf-8"))`
+- `token_proxy = ceil(input_bytes / 4)`
+- token proxy는 실제 host token 수가 아니다.
+- packet bytes와 token proxy는 full-source handoff보다 모두 작아야 한다.
+- hard guard provenance/application evidence, SDD grade gate evidence, claim evidence, allowed/forbidden, nonempty required verification, required review를 실제 Execution Packet 구조와 immutable identity에서 derive한다. `preserved_controls: true` 같은 boolean 자기신고는 사용하지 않는다.
+- 위 control을 하나씩 제거하거나 무효화한 negative fixture가 모두 실패해야 하며, 하나라도 통과하면 byte 절감과 무관하게 metric은 실패다.
+
 ### 3. Cross-agent behavior eval
 
 Cross-agent behavior eval은 deterministic/static validator를 보완하는 bounded diagnostic이며 기본 PR merge gate가 아니다. 일반 Issue에서는 변경된 workflow decision을 직접 다루는 case만 선언한 도구(예: Codex와 Claude)의 동일 commit에서 실행한다. 전체 corpus는 사용자가 명시적으로 요청하거나 별도 정기 audit가 승인된 경우에만 실행하며, 일반 Issue 완료를 위해 자동 반복하지 않는다.

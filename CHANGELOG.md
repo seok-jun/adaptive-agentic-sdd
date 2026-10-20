@@ -11,7 +11,15 @@ Meaning change in the Korean workflow (English workflow edition still pending):
 - Rejects `grade_mapping.min_grade: Epic` rather than silently converting it. Documents migration and retains the legacy `human_judgment.large_epic_merge` setting key without automatically waiving existing human permissions.
 - Adds seven fictional policy-regression cases. They are expected behavior specifications, not evidence of executed model behavior or operational improvement. No published tag is changed.
 
-Checked locally: five installer regression tests (including both tracker adapters, retained merge-setting values, and rejecting legacy Epic mappings before output writes), integrity of the 44-file copy, and structural checks for 37 cases / four skills in disposable installations. Model behavior evals and a new independent review have not been run. The separate skill-creator validator could not run because PyYAML is unavailable; the installer's built-in skill/frontmatter checks passed.
+Workflow organization in the same preview branch:
+
+- Keeps classification, entry conditions, and Epic orchestration in `sdd-workflow.md`. Moves SDD artifact details, design reviews, verification, observations, and optional token diagnostics into dedicated process documents with explicit read conditions.
+- Makes model routing/qualification and execution/result/review packet contracts separate owners. Execution and finishing skills call the relevant contract at the point of use; same-run valid evidence is reused. Packet serialization and size measurement belong to skill evaluation, outside routine execution inputs.
+- Clarifies that read-only investigation does not require an edit claim or a new lane, and that overlapping reads are not write conflicts. Product edits retain claim, grade, access, and dependency requirements.
+- Preserves current/manual model eligibility checks even without a model switch. Aligns packet evidence with existing input-based verification reuse: keep the actual execution identity and prove unchanged command inputs against the current candidate; missing or mismatched evidence remains stale.
+- Adds an installed Markdown target/anchor regression check and two fictional verification-reuse cases. The cases specify intended behavior; they are not executed model evaluations.
+
+Checked locally: six installer regression tests, including both tracker adapters, retained merge-setting values, legacy Epic rejection before output writes, and installed workflow/project links; integrity of the 50-file copy; structural checks for 39 cases / four skills in disposable installations. The installer's built-in skill/frontmatter checks passed. A separate source review and four scenario walkthroughs are document-level checks, not end-to-end model behavior evals. Operational outcomes and actual token use have not been measured.
 
 ## 1.0.0-preview.2
 
