@@ -23,7 +23,8 @@ grade는 orchestration shape만 정한다.
 | Trivial / Small | current agent 한 명이 model switch와 delegation 없이 완료; current concrete model이 role DENIED이면 한 명의 qualified replacement로 교체 |
 | Medium | 단일 agent가 기본이며 실제 unresolved PLAN decision 또는 required independent review phase만 bounded delegation |
 | Large | root/orchestrator가 검토를 통과한 설계와 경계를 소유하고 `PLAN / IMPLEMENT / REVIEW` coarse-grained phase만 위임 가능 |
-| Epic | root/orchestrator가 breakdown/shared contract/dependency graph를 소유하고 구현은 child Issue execution으로 넘김; giant implementation worker 금지 |
+
+Epic은 위 실행 grade와 별개인 선택적 관리 단위다. 담당은 목표·가이드·작업 구성·의존성·전체 완료를 조율하고, 각 하위 실행 Issue는 자체 grade로 routing한다. Epic 생성·분해에 별도 worker·독립 reviewer·model 선택을 요구하지 않으며 단일 Large 수행도 허용한다.
 
 phase risk와 decision complexity가 abstract tier를 정한다.
 
@@ -74,9 +75,9 @@ mapping이 없더라도 fresh evidence가 current model의 phase floor 충족을
 
 Host capability는 automatic route의 role qualification을 대신하지 않으며 canonical safety deny를 덮어쓰지 않는다. current/manual route는 위 bootstrap 규칙에 따라 positive qualification record 부재만으로 차단하지 않는다.
 
-Medium/Large/Epic에서 independent review가 required인데 분리된 reviewer agent/session capability가 없으면 valid execution trace를 만들지 않고 `BLOCKED: separate reviewer unavailable`로 중단한다. future reviewer의 concrete model role qualification은 PLAN 시작 조건이 아니라 실제 review actor 선택 직전에 검증한다.
+Medium/Large에서 independent review가 required인데 분리된 reviewer agent/session capability가 없으면 valid execution trace를 만들지 않고 `BLOCKED: separate reviewer unavailable`로 중단한다. future reviewer의 concrete model role qualification은 PLAN 시작 조건이 아니라 실제 review actor 선택 직전에 검증한다.
 
-Large/Epic AS-IS/PLAN의 Review B는 예외적으로 Human이 concrete model과 reasoning level을 선택한 뒤에만 route한다. 선택이 없으면 automatic reviewer mapping이나 fallback을 탐색하지 않고 `BLOCKED: blind-audit reviewer selection required`다. 선택값은 `strong + high` 이상의 canonical REVIEW floor, supported reasoning, canonical deny와 independent-reviewer role qualification을 모두 만족해야 한다. 선택된 model/session을 host에서 사용할 수 없거나 부적격이면 silent fallback 없이 `BLOCKED: selected blind-audit reviewer unavailable`로 중단하고 Human 재선택을 요청한다. Human 선택은 `review-mode = blind-audit`와 author/Review A actor 모두와 다른 별도 agent/session 요구를 바꾸지 않는다.
+Large AS-IS/PLAN의 Review B는 예외적으로 Human이 concrete model과 reasoning level을 선택한 뒤에만 route한다. 선택이 없으면 automatic reviewer mapping이나 fallback을 탐색하지 않고 `BLOCKED: blind-audit reviewer selection required`다. 선택값은 `strong + high` 이상의 canonical REVIEW floor, supported reasoning, canonical deny와 independent-reviewer role qualification을 모두 만족해야 한다. 선택된 model/session을 host에서 사용할 수 없거나 부적격이면 silent fallback 없이 `BLOCKED: selected blind-audit reviewer unavailable`로 중단하고 Human 재선택을 요청한다. Human 선택은 `review-mode = blind-audit`와 author/Review A actor 모두와 다른 별도 agent/session 요구를 바꾸지 않는다.
 
 ## Model Role Qualification
 
@@ -154,7 +155,7 @@ issue snapshot, PLAN identity/reference, goal, allowed/forbidden, required contr
 
 Execution Packet은 새 계층을 만들지 않고 기존 필드에 인계 근거를 연결한다. host-supported `fresh-context`, `verified-compaction`, `direct-fallback` 중 실제 수행한 방법을 기록한다. 같은 모델의 새 문맥도 가능하며 이 선택은 model tier/qualification/grade별 actor 수 규칙을 변경하지 않는다. 압축은 필수 입력 보존과 현재 source 대조를 검증해야 성공이다. 미지원·압축 실패는 사유와 남은 이력의 한계를 남기고 직접 구현하며 분리 성공으로 표시하지 않는다. 필수 source 복구 실패는 BLOCKED다.
 
-첫 edit 전 current Issue snapshot, PLAN identity, claim, guard와 직접 contract를 대조한다. Large/Epic에는 설계 단계 사람 승인 원본이 없으며 검토한 PLAN의 exact target과 Decision scope를 연결한다. PLAN이 달라지면 `STALE`이다. implementation finding은 검토를 통과한 PLAN의 list와 비교해 누락을 검출한다. resolved decision 이유, failure/recovery, verification 또는 required review 누락도 INVALID다. 현재 source mismatch는 STALE이며 관련 source만 bounded refresh한다. 대화·여러 설계 버전·전체 tool log는 기본 payload가 아니며 불변 source reference를 우선한다.
+첫 edit 전 current Issue snapshot, PLAN identity, claim, guard와 직접 contract를 대조한다. Large에는 설계 단계 사람 승인 원본이 없으며 검토한 PLAN의 exact target과 Decision scope를 연결한다. PLAN이 달라지면 `STALE`이다. implementation finding은 검토를 통과한 PLAN의 list와 비교해 누락을 검출한다. resolved decision 이유, failure/recovery, verification 또는 required review 누락도 INVALID다. 현재 source mismatch는 STALE이며 관련 source만 bounded refresh한다. 대화·여러 설계 버전·전체 tool log는 기본 payload가 아니며 불변 source reference를 우선한다.
 
 ## 공통 영향 결과 참조와 로컬 소비
 
@@ -200,7 +201,7 @@ Review A와 기본 CODE reviewer 입력은 phase별로 제한한다.
 
 ### Blind Audit Packet
 
-Large/Epic AS-IS/PLAN의 Review B에만 다음 최소 입력을 전달한다.
+Large AS-IS/PLAN의 Review B에만 다음 최소 입력을 전달한다.
 
 - Issue id와 title
 - `review_phase: AS-IS | PLAN`

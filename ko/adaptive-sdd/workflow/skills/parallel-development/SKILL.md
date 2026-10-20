@@ -79,7 +79,7 @@ forbidden:
 
 ## SDD review candidate publication
 
-Large/Epic AS-IS·PLAN independent review candidate는 현재 Issue branch의 exact commit으로 고정한다.
+Large AS-IS·PLAN independent review candidate는 현재 Issue branch의 exact commit으로 고정한다.
 
 1. 초안 중 local commit은 허용한다.
 2. review handoff 직전에 candidate commit을 현재 Issue branch의 remote branch로 push한다.

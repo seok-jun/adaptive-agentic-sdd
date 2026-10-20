@@ -1,7 +1,7 @@
 {
   "skill": "finishing-issues",
   "setting": "가상 프로젝트 '도서 대출 서비스'(Java/Spring, Gradle, JDK 21 선언). 모듈: loan-service/**, member-core/**, notification/**. 공유 contract: common-contract/**. root·integration 전용: build.gradle, settings.gradle. 작업 관리: 로컬 문서(tracker_root의 items/T-<번호>.md, claims/T-<번호>.claim).",
-  "note": "공개용 가상 사례다. 제품에서 검증된 사례의 기대 행동을 가상 프로젝트로 옮겼다. 제품 원본 사례는 제품이 소유한다.",
+  "note": "공개용 가상 사례다. 기존 운영 기대 행동을 옮긴 사례와 정책 변경에서 설계한 사례를 구분한다. FI-S09 Epic 사례는 정책 회귀용이며 모델 행동 실행은 미확인이다. 제품 원본 사례는 제품이 소유한다.",
   "cases": [
     {
       "id": "FI-S01-runtime-change-doc-before-sdd-delete",
@@ -109,6 +109,19 @@
       "must_not": [
         "다른 출처의 점검 도구를 찾아 대신 실행한다",
         "점검 도구 부재를 이유로 종료를 멈추거나 BLOCKED로 기록한다"
+      ]
+    },
+    {
+      "id": "FI-S09-epic-completion-evidence",
+      "prompt": "하위 작업이 모두 닫혔으니 Epic을 종료해라.",
+      "fixture": "대출 알림 Epic은 type:epic 관리 문서이고 직접 수정한 제품 코드·PR·CI·claim은 없다. 하위 Issue는 각각 완료됐지만 전체 알림 흐름의 통합 확인은 아직 미검증이다.",
+      "must": [
+        "managing-issues의 Epic 조율에서 전체 목표 달성 근거를 확인한다",
+        "미검증 전체 기준의 담당과 남은 작업을 연결하고 Epic 완료를 보류한다"
+      ],
+      "must_not": [
+        "하위 종료 표시만으로 Epic을 완료 처리한다",
+        "관리 문서 자체의 제품 diff·PR·CI·SDD 또는 breakdown A/B 리뷰를 요구한다"
       ]
     }
   ]

@@ -16,6 +16,8 @@ Issue 번호 또는 명확한 기존 Issue가 주어지면:
 3. Priority, grade, blockers, allowed/forbidden, acceptance criteria, Visual Spec, shared-contract refs만 작업 컨텍스트로 유지한다.
 4. Issue가 이미 결정한 요구를 다시 탐색하거나 사용자에게 재입력시키지 않는다.
 
+Epic 관리 문서가 주어지면 `managing-issues`의 `Epic 조율`로 작업 구성·의존성을 갱신하고 실제 요청된 하위 실행 Issue에 dispatch한다. 관리 문서 자체에 구현 claim·실행 grade·AS-IS/PLAN/BREAKDOWN 리뷰를 요구하지 않는다. 아직 하위 작업이 없으면 필요한 만큼 정의하고 조사할 수 있으며, 분해 PASS를 기다리지 않는다.
+
 ## Inputs
 
 현재 run에서 `P/AGENTS.md`의 `## 항상 적용 hard guard`가 적용됐음을 보장할 수 있으면 재독하지 않는다. 보장할 수 없는 standalone/subagent 진입이면 그 section을 먼저 읽고 진행한다.
@@ -41,7 +43,7 @@ Issue 번호 또는 명확한 기존 Issue가 주어지면:
 1. Issue에 Priority/grade, 사용자 영향, 목표, 작업 범위, allowed/forbidden, 완료 기준, dependencies가 있는지 확인한다.
 2. body Priority/grade와 labels가 일치하는지 확인한다.
 3. 현재 Priority와 사용자 지시상 구현 가능한지 확인한다.
-4. dependencies/blockers를 확인한다.
+4. dependencies/blockers가 어느 단계에 필요한지 확인한다. 상위의 미결 사항 자체로 하위 조사를 막지 않고, 그 결론을 필요로 하는 구현·통합·배포만 기다린다. 실제 접근·사람 판단 등 현재 조사 자체의 조건은 유지한다.
 5. Issue의 allowed/forbidden 경계를 확인한다.
 6. `parallel-development` claim 절차를 완료한다.
 7. grade에 맞는 SDD gate를 적용한다.
@@ -59,15 +61,14 @@ Issue 번호 또는 명확한 기존 Issue가 주어지면:
 - Small: 별도 `P/docs/sdd/**` 없이 진행.
 - Medium: 필요한 SDD를 작성하고 conflict가 없으면 추가 승인 없이 계속.
 - Large: AS-IS와 PLAN 각각 아래 required review의 다음 phase 진행 조건을 만족해야 다음 단계로 간다. 사람 승인 단계는 없으며 사람 판단 지점은 `W/process/sdd-workflow.md` (공통 계약·수행법) / `P/.adaptive-sdd/project/sdd-workflow.md` (제품 적용·권한·검증)의 `사람 판단 지점`을 따른다.
-- Epic: BREAKDOWN(`W/process/sdd-workflow.md` (공통 계약·수행법) / `P/.adaptive-sdd/project/sdd-workflow.md` (제품 적용·권한·검증) `Grade별 review gate`의 breakdown review), AS-IS, PLAN 각각에 같은 다음 phase 진행 조건을 적용한다.
 
-grade gate와 실행 routing은 다른 축이다. Trivial/Small은 Profile과 무관하게 single-agent/no-switch가 기본이다. 다만 current concrete model이 role DENIED이면 actor 수를 늘리지 않고 qualified replacement 한 명으로 교체한다. Medium은 unresolved PLAN decision 또는 required review phase만 bounded delegation한다. Large는 검토를 통과한 설계와 경계를 root가 소유한 상태에서만 `PLAN / IMPLEMENT / REVIEW` coarse-grained phase 위임을 허용한다. Epic은 breakdown과 child Issue execution을 사용하며 giant implementation worker를 만들지 않는다.
+grade gate와 실행 routing은 다른 축이다. Trivial/Small은 Profile과 무관하게 single-agent/no-switch가 기본이다. 다만 current concrete model이 role DENIED이면 actor 수를 늘리지 않고 qualified replacement 한 명으로 교체한다. Medium은 unresolved PLAN decision 또는 required review phase만 bounded delegation한다. Large는 검토를 통과한 설계와 경계를 root가 소유한 상태에서만 `PLAN / IMPLEMENT / REVIEW` coarse-grained phase 위임을 허용한다. Epic 소속 여부로 actor 수·병렬 실행·리뷰를 추가하지 않고 각 실행 Issue의 grade와 phase를 따른다.
 
 파일 존재나 오래된 review, 일반 Agent 댓글의 합의를 Human Decision으로 추정하지 않는다. 상세 코드 정합성은 Agent와 grade별 review가 책임진다. 문서 역할·적용 시점·상세 검증 기준은 `W/process/sdd-workflow.md` (공통 계약·수행법) / `P/.adaptive-sdd/project/sdd-workflow.md` (제품 적용·권한·검증)가 Source of Truth다.
 
 ### Remote review candidate gate
 
-Large/Epic AS-IS와 PLAN은 초안 작성 중 local commit을 허용하지만 independent review candidate가 되는 시점에는 다음을 모두 확인한다.
+Large AS-IS와 PLAN은 초안 작성 중 local commit을 허용하지만 independent review candidate가 되는 시점에는 다음을 모두 확인한다.
 
 1. candidate를 현재 Issue branch에 commit하고 같은 branch를 remote에 push한다.
 2. exact candidate SHA가 remote branch history에서 resolve되고, reviewer가 local worktree path 없이 Issue 번호, remote branch, SHA와 artifact 경로만으로 원문을 읽을 수 있는지 확인한다.
@@ -76,9 +77,9 @@ Large/Epic AS-IS와 PLAN은 초안 작성 중 local commit을 허용하지만 in
 
 push 실패, remote branch에서 exact SHA 확인 실패 또는 remote artifact 조회 실패 시 local-only 원문이나 Issue comment 재서술로 fallback하지 않고 상태를 반드시 `BLOCKED: SDD candidate remote push failed`로 기록해 중단한다. remote Issue branch와 exact SHA만으로 publication은 충분하다. 이 단계에서 PR이나 draft PR을 새로 만들지 않으며, 기존 PR이 없더라도 그대로 review handoff를 진행한다. 이 gate 때문에 기존 lane을 재생성·자동 rebase하거나 Medium 이하에 새 gate를 추가하지 않는다.
 
-### Large/Epic dual design review gate
+### Large dual design review gate
 
-Large/Epic의 AS-IS와 PLAN 최초 candidate에는 같은 remote-resolvable exact candidate에 다음 review를 순서대로 수행한다. 이후 revision은 7번의 영향 판정과 current-target 재확인 chain으로 다음 phase 전 review 유효성을 증명한다. Trivial/Small/Medium 또는 기본 CODE review에는 Review B를 추가하지 않는다.
+Large의 AS-IS와 PLAN 최초 candidate에는 같은 remote-resolvable exact candidate에 다음 review를 순서대로 수행한다. 이후 revision은 7번의 영향 판정과 current-target 재확인 chain으로 다음 phase 전 review 유효성을 증명한다. Trivial/Small/Medium 또는 기본 CODE review에는 Review B를 추가하지 않는다.
 
 1. **Review A — Contract Review**: author와 다른 agent/session에 phase-aware Contract Review Packet을 전달한다. Issue/acceptance, phase artifact, reviewed upstream contract, direct caller/callee·invariant·allowed/forbidden과 applicable evidence의 correctness/consistency만 bounded하게 검토한다. blocking finding은 보정 후 A re-check한다.
 2. **Review B — Blind Audit**: A가 통과한 뒤 Human이 선택한 model + reasoning을 사용한다. 선택 전에는 임의 reviewer를 배정하지 않고 `BLOCKED: blind-audit reviewer selection required`로 중단한다. 선택된 reviewer가 canonical REVIEW floor/role qualification을 만족하지 않거나 host에서 unavailable이면 자동 fallback하지 않고 `BLOCKED: selected blind-audit reviewer unavailable`로 중단해 Human 재선택을 요청한다.
@@ -106,6 +107,8 @@ P 적용 문서 `P/.adaptive-sdd/project/sdd-workflow.md`의 `사람 판단 지�
 
 ## Determine as-is and to-be
 
+상위·관련 작업의 분석은 `W/process/sdd-workflow.md`의 `기존 분석 재사용`에 따라 기준 revision·적용 범위·전제·직접 근거를 확인해 이어 쓴다. 유효한 조사는 참조하고 부족하거나 바뀐 부분만 조사하며, 그 사실만으로 해당 grade의 검토를 면제하지 않는다. 함께 검토할 공통 변경은 소비 작업·호환성·전환 영향까지 담당 Issue의 범위와 검증에 포함한다.
+
 1. 현재 `main` code = observed as-is.
 2. current Issue = requested to-be.
 3. 직접 관련된 `P/docs/domains/**`만 code와 비교한다.
@@ -123,7 +126,7 @@ Trivial은 제품 AS-IS discovery를 확장하지 않는다. 대상 text/metadat
    현황·계획 등 사람용 설명에는 [사람용 문서의 시각적 작성](../../process/agent-instruction-policy.md#사람용-문서의-시각적-작성)을 적용한다. 현재/변경 모습·선택을 먼저 보여주고, 비교·소유/경계·흐름/상태 중 필요한 관계를 표현한다. 단순 변경은 한 문장으로 충분하다. 전체 가이드/예시를 선행 로딩하거나 그림 수·새 승인 단계를 요구하지 않으며 이미 적용한 같은 기준은 재사용한다.
 3. `Independent Review: REQUIRED | NOT REQUIRED`를 판정한다. Trivial은 항상 `NOT REQUIRED`다.
 4. Device QA / Runtime QA를 판정하거나 handoff하지 않는다. 선택적 기기 확인은 P가 기기 확인 문서를 선언했으면 참고할 수 있지만 구현/PR/merge gate에 포함하지 않는다.
-5. grade별 design review gate를 통과한다. Large/Epic AS-IS/PLAN은 최초 Review A와 Human-selected blind B 및 필요한 current-target 재확인 chain이 유효하지 않으면 다음 phase로 진행하지 않는다.
+5. grade별 design review gate를 통과한다. Large AS-IS/PLAN은 최초 Review A와 Human-selected blind B 및 필요한 current-target 재확인 chain이 유효하지 않으면 다음 phase로 진행하지 않는다.
 6. phase risk가 destructive/shared-contract/migration/security/authority/recovery/atomicity PLAN이면 grade와 무관하게 `strong + extra-high` floor를 적용한다. `frontier`는 명시된 고위험 evidence가 strong에서도 unresolved일 때만 bounded candidate이며 compile failure, command typo, fixture correction은 escalation 근거가 아니다.
 7. Issue에 optional `## Execution Profile`이 있으면 phase별 tier/concrete model과 explicit fallback을 routing input으로만 사용한다. Profile이 없으면 current execution model/reasoning을 유지하되 current/manual eligibility를 shared routing contract로 검증한다. Profile 때문에 model switch/delegation이 생기면 fresh role qualification PASS를 요구한다. Profile로 hard guard·SDD·boundary·verification·review·canonical deny를 완화하지 않는다.
 8. P 적용 문서 `execution-routing.md`가 선언한 safety deny 모델은 standalone owner, PLAN/IMPLEMENT/TEST_DOCS worker, independent reviewer, finishing/lifecycle owner에서 DENIED다. `current`, cheap mapping, explicit profile, fallback은 이를 덮어쓰지 않는다.
@@ -139,7 +142,7 @@ Issue/current main/direct dependency 분석 중 실제 경쟁 선택지가 둘 �
 - current/manual agent가 현재 role을 계속하는 경우 canonical DENY와 실제 explicit qualification record를 다시 확인하고 fresh Host Capability evidence가 phase floor를 충족하는지 확인한다. explicit record가 `DENIED`이거나 존재하는 positive record가 stale/incomplete이면 우회하지 않는다. explicit positive record가 아예 없다는 이유만으로 current/manual route를 차단하지 않는다. Agent가 worker/reviewer/fallback model을 자동 선택하거나 switch하기 직전에는 해당 concrete role의 fresh qualification PASS를 요구하며, 없으면 적격 fallback을 찾거나 `BLOCKED: model role unqualified`로 중단한다.
 - Execution Packet의 required field, nested/nonempty 값, SDD gate/claim evidence, canonical provenance, Issue/PLAN/direct-contract freshness와 명시적 `implementation_findings` list를 첫 edit 전에 검증한다. 검토를 통과한 PLAN에 handoff item이 있으면 identity, PLAN exact target과 resolution expectation이 모두 있어야 한다. guard application을 포함한 evidence 누락·빈 값·형식 오류는 `INVALID`, current source와의 identity/freshness 충돌·version mismatch는 관련 항목만 `STALE`로 둔다. 둘 다 fail-closed하고 필요한 hard guard direct read 또는 bounded refresh 후 새 provenance로 증명할 수 없으면 `BLOCKED`한다.
 - native delegation이 없더라도 fresh evidence가 current model의 IMPLEMENT floor 충족을 증명하면 current agent가 직접 수행한다. required independent REVIEW는 이 fallback과 무관하게 구현 주체와 분리한다.
-- Medium/Large/Epic에서 required reviewer를 별도 agent/session으로 제공할 수 없으면 valid trace를 만들지 않고 `BLOCKED: separate reviewer unavailable`로 중단한다. Large/Epic AS-IS/PLAN Review B는 Human 선택 전 임의 route하지 않고, 선택 reviewer unavailable/부적격 시 automatic fallback하지 않는 전용 stop condition을 우선 적용한다. future reviewer의 concrete model qualification은 PLAN/IMPLEMENT 시작 전에 미리 요구하지 않고 실제 reviewer actor를 선택하는 시점에 shared routing contract로 검증한다.
+- Medium/Large에서 required reviewer를 별도 agent/session으로 제공할 수 없으면 valid trace를 만들지 않고 `BLOCKED: separate reviewer unavailable`로 중단한다. Large AS-IS/PLAN Review B는 Human 선택 전 임의 route하지 않고, 선택 reviewer unavailable/부적격 시 automatic fallback하지 않는 전용 stop condition을 우선 적용한다. future reviewer의 concrete model qualification은 PLAN/IMPLEMENT 시작 전에 미리 요구하지 않고 실제 reviewer actor를 선택하는 시점에 shared routing contract로 검증한다.
 - product file은 Issue allowed에 매칭되고 forbidden에 매칭되지 않는 path만 수정한다.
 - root/shared integration-only path가 필요해지면 직접 수정하지 말고 `module-boundaries.md`를 확인해 integration dependency로 전환한다.
 - lifecycle artifact는 해당 절차가 허용한 범위만 변경한다.
@@ -167,7 +170,7 @@ Issue/current main/direct dependency 분석 중 실제 경쟁 선택지가 둘 �
 - Issue가 이미 정한 결정을 다시 product discovery하지 않는다.
 - direct path/symbol에서 시작하고 repository-wide 탐색은 concrete dependency/compile failure가 있을 때만 확장한다.
 - 같은 run에서 읽은 변경 없는 Issue/정책/source와 이미 확보한 GitHub Issue/PR metadata는 아래 invalidation trigger가 없으면 재조회하지 않는다.
-  - Large/Epic AS-IS 또는 PLAN candidate를 새 commit으로 push해 review target SHA가 바뀜
+  - Large AS-IS 또는 PLAN candidate를 새 commit으로 push해 review target SHA가 바뀜
   - 현재 lane의 push로 PR head SHA가 바뀜
   - 현재 run에서 Issue/PR을 merge·close·reopen하거나 label/assignee/state를 변경함
   - base ref 또는 base SHA 변경 근거가 확인됨

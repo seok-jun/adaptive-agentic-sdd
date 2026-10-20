@@ -15,7 +15,7 @@
 
 | 종류 | 위치 | 소유 | 성격 |
 | --- | --- | --- | --- |
-| W 사례 | `W/skills/<이름>/evals/cases.json` | 공통(고정 사본) | 한 제품에서 검증된 기대 행동을 가상 프로젝트로 옮긴 사례. 프로젝트가 고치지 않는다 |
+| W 사례 | `W/skills/<이름>/evals/cases.json` | 공통(고정 사본) | 운영 기대 행동을 가상 프로젝트로 옮긴 사례와 정책 회귀 사례. 파일 note에서 출처·행동 실행 여부를 구분한다. 프로젝트가 고치지 않는다 |
 | 프로젝트 사례 | P 적용 문서 `skill-evals.md`의 사례 위치 | 프로젝트 | 실제 작업에서 기록된 사건으로 만든 **진단용** 사례. W 사례의 기대값을 바꾸지 않는다 |
 
 두 종류 모두 같은 형식을 쓴다: `id`, `prompt`, `fixture`, `must`, `must_not`. 프로젝트 사례에는 `source`(원 사건 기록 참조)와 `kind: "diagnostic"`을 더한다.
@@ -192,7 +192,12 @@ workflow gate를 변경한 case는 happy path뿐 아니라 해당 stop condition
 - 신규 Issue branch/worktree를 생성하기 직전에 `origin/main` fetch를 성공시키고 확인한 SHA를 explicit base로 사용하는지
 - `origin/main` fetch 실패 시 기존 remote-tracking ref, local `main`, current HEAD로 fallback하지 않고 중단하는지
 - fresh remote-main base 규칙을 기존 진행 lane의 자동 rebase/recreate에 소급하지 않는지
-- Large/Epic AS-IS·PLAN local-only candidate는 independent review/PASS로 진행하지 않는지
+- Large AS-IS·PLAN local-only candidate는 independent review/PASS로 진행하지 않는지
+- Epic을 실행 grade와 분리하고 새 패키지·모듈만으로 분해를 강제하지 않는지
+- 단일 Large 관리가 충분하면 하위 Issue·Epic 생성을 강제하지 않는지
+- Epic 분해 A/B나 게시를 하위 조사 착수 조건으로 만들지 않고 미결 결론이 필요한 후속 단계에만 의존성을 두는지
+- 상위 분석의 기준 revision·범위·전제를 확인해 재사용하면서 해당 실행 grade 검토는 유지하는지
+- 공통 변경의 소비자·호환성·전환 영향을 담당 실행 Issue의 범위·검증에 포함하고 전체 목표의 완료 근거를 별도로 확인하는지
 - 공유 저장소(또는 선언한 원격)에서 exact candidate SHA와 artifact가 resolve될 때만 review target으로 사용하는지
 - finding 반영으로 candidate revision이 바뀌면 새 SHA를 push하고 이전 review를 승계하지 않는지
 - 새 candidate의 Review B 최초 verdict 전에 Review A result와 이전 B finding detail을 제공하지 않고, 최초 verdict가 고정된 뒤에만 prior ledger를 reconciliation하는지
@@ -214,7 +219,7 @@ workflow gate를 변경한 case는 happy path뿐 아니라 해당 stop condition
 - Result/Review Packet의 head, inventory, diff reference, verification evidence identity가 current head와 다르면 완료하지 않는지
 - reviewer가 current head의 전체 inventory를 독립 확인한 뒤 bounded diff/contracts만 검토하는지
 - `current`를 capability rank로 비교하지 않고 fresh current capability evidence로 phase floor 충족을 별도 판정하는지
-- Medium/Large/Epic의 required reviewer를 별도 agent/session으로 제공할 수 없으면 valid trace 대신 중단하는지
+- Medium/Large의 required reviewer를 별도 agent/session으로 제공할 수 없으면 valid trace 대신 중단하는지
 - metric control boolean self-report를 거부하고 actual packet의 guard/SDD/claim/boundary/verification/review evidence로 보존 여부를 derive하는지
 - guard application evidence 누락·형식 오류는 `INVALID`, current source와의 identity/freshness mismatch는 `STALE`로 구분하되 둘 다 direct hard-guard read 또는 `BLOCKED` 전에는 편집하지 않는지
 - run-owned/generated임을 증명하지 못한 untracked diagnostic/unknown file을 사용자 state로 보존하고 worktree remove/force cleanup, registration 제거, `[RELEASE]`를 중단하는지

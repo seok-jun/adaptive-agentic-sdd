@@ -57,7 +57,7 @@ python -I -B .adaptive-sdd/tools/install.py init --project-root .
 | `tracker` | `kind`(`local-docs` 또는 `github`), 로컬 문서면 `root`(저장소 밖 절대 경로, 로컬 디스크나 SMB 공유 — 동기화 폴더 금지)·`id_prefix`·`merge_method`(`merge`·`squash`·`rebase`), 허용 작성자 | 사람 |
 | `docs` | business·SDD·결정 기록·구조 문서·목차 위치 | Agent 제안, 사람 확인 |
 | `grade_mapping` | 프로젝트별 자동 격상(예: 특정 공유 모듈 변경 → Medium) | Agent 제안, 사람 확인 |
-| `human_judgment` | Large/Epic 병합을 사람이 하는지, 추가 판단 지점, 기록된 위임(범위·날짜·확인자) | **사람만** |
+| `human_judgment` | Large 실행 변경의 사람 병합, 추가 판단 지점, 기록된 위임(범위·날짜·확인자). `large_epic_merge` 키는 호환을 위해 유지하며 기존 사람 권한을 자동 면제하지 않음 | **사람만** |
 | `worktree_root` | 병렬 lane worktree를 둘 짧은 절대 경로 | 사람 |
 | `build` | 빌드 도구, JDK major, 실행 wrapper, 정리 명령, 변경 범위별 검증 명령 | Agent 제안, 사람 확인 |
 | `modules` | 모듈 목록, 공유 contract, root·integration 전용 경로, 의존성 규칙 | Agent 제안, 사람 확인 |
@@ -73,7 +73,7 @@ python -I -B .adaptive-sdd/tools/install.py init --project-root .
 
 | 값 | 항목 형식 |
 | --- | --- |
-| `grade_mapping` | `{"change": "변경 조건", "min_grade": "Medium"}` |
+| `grade_mapping` | `{"change": "변경 조건", "min_grade": "Medium"}`. min_grade는 Trivial·Small·Medium·Large만 허용. Epic은 선택적 관리 단위 |
 | `human_judgment.delegations` | `{"scope": "위임 범위", "date": "YYYY-MM-DD", "confirmed_by": "기록한 사람"}` |
 | `build.verification` | `{"scope": "변경 범위", "commands": "실행할 명령"}` |
 | `modules.list` | `{"path": "모듈 경로", "role": "역할"}` |
@@ -159,6 +159,14 @@ $m.files.PSObject.Properties | ForEach-Object { $h = (Get-FileHash ".adaptive-sd
 1. 1절로 새 태그의 사본을 받는다. 고정 사본 폴더는 먼저 지우고 통째로 바꾼다. `project.json`, `project/`, `install.lock.json`은 그대로 둔다.
 2. `render`를 새 태그와 commit으로 다시 실행하고 `check`로 확인한다. 생성물이 어떻게 바뀌었는지 사람이 diff로 본다.
 3. 진행 중인 작업 도중에는 묵시적으로 바꾸지 않는다. 바꾸면 그 시점부터의 구간으로 기록한다(`core.md`).
+
+### Epic 실행 등급에서 관리 단위로 전환
+
+미출시 W 정책은 실행 grade를 Trivial·Small·Medium·Large로 한정한다. Epic 관리·조사 착수·공통 변경 검증의 원본은 W `process/sdd-workflow.md`의 `Epic 관리 단위`·`기존 Epic 전환`·`기존 분석 재사용`이다.
+
+- `grade_mapping`에 `min_grade: Epic`이 있으면 실제 전체 변경의 위험으로 실행 등급을 다시 정해 사람이 프로젝트 값을 갱신한다. 설치 도구는 자동으로 Large로 치환하지 않고 render 전에 오류를 낸다.
+- 기존 `grade:Epic` Issue는 관리 문서(`작업 유형: Epic`, `type:epic`, grade 없음)로 유지하거나 실제 범위에 따라 하나의 실행 Issue로 전환한다. local-docs의 관리 메타는 `type: epic`을 쓴다.
+- 기존 목표·사람 결정·병합 권한과 유효한 분석·검증은 보존한다. 전환만을 이유로 활성 lane을 초기화하거나 분석·리뷰를 반복하지 않는다. `human_judgment.large_epic_merge` 키는 호환을 위해 유지한다.
 
 ## 공통 문제를 알릴 때
 

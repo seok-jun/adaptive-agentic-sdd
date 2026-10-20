@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0 preview — unreleased
+
+Meaning change in the Korean workflow (English workflow edition still pending):
+
+- Uses four execution grades: Trivial, Small, Medium, Large. Epic becomes an optional management type for separately tracked issues; a single Large issue remains valid. New packages/modules no longer force an Epic or decomposition.
+- Removes the mandatory decomposition publication and Review A/B gate. Unresolved questions alone do not block child investigation; decisions are dependencies of the later steps that need them.
+- Assigns shared-change verification, consumer compatibility, and transition effects to an owning execution issue. Reuses applicable upstream analysis without waiving required current-target reviews or verification.
+- Keeps orchestration within authorized scope, human control over goal/acceptance reductions and prior decisions, and evidence for overall completion. Documents and generated tracker guidance distinguish management-only closure from implementation/PR closure.
+- Rejects `grade_mapping.min_grade: Epic` rather than silently converting it. Documents migration and retains the legacy `human_judgment.large_epic_merge` setting key without automatically waiving existing human permissions.
+- Adds seven fictional policy-regression cases. They are expected behavior specifications, not evidence of executed model behavior or operational improvement. No published tag is changed.
+
+Checked locally: five installer regression tests (including both tracker adapters, retained merge-setting values, and rejecting legacy Epic mappings before output writes), integrity of the 44-file copy, and structural checks for 37 cases / four skills in disposable installations. Model behavior evals and a new independent review have not been run. The separate skill-creator validator could not run because PyYAML is unavailable; the installer's built-in skill/frontmatter checks passed.
+
 ## 1.0.0-preview.2
 
 Adds executable procedures, skills, an eval structure, and an installer to the Korean edition, and fixes three human-judgment gaps in the common methodology for both editions.

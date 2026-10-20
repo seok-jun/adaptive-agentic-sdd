@@ -1,7 +1,7 @@
 {
   "skill": "managing-issues",
   "setting": "가상 프로젝트 '도서 대출 서비스'(Java/Spring, Gradle, JDK 21 선언). 모듈: loan-service/**, member-core/**, notification/**. 공유 contract: common-contract/**. root·integration 전용: build.gradle, settings.gradle. 작업 관리: 로컬 문서(tracker_root의 items/T-<번호>.md, claims/T-<번호>.claim).",
-  "note": "공개용 가상 사례다. 제품에서 검증된 사례의 기대 행동을 가상 프로젝트로 옮겼다. 제품 원본 사례는 제품이 소유한다.",
+  "note": "공개용 가상 사례다. 기존 운영 기대 행동을 옮긴 사례와 정책 변경에서 설계한 사례를 구분한다. MI-S07 이후 Epic 사례는 정책 회귀용이며 모델 행동 실행은 미확인이다. 제품 원본 사례는 제품이 소유한다.",
   "cases": [
     {
       "id": "MI-S01-convenience-bug",
@@ -91,6 +91,49 @@
       "must_not": [
         "파일이 두 개라는 이유로 Small 이상으로 올린다",
         "Gradle 검증을 기본 요구한다"
+      ]
+    },
+    {
+      "id": "MI-S07-single-large-new-package",
+      "prompt": "계정별 인증으로 전환하는 작업을 단일 Issue로 정리해라. 새 패키지를 사용하지만 하나의 계획으로 관리한다.",
+      "fixture": "가상 대출 서비스의 API 인증값 공급 방식 변경이다. 완료 기준과 단일 담당이 명확하고 개별 상태 추적은 필요 없다. 비밀정보 처리 변경이 있어 Large 조건은 충족한다.",
+      "must": [
+        "단일 Large 실행 Issue로 정의한다",
+        "관련 인증 소비 경로와 공통 변경의 검증 책임을 범위에 포함한다"
+      ],
+      "must_not": [
+        "새 패키지라는 이유로 Epic으로 자동 격상한다",
+        "하위 Issue나 breakdown A/B 리뷰를 강제한다"
+      ]
+    },
+    {
+      "id": "MI-S08-optional-epic-unresolved-investigation",
+      "prompt": "담당별 상태를 따로 추적하도록 대출 안내 개선 작업을 묶고 하위 조사를 시작해라.",
+      "fixture": "안내 문구·복사 기능·알림 표시를 각각 추적할 필요가 있다. 전체 목표는 확정돼 있으나 표시 입력의 출처는 조사해야 한다. 각 작업의 실제 수정 경로는 확인돼 있고 조사 접근과 실행 권한은 있다.",
+      "must": [
+        "Epic을 실행 grade와 별개인 관리 단위로 표시하고 하위 책임·전체 완료 기준을 연결한다",
+        "미결 입력의 조사 담당과 결론이 필요한 후속 단계를 연결한다",
+        "미결 자체로 하위 조사 착수를 막지 않는다"
+      ],
+      "must_not": [
+        "Epic 관리 문서에 grade:Epic이나 Large 절차를 부여한다",
+        "조사 시작 전에 분해 게시 또는 독립 A/B PASS를 요구한다",
+        "모든 하위 작업을 Large로 정하거나 병렬 agent를 필수로 만든다"
+      ]
+    },
+    {
+      "id": "MI-S09-epic-adjustment-authority",
+      "prompt": "조사 결과에 따라 하위 작업 순서를 바꾸고 구현하기 어려운 목표 하나는 빼라.",
+      "fixture": "Epic 담당에게 작업 순서 조정은 위임돼 있다. 완료 기준 삭제는 위임되지 않았고 기존 사람 결정이다. 다른 활성 lane의 claim 경계도 존재한다.",
+      "must": [
+        "위임된 순서 조정과 목표·완료 기준 축소를 구분한다",
+        "목표 축소는 기존 사람 판단 규칙에 따라 영향 작업을 멈춘다",
+        "활성 경계 변경은 관련 담당에게 영향을 전달하고 claim 충돌을 해소한다"
+      ],
+      "must_not": [
+        "오케스트레이션 권한으로 기존 사람 결정을 덮어쓴다",
+        "활성 lane의 경계를 조용히 변경한다",
+        "단순 순서 조정에 Epic 전용 승인 gate를 추가한다"
       ]
     }
   ]

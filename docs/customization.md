@@ -2,6 +2,8 @@
 
 This guide explains how to place a copy of the methodology in a project, adjust it to the project, and give work to an Agent. It is not part of the copy. The Korean edition is `ko/docs/customization.md`. In this preview the Korean edition installs a fuller copy, `ko/adaptive-sdd/` (methodology plus workflow procedures, skills, evals, and an installer), and follows its own guide; the English edition of those parts is pending.
 
+The unreleased Korean workflow separates the optional Epic management type from its four execution grades. Its upgrade guide explains how to migrate former `grade:Epic` issues and `min_grade: Epic` mappings without silently changing human decisions or restarting active work. See [the Korean upgrade guide](../ko/docs/customization.md#버전-올리기); this is not a new grade requirement for the English methodology-only edition.
+
 ## What this preview is
 
 - **A thin common layer.** `methodology/core.md` defines a minimal workflow, human-judgment requirements, and work records and observation. `methodology/adaptation.md` contains the rules for choosing supports based on observation. `methodology/supports/ordered-changes.md` is one default support.

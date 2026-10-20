@@ -15,11 +15,11 @@
 
 ## SDD grade
 
-공통 다섯 등급과 일반 자동 격상은 W가 원본이다. 이 프로젝트는 아래 구체 매핑을 더한다.
+공통 네 실행 등급(Trivial·Small·Medium·Large)과 일반 자동 격상은 W가 원본이다. Epic은 선택적 관리 단위이며 실행 등급이나 필수 선행 단계가 아니다. 이 프로젝트는 아래 구체 매핑을 더한다.
 
 ### 자동 격상
 
-W의 일반 자동 격상에 다음 매핑을 더하고 **해당하는 가장 높은 grade**를 적용한다. 공통 보안·DB·비용·모듈 신설 기준도 그대로 적용한다.
+W의 일반 자동 격상에 다음 매핑을 더하고 **해당하는 가장 높은 실행 grade**를 적용한다. 공통 보안·DB·비용 기준도 그대로 적용한다. 패키지·모듈 신설만으로 Epic 생성·분해를 강제하지 않는다.
 
 | 변경 행위 | 최소 grade |
 | --- | --- |
@@ -35,14 +35,16 @@ W의 `## 구현 시작 조건`을 적용한다. Issue·라벨·claim·blocked �
 
 ## grade별 산출물과 게이트
 
-W의 grade별 산출물과 게이트를 그대로 적용한다. Large/Epic에는 AS-IS·PLAN·BREAKDOWN의 설계 단계 사람 승인 단계를 두지 않는다. 사람 판단은 아래 지점에서 한다.
+W의 실행 grade별 산출물과 게이트를 적용한다. Large의 AS-IS·PLAN에는 설계 단계 사람 승인 단계를 두지 않는다. 사람 판단은 아래 지점에서 한다.
+
+Epic 생성·분해에는 독립 리뷰·분해 게시 gate를 요구하지 않는다. 미결 사항 자체는 하위 Issue의 조사 착수를 막지 않으며, 그 결론이 필요한 후속 단계에만 의존성을 둔다. 공통 변경은 소비 작업·전환 영향을 포함해 담당 실행 Issue에서 검증하고, 상위 분석은 기준 revision·적용 범위·전제를 확인해 재사용한다. 전체 정책은 W의 `Epic 관리 단위`·`기존 분석 재사용`을 따른다.
 
 ### 사람 판단 지점
 
 M `core.md`의 `사람 판단` 요건(미해결 사람 판단에서 멈춤, 판단 지점 명시, Agent의 사람 결정 생성 금지)은 이 선언으로 면제되지 않는다. 이 프로젝트의 판단 지점은 다음과 같다.
 
 1. **Human Decision blocker**: 새 중요한 제품/설계 Decision, 기존 Decision 범위 변경, 제품 의미·ownership·failure behavior·acceptance 해석의 경쟁 선택지가 확인되면 `[HUMAN DECISION REQUIRED]`로 영향 작업을 멈춘다. 사람이 결정을 밝히면 Agent는 그 결정을 Issue 본문 또는 해당 SDD에 반영하고 재개한다. Agent 합의·review PASS·일반 진행 지시로 이 결정을 대신하지 않는다.
-{{#if human_judgment.large_epic_merge}}2. **Large/Epic 병합**: Large/Epic 변경은 사람이 직접 병합하거나 그 변경의 병합을 명시적으로 지시한 경우에만 병합한다. review PASS·CI 통과·일반 진행 지시만으로 병합하지 않는다.
+{{#if human_judgment.large_epic_merge}}2. **Large 병합**: Large 실행 변경은 사람이 직접 병합하거나 그 변경의 병합을 명시적으로 지시한 경우에만 병합한다. review PASS·CI 통과·일반 진행 지시만으로 병합하지 않는다. 설정 키 `human_judgment.large_epic_merge`는 기존 프로젝트와의 호환을 위해 유지한다. 기존 Epic 작업의 사람 결정·병합 권한은 전환만으로 면제되지 않는다.
 {{/if}}{{#each human_judgment.points}}- **추가 판단 지점**: {{this}}
 {{/each}}
 

@@ -7,6 +7,8 @@ description: 구현을 마친 이 프로젝트의 Issue 작업을 종료한다. 
 
 # Finishing Issues
 
+Epic 관리 문서의 종료 요청이면 `managing-issues`의 `Epic 조율`에서 전체 목표 달성 근거를 확인한다. 아래 순서는 실제 변경을 수행한 실행 Issue에 적용하며, 제품 diff·PR·CI·SDD·claim이 없는 Epic 자체에 요구하지 않는다. 하위 작업이 모두 닫혔다는 사실만으로 전체 목표 충족을 대신하지 않는다.
+
 ## Inputs
 
 현재 run에서 `P/AGENTS.md`의 `## 항상 적용 hard guard`가 적용됐음을 보장할 수 있으면 재독하지 않는다. 보장할 수 없는 standalone/subagent 진입이면 그 section을 먼저 읽고 진행한다. implementing 단계에서 확인한 변경 없는 Issue/경계/검증 결과와 이미 확보한 GitHub Issue/PR metadata는 재사용한다. 단 현재 lane의 push로 인한 PR head SHA 변경, 이번 run의 Issue/PR merge·close·reopen 또는 label/assignee/state 변경, base ref/base SHA 변경 근거, webhook/wake·외부 tool result·GitHub 상태 변경을 알리는 사용자 지시 같은 외부 상태 변경 신호, merge 직전과 merge 후 closure 확인 직전 boundary에서는 그 판정에 필요한 metadata만 다시 조회한다.
@@ -37,9 +39,9 @@ full PR/Issue body·comments·diff는 그 내용 자체가 판단 근거일 때�
 5. 각 behavior change를 Issue acceptance criterion에 연결한다.
    - 반대 방향으로 기준 revision의 요구에서 최종 변경·검증을 대조해 빠진 진입점·조건도 찾는다. 테스트 제거·단언 약화·실행 제외·대상 변경은 최종 후보의 대체 근거와 공백을 SUMMARY에 드러낸다. 기존 입력의 PASS를 새 실행으로 쓰거나 최신 문서·CI의 일치만으로 기준 요구 충족을 대신하지 않는다. 미충족/필수 검증 공백은 기존 완료 gate로 처리한다.
    - Human Decision과 execution spec·diff의 일치도 확인한다. 사람이 결정하지 않은 새 중요한 결정/의미 변경이 있으면 `W/process/sdd-workflow.md` (공통 계약·수행법) / `P/.adaptive-sdd/project/sdd-workflow.md` (제품 적용·권한·검증)의 `[HUMAN DECISION REQUIRED]` 절차로 영향 작업과 closure를 중단한다. 일반 Agent 합의나 review PASS를 Human Decision으로 대체하지 않는다.
-   - Large/Epic AS-IS와 PLAN 각각에서 Review A Contract Review와 Review B 근거가 해당 phase의 exact candidate에 유효한지 확인한다. 최초 Blind Audit 및 이후 target 차이·영향 판정·A/B 재확인 chain과 current-target prior finding 상태를 확인한다. 핵심 Decision/상위 계약/경계/감사 전제 변경이나 불명확한 영향이면 새 Blind Audit이 필요하고, 국소 변경이면 독립 후속 재확인을 최초 blind로 오기하지 않았는지 확인한다. 검토 결과 기록만 바뀌고 대상 bytes가 불변이면 새 blind를 요구하지 않는다. 이전 PASS를 복사한 stale chain은 closure를 막는다. unresolved Human Decision blocker와 unresolved Execution-contract blocker는 각각 0이어야 한다. Implementation finding과 Non-blocking observation이 남았다는 이유로 PLAN review 근거를 무효화하지 않는다. A/B actor/session은 document author 및 서로와 분리되어야 하며, B 최초 verdict가 A의 verdict/finding/detailed packet 또는 이전 B finding detail을 받지 않았고 최초 verdict가 고정된 뒤에만 prior ledger가 제공됐는지 확인한다. reconciliation은 각 이전 finding을 `resolved / unresolved / regressed / not-applicable`로 current exact candidate에서 직접 재검증하고 신규 finding과 분리해야 한다. B reviewer의 model + reasoning에 대한 Human 선택, REVIEW floor/role qualification과 availability도 확인한다. 선택 누락, silent fallback, stale target, anchoring, reconciliation 누락 또는 분리 실패가 있으면 implementation이 이미 진행됐어도 유효한 design review로 추정하지 않고 closure를 중단한다.
+   - Large AS-IS와 PLAN 각각에서 Review A Contract Review와 Review B 근거가 해당 phase의 exact candidate에 유효한지 확인한다. 최초 Blind Audit 및 이후 target 차이·영향 판정·A/B 재확인 chain과 current-target prior finding 상태를 확인한다. 핵심 Decision/상위 계약/경계/감사 전제 변경이나 불명확한 영향이면 새 Blind Audit이 필요하고, 국소 변경이면 독립 후속 재확인을 최초 blind로 오기하지 않았는지 확인한다. 검토 결과 기록만 바뀌고 대상 bytes가 불변이면 새 blind를 요구하지 않는다. 이전 PASS를 복사한 stale chain은 closure를 막는다. unresolved Human Decision blocker와 unresolved Execution-contract blocker는 각각 0이어야 한다. Implementation finding과 Non-blocking observation이 남았다는 이유로 PLAN review 근거를 무효화하지 않는다. A/B actor/session은 document author 및 서로와 분리되어야 하며, B 최초 verdict가 A의 verdict/finding/detailed packet 또는 이전 B finding detail을 받지 않았고 최초 verdict가 고정된 뒤에만 prior ledger가 제공됐는지 확인한다. reconciliation은 각 이전 finding을 `resolved / unresolved / regressed / not-applicable`로 current exact candidate에서 직접 재검증하고 신규 finding과 분리해야 한다. B reviewer의 model + reasoning에 대한 Human 선택, REVIEW floor/role qualification과 availability도 확인한다. 선택 누락, silent fallback, stale target, anchoring, reconciliation 누락 또는 분리 실패가 있으면 implementation이 이미 진행됐어도 유효한 design review로 추정하지 않고 closure를 중단한다.
 6. scope 밖 change는 allowed path 안에서 안전하게 제거하거나, 불가능하면 `BLOCKED`하고 closure를 진행하지 않는다.
-7. Trivial은 `W/process/sdd-workflow.md` (공통 계약·수행법) / `P/.adaptive-sdd/project/sdd-workflow.md` (제품 적용·권한·검증)의 Trivial 조건을 다시 확인하고 targeted validation + diff ↔ 요청 범위를 self-review한다. Small은 diff ↔ 완료 기준을 self-review한다. Medium은 Verification Strategy의 `Independent Review` 판정을 적용하고, Large/Epic은 기존 bounded independent code review 1회 결과를 확인한다. Review B를 기본 CODE review에 추가하지 않으며 명시적 high-risk escalation 근거가 있을 때만 별도 code audit을 요구한다.
+7. Trivial은 `W/process/sdd-workflow.md` (공통 계약·수행법) / `P/.adaptive-sdd/project/sdd-workflow.md` (제품 적용·권한·검증)의 Trivial 조건을 다시 확인하고 targeted validation + diff ↔ 요청 범위를 self-review한다. Small은 diff ↔ 완료 기준을 self-review한다. Medium은 Verification Strategy의 `Independent Review` 판정을 적용하고, Large는 기존 bounded independent code review 1회 결과를 확인한다. Review B를 기본 CODE review에 추가하지 않으며 명시적 high-risk escalation 근거가 있을 때만 별도 code audit을 요구한다.
 
 W·M 고정 사본(`P/.adaptive-sdd/workflow`, `P/.adaptive-sdd/methodology`)은 이 작업에서 수정하지 않는다. 고쳐야만 풀리는 문제는 공통 문제로 보고한다.
 
@@ -102,7 +104,7 @@ business sync 전에 SDD를 삭제하지 않는다.
   작성 모델 한 줄은 workflow의 `작성 모델 기록` 형식과 host별 조회 위치를 따른다. 실제 제공값이 `미확인`이어도 확인한 요청값과 출처를 남기고, 역할·actor 식별자나 다른 작업·actor의 값을 모델 값으로 쓰지 않는다. 세션 기록에서는 모델 필드만 추출한다. 모델 줄의 누락이나 `미확인`으로 closure를 막지 않는다.
   시작 원본과 이미 보존한 결과를 직접 참조해 고정 정보의 본문 복사를 줄인다. 새 실패·요구 미충족·검증 축소·출처 상실·판단 변경은 현재 SUMMARY에 명시한다. 원본이 소실되거나 버전이 다르면 현재 확인한 적용 정보와 미확인 구간을 구별하며 요약으로 복구하지 않는다. 비용의 출처·수집 가능 여부는 현재 구간에서 확인한 뒤 같은 한계만 묶어 참조한다.
 - PR body에 `Closes #{issue-number}`를 넣는다.
-- Large/Epic PR은 `W/process/sdd-workflow.md` (공통 계약·수행법) / `P/.adaptive-sdd/project/sdd-workflow.md` (제품 적용·권한·검증)의 `사람 판단 지점`에 따라 사람이 그 PR을 직접 병합하거나 병합을 명시적으로 지시한 경우에만 병합한다. review PASS·CI 통과·일반 진행 지시만으로 병합하지 않는다.
+- Large PR은 `W/process/sdd-workflow.md` (공통 계약·수행법) / `P/.adaptive-sdd/project/sdd-workflow.md` (제품 적용·권한·검증)의 `사람 판단 지점`에 따라 사람이 그 PR을 직접 병합하거나 병합을 명시적으로 지시한 경우에만 병합한다. review PASS·CI 통과·일반 진행 지시만으로 병합하지 않는다.
 - required CI/review gate가 끝나기 전에 완료로 표현하지 않는다.
 
 ### 6. Merge confirmation and release
@@ -134,7 +136,7 @@ merge 후:
 - acceptance criterion failed/unknown
 - required CI failing
 - required independent review unfinished 또는 unresolved finding
-- Large/Epic AS-IS/PLAN Review A/B target·actor/session 분리·Blind Audit isolation·Human reviewer selection provenance가 누락되거나 stale
+- Large AS-IS/PLAN Review A/B target·actor/session 분리·Blind Audit isolation·Human reviewer selection provenance가 누락되거나 stale
 - 필요한 prior B finding reconciliation이 누락·stale이거나 unresolved Human Decision/Execution-contract blocker가 남음
 - PLAN Implementation finding handoff가 Result/CODE Review Packet에서 누락되거나 code+fixture 해결이 미검증·unresolved·stale
 - required business doc이 final code와 모순

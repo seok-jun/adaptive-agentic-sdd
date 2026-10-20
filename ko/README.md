@@ -11,7 +11,7 @@
 프로젝트가 복사해 고정하고, 프로젝트에 맞게 생성해 쓰는 공통 계층입니다. `adaptive-sdd/`가 고정 사본 전체입니다.
 
 - `adaptive-sdd/methodology/` — 공통 원칙. `core.md`(최소 작업 흐름, 사람 판단 요건, 작업 기록과 관측), `adaptation.md`(관찰 근거로 지원을 고르고 다시 평가하는 규칙), `supports/ordered-changes.md`(기본 지원), `manifest.json`.
-- `adaptive-sdd/workflow/` — 실행 절차와 Skill 4개(작업 정리·생성, 작업 격리, 설계와 구현, 검증과 종료), eval 체계(정적 검사, 행동 사례, 도구 간 비교, 채점과 결과 기록, 가상 대표 사례 30개, 사건을 진단 사례로 만드는 규칙), 작업 관리 방식 대응표(로컬 문서, GitHub). 한 제품에서 오래 다듬은 절차에서 제품 종속 부분만 덜어내 옮겼습니다.
+- `adaptive-sdd/workflow/` — 실행 절차와 Skill 4개(작업 정리·생성, 작업 격리, 설계와 구현, 검증과 종료), eval 체계(정적 검사, 행동 사례, 도구 간 비교, 채점과 결과 기록, 가상 대표·정책 회귀 사례, 사건을 진단 사례로 만드는 규칙), 작업 관리 방식 대응표(로컬 문서, GitHub). 새 정책 사례는 기대 행동과 실행 결과를 구분합니다. 한 제품에서 오래 다듬은 절차에서 제품 종속 부분만 덜어내 옮겼습니다.
 - `adaptive-sdd/templates/` — 프로젝트 종속 파일의 틀. 설치 도구가 `project.json` 값으로 채웁니다.
 - `adaptive-sdd/tools/install.py` — 설치 도구(Python 3.8 이상, 표준 라이브러리만). P 적용 문서, Claude Code·Codex용 Skill 입구, `AGENTS.md`·`CLAUDE.md`·`.gitattributes`의 표시 구간을 생성하고, 고정 사본과 생성물을 해시로 확인합니다.
 - `adaptive-sdd/MANIFEST.json` — 고정 사본 전체 파일의 sha256.
@@ -20,6 +20,8 @@
 개선 방식: 종료 기록 → `adaptation.md`에 따른 재검토 → 사건 사례 → 사람이 범위를 정한 비교 → 사람의 채택과 결정 기록.
 
 실행 절차·Skill·eval·설치 도구의 영문판은 아직 없고 다음 preview에서 냅니다. 그때까지 이 부분은 한국어판이 유일한 원본입니다.
+
+미출시 W 정책은 실행 등급을 Trivial·Small·Medium·Large 네 개로 구분합니다. Epic은 개별 추적이 필요한 Issue를 묶는 선택적 관리 단위이며 분해 전용 리뷰 gate를 두지 않습니다. 단일 Large 수행도 허용하고 공통 변경 검증·사람 판단 경계·전체 완료 근거는 유지합니다. 자세한 정책은 [Epic 관리 단위](adaptive-sdd/workflow/process/sdd-workflow.md#epic-관리-단위)를 따릅니다. 이 부분의 영문 실행 절차는 아직 미제공입니다.
 
 ## 무엇이 아닌가
 
