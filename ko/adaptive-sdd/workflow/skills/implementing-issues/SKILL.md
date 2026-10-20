@@ -28,7 +28,7 @@ description: 이 프로젝트의 승인된 작업 항목(Issue)을 Issue 번호�
 | 검증 계획·실행·PASS 재사용·code review 판정 | `W/process/verification.md`와 P 적용 문서 `build.md`의 해당 검증 |
 | 현재 role 진입·유지의 적격 확인, 모델·추론·위임·fallback 선택 | `W/skills/_shared/execution-routing.md`의 해당 role·선택 경로 |
 | worker 인계·Result/Review 소비·선언된 영향 결과 사용 | `W/skills/_shared/execution-packets.md`의 해당 Packet·영향 결과 절 |
-| 제품 수정 claim·lane 생성·격리 | `W/skills/parallel-development/SKILL.md`의 해당 절 |
+| SDD·테스트·코드 등 P 작업 파일 최초 쓰기의 claim·lane·격리 | `W/skills/parallel-development/SKILL.md`의 해당 절 |
 | shared/root 경계·lifecycle artifact 판단 | W/P `module-boundaries.md`의 관련 경계 |
 | 지시 충돌·code와 business의 불일치·승인 범위 해석 불가 | W/P `agent-instruction-policy.md`의 해당 충돌 절 |
 | 사람용 현황·계획·변경 설명 작성 | `W/process/agent-instruction-policy.md`의 `사람용 문서의 시각적 작성` |
@@ -44,7 +44,7 @@ description: 이 프로젝트의 승인된 작업 항목(Issue)을 Issue 번호�
 ## 조사와 제품 수정 진입
 
 1. 현재 요청이 읽기 전용 조사인지 제품 수정인지 구분하고, dependencies/blockers가 필요한 단계를 확인한다. 조사 자체의 접근 권한·사람 판단 조건은 유지한다. 상위 미결 결론은 그것을 소비하는 구현·통합·배포를 기다리게 하며 조사 착수를 막지 않는다.
-2. 읽기 전용 조사는 제품 수정 claim과 분리해 `parallel-development`의 적용 범위를 따른다. 조사 경로의 중복 읽기를 제품 수정 경로의 충돌로 판정하지 않는다.
+2. 읽기 전용 조사에는 수정 claim을 요구하지 않는다. 조사 경로의 중복 읽기는 수정 충돌이 아니다. SDD·테스트·코드 등 실행 Issue의 P 작업 파일을 처음 생성·수정·삭제하기 전에는 `parallel-development`로 lane·claim을 확보한다. 현재 단계의 지시·의존성·경계를 적용하며, SDD 작성 claim에 아직 작성하지 않은 AS-IS/PLAN의 PASS를 요구하지 않는다. tracker 기록과 Epic 관리 문서 자체의 기존 예외는 유지한다.
 3. 제품 코드 수정 전에는 Issue의 필수 본문·Priority/grade와 라벨 일치·allowed/forbidden·완료 기준·현재 구현 의존성을 확인하고, `sdd-workflow.md`의 구현 시작 조건과 `parallel-development` claim을 충족한다. 불충족이면 제품 코드를 수정하지 않는다.
 4. 각 원본이 정한 시작·변경 전 경계에서 `observations.md`의 시작 기록과 활성화된 `token-diagnostic.md`의 START를 적용한다. 재개·인계는 기존 시작 원본을 참조하며 새 작업의 관측을 이전 작업에서 상속하지 않는다.
 5. 현재 phase/role에 진입할 때는 current/manual model을 그대로 유지하는 경우도 `execution-routing.md`의 해당 적격 경로를 확인한다. canonical DENY·실제 explicit record·fresh capability floor 확인을 model switch 유무로 생략하지 않는다. 같은 run의 해당 role에서 여전히 유효한 근거는 재사용하고 미래 phase의 concrete model PASS를 현재 착수 조건으로 요구하지 않는다.
@@ -55,7 +55,7 @@ description: 이 프로젝트의 승인된 작업 항목(Issue)을 Issue 번호�
 
 1. 현재 main code를 관찰한 AS-IS, current Issue를 요청한 TO-BE로 삼는다. 직접 관련 business 문서만 비교하며 문서와 다르다는 이유로 코드를 과거 동작에 맞추지 않는다.
 2. Issue와 architecture/완료 기준 충돌은 `agent-instruction-policy.md`로 판단하고 해소되지 않으면 `BLOCKED: instruction conflict`로 중단한다.
-3. 아래 순서에 맞춰 현재 산출물을 작성한다. 형식·Decision/실행 명세 구분·실제 경쟁 선택지의 trade-off는 `sdd-artifacts.md`를 따른다. 선택지를 만들기 위한 광범위 탐색은 하지 않는다.
+3. 저장소 파일의 최초 쓰기 전 lane·claim을 확보한 뒤 아래 순서에 맞춰 현재 산출물을 작성한다. 형식·Decision/실행 명세 구분·실제 경쟁 선택지의 trade-off는 `sdd-artifacts.md`를 따른다. 선택지를 만들기 위한 광범위 탐색은 하지 않는다.
 
 | grade | 실행 순서 |
 | --- | --- |

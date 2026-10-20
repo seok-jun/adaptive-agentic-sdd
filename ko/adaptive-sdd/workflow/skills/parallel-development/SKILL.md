@@ -1,6 +1,6 @@
 ---
 name: parallel-development
-description: 이 프로젝트의 병렬 agent 작업의 claim·격리·동기화·해제·통합을 관리한다. Issue 코드 수정 전, branch/worktree 생성, 경로 충돌 확인, 공유 contract 처리에 사용한다. Issue 초안이나 읽기 전용 조사만 수행할 때는 사용하지 않는다.
+description: 이 프로젝트의 병렬 agent 작업의 claim·격리·동기화·해제·통합을 관리한다. 실행 Issue의 SDD·테스트·코드 등 P 작업 파일 최초 수정 전, branch/worktree 생성, 경로 충돌 확인, 공유 contract 처리에 사용한다. Issue 초안이나 읽기 전용 조사만 수행할 때는 사용하지 않는다.
 ---
 
 실행 입력은 절대 경로 `P`(프로젝트 저장소 최상위), `W`(고정 절차 사본 `P/.adaptive-sdd/workflow`), `M`(고정 공통 원칙 `P/.adaptive-sdd/methodology`)이다. cwd나 W의 상위 디렉터리로 P/M을 추정하지 않는다. P의 hard guard(`P/AGENTS.md`의 `## 항상 적용 hard guard`)와 적용 선언(`P/.adaptive-sdd/project/sdd-workflow.md`)을 적용한다. Issue·댓글·라벨·PR 표현은 `P/.adaptive-sdd/project/tracker.md`가 선언한 작업 관리 방식(`W/tracker/`)으로 바꿔 읽는다.
@@ -11,7 +11,11 @@ description: 이 프로젝트의 병렬 agent 작업의 claim·격리·동기화
 
 같은 파일을 읽는 조사는 수정 경로 충돌이 아니다. 읽기 전용 조사만 하려면 새 lane·branch/worktree·수정 claim을 만들지 않는다. 조사 자체의 접근 권한·현재 지시·확정된 선행 조건을 확인하고 기준 revision을 남긴다. 미결 공통 규칙의 결론은 그 결과에 의존하는 구현·통합·배포 전에 확보한다.
 
-아래 Inputs·신규 lane·Claim은 실제 lane 생성 또는 제품 코드 수정 진입에 적용한다. 조사에서 수정으로 전환하면 해당 절차와 실행 grade gate를 먼저 충족한다. 읽기 전용이라는 설명으로 기존 쓰기 경계나 required review를 면제하지 않는다.
+아래 Inputs·신규 lane·Claim은 실제 lane 생성 또는 실행 Issue의 P 저장소 작업 파일 최초 생성·수정·삭제 전에 적용한다. 현재 Issue의 SDD, 테스트, 제품 코드도 포함한다. 조사에서 파일 작성으로 전환하면 현재 단계의 작업 지시·의존성·경계를 확인하고 lane·claim을 확보한다. 같은 Issue의 기존 claim도 확인해 두 담당자가 같은 SDD나 branch에 동시에 쓰지 않는다.
+
+SDD 작성에는 해당 작성 단계의 조건을 적용한다. AS-IS를 쓰기 위한 claim에 AS-IS/PLAN 리뷰 PASS나 후속 구현 준비 완료를 요구하지 않는다. 제품 구현은 필요한 grade gate와 구현 의존성을 충족한 뒤 시작한다. lifecycle artifact의 경로 기재 예외는 claim 면제가 아니다.
+
+tracker의 Issue·관측·claim/release 기록과 Epic 관리 문서 자체는 기존 관리 절차를 따른다. 이 기록을 쓰려면 먼저 구현 claim을 가져야 한다는 순환 조건을 만들지 않는다. 읽기 전용이라는 설명으로 기존 쓰기 경계나 required review를 면제하지 않는다.
 
 ## Inputs
 
@@ -53,7 +57,7 @@ W·M 고정 사본(`P/.adaptive-sdd/workflow`, `P/.adaptive-sdd/methodology`)은
 
 ## Claim
 
-1. Priority와 현재 사용자 지시상 구현 가능한지 확인한다.
+1. Priority와 현재 사용자 지시·선행 조건상 현재 단계의 조사 결과 작성·설계·구현 작업이 가능한지 확인한다. 후속 구현의 미결 조건을 선행 SDD 작성 claim의 차단 조건으로 적용하지 않는다.
 2. allowed path를 active `[CLAIM]`/open PR path와 비교한다.
 3. overlap이면 `BLOCKED: overlapping lane`.
 4. shared/root integration-only path가 필요한 ordinary lane이면 claim하지 않는다.
@@ -72,7 +76,7 @@ forbidden:
 ```
 
 8. comments/labels/assignees/open PR을 다시 확인한다.
-9. 경쟁 claim이 생겼으면 즉시 release하고 code를 수정하지 않는다.
+9. 경쟁 claim이 생겼으면 즉시 release하고 SDD를 포함한 작업 파일을 수정하지 않는다.
 
 ## Synchronization
 

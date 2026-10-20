@@ -8,7 +8,7 @@
 
 | 조건·현재 작업 | 규칙 원본 |
 | --- | --- |
-| Issue 분류·코드 수정 진입·Epic 조율 | 이 문서의 해당 절 |
+| Issue 분류·파일 쓰기 진입·Epic 조율 | 이 문서의 해당 절 |
 | Medium·Large의 AS-IS·PLAN 작성 | [sdd-artifacts](sdd-artifacts.md)의 작성 대상 절 |
 | 완료 기준의 검증 설계·구현 중 검증·종료 | [verification](verification.md)의 현재 단계 절 |
 | Large AS-IS·PLAN 검토 또는 명시적 환경 간 SDD 리뷰 | [design-review](design-review.md)의 해당 절 |
@@ -71,7 +71,9 @@ Trivial은 **파일 수가 적다는 이유만으로 선택하지 않는다.** �
 
 ## 구현 시작 조건
 
-이 절의 claim·수정 경로 조건은 제품 코드 수정 진입에 적용한다. 읽기 전용 조사에는 수정 claim이나 새 branch/worktree를 선행 요구하지 않는다. 같은 파일을 조사하는 것은 수정 경로 충돌이 아니다. 조사 자체의 접근 권한·사용자 지시·확정된 선행 조건을 확인하고 조사 기준 revision을 남긴다. 조사 결과를 제품에 반영하기 전에는 아래 조건과 해당 grade gate를 충족해야 한다.
+읽기 전용 조사에는 수정 claim이나 새 branch/worktree를 선행 요구하지 않는다. 같은 파일을 조사하는 것은 수정 경로 충돌이 아니다. 조사 자체의 접근 권한·사용자 지시·확정된 선행 조건을 확인하고 조사 기준 revision을 남긴다.
+
+실행 Issue의 P 저장소 작업 파일을 처음 생성·수정·삭제하기 전에는 [parallel-development](../skills/parallel-development/SKILL.md#읽기-전용-조사와-수정-진입)의 lane·claim을 확보한다. SDD·테스트·제품 코드도 포함한다. 현재 단계의 조건을 적용하므로 SDD 작성 claim에 아직 작성하지 않은 AS-IS/PLAN의 리뷰 PASS를 요구하지 않는다. tracker의 관리 기록과 Epic 관리 문서 자체는 기존 예외를 유지한다. 제품 구현에 진입할 때는 아래 조건과 해당 grade gate를 별도로 충족한다.
 
 Trivial/Small/Medium Issue는 다음 조건을 모두 만족하면 구현을 시작할 수 있다.
 
@@ -233,12 +235,13 @@ claim/release, branch/worktree, cloud sandbox의 실행 절차는 `W/skills/para
 
 1. diff를 읽고 실제 동작 변경을 확정한다.
 2. 변경된 동작과 직접 연결된 business 문서를 최종 코드 기준으로 갱신한다.
-3. Verification Strategy의 test/lint/build/CI와 grade별 required review 결과를 확인한다.
+3. SDD 삭제 전에 Verification Strategy에 따른 구현의 필수 검증 근거를 확인하고 누락·무효화된 검증을 수행한다.
 4. P가 선언한 SDD 작업 문서 위치의 현재 작업 폴더를 삭제한다.
 5. P 문서 목차와 다른 문서에서 삭제된 SDD 경로 링크를 제거한다.
 6. 관련 review 문서에 현재 상태 필드가 있으면 실제 상태와 일치하도록 갱신한다. 과거 결정 내용 자체는 다시 쓰지 않는다.
-7. `[IMPLEMENTATION SUMMARY]` 댓글 하나를 남기고 PR 본문에 `Closes #{issue-number}`를 넣는다. 요약을 검증·required review 통과의 대체 근거로 쓰지 않는다.
-8. PR merge 후 Issue가 닫혔는지 확인한다.
+7. 예정된 저장소 파일 변경을 모두 마친 후보를 고정하고 grade별 CODE Review/self-review와 최종 검증의 유효한 근거를 확인한다. 앞선 검증은 입력 불변 근거가 있을 때만 재사용한다. 상세 순서와 변경 후 재확인은 [finishing-issues의 최종 후보 확인](../skills/finishing-issues/SKILL.md#5-prepareverify-pr-closure)을 따른다.
+8. `[IMPLEMENTATION SUMMARY]` 댓글 하나를 남기고 PR 본문에 `Closes #{issue-number}`를 넣는다. 요약을 검증·required review 통과의 대체 근거로 쓰지 않는다.
+9. PR merge 후 Issue가 닫혔는지 확인한다.
 
 business 문서를 갱신하기 전에 SDD 문서를 삭제하지 않는다.
 

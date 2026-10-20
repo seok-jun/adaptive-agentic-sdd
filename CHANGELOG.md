@@ -19,7 +19,13 @@ Workflow organization in the same preview branch:
 - Preserves current/manual model eligibility checks even without a model switch. Aligns packet evidence with existing input-based verification reuse: keep the actual execution identity and prove unchanged command inputs against the current candidate; missing or mismatched evidence remains stale.
 - Adds an installed Markdown target/anchor regression check and two fictional verification-reuse cases. The cases specify intended behavior; they are not executed model evaluations.
 
-Checked locally: six installer regression tests, including both tracker adapters, retained merge-setting values, legacy Epic rejection before output writes, and installed workflow/project links; integrity of the 50-file copy; structural checks for 39 cases / four skills in disposable installations. The installer's built-in skill/frontmatter checks passed. A separate source review and four scenario walkthroughs are document-level checks, not end-to-end model behavior evals. Operational outcomes and actual token use have not been measured.
+External-review follow-up:
+
+- Requires a lane and claim before the first execution-issue repository file write, including SDD and tests, while preserving read-only investigation, tracker management, and Epic-management exceptions. Applies current-phase prerequisites so claiming an AS-IS writing task does not require its future design reviews.
+- Places final CODE Review after business synchronization and SDD/link/status cleanup. Earlier CODE Review remains historical evidence when the repository candidate changes; unchanged verification inputs and an unchanged review candidate can reuse their valid evidence. Does not add a default second review or build run.
+- Adds two fictional regression specifications for first SDD write ownership and the final review target after closure edits. These remain document-level expected behavior specifications.
+
+Checked locally: six installer regression tests, including both tracker adapters, retained merge-setting values, legacy Epic rejection before output writes, and installed workflow/project links; integrity of the 50-file copy; structural checks for 41 cases / four skills in disposable installations. The installer's built-in skill/frontmatter checks passed. A separate source review and four scenario walkthroughs are document-level checks, not end-to-end model behavior evals. Operational outcomes and actual token use have not been measured.
 
 ## 1.0.0-preview.2
 

@@ -41,8 +41,6 @@ Epic 관리 문서의 종료는 `managing-issues`의 `Epic 조율`에서 전체 
 3. Human Decision·실행 명세·diff를 대조한다. 사람이 결정하지 않은 새 중요한 Decision이나 의미 변경이 있으면 P의 `[HUMAN DECISION REQUIRED]` 절차로 영향 작업과 closure를 중단한다. Agent 합의·review PASS를 사람 결정으로 대신하지 않는다.
 4. Large는 `design-review.md`에 따라 AS-IS와 PLAN 각각의 current-target 근거가 유효하고 필요한 재확인·reconciliation이 완료됐는지 확인한다. 누락·stale PASS·분리/선택/격리 실패를 구현 진행 사실로 정당화하지 않으며, 유효한 근거가 없으면 closure를 중단한다. Human에게 상세 리뷰 전체를 다시 읽도록 요구하지 않는다.
 5. scope 밖 변경은 allowed 안에서 안전하게 제거하거나 `BLOCKED`한다. W·M 고정 사본을 수정해야만 풀리면 공통 문제로 보고한다.
-6. `verification.md`의 `Grade별 review gate`를 적용한다. Trivial은 조건과 targeted validation·diff 대조, Small은 diff와 완료 기준 self-review, Medium은 `Independent Review` 판정, Large는 bounded independent code review 1회의 유효한 결과를 확인한다. Trivial에서 실행 의미 변경이 발견되면 최소 Small로 재판정한다. 기본 CODE review에 B를 추가하지 않는다.
-7. required reviewer에게 `execution-packets.md`의 현재 phase Review Packet을 제공한다. reviewer는 inventory와 PLAN handoff 완전성을 독립 확인하고 current code·fixture 해결을 검토한다. 누락·unresolved·INVALID/STALE 근거 또는 required finding 미해결이면 merge/complete로 진행하지 않는다.
 
 구현 문맥 전환 evidence와 fallback 한계도 해당 Packet 계약으로 소비한다. 필수 근거를 잃은 압축·인계를 성공으로 추정하지 않으며 로그 전문을 재수집하지 않는다. 반복 정체로 중단된 blocker는 `design-review.md`가 정한 해결·사람의 범위 결정 근거 없이 closure하지 않는다.
 
@@ -54,13 +52,13 @@ runtime behavior가 바뀐 경우에만 직접 영향을 받는 P의 business ru
 
 같은 business 파일을 다른 active lane/PR이 수정하면 `BLOCKED: documentation lane conflict`다. lifecycle 허용 범위는 `module-boundaries.md`를 따른다. runtime/product behavior가 바뀌지 않았으면 동기화를 위해 business 문서를 만들거나 수정하지 않는다.
 
-### 3. Verify
+### 3. Verify before SDD cleanup
 
 1. 선언된 영향 분석 결과를 사용하면 `execution-packets.md`의 `공통 영향 결과 참조와 로컬 소비`로 최신성·완전성을 확인한다. stale 결과로 필수 검증을 줄이거나 이전 SHA의 review PASS를 승계하지 않는다.
-2. diff·review finding·검증 입력이 안정화된 최종 후보에서 `verification.md`의 required broad command set을 완료한다. 입력 변경 뒤 targeted 재실행·필수 broad 재실행·입력 불변 PASS 재사용은 같은 원본의 시퀀싱과 유효성 조건으로 판정한다.
+2. SDD 삭제 전에 구현의 필수 검증 근거를 확인하고 누락·무효화된 검증을 수행한다. 입력 변경 뒤 targeted 재실행·필수 broad 재실행·입력 불변 PASS 재사용은 `verification.md`를 따른다. 이 시점의 확인을 정리 후 최종 후보의 CODE Review·완료 판정으로 대신하지 않는다. business 동기화 전 CODE Review가 있다면 과거 근거로 보존하고, 새 후보의 CODE Review는 5단계에서 판정한다.
 3. 빌드·테스트 명령 전 `build-preflight.md`와 `verification.md`의 `검증 환경`을 적용한다. 환경 실패를 제품 회귀로 단정하지 않으며 선언된 실제 빌드 JVM 확인·허용된 process-local 교정 결과만 canonical 근거로 사용한다. 미실행·환경 차단을 PASS로 기록하지 않는다.
 4. command/result와 필요한 CI를 확인한다. required failure·미실행 검증은 incomplete다. Trivial 등 해당 grade에 필요하지 않은 빌드나 선택적 Device QA/Runtime QA·report 부재를 새로운 gate로 만들지 않는다.
-5. 전체 변경 경로가 Issue allowed/forbidden과 일치하는지 다시 확인한다. Result/CODE Review Packet이 있으면 `execution-packets.md`의 current-head 검증 evidence와 PLAN Implementation finding 해결 조건을 충족해야 한다. 명령 성공 자기신고만으로 PASS를 증명하지 않는다.
+5. 전체 변경 경로가 Issue allowed/forbidden과 일치하는지 다시 확인한다. Result Packet이 있으면 `execution-packets.md`의 current-head 검증 evidence와 PLAN Implementation finding 해결 조건을 충족해야 한다. 명령 성공 자기신고만으로 PASS를 증명하지 않는다.
 6. 외부 blocker는 상태·재개 조건을 기록하고 `observations.md`와 활성 `token-diagnostic.md`의 BLOCKED/RESUME을 적용한다. 해소 근거 없는 재개·자동 재확인·반복 checkpoint를 하지 않는다.
 
 ### 4. Remove temporary SDD
@@ -74,6 +72,14 @@ Trivial/Small은 해당 없음이다. SDD가 있으면:
 3. historical review의 mutable status가 stale하면 status만 갱신한다.
 
 ### 5. Prepare/verify PR closure
+
+business 동기화, 현재 SDD 삭제, 링크·review status 정리처럼 예정된 저장소 파일 변경을 먼저 마친다. 그 결과를 commit하고 현재 base/head·전체 diff·inventory를 최종 리뷰 후보로 고정한다. 과거 CODE Review의 target과 다른 후보를 기존 PASS로 완료 처리하지 않는다.
+
+1. `verification.md`의 `Grade별 review gate`를 현재 후보에 적용한다. Trivial·Small은 해당 self-review, Medium은 `Independent Review` 판정, Large는 bounded independent code review 1회의 유효한 결과를 확인한다. Trivial 조건을 벗어나면 최소 Small로 재판정한다. 이미 같은 후보에서 유효한 리뷰는 재사용하며 기본 CODE review에 B를 추가하지 않는다.
+2. required reviewer에게 `execution-packets.md`의 current CODE Review Packet을 제공한다. reviewer는 전체 inventory와 PLAN handoff의 완전성·current code/fixture 해결을 독립 확인한다. 삭제한 SDD의 검토 원문은 삭제 전 exact commit으로 참조한다. 필요한 근거가 없거나 필수 해결 finding·INVALID/STALE이 남으면 merge/complete로 진행하지 않는다.
+3. 리뷰 finding 반영 후 안정화된 최종 후보에서 `verification.md`의 required broad command set을 확인한다. 3단계의 입력 불변 PASS는 실행 identity를 보존해 재사용하고, 정리한 문서를 소비하는 static validator 등 누락·무효화된 검증만 실행한다. 리뷰·검증 보정으로 저장소 파일을 다시 바꾸면 이 최종 후보 확인부터 갱신한다. 빌드 PASS 재사용을 이전 CODE Review target의 자동 승계로 확대하지 않는다.
+
+아래 PR·SUMMARY 기록은 위 후보의 유효한 리뷰·검증 근거에 연결한다. PR metadata만 바뀌고 저장소 후보가 불변이면 같은 CODE Review를 다시 실행하지 않는다.
 
 1. PR scope를 Issue 경계·완료 기준과 대조하고 body에 `Closes #{issue-number}`를 넣는다.
 2. 기존 `[IMPLEMENTATION SUMMARY]` 하나에 Decision 준수·execution deviation·Human escalation·verification·남은 위험을 정리한다. 이미 있으면 갱신하며 새 문서·Human 승인 gate를 추가하지 않는다.
