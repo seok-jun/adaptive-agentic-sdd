@@ -6,6 +6,7 @@
 | --- | --- |
 | Issue, `#N` | 선언한 저장소의 GitHub Issue |
 | `priority:*`, `grade:*`, `status:*` 라벨 | 같은 이름의 Issue 라벨 |
+| Epic 관리 문서 | `type:epic` 라벨과 본문 `## 작업 유형`의 `Epic`. `grade:*` 없음. 하위 Issue는 본문에서 연결하며 전체 완료 근거 확인 뒤 관리 Issue를 닫음 |
 | assignee | Issue assignee |
 | Issue 댓글, URL, `updated_at` | Issue comment와 그 URL·`updated_at` |
 | `[CLAIM]` / `[RELEASE]` | 해당 태그로 시작하는 Issue comment |

@@ -13,13 +13,14 @@ import re
 import sys
 
 RENDERER_VERSION = "1"
+EXECUTION_GRADES = ("Trivial", "Small", "Medium", "Large")
 NL = "\n"
 COPY_DIRNAME = ".adaptive-sdd"
 COPY_DIRS = ("methodology", "workflow", "templates", "tools")
 TOOL_DIRS = {"claude-code": ".claude/skills", "codex": ".agents/skills"}
 SKILLS = [
     ("managing-issues",
-     "{name}의 작업 항목(Issue)을 생성·분류·우선순위 재조정·본문 재작성할 때 사용한다. Priority/SDD grade 판정, 작업 경계, "
+     "{name}의 작업 항목(Issue)을 생성·분류·우선순위 재조정·본문 재작성하고 선택적 Epic의 작업 구성·의존성을 조율할 때 사용한다. Priority/실행 grade 판정, 작업 경계, "
      "Mermaid·Visual Spec 판단에 쓴다. 코드 구현에는 사용하지 않는다."),
     ("implementing-issues",
      "{name}의 승인된 Issue를 번호나 명시한 참조로 받아 명시한 모듈 경계 안에서 구현한다. 기존 Issue의 진행·구현·마무리를 요청할 때 "
@@ -192,6 +193,13 @@ def load_values(project_root):
         raise InstallError("project.json: tracker.merge_method must be merge, squash, rebase, or empty")
     for path, keys in LIST_SHAPES.items():
         _check_list(values, path, keys)
+    for i, mapping in enumerate(values.get("grade_mapping") or []):
+        if mapping["min_grade"] not in EXECUTION_GRADES:
+            raise InstallError(
+                f"project.json: grade_mapping[{i}].min_grade must be one of "
+                f"{', '.join(EXECUTION_GRADES)}; Epic is an optional management type, "
+                "not an execution grade. Reclassify the actual change; do not auto-convert it."
+            )
     return values
 
 

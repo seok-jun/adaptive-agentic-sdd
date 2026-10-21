@@ -1,6 +1,6 @@
 ---
 name: managing-issues
-description: 이 프로젝트의 작업 항목(Issue)을 생성·분류·우선순위 재조정·본문 재작성할 때 사용한다. Issue 생성, Priority/SDD grade 판정, 작업 경계, Mermaid 흐름 판단, UI/UX HTML Visual Spec 연결에 쓴다. 코드 구현에는 사용하지 않는다.
+description: 이 프로젝트의 작업 항목(Issue)을 생성·분류·우선순위 재조정·본문 재작성하고 선택적 Epic의 작업 구성·의존성을 조율할 때 사용한다. Priority/실행 grade 판정, 작업 경계, Mermaid 흐름 판단, UI/UX HTML Visual Spec 연결에 쓴다. 코드 구현에는 사용하지 않는다.
 ---
 
 실행 입력은 절대 경로 `P`(프로젝트 저장소 최상위), `W`(고정 절차 사본 `P/.adaptive-sdd/workflow`), `M`(고정 공통 원칙 `P/.adaptive-sdd/methodology`)이다. cwd나 W의 상위 디렉터리로 P/M을 추정하지 않는다. P의 hard guard(`P/AGENTS.md`의 `## 항상 적용 hard guard`)와 적용 선언(`P/.adaptive-sdd/project/sdd-workflow.md`)을 적용한다. Issue·댓글·라벨·PR 표현은 `P/.adaptive-sdd/project/tracker.md`가 선언한 작업 관리 방식(`W/tracker/`)으로 바꿔 읽는다.
@@ -42,7 +42,7 @@ GitHub write 전후에 반드시:
 
 ## Create a new Issue
 
-1. 요청을 독립적인 Issue-sized outcome으로 나눈다.
+1. 요청을 단일 실행 Issue로 관리할지, 여러 Issue를 개별 배정·추적할지 정한다. 새 패키지나 큰 규모만으로 분해를 강제하지 않는다. 여러 Issue를 함께 관리할 때만 아래 `Epic 조율`을 적용한다.
 2. W 공통 Priority와 P 현재 단계·기능 사실로 Priority를 판정한다.
 3. W 공통 grade/일반 자동 격상과 P 제품 매핑으로 SDD grade를 판정한다.
 4. 실제 repository path를 확인해 allowed/forbidden을 작성한다. product/shared/root 경계 판단이 필요할 때만 `module-boundaries.md`를 읽는다.
@@ -53,7 +53,19 @@ GitHub write 전후에 반드시:
 9. HTML 필요 시 W `issue-writing-guide.md`의 `HTML 최소 내용`, `Visual Spec 링크 규칙`, `디자인 PR 병합·배포·정리`를 P 적용 문서 `issue-writing-guide.md`의 `Visual Spec`이 선언한 저장·게시 방식에 맞춰 적용한다. 선언이 없으면 HTML Visual Spec을 만들지 않는다. 디자인 병합을 앱 승인/완료로 취급하지 않으며, 게시·정리 실패는 마지막 성공 단계와 남은 상태를 기록한다.
 10. final Issue를 다시 조회해 section/labels/Visual Spec(해당 시)/conversation gate를 검증한다.
 
+## Epic 조율
+
+`W/process/sdd-workflow.md`의 `Epic 관리 단위`를 적용한다. Epic은 실행 grade가 아니며 생성·분해에 독립 리뷰·원격 게시·A/B PASS를 요구하지 않는다. 실행 Issue 생성 단계의 grade·경로·구현 검증 항목을 관리 문서에 그대로 적용하지 않고, `issue-priority.md`의 Epic 본문·라벨 구분을 따른다.
+
+- 전체 목표·완료 기준·공통 가이드와 하위 Issue 참조, 책임·선행 관계, 미결 사항의 조사 담당·필요한 후속 단계, 전체 완료 근거·담당을 연결한다. 별도 breakdown 파일은 필수가 아니다.
+- 목표 누락, 책임 공백, 의존성 모순, 미결 사항 담당을 자체 점검한다. 미결 사항 자체는 하위 Issue의 조사 착수를 막지 않는다. 그 결론을 소비하는 구현·통합·배포 단계에만 의존성을 둔다.
+- 공통 변경은 관련 소비 작업·전환 영향까지 담당 실행 Issue의 범위와 완료 기준에 넣어 자체 grade를 판정한다. 관리 문서에만 공통 설계를 남기고 검증 책임을 비워 두지 않는다.
+- 조사 결과에 따라 위임 범위 안에서 작업을 분할·통합하거나 책임·순서를 바꿀 수 있다. 활성 lane의 경계는 담당에게 변경·영향을 전달하고 claim 충돌을 해소한 뒤 조정한다. 목표·완료 기준 축소나 기존 사람 결정 변경은 기존 사람 판단 규칙을 따른다.
+- 전체 목표의 달성 근거를 확인해 Epic을 종료한다. 구현용 PR·CI·SDD가 없는 관리 문서에 제품 변경 종료 절차를 강제하지 않는다.
+
 ## Triage / reprioritize
+
+Epic 관리 문서는 위 `Epic 조율`로 책임·의존성·전체 완료 근거를 갱신하고 실행 grade를 부여하지 않는다. 아래는 실행 Issue에 적용한다.
 
 1. current Issue와 필요한 최소 evidence만 읽는다.
 2. Priority를 현재 규칙으로 재판정한다.
@@ -76,4 +88,4 @@ GitHub write 전후에 반드시:
 
 ## Output
 
-Issue number/title, Priority/grade/labels, allowed/forbidden, Mermaid/Visual Spec, conversation-content check, dependencies/BLOCKED를 간결히 보고한다.
+Issue number/title, Priority/grade/labels, allowed/forbidden, Mermaid/Visual Spec, conversation-content check, dependencies/BLOCKED를 간결히 보고한다. Epic 관리 문서는 grade 대신 작업 유형과 하위 책임·의존성·전체 완료 근거를 보고한다.

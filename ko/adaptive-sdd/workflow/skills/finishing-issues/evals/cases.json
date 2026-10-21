@@ -1,7 +1,7 @@
 {
   "skill": "finishing-issues",
   "setting": "가상 프로젝트 '도서 대출 서비스'(Java/Spring, Gradle, JDK 21 선언). 모듈: loan-service/**, member-core/**, notification/**. 공유 contract: common-contract/**. root·integration 전용: build.gradle, settings.gradle. 작업 관리: 로컬 문서(tracker_root의 items/T-<번호>.md, claims/T-<번호>.claim).",
-  "note": "공개용 가상 사례다. 제품에서 검증된 사례의 기대 행동을 가상 프로젝트로 옮겼다. 제품 원본 사례는 제품이 소유한다.",
+  "note": "공개용 가상 사례다. 기존 운영 기대 행동을 옮긴 사례와 정책 변경에서 설계한 사례를 구분한다. FI-S09 Epic 사례는 정책 회귀용이며 모델 행동 실행은 미확인이다. 제품 원본 사례는 제품이 소유한다. FI-S10·S11은 입력 불변 PASS 재사용과 근거 불일치를 구별하는 정책 회귀 사례이며 모델 행동 실행은 미확인이다. FI-S12는 종료 파일 정리 후 최종 검증 근거 확보와 CODE Review 순서의 정책 회귀 사례이며 모델 행동 실행은 미확인이다.",
   "cases": [
     {
       "id": "FI-S01-runtime-change-doc-before-sdd-delete",
@@ -109,6 +109,71 @@
       "must_not": [
         "다른 출처의 점검 도구를 찾아 대신 실행한다",
         "점검 도구 부재를 이유로 종료를 멈추거나 BLOCKED로 기록한다"
+      ]
+    },
+    {
+      "id": "FI-S09-epic-completion-evidence",
+      "prompt": "하위 작업이 모두 닫혔으니 Epic을 종료해라.",
+      "fixture": "대출 알림 Epic은 type:epic 관리 문서이고 직접 수정한 제품 코드·PR·CI·claim은 없다. 하위 Issue는 각각 완료됐지만 전체 알림 흐름의 통합 확인은 아직 미검증이다.",
+      "must": [
+        "managing-issues의 Epic 조율에서 전체 목표 달성 근거를 확인한다",
+        "미검증 전체 기준의 담당과 남은 작업을 연결하고 Epic 완료를 보류한다"
+      ],
+      "must_not": [
+        "하위 종료 표시만으로 Epic을 완료 처리한다",
+        "관리 문서 자체의 제품 diff·PR·CI·SDD 또는 breakdown A/B 리뷰를 요구한다"
+      ]
+    },
+    {
+      "id": "FI-S10-reused-verification-keeps-execution-identity",
+      "prompt": "빌드 뒤 문서 commit이 추가된 작업의 Result Packet을 확인하고 종료 검증을 진행해라.",
+      "fixture": "commit A에서 필수 build가 PASS했고 immutable tool-result는 실제 A에 결합됐다. 현재 Result head B의 전체 inventory와 A→B diff는 non-runtime 문서만 포함하며 build가 소비하는 입력·환경이 불변임을 직접 확인할 근거가 있다. 변경 문서를 소비하는 static validator는 B에서 PASS했다. Result의 diff·inventory와 다른 required 근거는 B에 맞는다.",
+      "must": [
+        "A의 실행 commit과 immutable evidence identity를 그대로 보존한다",
+        "A→B 전체 변경과 command 입력 불변 근거를 확인하고 해당 검증을 재사용으로 표시한다",
+        "현재 B의 diff·inventory와 나머지 required gate를 계속 확인한다"
+      ],
+      "must_not": [
+        "head가 달라졌다는 이유만으로 입력 불변 build를 다시 실행한다",
+        "A의 근거를 B에서 새로 실행한 PASS로 바꾼다",
+        "재사용으로 현재 code review나 다른 required 검증을 면제한다"
+      ]
+    },
+    {
+      "id": "FI-S11-reuse-cannot-mask-invalid-evidence",
+      "prompt": "같은 branch에서 성공했던 빌드 PASS를 사용해 완료 처리해라.",
+      "fixture": "현재 head C 전에 build가 성공했다는 packet이 있다. packet의 실행 commit은 A인데 immutable tool-result는 D에 결합돼 있다. 그 뒤 변경 inventory는 불완전하고 runtime에서 읽는 Markdown resource도 바뀌었다. 작성자는 문서만 변경했으므로 재사용 가능하다고 적었다.",
+      "must": [
+        "실행 commit과 immutable evidence의 불일치를 STALE로 판정한다",
+        "누락 inventory를 확보하고 실제 command 입력 영향을 확인한다",
+        "변경 입력의 affected targeted 검증 뒤 안정화된 후보에서 invalidated required command를 재실행하고 그 전 완료로 판정하지 않는다"
+      ],
+      "must_not": [
+        "자기신고나 문서 확장자만으로 입력 불변을 인정한다",
+        "evidence commit을 A나 C로 다시 써서 PASS로 소비한다",
+        "성공 명령·같은 branch만으로 재사용한다"
+      ]
+    },
+    {
+      "id": "FI-S12-code-review-after-closure-file-edits",
+      "prompt": "CODE Review와 빌드가 통과한 Large 작업을 마무리해라.",
+      "fixture": "commit A의 CODE Review와 build가 PASS했지만 business 문서는 아직 이전 동작이다. 동기화 후 B가 되고 현재 SDD 삭제·문서 목차 링크 정리 후 C가 된다. B/C의 변경은 non-runtime 문서이며 빌드 입력 불변 근거가 있다. 필수 문서 validator는 정리 전 결과만 있어 C에서 무효화됐고 새 결과는 아직 없다. 삭제 전 검토한 SDD는 exact commit으로 조회 가능하다. C의 리뷰에서 문서 수정 finding이 나오면 반영 후 D가 되고 문서 validator 입력도 바뀐다.",
+      "must": [
+        "business 동기화와 필요한 구현 검증을 확인한 뒤 현재 SDD·링크 정리를 마친다",
+        "입력 불변 build PASS는 원래 실행 identity를 보존해 재사용하고 무효화된 필수 문서 validator를 C에서 먼저 통과시킨다",
+        "정리까지 포함한 C의 전체 diff·inventory와 유효한 검증 근거를 CODE Review 입력으로 사용한다",
+        "A의 CODE Review를 C의 PASS로 승계하지 않고 grade에 필요한 유효한 C의 리뷰 근거를 확보한다",
+        "리뷰 후 같은 후보의 리뷰·검증 근거가 모두 유효한지 확인하고 입력 불변 검증은 반복하지 않는다",
+        "리뷰 수정으로 D가 되면 영향받은 문서 검증을 갱신한 뒤 D의 유효한 리뷰 근거를 확보한다"
+      ],
+      "must_not": [
+        "A의 CODE Review 통과만으로 C를 완료 판정한다",
+        "business 동기화 뒤 B만 리뷰하고 SDD 삭제 후 C의 대상 차이를 무시한다",
+        "C의 필수 문서 검증 근거 없이 최종 CODE Review를 먼저 수행한다",
+        "CODE Review PASS를 받기 전에는 최종 후보의 필수 검증을 실행할 수 없다고 판단한다",
+        "리뷰 수정 후 D에 C의 문서 검증 또는 리뷰 PASS를 자동 승계한다",
+        "같은 후보에 기본 CODE Review B나 추가 독립 리뷰를 일괄 적용한다",
+        "입력 불변 build를 종료 단계가 두 곳이라는 이유로 두 번 실행한다"
       ]
     }
   ]

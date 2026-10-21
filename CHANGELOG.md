@@ -1,5 +1,33 @@
 # Changelog
 
+## 1.0 preview — unreleased
+
+Meaning change in the Korean workflow (English workflow edition still pending):
+
+- Uses four execution grades: Trivial, Small, Medium, Large. Epic becomes an optional management type for separately tracked issues; a single Large issue remains valid. New packages/modules no longer force an Epic or decomposition.
+- Removes the mandatory decomposition publication and Review A/B gate. Unresolved questions alone do not block child investigation; decisions are dependencies of the later steps that need them.
+- Assigns shared-change verification, consumer compatibility, and transition effects to an owning execution issue. Reuses applicable upstream analysis without waiving required current-target reviews or verification.
+- Keeps orchestration within authorized scope, human control over goal/acceptance reductions and prior decisions, and evidence for overall completion. Documents and generated tracker guidance distinguish management-only closure from implementation/PR closure.
+- Rejects `grade_mapping.min_grade: Epic` rather than silently converting it. Documents migration and retains the legacy `human_judgment.large_epic_merge` setting key without automatically waiving existing human permissions.
+- Adds seven fictional policy-regression cases. They are expected behavior specifications, not evidence of executed model behavior or operational improvement. No published tag is changed.
+
+Workflow organization in the same preview branch:
+
+- Keeps classification, entry conditions, and Epic orchestration in `sdd-workflow.md`. Moves SDD artifact details, design reviews, verification, observations, and optional token diagnostics into dedicated process documents with explicit read conditions.
+- Makes model routing/qualification and execution/result/review packet contracts separate owners. Execution and finishing skills call the relevant contract at the point of use; same-run valid evidence is reused. Packet serialization and size measurement belong to skill evaluation, outside routine execution inputs.
+- Clarifies that read-only investigation does not require an edit claim or a new lane, and that overlapping reads are not write conflicts. Product edits retain claim, grade, access, and dependency requirements.
+- Preserves current/manual model eligibility checks even without a model switch. Aligns packet evidence with existing input-based verification reuse: keep the actual execution identity and prove unchanged command inputs against the current candidate; missing or mismatched evidence remains stale.
+- Adds an installed Markdown target/anchor regression check and two fictional verification-reuse cases. The cases specify intended behavior; they are not executed model evaluations.
+
+External-review follow-up:
+
+- Requires a lane and claim before the first execution-issue repository file write, including SDD and tests, while preserving read-only investigation, tracker management, and Epic-management exceptions. Applies current-phase prerequisites so claiming an AS-IS writing task does not require its future design reviews.
+- Places final CODE Review after business synchronization and SDD/link/status cleanup. Earlier CODE Review remains historical evidence when the repository candidate changes; unchanged verification inputs and an unchanged review candidate can reuse their valid evidence. Does not add a default second review or build run.
+- Prepares valid required verification evidence before final CODE Review, including validators invalidated by closure edits. Review corrections refresh the candidate and affected verification before its review; unchanged verification inputs do not trigger repeated runs. Extends FI-S12 to specify this order without adding a new case or gate.
+- Adds two fictional regression specifications for first SDD write ownership and the final review target after closure edits. These remain document-level expected behavior specifications.
+
+Checked locally: six installer regression tests, including both tracker adapters, retained merge-setting values, legacy Epic rejection before output writes, and installed workflow/project links; integrity of the 50-file copy; structural checks for 41 cases / four skills in disposable installations. The installer's built-in skill/frontmatter checks passed. A separate source review and four scenario walkthroughs are document-level checks, not end-to-end model behavior evals. Operational outcomes and actual token use have not been measured.
+
 ## 1.0.0-preview.2
 
 Adds executable procedures, skills, an eval structure, and an installer to the Korean edition, and fixes three human-judgment gaps in the common methodology for both editions.

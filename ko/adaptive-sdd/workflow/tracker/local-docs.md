@@ -23,6 +23,7 @@
 | Issue 번호 `#N` | `<ID>` |
 | Issue body | 작업 문서의 `## 메타`와 `## 기록`을 뺀 본문 section |
 | `priority:*`, `grade:*`, `status:*` 라벨 | `## 메타`의 `priority:`, `grade:`, `status:` 줄. 각각 정확히 하나 |
+| Epic의 `type:epic` 라벨 | 관리 문서 `## 메타`의 `type: epic`과 본문 `## 작업 유형`의 `Epic`. `grade:` 줄은 두지 않는다. priority·status는 유지한다 |
 | assignee | `## 메타`의 `담당:` 줄 |
 | Issue 댓글 | `## 기록`에 덧붙이는 항목. 아래 "기록 항목" 형식 |
 | 댓글 URL / ID | `items/<ID>.md#<항목 id>` |
@@ -70,6 +71,8 @@ status: open
 ```
 
 `## 메타`의 값과 본문의 `## Priority`·`## SDD grade` 값은 항상 같아야 한다(W의 본문–라벨 일치 규칙).
+
+Epic 관리 문서는 grade 대신 위 작업 유형을 사용한다. 하위 종료가 자동으로 Epic을 닫지 않으며, 담당이 전체 목표의 달성 근거를 확인한 뒤 status를 갱신하고 `## 기록`에 종료 근거를 남긴다. 제품 PR의 `[MERGED]`·`[PRODUCT COMPLETE]`를 관리 문서 자체에 요구하지 않는다.
 
 ## 기록 항목
 

@@ -20,11 +20,13 @@ A common layer that a project copies, pins, and adjusts to itself.
 `ko/adaptive-sdd/` is a full pinned copy that adds, on top of the methodology:
 
 - **Workflow procedures and four skills** — organizing work items (including creating them), isolating work in a worktree, design and implementation, and verification and closing. They were extracted from procedures refined over a long period in one product, with product-specific parts moved out.
-- **An eval structure** — static checks, behavior cases, cross-agent comparison, grading and result records, 30 fictional seed cases, and rules for turning a recorded incident into a diagnostic case.
+- **An eval structure** — static checks, behavior cases, cross-agent comparison, grading and result records, fictional seed and policy-regression cases, and rules for turning a recorded incident into a diagnostic case. New policy cases distinguish expected behavior from executed results.
 - **An improvement loop** — closing records → re-evaluation under `adaptation.md` → incident cases → a comparison whose scope a human approves → adoption decided and recorded by a human.
 - **An installer** — `tools/install.py` (Python 3.8+, standard library only) generates the project-dependent files (project documents, skill entry files for Claude Code and Codex, marked blocks in `AGENTS.md`, `CLAUDE.md`, and `.gitattributes`) from the project's `project.json`, and checks the copy and generated files against their hashes.
 
 The English edition of these parts is pending and planned for a later preview. Until then, the Korean edition is the only source for them, and English-only projects use the methodology documents above.
+
+The unreleased Korean workflow uses four execution grades (Trivial, Small, Medium, Large). Epic is an optional grouping for independently tracked issues, with no separate decomposition review gate. A single Large issue remains valid; shared-change verification, human-decision boundaries, and evidence for the overall outcome remain required. See the [Korean workflow](ko/adaptive-sdd/workflow/process/sdd-workflow.md#epic-관리-단위) for the policy; its English edition is still pending.
 
 ## What this is not
 

@@ -1,6 +1,8 @@
 <!-- 생성 파일. 직접 고치지 않는다. 값은 P/.adaptive-sdd/project.json을 고치고 다시 생성한다. -->
 # {{project.name}} 작업 관리 방식
 
+실행 Issue는 네 실행 grade를 사용한다. Epic 관리 문서는 본문 `작업 유형: Epic`과 `type:epic`(local-docs는 메타 `type: epic`)으로 구분하고 grade를 두지 않는다. 하위 Issue를 연결하며 전체 목표의 달성 근거로 종료한다. 기존 `grade:Epic` 전환은 W `process/sdd-workflow.md`의 `기존 Epic 전환`을 따른다.
+
 - 방식: `{{tracker.kind}}` — W `P/.adaptive-sdd/workflow/tracker/{{tracker.kind}}.md`의 대응표로 W 절차의 Issue·댓글·라벨·assignee·PR·closing reference를 바꿔 읽는다.
 {{#if tracker.root}}- tracker_root: `{{tracker.root}}`
 {{else}}{{#if tracker_is_local}}- tracker_root: 미정 — 작업 항목을 만들거나 읽는 절차는 `BLOCKED: tracker unavailable`로 멈춘다

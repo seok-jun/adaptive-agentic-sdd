@@ -1,11 +1,21 @@
 ---
 name: parallel-development
-description: 이 프로젝트의 병렬 agent 작업의 claim·격리·동기화·해제·통합을 관리한다. Issue 코드 수정 전, branch/worktree 생성, 경로 충돌 확인, 공유 contract 처리에 사용한다. Issue 초안만 작성할 때는 사용하지 않는다.
+description: 이 프로젝트의 병렬 agent 작업의 claim·격리·동기화·해제·통합을 관리한다. 실행 Issue의 SDD·테스트·코드 등 P 작업 파일 최초 수정 전, branch/worktree 생성, 경로 충돌 확인, 공유 contract 처리에 사용한다. Issue 초안이나 읽기 전용 조사만 수행할 때는 사용하지 않는다.
 ---
 
 실행 입력은 절대 경로 `P`(프로젝트 저장소 최상위), `W`(고정 절차 사본 `P/.adaptive-sdd/workflow`), `M`(고정 공통 원칙 `P/.adaptive-sdd/methodology`)이다. cwd나 W의 상위 디렉터리로 P/M을 추정하지 않는다. P의 hard guard(`P/AGENTS.md`의 `## 항상 적용 hard guard`)와 적용 선언(`P/.adaptive-sdd/project/sdd-workflow.md`)을 적용한다. Issue·댓글·라벨·PR 표현은 `P/.adaptive-sdd/project/tracker.md`가 선언한 작업 관리 방식(`W/tracker/`)으로 바꿔 읽는다.
 
 # Parallel Development
+
+## 읽기 전용 조사와 수정 진입
+
+같은 파일을 읽는 조사는 수정 경로 충돌이 아니다. 읽기 전용 조사만 하려면 새 lane·branch/worktree·수정 claim을 만들지 않는다. 조사 자체의 접근 권한·현재 지시·확정된 선행 조건을 확인하고 기준 revision을 남긴다. 미결 공통 규칙의 결론은 그 결과에 의존하는 구현·통합·배포 전에 확보한다.
+
+아래 Inputs·신규 lane·Claim은 실제 lane 생성 또는 실행 Issue의 P 저장소 작업 파일 최초 생성·수정·삭제 전에 적용한다. 현재 Issue의 SDD, 테스트, 제품 코드도 포함한다. 조사에서 파일 작성으로 전환하면 현재 단계의 작업 지시·의존성·경계를 확인하고 lane·claim을 확보한다. 같은 Issue의 기존 claim도 확인해 두 담당자가 같은 SDD나 branch에 동시에 쓰지 않는다.
+
+SDD 작성에는 해당 작성 단계의 조건을 적용한다. AS-IS를 쓰기 위한 claim에 AS-IS/PLAN 리뷰 PASS나 후속 구현 준비 완료를 요구하지 않는다. 제품 구현은 필요한 grade gate와 구현 의존성을 충족한 뒤 시작한다. lifecycle artifact의 경로 기재 예외는 claim 면제가 아니다.
+
+tracker의 Issue·관측·claim/release 기록과 Epic 관리 문서 자체는 기존 관리 절차를 따른다. 이 기록을 쓰려면 먼저 구현 claim을 가져야 한다는 순환 조건을 만들지 않는다. 읽기 전용이라는 설명으로 기존 쓰기 경계나 required review를 면제하지 않는다.
 
 ## Inputs
 
@@ -47,7 +57,7 @@ W·M 고정 사본(`P/.adaptive-sdd/workflow`, `P/.adaptive-sdd/methodology`)은
 
 ## Claim
 
-1. Priority와 현재 사용자 지시상 구현 가능한지 확인한다.
+1. Priority와 현재 사용자 지시·선행 조건상 현재 단계의 조사 결과 작성·설계·구현 작업이 가능한지 확인한다. 후속 구현의 미결 조건을 선행 SDD 작성 claim의 차단 조건으로 적용하지 않는다.
 2. allowed path를 active `[CLAIM]`/open PR path와 비교한다.
 3. overlap이면 `BLOCKED: overlapping lane`.
 4. shared/root integration-only path가 필요한 ordinary lane이면 claim하지 않는다.
@@ -66,7 +76,7 @@ forbidden:
 ```
 
 8. comments/labels/assignees/open PR을 다시 확인한다.
-9. 경쟁 claim이 생겼으면 즉시 release하고 code를 수정하지 않는다.
+9. 경쟁 claim이 생겼으면 즉시 release하고 SDD를 포함한 작업 파일을 수정하지 않는다.
 
 ## Synchronization
 
@@ -79,15 +89,7 @@ forbidden:
 
 ## SDD review candidate publication
 
-Large/Epic AS-IS·PLAN independent review candidate는 현재 Issue branch의 exact commit으로 고정한다.
-
-1. 초안 중 local commit은 허용한다.
-2. review handoff 직전에 candidate commit을 현재 Issue branch의 remote branch로 push한다.
-3. remote branch history가 exact candidate SHA를 포함하고 해당 SHA의 artifact 경로가 remote에서 조회되는지 확인한다. local remote-tracking ref나 작성자의 worktree 존재만으로 remote-resolvable 상태를 추정하지 않는다.
-4. Issue handoff에는 Issue 번호, remote branch, phase, exact SHA와 artifact 경로를 기록한다. reviewer의 local path 접근을 요구하지 않는다.
-5. finding 반영으로 review-affecting artifact가 바뀌면 새 commit을 push하고 새 SHA에서 `W/process/sdd-workflow.md` (공통 계약·수행법) / `P/.adaptive-sdd/project/sdd-workflow.md` (제품 적용·권한·검증)의 의미·영향 판정과 current-target 재확인 chain을 적용한다. 이전 PASS를 자동 승계하지 않는다. 기록/head만 바뀌고 검토 artifact inventory·bytes, Decision scope·upstream과 검토 전제가 불변이면 기존 검토 target을 유지한다. branch head 변경만으로 A/B를 다시 요구하지 않는다.
-
-push 또는 remote resolution 확인이 실패하면 상태를 반드시 `BLOCKED: SDD candidate remote push failed`로 기록해 중단하고 local-only review로 fallback하지 않는다. remote branch와 exact SHA만으로 publication은 충분하므로 이 단계에서 PR이나 draft PR을 만들지 않는다. 모든 commit의 즉시 push를 요구하지 않으며, 신규 lane의 freshly fetched `origin/main` base와 기존 worktree/claim lifecycle을 변경하지 않는다. Medium 이하에는 새로운 gate를 만들지 않는다.
+현재 Issue branch의 AS-IS·PLAN 검토 후보 게시에는 [설계 리뷰의 원격 후보 게시](../../process/design-review.md#원격-검토-후보-게시)를 적용한다. candidate·artifact의 remote 조회 근거를 인계하고, 변경 후보의 재검토는 같은 문서의 의미·영향 판정을 따른다. 신규 lane의 base와 기존 claim·worktree lifecycle은 위 절차를 유지한다.
 
 ## Shared contracts
 

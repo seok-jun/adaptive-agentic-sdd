@@ -87,11 +87,15 @@ Medium
 신규 Issue는 생성 직후 다음 라벨을 **각각 정확히 하나** 가져야 한다.
 
 - Priority: `priority:P0`, `priority:P1`, `priority:P2`, `priority:P3`
-- SDD grade: `grade:Trivial`, `grade:Small`, `grade:Medium`, `grade:Large`, `grade:Epic`
+- SDD grade: `grade:Trivial`, `grade:Small`, `grade:Medium`, `grade:Large`
 
 agent가 Issue 생성 API에서 두 라벨을 함께 지정할 수 있으면 생성 요청에 포함한다. API 제약으로 한 번에 적용되지 않으면 생성 직후 보정하고, 다시 조회해 두 라벨이 확인되기 전에는 완료로 보고하지 않는다.
 
 본문 값과 라벨이 다르면 임의로 라벨을 우선하지 않는다. 판정 근거를 다시 확인한 뒤 **본문과 라벨을 같은 값으로 수정한다.**
+
+### Epic 관리 문서의 본문과 라벨
+
+위 실행 Issue의 필수 본문·grade 규칙은 Epic 관리 문서에 그대로 적용하지 않는다. Epic에는 `## 작업 유형`에 `Epic`을 적고 `type:epic` 라벨과 Priority 라벨을 부여하며, `## SDD grade`와 `grade:*`는 두지 않는다. 목표·전체 완료 기준·공통 가이드, 하위 Issue 참조와 책임·의존성, 미결 사항 담당·필요한 후속 단계, 전체 완료 근거와 담당을 기존 본문에 둔다. 제품 수정 경로·구체 검증은 담당 실행 Issue에 둔다. `W/process/sdd-workflow.md`의 `Epic 관리 단위`와 `기존 Epic 전환`을 따른다.
 
 ## Priority 변경
 

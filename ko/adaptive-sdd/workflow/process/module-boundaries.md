@@ -30,7 +30,7 @@
 
 ## Lifecycle artifact 예외
 
-다음 파일/metadata는 제품 구현 ownership과 별개인 **Issue lifecycle artifact**다. 아래 조건을 충족할 때만 `수정 허용`에 별도 기재하지 않고 변경할 수 있다.
+다음 파일/metadata는 제품 구현 ownership과 별개인 **Issue lifecycle artifact**다. 아래 조건을 충족할 때만 `수정 허용`에 별도 기재하지 않고 변경할 수 있다. 경로 기재 예외는 실행 Issue의 SDD 등 P 작업 파일에 대한 lane·claim 면제가 아니다. 작업 관리 metadata와 Epic 관리 문서 자체의 기존 관리 절차는 유지한다.
 
 ### 작업 관리 metadata
 
@@ -73,14 +73,14 @@
 
 ## 병렬 lane 선점
 
-제품 코드 수정 전에는 active lane의 allowed path가 현재 Issue와 겹치지 않는지 확인하고 현재 lane을 claim해야 한다. **claim/release의 실행 순서, metadata와 comment 형식은 `W/skills/parallel-development/SKILL.md`가 canonical owner**이며 이 문서에서 중복 정의하지 않는다.
+실행 Issue의 SDD·테스트·코드 등 P 작업 파일 최초 생성·수정·삭제 전에는 active lane의 allowed path와 같은 Issue의 claim을 확인하고 현재 lane을 확보해야 한다. 읽기 전용 조사와 tracker 관리 기록의 기존 예외는 유지한다. **claim/release의 실행 순서, metadata와 comment 형식은 `W/skills/parallel-development/SKILL.md`가 canonical owner**이며 이 문서에서 중복 정의하지 않는다.
 
 이 문서가 소유하는 경계 불변식은 다음과 같다.
 
 - 다른 활성 `[CLAIM]` 또는 open PR과 제품 구현 경로가 겹치면 구현하지 않는다.
 - shared/root integration-only 경로를 ordinary lane이 claim하지 않는다.
 - Issue의 allowed/forbidden이 없으면 제품 코드 수정을 시작하지 않는다.
-- claim 이후 새 overlap이 확인되면 제품 코드를 수정하지 않고 lane을 release한다.
+- claim 이후 새 overlap이 확인되면 충돌하는 작업 파일을 수정하지 않고 lane을 release한다.
 
 ## Branch/worktree/cloud
 
