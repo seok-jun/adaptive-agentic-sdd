@@ -1,6 +1,6 @@
 # issue-writing-guide 수행 절차
 
-조건·제품 사실·필수 검증·사람 권한은 P 적용 문서 `P/.adaptive-sdd/project/issue-writing-guide.md`가 원본이다. W는 공통 분류 기준과 수행법을 소유한다.
+조건·제품 사실·필수 검증·사람 권한은 P 적용 문서 `S/.adaptive-sdd/project/issue-writing-guide.md`가 원본이다. W는 공통 분류 기준과 수행법을 소유한다.
 
 공통 Priority·SDD grade와 본문/라벨은 [공통 우선순위](issue-priority.md) 및 [공통 등급](sdd-workflow.md#sdd-grade)을 따른다. 제품별 적용과 권한은 P 원본을 함께 읽는다.
 
@@ -161,12 +161,14 @@ flowchart TD
 
 근거는 원본을 복제하기보다 원본 위치·식별자·확인 revision·판정 범위를 연결한다. 허용 metadata/내용·보호 대상은 P hard guard와 제품의 근거 기록 정책을 따른다. write 전 금지 내용을 점검하고 write 후 실제 artifact를 확인한다. 재현이 필요하면 같은 구조의 합성 fixture를 사용한다. 제품이 금지한 데이터를 일반 template/예시로 옮기지 않는다.
 
+M `core.md`의 `요구사항과 결정 기록`에 따라, 사람이 제공한 외부 티켓·작업 요구와 명시적으로 확정한 결정은 대화로 전달됐어도 Issue의 목표·범위·완료 기준과 결정 기록에 필요한 만큼 정리한다. 제공된 요구는 원천 ID·revision 또는 제공 시점과 연결하고, 결정은 내용·범위·결정자·시점·원천 참조를 남긴다. 원문 조회 불가는 한계로 표시하며 대화 전문을 복사해 근거를 대신하지 않는다. 사실 확인 요청은 조사 항목, 제안은 미확정 선택지로 유지한다. 모호한 답을 결정으로 추정하지 않고 필요한 판단만 확인한다. 명확한 결정을 다시 승인받는 단계는 추가하지 않는다.
+
 ## Visual Spec 링크 규칙
 
 HTML이 필요한 Issue는 다음 순서로 처리한다.
 
 1. 앱 Issue를 생성해 Issue 번호를 확보한다.
-2. freshly fetched 디자인 `origin/main`에서 격리한 작업 branch를 만들고 프로젝트가 지정한 디자인 저장소의 Issue HTML을 생성·검증·commit한다. 기존 branch를 이어 쓰면 미게시 변경과 active 작업 여부부터 확인한다.
+2. 프로젝트가 별도로 선언한 디자인 저장소 원격/기준 브랜치의 freshly fetched SHA에서 격리한 작업 branch를 만들고 프로젝트가 지정한 디자인 저장소의 Issue HTML을 생성·검증·commit한다. 기존 branch를 이어 쓰면 미게시 변경과 active 작업 여부부터 확인한다.
 3. commit SHA가 포함된 immutable permalink를 확보한다.
 4. 앱 Issue 본문에 `## Visual Spec`을 추가한다.
 5. 구현 시작 전에 링크가 immutable permalink인지 확인한다.

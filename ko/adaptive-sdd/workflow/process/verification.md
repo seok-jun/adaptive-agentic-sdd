@@ -1,6 +1,6 @@
 # 검증 계약
 
-완료 기준을 검증에 연결하고 구현 중·종료 시 검증을 실행할 때 읽는다. grade 분류는 [sdd-workflow](sdd-workflow.md#sdd-grade), 실제 프로젝트 명령은 `P/.adaptive-sdd/project/build.md`가 원본이다. 새 검증을 수량으로 채우지 않으며 해당 grade·변경 영향·Issue가 요구한 범위에 적용한다.
+완료 기준을 검증에 연결하고 구현 중·종료 시 검증을 실행할 때 읽는다. grade 분류는 [sdd-workflow](sdd-workflow.md#sdd-grade), 실제 프로젝트 명령은 `S/.adaptive-sdd/project/build.md`가 원본이다. 새 검증을 수량으로 채우지 않으며 해당 grade·변경 영향·Issue가 요구한 범위에 적용한다.
 
 | 현재 작업 | 읽을 절 |
 | --- | --- |
@@ -9,6 +9,10 @@
 | 빌드·테스트 명령 실행 | [검증 환경](#검증-환경) |
 
 ## Verification Strategy
+
+P `build.md`는 기존 `build.verification` 명령과 `build.checks`의 command/manual·agent/human·required/optional 수단을 선언할 수 있다. 필수 수동 확인은 대상·절차·기대 결과를 인계하고 실제 관찰 결과·확인자·시점·검증 대상 identity를 근거로 남긴다. 증거를 받기 전에는 미검증이며, 수동 검증 선언 자체를 PASS로 보지 않는다. 실행 명령이 없는 수동 항목에 가짜 command/exit code를 만들지 않는다. 완료 기준을 증명하는 수단이 있어야 한다는 조건은 같다.
+
+P의 테스트 수명이 temporary이면 테스트·fixture·실행 근거와 실제 제품 입력 identity를 선언 위치에 보존·재조회한 뒤 제거한다. 최종 후보와 실행 입력의 대응을 Packet에 연결하고 기존 PASS 재사용 조건을 적용한다. none이면 신규 테스트 대신 선언된 동등한 동작 관찰 근거가 필요하며, fixture/test를 필요로 하는 PLAN finding도 그 resolution expectation을 실제로 증명해야 한다. 증명할 수 없으면 차단하고 테스트 정책을 핑계로 필수 검증을 면제하지 않는다.
 
 구현 전에 각 Acceptance Criterion을 어떤 근거로 판정할지 정한다. 검증 수단은 unit, integration, lint, build, CI와 grade별 review 중 실제로 필요한 것만 선택한다.
 
@@ -29,7 +33,7 @@ Verification Strategy에는 grade 규칙에 따라 다음 판정을 포함한다
 Independent Review: REQUIRED | NOT REQUIRED
 ```
 
-Trivial은 항상 `Independent Review: NOT REQUIRED`다. Device QA / Runtime QA 판정이나 handoff를 canonical gate로 두지 않는다. P가 기기 관측 참고 문서를 선언했으면 비필수 참고 자료로 사용할 수 있지만 Verification Strategy, PR metadata, merge/complete 조건에는 포함하지 않는다.
+Trivial은 항상 `Independent Review: NOT REQUIRED`다. Device QA / Runtime QA 판정이나 handoff를 공통 필수 gate로 자동 추가하지 않는다. P가 단순 참고로 선언한 기기 관측 문서는 비필수 참고 자료로 유지한다. 다만 P의 build.checks 또는 Issue Verification Strategy가 기기·런타임 확인을 required로 명시하면 위 수동 검증 계약을 적용하고 merge/complete 전에 실제 결과를 확인한다. 명시된 필수 검증을 참고 자료로 낮추지 않는다.
 
 ## Grade별 review gate
 

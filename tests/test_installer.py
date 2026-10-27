@@ -11,9 +11,12 @@ import json
 from pathlib import Path
 import re
 import shutil
+import subprocess
+import sys
 import tempfile
 import unicodedata
 import unittest
+from unittest import mock
 from urllib.parse import unquote
 
 
@@ -76,11 +79,46 @@ class InstallerPolicyTests(unittest.TestCase):
     def save_values(self):
         self.values_path.write_text(json.dumps(self.values, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-    def command(self, name):
+    def command(self, name, *arguments):
         output = io.StringIO()
         with contextlib.redirect_stdout(output):
-            result = installer.main([name, "--project-root", str(self.project)])
+            result = installer.main([name, "--project-root", str(self.project), *arguments])
         return result, output.getvalue()
+
+    def test_untagged_commit_upgrade_drops_previous_tag(self):
+        self.assertEqual(self.command("render", "--source-tag", "v-test.1", "--source-commit", "a" * 40)[0], 0)
+        self.assertEqual(self.command("render", "--source-commit", "b" * 40)[0], 0)
+        source = installer.load_lock(self.project)["source"]
+        self.assertNotIn("tag", source)
+        self.assertEqual(source["commit"], "b" * 40)
+        self.assertEqual(self.command("check")[0], 0)
+
+    def test_same_source_render_preserves_tag_and_explicit_upgrade_replaces_pair(self):
+        self.assertEqual(self.command("render", "--source-tag", "v-test.1", "--source-commit", "a" * 40)[0], 0)
+        for arguments in ((), ("--source-commit", "a" * 40)):
+            self.assertEqual(self.command("render", *arguments)[0], 0)
+            self.assertEqual(installer.load_lock(self.project)["source"]["tag"], "v-test.1")
+        self.assertEqual(self.command("render", "--source-tag", "v-test.2", "--source-commit", "b" * 40)[0], 0)
+        source = installer.load_lock(self.project)["source"]
+        self.assertEqual((source["tag"], source["commit"]), ("v-test.2", "b" * 40))
+
+    def test_clear_source_tag_repairs_existing_identity_without_changing_commit(self):
+        self.assertEqual(self.command("render", "--source-tag", "v-test.1", "--source-commit", "a" * 40)[0], 0)
+        self.assertEqual(self.command("render", "--clear-source-tag")[0], 0)
+        source = installer.load_lock(self.project)["source"]
+        self.assertNotIn("tag", source)
+        self.assertEqual(source["commit"], "a" * 40)
+        self.assertEqual(self.command("check")[0], 0)
+
+    def test_tag_without_commit_is_rejected_before_any_output_write(self):
+        self.assertEqual(self.command("render", "--source-tag", "v-test.1", "--source-commit", "a" * 40)[0], 0)
+        paths = [self.copy / "install.lock.json", self.project / "AGENTS.md"]
+        before = {path: path.read_bytes() for path in paths}
+        self.values["project"]["name"] = "Changed fictional library"
+        self.save_values()
+        code, _ = self.command("render", "--source-tag", "v-test.2")
+        self.assertEqual(code, 2)
+        self.assertEqual({path: path.read_bytes() for path in paths}, before)
 
     def test_all_execution_grades_load(self):
         self.values["grade_mapping"] = [
@@ -151,6 +189,150 @@ class InstallerPolicyTests(unittest.TestCase):
                     self.assertTrue(target.is_file(), f"Missing installed target: {target}")
                     if separator:
                         self.assertIn(fragment, markdown_anchors(target.read_text(encoding="utf-8")))
+
+    def external_install(self):
+        product = self.project / "product"
+        source = self.project / "harness"
+        product.mkdir()
+        shutil.copytree(SOURCE, source / ".adaptive-sdd")
+        (source / ".adaptive-sdd/project.json").write_bytes(self.values_path.read_bytes())
+        return source, product
+
+    def external_command(self, name, product, source=None):
+        args = [name, "--project-root", str(product)]
+        if source:
+            args += ["--harness-root", str(source)]
+        with contextlib.redirect_stdout(io.StringIO()):
+            return installer.main(args)
+
+    def test_external_layout_and_connection_check(self):
+        source, product = self.external_install()
+        (product / "AGENTS.md").write_text("# Existing product policy\n", encoding="utf-8")
+        self.assertEqual(self.external_command("render", product, source), 0)
+        self.assertTrue((source / ".adaptive-sdd/project/build.md").is_file())
+        self.assertFalse((product / ".adaptive-sdd").exists())
+        self.assertFalse((source / ".agents").exists())
+        self.assertTrue((product / ".agents/skills/implementing-issues/SKILL.md").is_file())
+        self.assertTrue((product / "AGENTS.md").read_text(encoding="utf-8").startswith("# Existing product policy"))
+        self.assertEqual(self.external_command("check", product), 0)
+        self.assertEqual(self.external_command("check-evals", product), 0)
+        connection = json.loads((product / installer.CONNECTION).read_bytes())
+        self.assertEqual(connection["harness_root"], source.as_posix())
+        self.assertEqual(installer.load_lock(source)["project_root"], product.as_posix())
+
+    def test_in_repo_outputs_are_identical_across_shell_hosts(self):
+        with mock.patch.object(installer.sys, "platform", "win32"):
+            self.assertEqual(self.command("render")[0], 0)
+        with mock.patch.object(installer.sys, "platform", "linux"):
+            code, output = self.command("check")
+            self.assertEqual(code, 0, output)
+
+    def test_generated_external_commands_execute_with_literal_paths(self):
+        product = self.project / "product $literal 'space;"
+        source = self.project / "harness $literal 'space;"
+        product.mkdir()
+        shutil.copytree(SOURCE, source / ".adaptive-sdd")
+        values = json.loads(json.dumps(self.values))
+        values.setdefault("skill_eval", {})["command"] = ""
+        (source / ".adaptive-sdd/project.json").write_bytes(installer.canonical(values))
+        self.assertEqual(self.external_command("render", product, source), 0)
+        entry = (product / ".agents/skills/implementing-issues/SKILL.md").read_text(encoding="utf-8")
+        eval_doc = (source / ".adaptive-sdd/project/skill-evals.md").read_text(encoding="utf-8")
+        commands = [
+            re.search(r"`(python -I -B [^\n]+?)`", entry).group(1),
+            re.search(r"`(python -I -B [^\n]+?)`", eval_doc).group(1),
+        ]
+        if sys.platform == "win32":
+            shell = shutil.which("pwsh") or shutil.which("powershell")
+            self.assertIsNotNone(shell, "PowerShell is required to verify generated Windows commands")
+            prefix = [shell, "-NoProfile", "-NonInteractive", "-Command"]
+        else:
+            prefix = ["/bin/sh", "-c"]
+        for command in commands:
+            with self.subTest(command=command):
+                result = subprocess.run(prefix + [command], cwd=product, capture_output=True,
+                                        text=True, encoding="utf-8", errors="replace", timeout=30)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_external_connection_tamper_and_shared_harness_are_rejected(self):
+        source, product = self.external_install()
+        self.assertEqual(self.external_command("render", product, source), 0)
+        other = self.project / "other-product"
+        other.mkdir()
+        self.assertEqual(self.external_command("render", other, source), 2)
+        self.assertFalse((other / "AGENTS.md").exists())
+        connection = product / installer.CONNECTION
+        value = json.loads(connection.read_bytes())
+        value["manifest_sha256"] = "0" * 64
+        connection.write_bytes(installer.canonical(value))
+        self.assertEqual(self.external_command("check", product), 2)
+
+    def test_external_hand_edit_is_kept_and_detected(self):
+        source, product = self.external_install()
+        self.assertEqual(self.external_command("render", product, source), 0)
+        entry = product / ".agents/skills/managing-issues/SKILL.md"
+        content = entry.read_bytes() + b"\nmanual change\n"
+        entry.write_bytes(content)
+        self.assertEqual(self.external_command("check", product), 1)
+        self.assertEqual(self.external_command("render", product, source), 3)
+        self.assertEqual(entry.read_bytes(), content)
+
+    def test_nondefault_project_settings_render_and_check(self):
+        self.values["git"] = {"remote": "upstream", "base_branch": "develop", "merge_branch": "release"}
+        self.values["review"] = {"repository": self.project.as_posix(), "remote": "local-review", "branch": "reviews"}
+        self.values["tracker"].update(id_source="external", id_format="BOOK-<ticket>", child_id_rule="Use approved parent-suffix IDs")
+        self.values["build"]["checks"] = [{"scope": "behavior", "method": "manual", "actor": "human",
+            "instructions": "Observe loan cancellation", "evidence": "target SHA and signed result", "required": "required"}]
+        self.values["build"].update(test_mode="temporary", test_format="synthetic unit fixtures", test_preserve_at="../evidence")
+        self.values["routing"]["role_defaults"] = [{"role": "IMPLEMENT", "model": "fictional-model", "reasoning": "high"}]
+        self.values["routing"]["capabilities"] = [{"host": "fictional-host", "model": "fictional-model", "tier": "strong",
+            "reasoning": "high", "source": "host record", "identity": "sample-identity", "valid_until": "2030-01-01T00:00:00Z"}]
+        self.save_values()
+        self.assertEqual(self.command("render")[0], 0)
+        self.assertEqual(self.command("check")[0], 0)
+        tracker = (self.copy / "project/tracker.md").read_text(encoding="utf-8")
+        self.assertIn("BOOK-<ticket>", tracker)
+        self.assertIn("`develop`", tracker)
+        self.assertIn("`release`", tracker)
+        self.assertNotIn("가장 큰 번호 + 1", tracker)
+        build = (self.copy / "project/build.md").read_text(encoding="utf-8")
+        self.assertIn("Observe loan cancellation", build)
+        self.assertNotIn("검증 수단이 없으면", build)
+        self.assertIn("../evidence", build)
+
+    def test_invalid_settings_fail_before_output_writes(self):
+        self.assertEqual(self.command("render")[0], 0)
+        original = json.loads(json.dumps(self.values))
+        lock = (self.copy / "install.lock.json").read_bytes()
+        bad_settings = [
+            ("git", {"remote": "origin;unsafe"}),
+            ("tracker", dict(self.values["tracker"], id_source="external", id_format="")),
+            ("review", {"repository": "relative/path"}),
+            ("build", dict(self.values["build"], test_mode="temporary", test_preserve_at="")),
+            ("build", dict(self.values["build"], checks=[{"scope": "x", "method": "unknown", "actor": "agent", "instructions": "x", "evidence": "x", "required": "required"}])),
+        ]
+        for invalid in ("publish/", "publish.lock", "publish//candidate", "publish/.hidden", "publish.lock/candidate"):
+            bad_settings.extend([("review", {"branch": invalid}), ("git", {"base_branch": invalid})])
+        for section, value in bad_settings:
+            with self.subTest(section=section, value=value):
+                self.values = json.loads(json.dumps(original))
+                self.values[section] = value
+                self.save_values()
+                self.assertEqual(self.command("render")[0], 2)
+                self.assertEqual((self.copy / "install.lock.json").read_bytes(), lock)
+
+    def test_legacy_settings_have_compatible_defaults(self):
+        legacy = json.loads(json.dumps(self.values))
+        for key in ("git", "review"):
+            legacy.pop(key, None)
+        for section, keys in {"tracker": ("id_source", "id_format", "child_id_rule"), "build": ("checks", "test_mode", "test_format", "test_preserve_at"), "routing": ("role_defaults", "capabilities", "qualification_records"), "project": ("conversation_language", "conventions")}.items():
+            for key in keys:
+                legacy[section].pop(key, None)
+        installer.validate_settings(legacy)
+        cfg = installer.settings(legacy)
+        self.assertEqual(cfg["git"], {"remote": "origin", "base_branch": "main", "merge_branch": "main"})
+        self.assertEqual(cfg["build"]["test_mode"], "persistent")
+        self.assertFalse(cfg["tracker_external_id"])
 
 
 if __name__ == "__main__":

@@ -26,7 +26,25 @@ External-review follow-up:
 - Prepares valid required verification evidence before final CODE Review, including validators invalidated by closure edits. Review corrections refresh the candidate and affected verification before its review; unchanged verification inputs do not trigger repeated runs. Extends FI-S12 to specify this order without adding a new case or gate.
 - Adds two fictional regression specifications for first SDD write ownership and the final review target after closure edits. These remain document-level expected behavior specifications.
 
-Checked locally: six installer regression tests, including both tracker adapters, retained merge-setting values, legacy Epic rejection before output writes, and installed workflow/project links; integrity of the 50-file copy; structural checks for 41 cases / four skills in disposable installations. The installer's built-in skill/frontmatter checks passed. A separate source review and four scenario walkthroughs are document-level checks, not end-to-end model behavior evals. Operational outcomes and actual token use have not been measured.
+First feedback implementation pass (meaning changes):
+
+- Clarifies requirement and confirmed-decision recording in both English and Korean `core.md`. Task-relevant requirements delivered through conversation can be recorded with provenance; investigation requests and proposals do not become decisions. Conversation-log collection and protected-content restrictions remain. Updates the Korean issue-writing template and skill consistently.
+- Defines implementation-time plan correction and in-progress policy transitions, preserving prior revisions and replacing current instructions explicitly. Review and verification are refreshed by actual impact. Verification-only strengthening with unchanged product contracts and audit assumptions uses A reconfirmation; B is called again only when its finding evidence is affected, without automatically starting a new blind audit.
+- Prevents stale installer tags: a changed source commit without a supplied tag clears the old tag. Same-source renders retain it; `--clear-source-tag` repairs an existing incorrect tag. Supplying a tag requires a commit before any output is written. Remote tag correspondence is still the caller's responsibility.
+- Preserves active consumers of SDD contracts before cleanup, using accessible immutable references or retained documents with a cleanup owner and release condition. Confirmed retention does not itself block product completion. Missing references or unowned retention are not accepted as cleanup complete.
+- Adds seven original fictional policy-regression specifications and four executable installer regression tests. Korean workflow/template/tool editions remain pending in English; the shared methodology clarification and upgrade guidance are synchronized.
+
+Checked locally after this pass: ten installer regression tests, including both tracker adapters, source-tag upgrade/repair/rejection before writes, and installed workflow/project links; integrity of the 50-file copy and both methodology manifests; structural checks for 48 cases / four skills in disposable installations. The installer's built-in skill/frontmatter checks passed. The separate skill-creator validator could not run because PyYAML is unavailable. New behavior cases are specifications only: no model behavior evaluation or independent review was run for this pass. Operational outcomes and actual token use have not been measured. Earlier source review and scenario walkthroughs apply to earlier revisions, not this pass.
+
+Second feedback implementation pass (Korean workflow; English workflow edition pending):
+
+- Bounds AS-IS investigation to evidence that affects decisions: baseline identity and operational use, relevant introduction/disablement history, exact dependency behavior, and external consumers. Separates observed facts from intent and frequency guesses; conflicts stop dependent work without stopping unrelated investigation.
+- Separates review PASS from readiness of the next action. Unresolved questions carry an owner and the step that needs their answer, including questions not found by reviewers. Shared questions are coordinated once and current child instructions are updated after decisions.
+- Connects declared project conventions and documented exceptions to change plans, execution packets, and contract review. Does not turn personal style preferences or absent conventions into new requirements.
+- Prepares blind inputs separately from review records, preserves substantive contracts and unresolved facts, and records source identity, selected ranges, access checks, and enforced versus instruction-only isolation. Exposure invalidates the initial blind run; reconfirmation remains distinct.
+- Adds the optional standard-library `review_snapshot.py` helper for exact-commit UTF-8 artifacts and local-docs bodies. It exports source/output hashes and line selections, rejects mutable refs and unsafe paths, and checks source correspondence, altered bytes, and unexpected files. It does not prove remote publication, semantic redaction, or host isolation.
+
+Checked after the second pass: all 17 executable tests passed, including seven snapshot tests with Korean CRLF text, fenced heading examples, hidden metadata/records, changed worktree versus exact commit, tampering, and a bare-source CLI run. The sandbox blocked Git's shell during the initial local bare-clone fixture setup; the full suite then passed with approved execution permissions. Installed links/frontmatter, both tracker adapters, the 51-file bundle, both methodology manifests, and structure of 54 cases / four skills were checked. Six new behavior specifications were added; model behavior evaluation and independent review remain unrun. Actual reviewer-account access and end-to-end blind isolation are not claimed from synthetic tool tests. The separate skill-creator validator remains unavailable without PyYAML.
 
 ## 1.0.0-preview.2
 
@@ -101,3 +119,24 @@ These are methodology/starter changes, not a claim of runtime enforcement or com
 ## 0.1.0
 
 Initial public working methodology: Issue-first execution, information-specific Source of Truth, risk grades, bounded AS-IS analysis, Verification Strategy, Trade-off Capture, grade-based review, conditional Device QA, token/context efficiency, and lifecycle cleanup.
+
+Third feedback implementation pass (meaning changes):
+
+- Adds optional external harness installation with checkout-bound connection, lock, manifest and generated-entry checks. One harness root serves one checkout; migration preserves hand edits and does not remove old copies.
+- Declares code remote/base/merge target separately from review publication repository/remote/branch, and external/child ID rules. Existing installations keep defaults; no service adapter or Git authorization is inferred.
+- Adds manual verification ownership/evidence and persistent/temporary/no-new-test policy, preserving required checks, temporary evidence and current-target correspondence.
+- Adds conversation/convention references, role preferences and capability/qualification references. Inherited current/manual reviewers still need verified identity/reasoning; preferences do not bypass qualification or human Review B selection.
+- Aligns generated AGENTS privacy guidance with the first-pass permission to record minimal requirements and explicit decisions. Normalizes generated marker-block boundaries for repeatable rendering.
+- English/Korean customization guides describe these settings and limitations. Full English workflow/templates/tools remain pending. Synthetic tests and behavioral specifications do not establish live-host or operational efficacy.
+
+Context-inheriting auxiliary review follow-up (not an independent review):
+
+- Resolves three P2 findings: completion uses the declared merge target; explicit required device/runtime checks remain mandatory without adding a universal QA gate; Git and publication names share validation before writes. Adds invalid-name regression inputs and two fictional behavior specifications.
+- A context-inheriting auxiliary reviewer confirmed all three fixes with no new actionable finding in the corrected scope. Installer regressions passed again; live publication and host behavior remain unverified.
+
+Context-isolated Astra high review:
+
+- A fresh gpt-6-astra/high reviewer received no conversation history or previous findings/test results. It inspected the cumulative working-tree changes independently; earlier review statements were excluded as evidence.
+- Fixes two P2 findings: external default check-evals now uses explicit harness/product roots, and generated external commands quote paths literally for the named PowerShell/POSIX shell.
+- Fixes a follow-up P2 regression by keeping in-repository output independent of the generating OS. Adds actual Windows-shell execution tests for special-character paths and a win32-render/linux-check branch test.
+- The reviewer confirmed all findings resolved. Initial full suite: 23 tests passed; final changed installer suite: 18 tests passed. Actual POSIX execution, live remote operations and model behavior evaluations remain unverified.

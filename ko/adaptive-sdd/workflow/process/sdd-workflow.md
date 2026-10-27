@@ -1,6 +1,6 @@
 # sdd-workflow 수행 절차
 
-공통 SDD grade·일반 자동 격상은 아래 절이 원본이다. 프로젝트 적용 선언·제품 사실·구체 검증 명령·사람 권한은 P 적용 문서 `P/.adaptive-sdd/project/sdd-workflow.md`가 원본이다. W는 공통 분류와 수행법을 소유한다.
+공통 SDD grade·일반 자동 격상은 아래 절이 원본이다. 프로젝트 적용 선언·제품 사실·구체 검증 명령·사람 권한은 P 적용 문서 `S/.adaptive-sdd/project/sdd-workflow.md`가 원본이다. W는 공통 분류와 수행법을 소유한다.
 
 ## 현재 단계에서 읽을 규칙
 
@@ -67,7 +67,7 @@ Trivial은 **파일 수가 적다는 이유만으로 선택하지 않는다.** �
 | 결정 기록 | `docs/reviews/**` | 영속 | 과거 의사결정의 근거와 대안 |
 | 구조 문서 | `docs/architecture/**` | 영속 | 모듈 책임, 의존성, 작업 경계 |
 
-위 위치는 기본값이며 실제 위치는 P 적용 문서의 `문서 역할` 표를 따른다. SDD 작업 문서는 완료 후 삭제한다. business 문서는 SDD 문서나 Issue를 복사하지 않고 **최종 코드 동작을 읽어서** 갱신한다.
+위 위치는 기본값이며 실제 위치는 P 적용 문서의 `문서 역할` 표를 따른다. SDD 작업 문서는 완료 시 정리하되, 활성 소비자가 참조하는 근거는 [finishing의 참조 보존 조건](../skills/finishing-issues/SKILL.md#4-remove-temporary-sdd)에 따라 불변 참조로 전환하거나 담당·해제 조건을 정해 보존한다. business 문서는 SDD 문서나 Issue를 복사하지 않고 **최종 코드 동작을 읽어서** 갱신한다.
 
 ## 구현 시작 조건
 
@@ -146,6 +146,14 @@ Epic의 생성·분해에는 독립 리뷰 gate나 Large 절차를 누적하지 
 
 하위 Issue의 AS-IS는 상위·관련 작업의 분석 원문과 기준 코드 revision, 적용 범위·전제, 근거를 먼저 확인한다. 현재 변경에도 유효한 사실은 참조하고 부족하거나 달라진 부분만 보완한다. phase나 문서 이름이 다르다는 이유로 같은 조사를 반복하지 않는다. 분석 재사용은 하위 Issue의 해당 grade 검토를 자동 면제하거나, 과거 검증·PASS를 새 target의 결과로 승계한다는 뜻이 아니다.
 
+## 미결 사항과 단계별 의존성
+
+리뷰 PASS는 해당 target에 대한 검토 결과이며 모든 결정의 완료나 다음 작업 전체의 착수 허가가 아니다. 작성자·조사·reviewer 중 누가 발견했든 미결 사항에는 **확인/결정할 내용, 담당, 결론을 필요로 하는 작업·단계**를 기존 Issue/SDD에 연결한다. 새 상태 라벨·별도 장부·질문 개수 gate는 만들지 않는다.
+
+진입하려는 작업이 결론을 소비하면 해당 부분은 기다리고, 결론과 무관한 조사·작업은 진행할 수 있다. 예를 들어 배포 시점에만 필요한 결정은 독립적인 조사 착수를 막지 않지만, PLAN에서 동작을 선택해야 하는 질문을 배포까지 미룰 수는 없다. 미결 질문을 단순히 노출했다고 해결된 것으로 보거나, reviewer finding에 없다는 이유로 무시하지 않는다. 기존 grade별 리뷰와 사람 판단 요건은 유지한다.
+
+여러 Issue에 공통인 질문은 Epic 담당 또는 기존 조정 담당이 원천·영향 Issue를 연결해 한 번에 묻는다. 이를 위해 Epic을 새로 만들 필요는 없다. 결정 뒤 담당은 관련 Issue/SDD의 미결 표시를 갱신하거나 확정 결정 참조로 대체하고, 활성 담당에게 전달한다. 과거 미결 기록은 이력으로 보존하되 현재 지시가 서로 다르게 남지 않도록 한다. 의미 변경이면 [계획 정정과 정책 전환](sdd-artifacts.md#계획-정정과-정책-전환)을 적용한다.
+
 ## Verification Strategy
 
 완료 기준과 검증 수단의 대응, grade별 review, targeted·최종 검증 및 PASS 재사용은 [검증 계약](verification.md)을 따른다. 실제 명령과 프로젝트의 필수 검증은 P의 `build.md`·Issue가 정한다.
@@ -168,7 +176,7 @@ business 문서는 구현 완료 후 **현재 코드가 실제로 하는 동작*
 
 ## Issue 본문 규약
 
-신규 구현/버그 Issue의 필수 section과 canonical 본문 형식은 고정 W의 `process/issue-priority.md`의 `## 신규 Issue 필수 본문`이 Source of Truth다. 제품별 적용 조건은 `P/.adaptive-sdd/project/issue-priority.md`를 읽는다. 이 문서는 같은 template을 복제하지 않는다.
+신규 구현/버그 Issue의 필수 section과 canonical 본문 형식은 고정 W의 `process/issue-priority.md`의 `## 신규 Issue 필수 본문`이 Source of Truth다. 제품별 적용 조건은 `S/.adaptive-sdd/project/issue-priority.md`를 읽는다. 이 문서는 같은 template을 복제하지 않는다.
 
 본문 값과 `priority:*`, `grade:*` 라벨은 항상 일치해야 한다.
 
@@ -227,7 +235,7 @@ P의 mode가 `ENABLED`일 때만 [token-diagnostic](token-diagnostic.md)의 STAR
 
 ## 병렬 작업
 
-claim/release, branch/worktree, cloud sandbox의 실행 절차는 `W/skills/parallel-development/SKILL.md`가 canonical owner다. 모듈 ownership, shared/root integration 경계는 `P/.adaptive-sdd/project/module-boundaries.md`가 Source of Truth다.
+claim/release, branch/worktree, cloud sandbox의 실행 절차는 `W/skills/parallel-development/SKILL.md`가 canonical owner다. 모듈 ownership, shared/root integration 경계는 `S/.adaptive-sdd/project/module-boundaries.md`가 Source of Truth다.
 
 ## 완료 절차
 
@@ -236,8 +244,8 @@ claim/release, branch/worktree, cloud sandbox의 실행 절차는 `W/skills/para
 1. diff를 읽고 실제 동작 변경을 확정한다.
 2. 변경된 동작과 직접 연결된 business 문서를 최종 코드 기준으로 갱신한다.
 3. SDD 삭제 전에 Verification Strategy에 따른 구현의 필수 검증 근거를 확인하고 누락·무효화된 검증을 수행한다.
-4. P가 선언한 SDD 작업 문서 위치의 현재 작업 폴더를 삭제한다.
-5. P 문서 목차와 다른 문서에서 삭제된 SDD 경로 링크를 제거한다.
+4. P가 선언한 SDD 작업 문서 위치의 현재 작업 폴더를 [참조 보존 조건](../skills/finishing-issues/SKILL.md#4-remove-temporary-sdd)에 따라 삭제하거나 담당·해제 조건을 명시해 보존한다.
+5. P 문서 목차와 다른 문서의 SDD 링크는 불필요한 것만 제거하고 활성 소비자의 필요한 참조는 유지·전환한다.
 6. 관련 review 문서에 현재 상태 필드가 있으면 실제 상태와 일치하도록 갱신한다. 과거 결정 내용 자체는 다시 쓰지 않는다.
 7. 예정된 저장소 파일 변경을 모두 마친 후보를 고정하고 최종 필수 검증 근거를 확보한 뒤 grade별 CODE Review/self-review를 수행한다. 종료 시 두 근거의 유효성을 함께 확인하며, 앞선 검증은 입력 불변 근거가 있을 때만 재사용한다. 상세 순서와 변경 후 재확인은 [finishing-issues의 최종 후보 확인](../skills/finishing-issues/SKILL.md#5-prepareverify-pr-closure)을 따른다.
 8. `[IMPLEMENTATION SUMMARY]` 댓글 하나를 남기고 PR 본문에 `Closes #{issue-number}`를 넣는다. 요약을 검증·required review 통과의 대체 근거로 쓰지 않는다.

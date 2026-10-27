@@ -1,6 +1,6 @@
 # Execution routing
 
-입력은 명시한 P/W/M 절대 root다. P 적용 문서 `P/.adaptive-sdd/project/execution-routing.md`의 모델 제한·영향 분석·probe 조건을 먼저 확인한다.
+입력은 명시한 P/S/W/M 절대 root다. S는 설치 root이며 in-repo에서는 P와 같다. P 적용 문서 `S/.adaptive-sdd/project/execution-routing.md`의 모델 제한·영향 분석·probe 조건을 먼저 확인한다.
 
 현재 phase/role 진입·유지의 current/manual 적격 확인, model/reasoning 선택, switch/delegation 또는 reviewer 배정 시 읽는다. 같은 run의 해당 role에서 여전히 유효한 근거는 재사용하며, model switch가 없다는 이유로 자격 확인을 생략하지 않는다. fixed pre-read 입력은 아니다. packet 작성·수신·검증만 필요하면 [Execution Packet과 인계 계약](execution-packets.md)의 해당 절을 읽는다.
 
@@ -61,6 +61,10 @@ fallback은 다음 순서를 바꾸지 않는다. **이미 실행 중이거나 �
 Profile과 fallback은 floor 아래로 downgrade할 수 없다. 존재하지 않거나 지원 여부가 확인되지 않은 concrete model/tier를 추정하지 않는다. **아직 진입하지 않은 future phase의 concrete model qualification은 선결 조건으로 미리 요구하지 않는다.** 해당 phase에서 실제 current/manual model을 확인하거나 switch/delegation 후보를 선택하기 직전에 위 규칙으로 just-in-time 검증한다.
 
 ## Host Capability Map
+
+P의 `routing.role_defaults`는 선호 후보이고 `routing.capabilities`는 host mapping의 근거 참조다. 사람이 설정 파일에 적었다는 사실만으로 능력·가용성·role qualification이 증명되지는 않는다. 선택 시 host·concrete model·supported reasoning·원천 identity·유효 기한을 확인한다. role qualification은 P의 `qualification_records` 참조나 실제 runtime evidence를 별도로 사용한다.
+
+현재/사람이 선택한 모델을 바꾸지 않고 별도 reviewer session에 그대로 상속하는 경우, 실제 concrete model과 reasoning의 동일성을 host가 확인하면 current/manual 경로로 판정한다. 별도 session이라는 이유만으로 자동 모델 선택으로 분류하지 않는다. 모델이나 reasoning을 Agent가 새로 고르면 기존 자동 선택 qualification 규칙을 적용한다. reasoning을 host에서 확인할 수 없으면 확인된 요청값과 제공값 미확인을 구별한다. 지원 설정을 실제 적용했다는 fresh host 근거로 floor 충족을 확인할 수 없으면 충족을 추정하지 않고 해당 reviewer 배정을 차단한다. 별도 actor/session·Human-selected B 선택 조건은 유지한다.
 
 concrete mapping은 runtime 또는 host adapter가 소유하고 canonical Skill은 다음 schema만 소비한다.
 

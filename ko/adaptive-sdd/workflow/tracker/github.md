@@ -15,3 +15,5 @@
 | CI | 저장소의 required checks. 실제 검증 명령은 P가 선언 |
 
 GitHub 쓰기 권한·토큰·secret은 P와 사람이 관리한다. Agent는 토큰을 만들거나 조회하거나 등록하지 않는다.
+
+코드 원격·신규 lane 기준·PR base는 P tracker.md의 git.remote/base_branch/merge_branch 선언을 따른다. PR 생성 시 base를 명시하고 기본 브랜치를 추측하지 않는다. SDD 게시 저장소·원격·branch는 review 선언을 따르며 제품 PR head나 claim branch와 구분한다. 외부 ID 설정은 GitHub의 실제 발급 ID나 closing reference 문법을 바꾸지 않으며 다른 서비스의 API adapter를 제공하지 않는다.

@@ -1,6 +1,6 @@
 # Token diagnostic
 
-`P/.adaptive-sdd/project/sdd-workflow.md`의 `Token diagnostic mode`가 `ENABLED`일 때만 읽는다. 일반 적용·사건 관측은 [observations](observations.md)를 따르며 이 mode로 비활성화되지 않는다.
+`S/.adaptive-sdd/project/sdd-workflow.md`의 `Token diagnostic mode`가 `ENABLED`일 때만 읽는다. 일반 적용·사건 관측은 [observations](observations.md)를 따르며 이 mode로 비활성화되지 않는다.
 
 | 실제 lifecycle event | 읽을 절 |
 | --- | --- |
@@ -11,7 +11,7 @@
 
 ## 안정화 기간 token diagnostic
 
-mode 값은 명시한 `P/.adaptive-sdd/project/sdd-workflow.md`에서 읽는다
+mode 값은 명시한 `S/.adaptive-sdd/project/sdd-workflow.md`에서 읽는다
 
 이 mode는 workflow 안정화 기간의 한시적 계측이다. 약 20~30개 Issue 또는 약 2주간 표본을 모은 뒤 baseline을 검토하고, 유지 결정이 없으면 위 값을 `DISABLED`로 바꾼다. Skill은 위 P 적용 문서의 mode가 `ENABLED`일 때만 아래 checkpoint를 기록하므로 비활성화할 때 각 실행 절차를 다시 설계하지 않는다.
 

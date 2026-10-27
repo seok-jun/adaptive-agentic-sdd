@@ -7,10 +7,10 @@
 | root | 설치된 프로젝트에서의 위치 | 소유 | 고치는가 |
 | --- | --- | --- | --- |
 | `P` | 프로젝트 저장소 최상위 | 프로젝트 | 프로젝트 규칙대로 |
-| `W` | `P/.adaptive-sdd/workflow/` | 공통(이 폴더) | 고치지 않는다. 버전을 올릴 때 통째로 바꾼다 |
-| `M` | `P/.adaptive-sdd/methodology/` | 공통 원칙(`core.md`, `adaptation.md`, 지원) | 고치지 않는다 |
+| `W` | `S/.adaptive-sdd/workflow/` | 공통(이 폴더) | 고치지 않는다. 버전을 올릴 때 통째로 바꾼다 |
+| `M` | `S/.adaptive-sdd/methodology/` | 공통 원칙(`core.md`, `adaptation.md`, 지원) | 고치지 않는다 |
 
-P 적용 문서는 `P/.adaptive-sdd/project/` 아래에 설치 도구가 `P/.adaptive-sdd/project.json`의 값으로 생성한다. W 문서가 `P/.adaptive-sdd/project/<문서>`를 가리키면 그 생성물을 읽는다. 생성물을 손으로 고치지 않는다. 값을 바꾸려면 `project.json`을 고치고 다시 생성한다.
+P 적용 문서는 `S/.adaptive-sdd/project/` 아래에 설치 도구가 `S/.adaptive-sdd/project.json`의 값으로 생성한다. W 문서가 `S/.adaptive-sdd/project/<문서>`를 가리키면 그 생성물을 읽는다. 생성물을 손으로 고치지 않는다. 값을 바꾸려면 `project.json`을 고치고 다시 생성한다.
 
 W 문서의 `P/AGENTS.md`의 `## 항상 적용 hard guard`는 설치 도구가 `AGENTS.md`에 넣은 표시 구간 안의 절이다.
 

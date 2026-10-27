@@ -1,5 +1,7 @@
 # 설치와 커스터마이징 안내 (1.0 preview.2)
 
+생성된 기본 check/check-evals 명령은 Windows에서는 PowerShell, 그 외에서는 POSIX sh의 경로 리터럴 인용을 사용한다. 표시된 셸에서 실행한다. 사용자 지정 명령의 인용은 프로젝트가 관리한다.
+
 이 문서는 방법론 사본을 프로젝트에 두고, 프로젝트 값으로 프로젝트 종속 파일을 생성하고, Agent에게 일을 시키는 방법을 설명한다. 사본에는 넣지 않는다.
 
 ## 이 preview는 무엇인가
@@ -25,6 +27,8 @@
 
 ## 1. 사본 받기
 
+기본은 저장소 안 설치다. 외부 설치를 선택하면 아래 파일 복사의 목적지를 제품 P가 아닌 전용 설치 root S의 `.adaptive-sdd/`로 바꾸고 다음 절의 명시적 root 옵션을 사용한다. OS junction·하드링크는 필요하지 않다.
+
 태그의 소스 압축 파일을 받아 `ko/adaptive-sdd/`를 프로젝트의 `.adaptive-sdd/`로 **바이트 그대로** 복사한다. 텍스트 편집 도구나 Agent의 파일 쓰기 도구로 다시 쓰지 않는다. Windows PowerShell 예:
 
 ```powershell
@@ -43,6 +47,42 @@ Remove-Item $tmp -Recurse -Force; Remove-Item $zip -Force
 태그가 가리키는 commit을 확인해 둔다: `git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.2^{}"`.
 
 ## 2. 프로젝트 값 만들기
+
+### 외부 설치와 연결
+
+제품 checkout P와 서로 포함하지 않는 전용 폴더 S를 정하고 사본을 `S/.adaptive-sdd/`에 둔다. 다음 명령은 경로 예시이며 실제 허용된 위치로 바꾼다. Windows JSON 경로에는 `/`를 쓰면 역슬래시 이스케이프 혼동을 줄일 수 있다.
+
+```text
+python -I -B <S>/.adaptive-sdd/tools/install.py init --project-root <P> --harness-root <S>
+python -I -B <S>/.adaptive-sdd/tools/install.py render --project-root <P> --harness-root <S> --source-commit <확인한 SHA>
+python -I -B <S>/.adaptive-sdd/tools/install.py check --project-root <P> --harness-root <S>
+```
+
+설정·적용 문서·lock은 S, `.agentics/adaptive-sdd.json`·도구별 Skill 입구·AGENTS/CLAUDE 표시 구간은 P에 생성한다. S에는 중복 Skill 입구를 만들지 않는다. 연결의 manifest hash, S의 lock source, 사본 byte, P/S 생성물을 함께 검사한다. 연결이 없거나 접근/고정 정보가 틀리면 다른 사본으로 fallback하지 않는다. 사본 업그레이드 후에는 검토한 S를 `--harness-root`로 명시해 render하고 연결을 갱신한다. 도구가 원격 source commit의 진위를 검증하는 것은 아니다.
+
+한 S의 lock은 한 P checkout에만 묶인다. 새 worktree/다른 checkout은 전용 S와 연결을 만들고 같은 tracker_root를 공유할 수 있다. 이미 연결된 S를 다른 P로 몰래 재지정하지 않는다. 여러 checkout에 하나의 생성물 lock을 공유하는 모드는 지원하지 않는다. 클라우드 host가 S를 읽을 수 없으면 in-repo 설치를 사용하거나 접근 가능한 배치를 별도로 정해야 한다.
+
+기존 설치를 옮길 때는 새 S에 고정 사본과 검토한 project.json을 복사하고 위 명령으로 연결한다. P에 남은 손편집 입구는 KEPT로 보존되므로 diff 검토 후 해당 경로에만 `--accept-overwrite`를 사용한다. 옛 사본·입구·연결은 도구가 자동 삭제하지 않는다. 검증 후 소유·사용 여부를 확인해 별도로 정리한다. 로컬 전용이면 생성 경로의 commit/exclude 여부를 P에서 정하며 설치가 push 권한을 부여하지 않는다. S를 Git으로 관리할 때에도 사본은 LF byte를 유지한다.
+
+### 프로젝트별 운영 설정
+
+기존 schema 1 값은 계속 읽으며 생략된 Git 값은 origin/main/main, ID는 generated, 테스트 수명은 persistent다.
+
+| 값 | 의미 |
+| --- | --- |
+| `git.remote`, `git.base_branch`, `git.merge_branch` | 코드 원격, 새 lane 기준, 제품 병합 대상. 실제 Git 권한과 별개 |
+| `review.repository`, `review.remote`, `review.branch` | SDD 게시 저장소 절대 경로·원격·branch. 빈 값은 각각 P·git.remote·Issue branch. 로컬 bare 원격도 exact artifact 조회가 가능해야 함 |
+| `tracker.id_source`, `id_format`, `child_id_rule` | generated 또는 external. external은 형식 필수이며 원천 ID를 유지. 하위 접미 규칙과 발급 권한은 사람이 선언 |
+| `project.conversation_language`, `project.conventions` | 대화/진행 보고 언어, 프로젝트 컨벤션 원본 참조 |
+| `build.checks` | `scope, method, actor, instructions, evidence, required` 문자열을 가진 목록. method는 command/manual, actor는 agent/human, required는 required/optional |
+| `build.test_mode`, `test_format`, `test_preserve_at` | persistent/temporary/none, 테스트 형식, 임시 증거 보존 위치(temporary에 필수). 상대 경로는 P 기준 |
+| `routing.role_defaults` | `role, model, reasoning` 목록. role은 PLAN/IMPLEMENT/REVIEW/TEST_DOCS/FINISH. 선호이며 qualification이나 B의 사람 선택을 대체하지 않음 |
+| `routing.capabilities` | `host, model, tier, reasoning, source, identity, valid_until` 목록. tier는 cheap/strong/frontier, 기한은 timezone 포함 ISO 시각. 선택 시 실제 원천·freshness·host 지원을 확인 |
+| `routing.qualification_records` | 별도 role qualification 기록 참조. capability와 구분 |
+
+`build.verification`의 기존 명령과 `build.checks`는 함께 적용된다. 수동 결과는 대상·확인자·시점·관찰 증거를 확보해야 하며 필수 미확인은 완료가 아니다. temporary는 테스트/fixture·실행 근거를 보존·재조회한 뒤 제거하며 최종 코드와 입력 대응을 증명한다. none도 완료 기준과 PLAN finding을 증명할 동등 근거가 없으면 차단한다. 새 설정은 과거 지시를 묵시적으로 덮지 않으며 진행 중 적용은 기존 정책 전환 절차를 따른다.
+
+### 저장소 안 기본 설치
 
 ```bash
 python -I -B .adaptive-sdd/tools/install.py init --project-root .
@@ -81,7 +121,7 @@ python -I -B .adaptive-sdd/tools/install.py init --project-root .
 
 빈 값은 생성물에 "미정"으로 드러난다. 미정인 채로도 생성되지만, 그 값에 기대는 절차(예: 로컬 문서 방식에서 `tracker.root`나 `merge_method` 없이 작업 항목 만들기·병합 확인)는 멈춘다.
 
-로컬 문서 방식도 git 절차는 그대로라서 코드 원격 `origin`이 필요하다(새 lane은 `origin/main`에서 만든다). 원격이 없으면 W `tracker/local-docs.md`의 `코드 원격`을 따른다.
+로컬 문서 방식의 Git·SDD 게시 원격은 위 선언을 따른다. 원격이 없으면 W `tracker/local-docs.md`의 `코드 원격`을 따른다.
 
 ## 3. Agent에게 시키는 순서
 
@@ -119,7 +159,7 @@ python -I -B .adaptive-sdd/tools/install.py check --project-root .
 
 **저장소 밖 쓰기 허용.** `tracker.root`와 `worktree_root`는 저장소 밖이다. Agent 도구의 기본 작업 범위가 저장소 안뿐이면 그 쓰기가 막히거나 매번 확인을 묻는다. 두 폴더를 도구의 추가 작업 폴더로 허용한다. 예: Claude Code는 실행 시 `--add-dir <경로>` 또는 설정의 `permissions.additionalDirectories`, Codex CLI는 `--add-dir <경로>` 또는 `config.toml`의 `[sandbox_workspace_write]` `writable_roots`. 옵션 이름은 도구 버전마다 다를 수 있으니 쓰는 버전의 문서로 확인한다. 허용은 사람이 한다.
 
-**commit과 push.** ⑤ 전에 설치 결과를 main에 commit하고 `origin`에 push한다: `.adaptive-sdd/`(고정 사본, `project.json`, `install.lock.json`, `project/`), `.claude/skills/`, `.agents/skills/`, `AGENTS.md`, `CLAUDE.md`, `.gitattributes`. 새 lane은 `origin/main`에서 만들어지므로, push하지 않으면 lane worktree에 사본이 없어 Skill 입구의 `check`가 `BLOCKED: pinned workflow unavailable`로 멈춘다. 공유 main에 직접 push할지는 사람이 정한다.
+**commit과 push.** 저장소 안 설치는 생성물과 고정 사본을 검토한 뒤 P가 선언한 코드 원격·기준 브랜치에 반영한다. 새 lane에서 같은 사본을 조회할 수 있어야 한다. 병합·push 주체와 방법은 P 권한을 따르며 공유 기준 브랜치 직접 push를 강제하지 않는다. 외부 설치는 checkout별 S와 연결을 준비하고 check한다. 로컬 절대 경로를 담은 연결의 공유 여부와 설치 파일의 commit/exclude 정책은 P에서 정한다.
 
 **⑤ 작은 작업으로 시운전.**
 
@@ -158,7 +198,11 @@ $m.files.PSObject.Properties | ForEach-Object { $h = (Get-FileHash ".adaptive-sd
 
 1. 1절로 새 태그의 사본을 받는다. 고정 사본 폴더는 먼저 지우고 통째로 바꾼다. `project.json`, `project/`, `install.lock.json`은 그대로 둔다.
 2. `render`를 새 태그와 commit으로 다시 실행하고 `check`로 확인한다. 생성물이 어떻게 바뀌었는지 사람이 diff로 본다.
-3. 진행 중인 작업 도중에는 묵시적으로 바꾸지 않는다. 바꾸면 그 시점부터의 구간으로 기록한다(`core.md`).
+3. 진행 중인 작업 도중에는 묵시적으로 바꾸지 않는다. 바꾸면 그 시점부터의 구간으로 기록한다(`core.md`). 활성 담당·실행 중 리뷰·미커밋 변경·최근 작업 기록을 확인하고 적용할 Issue·시점을 조율한다. 프로젝트 정책 변경도 W `process/sdd-artifacts.md`의 `계획 정정과 정책 전환`을 따른다. 유효한 기존 결정을 다시 승인받거나 전체 리뷰를 자동 반복하지 않고 실제 무효화된 근거만 갱신한다.
+
+태그 없는 revision으로 올릴 때는 `render --project-root . --source-commit <확인한 SHA>`를 사용하고 브랜치 이름을 `--source-tag`로 넘기지 않는다. commit이 이전 값과 달라지고 새 태그를 명시하지 않으면 이전 `source.tag`를 제거한다. 같은 commit의 재생성이나 source 옵션 없는 재생성은 기존 값을 보존한다. 이미 잘못 남은 태그는 `--clear-source-tag`로 제거할 수 있다. 새 태그는 반드시 `--source-tag <실제 태그> --source-commit <확인한 SHA>`를 함께 지정한다. 설치 도구는 원격 태그의 대응을 조회하지 않으므로 그 대응 확인은 호출자의 책임이며 `check` 성공이 태그 출처 검증을 뜻하지 않는다.
+
+이번 요구사항·결정 기록 규칙을 적용할 때는 생성 `project/issue-writing-guide.md`와 프로젝트가 직접 둔 금지 규칙의 차이를 확인한다. 작업 요구의 최소 기록과 대화 로그 수집을 구별하되 프로젝트의 정보 공개·비밀정보 보호 제한을 자동으로 완화하지 않는다. 손으로 고친 생성물이 `KEPT`이면 diff를 검토하고 허용된 범위에서만 갱신한다.
 
 ### Epic 실행 등급에서 관리 단위로 전환
 

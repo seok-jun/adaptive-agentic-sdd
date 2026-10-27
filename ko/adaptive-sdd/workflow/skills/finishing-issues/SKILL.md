@@ -3,7 +3,7 @@ name: finishing-issues
 description: 구현을 마친 이 프로젝트의 Issue 작업을 종료한다. 최종 diff 검토, business 문서 동기화, 검증·CI gate, SDD 정리, PR 종료 구문, merge 확인, lane 해제에 사용한다. 구현이 종료 준비되기 전에는 사용하지 않는다.
 ---
 
-실행 입력은 절대 경로 `P`(프로젝트 저장소 최상위), `W`(고정 절차 사본 `P/.adaptive-sdd/workflow`), `M`(고정 공통 원칙 `P/.adaptive-sdd/methodology`)이다. cwd나 W의 상위 디렉터리로 P/M을 추정하지 않는다. P의 hard guard와 적용 선언을 따르고, Issue·댓글·라벨·PR 표현은 `P/.adaptive-sdd/project/tracker.md`가 선언한 `W/tracker/` 방식으로 읽는다.
+실행 입력은 절대 경로 `P`(프로젝트 저장소 최상위), `S`(설치 root, in-repo에서는 P), `W`(고정 절차 사본 `S/.adaptive-sdd/workflow`), `M`(고정 공통 원칙 `S/.adaptive-sdd/methodology`)이다. cwd나 W의 상위 디렉터리로 P/M을 추정하지 않는다. P의 hard guard와 적용 선언을 따르고, Issue·댓글·라벨·PR 표현은 `S/.adaptive-sdd/project/tracker.md`가 선언한 `W/tracker/` 방식으로 읽는다.
 
 # Finishing Issues
 
@@ -67,13 +67,15 @@ SDD·로컬 결과에만 있는 발견 사건은 삭제 전에 `observations.md`
 
 Trivial/Small은 해당 없음이다. SDD가 있으면:
 
-1. business sync와 필요한 verification 뒤 **현재 Issue의 SDD만** 삭제한다. 검토 문서는 삭제 전 commit에서 계속 조회할 수 있어야 하며 일부 삭제·설계 수정을 정리로 숨기지 않는다.
-2. P가 선언한 문서 목차와 관련 문서에서 삭제된 SDD 링크를 제거한다.
+1. business sync와 필요한 verification 뒤 **현재 Issue의 SDD만** 정리한다. 연결된 활성 Issue·계획의 직접 참조를 확인하고, 소비 중인 계약·결정 근거는 아래 참조 보존 조건을 적용한 뒤 삭제한다. 검토 문서는 삭제 전 exact commit에서 계속 조회할 수 있어야 하며 일부 삭제·설계 수정을 정리로 숨기지 않는다.
+2. P가 선언한 문서 목차와 관련 문서에서 불필요한 링크를 제거한다. 활성 소비자가 필요한 링크는 삭제하지 말고 조회 가능한 불변 참조나 지속 관리 계약 문서로 전환한다.
 3. historical review의 mutable status가 stale하면 status만 갱신한다.
+
+**참조 보존 조건:** 삭제 전 exact revision·경로로 소비자가 필요한 원문과 직접 의존 문서를 실제 조회할 수 있는지 확인한다. 지속 관리 문서로 옮기면 의미가 유지되는지 확인한다. 다른 lane 문서의 수정은 그 담당·claim과 조율하며, 링크만 바꾸는 작업으로 계약 변경을 숨기지 않는다. 필요한 참조 전환을 지금 완료할 수 없으면 현재 SDD 폴더를 보존하고 기존 SUMMARY에 소비 Issue, 보존 이유, 정리 담당, 해제 조건(소비자의 참조 전환 또는 의존 종료)을 남긴다. 담당 인계와 조회 가능성이 확인된 보존은 정리 완료의 허용 상태이며 제품 종료를 자동 차단하지 않는다. 접근 가능한 원문이나 정리 담당을 확보하지 못한 상태는 허용된 보존이 아니다. 담당은 해제 조건 충족 후 기존 권한·claim 안에서 정리하며, Epic 전체 종료까지 무조건 보존하거나 남은 파일을 완료 후 무단 삭제하지 않는다.
 
 ### 5. Prepare/verify PR closure
 
-business 동기화, 현재 SDD 삭제, 링크·review status 정리처럼 예정된 저장소 파일 변경을 먼저 마친다. 그 결과를 commit하고 현재 base/head·전체 diff·inventory를 최종 리뷰 후보로 고정한다. 과거 CODE Review의 target과 다른 후보를 기존 PASS로 완료 처리하지 않는다.
+business 동기화, 현재 SDD 삭제 또는 위 조건에 따른 보존, 링크·review status 정리처럼 예정된 저장소 파일 변경을 먼저 마친다. 그 결과를 commit하고 현재 base/head·전체 diff·inventory를 최종 리뷰 후보로 고정한다. 과거 CODE Review의 target과 다른 후보를 기존 PASS로 완료 처리하지 않는다.
 
 1. CODE Review/self-review 전에 `verification.md`의 required broad command set에 대해 현재 후보에 유효한 PASS 근거를 확보한다. 3단계의 입력 불변 PASS는 실행 identity를 보존해 재사용하고, 정리한 문서를 소비하는 static validator 등 누락·무효화된 검증만 해당 계약의 순서로 실행한다. 검증 보정으로 파일이 바뀌면 새 후보와 그 검증 근거를 먼저 확정한다.
 2. `verification.md`의 `Grade별 review gate`를 현재 후보에 적용한다. Trivial·Small은 해당 self-review, Medium은 `Independent Review` 판정, Large는 bounded independent code review 1회의 유효한 결과를 확인한다. Trivial 조건을 벗어나면 최소 Small로 재판정한다. 이미 같은 후보에서 유효한 리뷰는 재사용하며 기본 CODE review에 B를 추가하지 않는다.
@@ -94,7 +96,7 @@ business 동기화, 현재 SDD 삭제, 링크·review status 정리처럼 예정
 1. merge 직전과 merge 후 closure 확인 경계에서 필요한 metadata를 갱신하고 실제 PR merged·Issue closed를 확인한다.
 2. 정리 전에 관측 시작·SUMMARY·필요한 원본을 지속 보존 위치에서 재조회한다. 결과·조회 공백은 `observations.md`의 제품 완료 관측으로 SUMMARY에 남긴다. local worktree만을 후속 관측의 유일한 원본으로 남기지 않는다.
 3. `observations.md`의 `종료 관측 점검`을 적용한다. 이 preview의 `observation-check unavailable reason=not-shipped` 결과와 필요한 최초 출력·재실행 이유를 준비하되 closure/release의 새 차단 조건으로 삼지 않는다.
-4. 위 점검 결과와 실제 main 대상 PR의 closing reference·merge SHA로 `[PRODUCT COMPLETE]`를 한 번 기록한다. 첫 줄 태그 다음에 `product-complete: {"schema_version":1,"issue":N,"pull_request":PR,"merge_commit":"40자리 SHA"}`를 둔다. 제품 완료와 local cleanup·ownership release는 별개이며 같은 lifecycle의 완료 기록을 중복 생성하지 않는다.
+4. 위 점검 결과와 P가 선언한 병합 대상 branch에 실제 병합된 PR의 closing reference·merge SHA로 `[PRODUCT COMPLETE]`를 한 번 기록한다. 첫 줄 태그 다음에 `product-complete: {"schema_version":1,"issue":N,"pull_request":PR,"merge_commit":"40자리 SHA"}`를 둔다. 제품 완료와 local cleanup·ownership release는 별개이며 같은 lifecycle의 완료 기록을 중복 생성하지 않는다.
 5. `parallel-development`의 Release·Merged local worktree cleanup을 실행한다. registration 제거 전에는 run-owned/generated로 증명되지 않은 untracked diagnostic/unknown 파일이 없는지 확인한다. 그런 파일은 사용자 state로 보존하고 registration 제거·RELEASE를 중단해 lane release incomplete로 보고한다.
 6. no-artifact 예외, 빌드 정리, registration·physical directory 각각의 부재 확인, 허용된 잔여 정리와 ownership release 순서는 그 원본을 따른다. 현재 claim·환경 근거를 재사용하고 force cleanup이나 대량 파일의 개별 삭제 loop로 보호 정책을 우회하지 않는다.
 7. cleanup/release가 pending이면 정확한 경로·상태·재개 조건을 보고하되 제품 완료를 취소하지 않는다. cleanup만의 후속 갱신은 `[LOCAL CLEANUP]`에 남기고 제품 완료 기록을 다시 작성하지 않는다.

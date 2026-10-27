@@ -19,6 +19,12 @@ Concrete work units and product facts are managed by the project. Do not require
 
 These three are the common minimum requirements. Host and project rules may make them stricter but may not waive them. On conflict, stop the work that depends on that judgment and ask a human. If the execution environment cannot ask a human, stop that work and record the question as unresolved.
 
+### Requirement and decision records
+
+Requirements provided by a human for the task and decisions they explicitly make may be summarized in the project's permitted work records even when delivered through conversation. Record only what the task needs. Link requirements to the source identifier and checked revision or provision time; link decisions to their content, scope, decision-maker, time, and source reference. State when the source cannot be retrieved, and do not claim to have verified an unseen original. Do not turn an investigation request, proposal, or general instruction to proceed into a confirmed decision.
+
+This does not permit collecting conversation logs. The observation restrictions below remain in force; requirement and decision records also follow the project's protection of secrets, personal information, product-user data, and disclosure boundaries. Do not copy prohibited content by labeling it a requirement. No separate ledger or repeated approval step is required.
+
 ## Application and improvement observation
 
 The Agent doing the work leaves the links below in the project's existing work records. Reuse the issues, PRs, and handoff records the project already defines; do not assume a separate service or a dedicated ledger. The project's start, handoff, and closing procedures must consume this section. Do not claim automatic collection or behavioral compliance merely because documents were distributed or the copy's hashes matched.

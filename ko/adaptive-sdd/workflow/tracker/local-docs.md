@@ -19,7 +19,7 @@
 
 | W 절차의 표현 | 로컬 문서 방식 |
 | --- | --- |
-| Issue 생성 | `items/<ID>.md`를 **이미 있으면 실패하는 방식**으로 만든다. ID 충돌이면 다음 ID로 다시 시도한다 |
+| Issue 생성 | `items/<ID>.md`를 **이미 있으면 실패하는 방식**으로 만든다. ID 충돌이면 P의 id_source를 확인한다. generated만 번호를 재발급하고 external은 원천/기존 작업을 확인하며 임의 증가하지 않는다 |
 | Issue 번호 `#N` | `<ID>` |
 | Issue body | 작업 문서의 `## 메타`와 `## 기록`을 뺀 본문 section |
 | `priority:*`, `grade:*`, `status:*` 라벨 | `## 메타`의 `priority:`, `grade:`, `status:` 줄. 각각 정확히 하나 |
@@ -30,14 +30,14 @@
 | 댓글 `updated_at` | 항목의 `작성` 시각. 항목은 수정하지 않으므로 작성 시각이 곧 갱신 시각이다 |
 | `[CLAIM]` | `claims/<ID>.claim`을 이미 있으면 실패하는 방식으로 만들고, 같은 내용을 `## 기록`에 남긴다 |
 | `[RELEASE]` | `## 기록`에 `[RELEASE]`를 남긴 뒤 `claims/<ID>.claim`을 지운다 |
-| open PR | 아직 main에 병합되지 않은 해당 작업의 branch |
-| PR head / base SHA | branch head SHA / 병합 대상 main SHA |
+| open PR | 아직 선언한 병합 branch에 병합되지 않은 해당 작업의 branch |
+| PR head / base SHA | branch head SHA / 선언한 병합 대상 SHA |
 | PR body의 `Closes #N` | `[IMPLEMENTATION SUMMARY]` 항목의 `closes: <ID>` 줄 |
-| PR mergeability | `git merge-tree --write-tree origin/main <branch>`(Git 2.38 이상)의 종료 코드 0이면 충돌 없음. 쓸 수 없으면 disposable worktree에서 병합을 시도하고 결과만 기록한 뒤 버린다 |
-| PR merge | P 적용 문서 `tracker.md`의 `병합 방법`(merge·squash·rebase)으로 branch를 `origin`의 main에 병합하고 push한다. 병합 주체는 P의 사람 판단 지점을 따른다. 병합한 쪽이 `## 기록`에 `[MERGED]` 항목(`branch:`, `head:` branch head SHA, `main:` 병합 결과 main SHA, `method:`)을 남긴다. 병합 방법이 미정이면 `BLOCKED: tracker operation unsupported` |
-| merged 확인 | `git fetch origin main` 뒤, `merge`면 `git merge-base --is-ancestor <branch head> origin/main`이 성공해야 한다. `squash`·`rebase`면 branch head가 main에 없으므로 `[MERGED]`의 `main:` SHA가 `origin/main`의 조상이고 그 commit 메시지가 작업 ID를 담는지 확인한다. 확인한 origin/main SHA를 기록한다 |
+| PR mergeability | `git merge-tree --write-tree <code-remote>/<merge-branch> <branch>`(Git 2.38 이상)의 종료 코드 0이면 충돌 없음. 쓸 수 없으면 disposable worktree에서 병합을 시도하고 결과만 기록한 뒤 버린다 |
+| PR merge | P 적용 문서 `tracker.md`의 `병합 방법`(merge·squash·rebase)으로 branch를 선언한 코드 원격의 병합 대상 branch에 병합하고 push한다. 병합 주체는 P의 사람 판단 지점을 따른다. 병합한 쪽이 `## 기록`에 `[MERGED]` 항목(`branch:`, `head:` branch head SHA, `main:` 선언한 병합 branch의 결과 SHA, `method:`)을 남긴다. 병합 방법이 미정이면 `BLOCKED: tracker operation unsupported` |
+| merged 확인 | `git fetch <code-remote> <merge-branch>` 뒤, `merge`면 `git merge-base --is-ancestor <branch head> <code-remote>/<merge-branch>`이 성공해야 한다. `squash`·`rebase`면 원래 branch head가 병합 branch에 없을 수 있으므로 `[MERGED]`의 `main:` SHA가 `<code-remote>/<merge-branch>`의 조상이고 그 commit 메시지가 작업 ID를 담는지 확인한다. 확인한 <code-remote>/<merge-branch> SHA를 기록한다 |
 | CI | P 적용 문서 `build.md`의 `## 검증 기준`이 정한 로컬 명령. CI가 있으면 같은 문서의 `CI`가 함께 선언 |
-| PR 기반 review candidate publication | W 그대로 Issue branch를 `origin`에 push하고 exact SHA를 기록한다. 작업 관리 방식은 이 단계를 바꾸지 않는다 |
+| PR 기반 review candidate publication | P의 게시 저장소·원격·branch에 artifact를 push하고 exact SHA를 기록한다. 제품 claim branch와 구별하며 W design-review 게시 조건을 따른다 |
 | Issue closed (병합 뒤 자동 종료) | GitHub의 자동 종료에 해당하는 동작이 없으므로, merged 확인 뒤 종료 절차를 수행하는 Agent가 `## 메타`의 `status: closed`와 `종료:` 시각을 쓰고 `## 기록`에 `[CLOSED]` 항목(`by-merge: <main SHA>`)을 남긴다. `[IMPLEMENTATION SUMMARY]`의 `closes:`가 이 작업 ID일 때만 한다 |
 | Issue not-planned | `## 메타`의 `status: not-planned`와 `종료:` 시각, `## 기록`의 사유 항목 |
 | `[PRODUCT COMPLETE]`의 `product-complete:` JSON | `{"schema_version":1,"issue":"<ID>","pull_request":null,"branch":"<branch>","head":"<branch head SHA>","merge_commit":"<[MERGED]의 main SHA>"}` |
@@ -47,7 +47,13 @@
 
 ## 코드 원격
 
-로컬 문서 방식은 Issue·댓글·라벨·PR 표현만 바꾼다. git 절차는 그대로라서 W의 `git fetch origin main`, Issue branch push, review candidate publication에 코드 원격 `origin`이 필요하다. 회사 git 서버가 있으면 그것을 쓴다. 원격이 없는 저장소는 저장소 밖 로컬 디스크에 bare 저장소를 만들어 `origin`으로 둘 수 있다(`git init --bare <경로>` 뒤 `git remote add origin <경로>`, `git push -u origin main`). 이 경우 reviewer도 같은 경로를 읽을 수 있어야 한다.
+로컬 문서 방식은 Issue·댓글·라벨·PR 표현을 바꾼다. 코드 remote·신규 lane base·제품 merge target 및 SDD 게시 저장소/remote/branch는 P tracker.md의 선언을 따른다(기본 origin/main). 게시 원격은 저장소 밖 로컬 bare도 사용할 수 있으나 reviewer가 같은 경로와 exact commit을 읽을 수 있어야 한다. 저장소 생성·연결·push 권한은 별도 확인하며 로컬 파일이 존재한다는 사실만으로 게시를 인정하지 않는다. 기존 기록의 `main:` 필드명은 호환을 위해 유지하지만 값은 선언한 병합 branch의 결과 SHA다.
+
+## 리뷰 입력
+
+review 대상 Issue body는 위 대응표처럼 `## 메타`와 `## 기록`을 제외한 본문이다. 리뷰 기록을 추가했다는 이유만으로 본문의 검토 identity를 새 head로 바꾸지 않는다. 대상 본문과 직접 계약이 불변인지 확인하는 조건은 `process/design-review.md`를 따른다.
+
+최초 blind에는 exact candidate에서 추출한 본문과 필요한 산출물만 제공한다. 추출은 reviewer 입력을 준비하는 쪽에서 UTF-8 bytes를 보존해 수행하며 `git show` 전체 출력 뒤 shell 문자열 필터로 기록을 가리는 방식은 사용하지 않는다. 추출 범위·원문/사본 hash·실제 읽기 권한과 본문에 남은 finding 언급까지 확인하는 절차는 [Blind 입력 준비와 확인](../skills/_shared/execution-packets.md#blind-입력-준비와-확인)을 따른다. 원본의 메타·기록을 삭제하거나 다른 lane의 기록 형식을 바꾸지 않는다.
 
 ## 작업 문서 형식
 

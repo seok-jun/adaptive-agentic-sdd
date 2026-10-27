@@ -1,8 +1,36 @@
 # Customization guide (1.0 preview)
 
+Generated default check and check-evals commands use literal path quoting for PowerShell on Windows and POSIX sh elsewhere; use the named shell. Custom commands remain project-owned.
+
 This guide explains how to place a copy of the methodology in a project, adjust it to the project, and give work to an Agent. It is not part of the copy. The Korean edition is `ko/docs/customization.md`. In this preview the Korean edition installs a fuller copy, `ko/adaptive-sdd/` (methodology plus workflow procedures, skills, evals, and an installer), and follows its own guide; the English edition of those parts is pending.
 
 The unreleased Korean workflow separates the optional Epic management type from its four execution grades. Its upgrade guide explains how to migrate former `grade:Epic` issues and `min_grade: Epic` mappings without silently changing human decisions or restarting active work. See [the Korean upgrade guide](../ko/docs/customization.md#버전-올리기); this is not a new grade requirement for the English methodology-only edition.
+
+The same Korean upgrade guide now covers in-progress policy transitions and installer source identity. A new `--source-commit` without a tag removes the previous tag when the commit changes; a same-commit or source-option-free render preserves it. `--clear-source-tag` repairs an already incorrect tag. A supplied `--source-tag` requires the verified `--source-commit` alongside it; branch names are not tags. The installer does not verify remote tag correspondence. These installer/workflow features still have no English edition.
+
+## Korean installer: external placement and operating settings
+
+The unreleased Korean installer accepts `--harness-root S` alongside product checkout `--project-root P`. Place the pinned bundle at `S/.adaptive-sdd/`; neither root may contain the other. Settings, generated project documents and the lock stay in S. Product entry skills, marked AGENTS/CLAUDE blocks and `.agentics/adaptive-sdd.json` stay in P. External entry checks explicitly bind both roots and check the connection, manifest, lock and generated outputs. A changed bundle requires an explicit render with the reviewed S. Source commit authenticity is still the caller's responsibility.
+
+One S is bound to one checkout. A new worktree needs its own S/connection; tracker storage may be shared. Hosts unable to read S need another accessible placement. Migration does not delete old copies or overwrite hand edits: review KEPT output before accepting individual replacements. The project decides whether to commit or exclude local connection files. In-repository installation must reach the declared base branch through the project's authorized integration process, not a mandatory direct push to main. Preserve LF bytes when versioning S.
+
+Optional schema-1 settings retain defaults for existing installations:
+
+| Settings | Meaning |
+| --- | --- |
+| `git.remote/base_branch/merge_branch` | Code remote, new-lane base and merge target; defaults origin/main/main |
+| `review.repository/remote/branch` | Publication repository absolute path, remote and branch; empty defaults P/code remote/issue branch. A local bare remote still requires exact-artifact reviewer access |
+| `tracker.id_source/id_format/child_id_rule` | generated or external IDs; external requires a format and preserves source IDs. Child issuance follows declared authority |
+| `project.conversation_language/conventions` | Conversation/report language and convention source reference |
+| `build.checks` | List with scope, method, actor, instructions, evidence, required. method: command/manual; actor: agent/human; required: required/optional |
+| `build.test_mode/test_format/test_preserve_at` | persistent (default), temporary or none; format and preservation location (required for temporary; relative paths use P) |
+| `routing.role_defaults` | role/model/reasoning preferences for PLAN, IMPLEMENT, REVIEW, TEST_DOCS, FINISH |
+| `routing.capabilities` | host/model/tier/reasoning/source/identity/valid_until records; cheap/strong/frontier tiers and timezone-qualified ISO expiry |
+| `routing.qualification_records` | Separate role qualification evidence reference |
+
+Existing verification commands and new checks both apply. Manual evidence needs target, confirmer, time and observations; requesting a check is not a pass. Preserve and re-query temporary tests, fixtures and execution evidence before removal, linking actual inputs to the final candidate. No-new-test mode still needs equivalent acceptance/finding evidence and cannot waive required verification. Model preferences do not establish capability, qualification or a human's Review B selection. Verify source, freshness and host support when selecting; inherited current/manual reviewers still need actual model/reasoning evidence. These declarations do not grant Git or execution authority or silently replace earlier decisions. Use the existing policy-transition procedure for active work.
+
+The Korean guide and this feature description are synchronized; the full workflow/templates/tools English edition remains pending.
 
 ## What this preview is
 
@@ -179,7 +207,9 @@ Propose only what has evidence, and separate anything that looks like a problem 
 
 1. Repeat section 1 with the new tag's archive. Delete the copy folder first and replace it as a whole; leftover old files are not caught by the hash comparison.
 2. Update the adapter's "Pin" section with the new values and record the date of the change. Do not edit records of earlier intervals.
-3. Do not switch implicitly in the middle of a task in progress. If you switch, record it as an interval starting at that point.
+3. Do not switch implicitly in the middle of a task in progress. If you switch, record it as an interval starting at that point. Check active owners, running reviews, uncommitted changes, and recent work records to coordinate which tasks and stages adopt the change. The Korean workflow defines plan correction and policy transition in `process/sdd-artifacts.md`; retain valid prior decisions and review evidence rather than automatically restarting them.
+
+When adopting the requirement/decision recording clarification in `core.md`, check project-owned restrictions as well. Minimal task requirement and decision records are distinct from collecting conversation logs; the clarification does not automatically relax project disclosure or secret-protection rules. In the Korean installer, inspect generated `project/issue-writing-guide.md` differences and any `KEPT` hand-edited outputs before updating them within the permitted scope.
 
 ## Reporting a common problem
 

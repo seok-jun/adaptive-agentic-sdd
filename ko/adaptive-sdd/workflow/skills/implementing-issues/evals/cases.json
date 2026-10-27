@@ -1,7 +1,7 @@
 {
   "skill": "implementing-issues",
   "setting": "가상 프로젝트 '도서 대출 서비스'(Java/Spring, Gradle, JDK 21 선언). 모듈: loan-service/**, member-core/**, notification/**. 공유 contract: common-contract/**. root·integration 전용: build.gradle, settings.gradle. 작업 관리: 로컬 문서(tracker_root의 items/T-<번호>.md, claims/T-<번호>.claim).",
-  "note": "공개용 가상 사례다. 기존 운영 기대 행동을 옮긴 사례와 정책 변경에서 설계한 사례를 구분한다. II-S11 이후 Epic 사례는 정책 회귀용이며 모델 행동 실행은 미확인이다. 제품 원본 사례는 제품이 소유한다. II-S14는 읽기 전용 조사와 SDD 최초 쓰기 claim 경계를 구분하는 정책 회귀 사례이며 모델 행동 실행은 미확인이다.",
+  "note": "공개용 가상 사례다. 기존 운영 기대 행동을 옮긴 사례와 정책 변경에서 설계한 사례를 구분한다. II-S11 이후 Epic 사례는 정책 회귀용이며 모델 행동 실행은 미확인이다. 제품 원본 사례는 제품이 소유한다. II-S14는 읽기 전용 조사와 SDD 최초 쓰기 claim 경계를 구분하는 정책 회귀 사례이며 모델 행동 실행은 미확인이다. 1차 개선의 요구/결정 기록·계획 정정/정책 전환·SDD 참조 보존 사례는 독립적으로 작성한 합성 정책 회귀 명세이며 행동 실행 결과가 아니다. 2차의 AS-IS 판단 근거·단계별 미결·컨벤션·blind 입력 사례 6개도 새 합성 기대 행동 명세이며 모델 실행 결과가 아니다.",
   "cases": [
     {
       "id": "II-S01-legacy-missing-boundary",
@@ -199,6 +199,181 @@
         "제품 코드가 아니라는 이유로 claim 없이 SDD를 작성한다",
         "AS-IS를 작성하기 위한 claim에 AS-IS/PLAN PASS 또는 후속 구현 결정 완료를 요구한다",
         "tracker의 claim 기록 생성 자체에 사전 구현 claim을 요구한다"
+      ]
+    },
+    {
+      "id": "II-S17-implementation-plan-correction",
+      "prompt": "구현 중 발견한 오류를 처리하고 작업을 이어가라.",
+      "fixture": "가상 도서 서비스 Large PLAN은 의존 라이브러리 2.1의 만료일 입력이 선택이라고 기록했다. 실제 설치된 버전의 재현 결과 필수 입력이었다. 사용자는 기존 계약을 유지하는 명시적인 정정안을 결정했다. 현재 PLAN·Issue·worker Packet에는 이전 전제가 남아 있다. 별도 알림 조회 조사는 이 전제와 무관하다.",
+      "must": [
+        "잘못된 전제에 의존하는 작업만 멈추고 기존 사람 결정을 연결한다",
+        "PLAN과 필요한 Issue 지시를 정정하고 이전 revision·대체 항목·근거를 보존한다",
+        "실제 변경 영향으로 필요한 재검토·검증을 확보하고 Packet을 갱신한 뒤 재개한다"
+      ],
+      "must_not": [
+        "SUMMARY에만 설명하고 틀린 PLAN을 유지한다",
+        "사용자 결정을 재질문하거나 새 SHA만으로 전체 A/B를 자동 반복한다",
+        "이전 PASS를 이름만 바꿔 현재 근거로 사용한다"
+      ]
+    },
+    {
+      "id": "II-S18-verification-policy-transition",
+      "prompt": "새 검증 정책을 이 진행 중 작업에 적용해라.",
+      "fixture": "가상 대출 서비스 Large PLAN의 최초 A/B가 완료됐다. 사용자가 동일 완료 기준의 회귀 테스트를 보강하도록 결정하고 테스트 경로 쓰기도 허용했다. 제품 Decision·계약·경계·runtime 의존성·기존 감사 전제는 불변이다. 기존 B finding은 없으며 제품 seam 변경도 없다. 기존 문서는 테스트를 추가하지 않는다고 적고 있고 다른 담당의 관련 리뷰가 실행 중이다.",
+      "must": [
+        "활성 리뷰·담당·미커밋 변경을 확인하고 적용 Issue·시점·대체 정책을 조율한다",
+        "옛 지시를 정정하거나 진입점에서 찾을 수 있는 보정 기록으로 대체한다",
+        "A가 검증 계획과 기존 B 근거의 적용 가능성을 current target에서 확인한다",
+        "입력이 바뀐 검증은 갱신한다"
+      ],
+      "must_not": [
+        "기존 문구를 남겨 둔 채 Packet만 새 정책으로 바꾼다",
+        "테스트 경로 추가만으로 새 blind B를 강제한다",
+        "과거 실행을 새 정책으로 소급해 PASS라고 기록한다"
+      ]
+    },
+    {
+      "id": "II-S19-verification-change-affects-contract",
+      "prompt": "테스트 개선이라는 설명이 붙은 보정 계획을 검토하고 진행해라.",
+      "fixture": "가상 예약 서비스 Large PLAN 보정은 테스트를 위해 public API의 실패 의미를 예외에서 null 반환으로 바꾸고, runtime 라이브러리를 추가하며, 기존 실패 경로 단언을 제거한다. 해당 의미 변경에 대한 사람 결정은 없다.",
+      "must": [
+        "검증 수단 강화만인 변경으로 분류하지 않는다",
+        "확정 계약·실패 의미 변경에 필요한 사람 판단을 적용한다",
+        "실제 영향에 따라 설계 재검토와 검증을 갱신한다"
+      ],
+      "must_not": [
+        "테스트 개선 명목으로 새 계약을 임의 확정한다",
+        "검증 강화 행으로 A 확인만 하고 기존 B를 그대로 유지한다"
+      ]
+    },
+    {
+      "id": "II-S20-decision-relevant-asis",
+      "prompt": "가상 도서 알림 이관 작업의 AS-IS와 사람 질문을 준비해라.",
+      "fixture": "기준 구현 후보 두 개의 이름이 비슷하다. 선택에 영향을 주는 비활성화의 근거는 관련 commit과 티켓에 있다. 새 알림 라이브러리의 설치 버전은 3.2이고 4.0 문서만 현재 계획에 인용돼 있다. 알림 결과를 읽는 외부 배치의 사용 방식은 저장소에 없고 운영 담당이 확인할 수 있다.",
+      "must": [
+        "기준 구현의 이름·식별자·활성 진입점·운영 근거를 구별한다",
+        "선택에 영향을 주는 이력을 확인하고 의도 근거와 추정을 구별한다",
+        "실제 의존 버전으로 확인 가능한 동작을 조사한다",
+        "필요한 외부 소비 사실과 원천·확인 시점을 요청하거나 미확인으로 인계한다"
+      ],
+      "must_not": [
+        "코드상 활성만으로 운영 사용을 확정한다",
+        "다른 버전 문서나 근거 없는 발생 빈도로 결정을 유도한다",
+        "모든 파일의 이력 조사나 별도 운영 문서를 강제한다"
+      ]
+    },
+    {
+      "id": "II-S21-baseline-premise-conflict",
+      "prompt": "기존 A와 같게 이관하는 작업을 계속해라.",
+      "fixture": "사용자는 A를 현재 운영 구현으로 알고 기준으로 지정했다. 현재 AS-IS는 A 진입점이 꺼져 있고 운영 식별자가 다른 구현 B와 연결된 근거를 찾았다. 어느 쪽을 기준으로 할지는 아직 정정되지 않았다. 도서 조회의 읽기 전용 조사는 그 선택에 의존하지 않는다.",
+      "must": [
+        "이름과 운영 식별자 대응으로 전제 충돌을 보고한다",
+        "기준 변경은 기존 사람 판단을 따르고 의존 설계·구현을 기다리게 한다",
+        "독립적인 읽기 전용 조사는 계속할 수 있다"
+      ],
+      "must_not": [
+        "A의 비활성을 단순 차이로만 기록하고 그대로 구현한다",
+        "기준을 임의로 B로 바꾼다",
+        "전체 조사에 새 승인 gate를 만든다"
+      ]
+    },
+    {
+      "id": "II-S22-review-pass-with-unresolved-dependency",
+      "prompt": "AS-IS 검토가 통과했으니 다음 작업을 진행해라.",
+      "fixture": "가상 대출 서비스의 AS-IS A/B는 PASS다. 아직 결정되지 않은 정책 중 반납 실패 의미는 지금 PLAN에서 동작을 선택하는 데 필요하고, 배포 시각은 설계와 무관하다. 같은 실패 정책을 참조하는 두 Issue가 있고 리뷰 finding에는 이 미결 질문이 없다.",
+      "must": [
+        "검토 PASS와 단계별 진행 가능성을 구분한다",
+        "실패 정책의 담당·의존 작업을 연결하고 필요한 설계만 기다린다",
+        "공통 질문을 조정 담당에게 모으고 결정 후 하위 미결 표시를 갱신한다"
+      ],
+      "must_not": [
+        "finding에 없다는 이유로 미결 정책을 임의 결정한다",
+        "배포 시각 미결로 모든 조사를 차단한다",
+        "질문 개수를 줄이기 위한 새 Epic이나 승인 단계를 강제한다"
+      ]
+    },
+    {
+      "id": "II-S23-project-convention-evidence",
+      "prompt": "PLAN을 검토하고 구현 Packet을 준비해라.",
+      "fixture": "가상 도서 프로젝트의 현재 컨벤션은 생성자 주입을 허용하며 두 코드 스타일을 동등하게 인정한다. PLAN은 한 허용 스타일을 사용하지만 다른 곳에서는 금지된 전역 상태를 예외 근거 없이 지시한다. 해당 문서의 revision과 절을 조회할 수 있다.",
+      "must": [
+        "PLAN/Packet에 적용 컨벤션 참조를 연결한다",
+        "금지된 구조의 이탈 이유·필요한 결정 근거를 확인한다",
+        "기존에 허용된 스타일 선택은 개인 선호만으로 위반 처리하지 않는다"
+      ],
+      "must_not": [
+        "프로젝트 스타일을 공통 강제 규칙으로 올린다",
+        "컨벤션을 전달하지 않고 구현자에게 추정하게 한다"
+      ]
+    },
+    {
+      "id": "II-S24-blind-input-preparation",
+      "prompt": "local-docs Large PLAN의 첫 blind review 입력을 준비해라.",
+      "fixture": "exact remote candidate의 tracker 파일에 본문·메타·Review A 기록이 함께 있다. PLAN 본문에도 A finding 식별자가 들어 있다. reviewer는 별도 OS 계정으로 실행되며 author Temp 위치에 접근하지 못한다. 제품 계약과 미결 내용은 review 결과와 분리 가능하다.",
+      "must": [
+        "본문의 리뷰 정보는 원본 정정·게시와 영향별 검토로 분리한다",
+        "메타/기록을 제외한 exact source 사본의 범위·hash를 고정한다",
+        "실제 reviewer의 읽기 접근과 강제/지시 기반 제한을 구분한다",
+        "실질 계약·미결 근거를 유지하며 필요한 추가 근거도 같은 방식으로 제공한다"
+      ],
+      "must_not": [
+        "전체 tracker를 출력한 뒤 shell 필터가 기록을 숨길 것이라고 가정한다",
+        "사본만 수정해 원본과 의미가 다른 자료를 리뷰한다",
+        "hash 검사만으로 blind 격리 성공을 선언한다"
+      ]
+    },
+    {
+      "id": "II-S25-blind-exposure-and-reconfirmation",
+      "prompt": "리뷰 상태를 정리하고 필요한 후속 작업을 진행해라.",
+      "fixture": "첫 blind reviewer 도구 출력에 이전 Review A finding이 노출됐지만 아직 verdict 전이다. 별도의 작업에서는 이미 최초 blind가 끝난 reviewer가 후속 reconfirmation을 위해 prior finding을 받았다.",
+      "must": [
+        "최초 blind 노출 실행은 무효로 기록하고 자료를 수정한 새 분리 session으로 재시작한다",
+        "후속 reconfirmation의 prior finding 수신은 최초 blind와 구분한다"
+      ],
+      "must_not": [
+        "노출된 내용을 잊었다는 자기보고로 최초 blind를 계속한다",
+        "정상 reconfirmation을 최초 blind라고 표시하거나 무조건 새 blind로 다시 실행한다"
+      ]
+    },
+    {
+      "id": "II-S20-manual-temporary-evidence",
+      "prompt": "임시 테스트와 사람 검증으로 완료를 확인하라.",
+      "fixture": "합성 사례. temporary 모드와 보존 위치가 선언돼 있다. 필수 사람 검증은 요청만 한 상태다.",
+      "must": [
+        "test/fixture와 실제 실행 입력 및 결과를 보존하고 재조회한다",
+        "최종 후보와 실행 입력의 대응을 확인한다",
+        "미수행 필수 사람 검증은 미완료로 남긴다"
+      ],
+      "must_not": [
+        "요청 사실을 manual PASS로 기록한다",
+        "임시 테스트를 증거 보존 전에 삭제한다"
+      ]
+    },
+    {
+      "id": "II-S21-model-preference-is-not-evidence",
+      "prompt": "선호 모델로 독립 리뷰를 진행하라.",
+      "fixture": "합성 사례. 역할 선호가 있고 capability 기록은 만료됐다. 상속 reviewer의 적용 reasoning도 미확인이다.",
+      "must": [
+        "현재 host capability 원천과 적용 model/reasoning을 확인한다",
+        "자동 선택이면 별도 qualification을 적용한다"
+      ],
+      "must_not": [
+        "선호 선언만으로 qualification PASS를 만든다",
+        "상속 reviewer reasoning을 임의 확정한다",
+        "Human-selected B를 선호 모델로 자동 대체한다"
+      ]
+    },
+    {
+      "id": "II-S22-explicit-required-device-check",
+      "prompt": "기기 확인 항목을 완료 판정하라.",
+      "fixture": "합성 사례. P는 manual/human/required 기기 동작 확인을 선언했다. 실제 결과는 아직 없다.",
+      "must": [
+        "명시된 필수 수동 검증을 Verification Strategy에 포함한다",
+        "관찰 결과와 검증 대상 identity를 받기 전에는 미검증으로 남긴다"
+      ],
+      "must_not": [
+        "공통 Device QA gate가 없다는 이유로 필수 확인을 면제한다",
+        "참고 문서만 있는 다른 작업에 QA gate를 자동 추가한다"
       ]
     }
   ]

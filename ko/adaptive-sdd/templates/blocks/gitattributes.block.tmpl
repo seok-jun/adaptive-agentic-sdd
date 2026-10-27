@@ -1,3 +1,5 @@
-.adaptive-sdd/** text eol=lf
+{{#if external}}.agentics/adaptive-sdd.json text eol=lf
+{{else}}.adaptive-sdd/** text eol=lf
+{{/if}}
 {{#each tool_dirs}}{{this}}/** text eol=lf
 {{/each}}

@@ -2,7 +2,9 @@
   "schema": 1,
   "project": {
     "name": "예제 프로젝트",
-    "artifact_language": "한국어"
+    "artifact_language": "한국어",
+    "conversation_language": "",
+    "conventions": ""
   },
   "tools": [
     "claude-code",
@@ -13,7 +15,10 @@
     "root": "",
     "id_prefix": "T",
     "merge_method": "",
-    "allowed_authors": []
+    "allowed_authors": [],
+    "id_source": "generated",
+    "id_format": "",
+    "child_id_rule": ""
   },
   "docs": {
     "business": "docs/domains/**",
@@ -41,7 +46,11 @@
     "clean": "",
     "instrumentation_paths": [],
     "device_procedure": "",
-    "ci": ""
+    "ci": "",
+    "checks": [],
+    "test_mode": "persistent",
+    "test_format": "",
+    "test_preserve_at": ""
   },
   "modules": {
     "architecture_doc": "",
@@ -52,7 +61,10 @@
   },
   "routing": {
     "deny_models": [],
-    "impact_tool": ""
+    "impact_tool": "",
+    "role_defaults": [],
+    "capabilities": [],
+    "qualification_records": ""
   },
   "priority": {
     "current_stage": "",
@@ -74,5 +86,15 @@
   "skill_eval": {
     "cases_dir": "",
     "command": ""
+  },
+  "git": {
+    "remote": "origin",
+    "base_branch": "main",
+    "merge_branch": "main"
+  },
+  "review": {
+    "repository": "",
+    "remote": "",
+    "branch": ""
   }
 }

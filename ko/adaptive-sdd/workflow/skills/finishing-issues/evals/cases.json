@@ -1,7 +1,7 @@
 {
   "skill": "finishing-issues",
   "setting": "가상 프로젝트 '도서 대출 서비스'(Java/Spring, Gradle, JDK 21 선언). 모듈: loan-service/**, member-core/**, notification/**. 공유 contract: common-contract/**. root·integration 전용: build.gradle, settings.gradle. 작업 관리: 로컬 문서(tracker_root의 items/T-<번호>.md, claims/T-<번호>.claim).",
-  "note": "공개용 가상 사례다. 기존 운영 기대 행동을 옮긴 사례와 정책 변경에서 설계한 사례를 구분한다. FI-S09 Epic 사례는 정책 회귀용이며 모델 행동 실행은 미확인이다. 제품 원본 사례는 제품이 소유한다. FI-S10·S11은 입력 불변 PASS 재사용과 근거 불일치를 구별하는 정책 회귀 사례이며 모델 행동 실행은 미확인이다. FI-S12는 종료 파일 정리 후 최종 검증 근거 확보와 CODE Review 순서의 정책 회귀 사례이며 모델 행동 실행은 미확인이다.",
+  "note": "공개용 가상 사례다. 기존 운영 기대 행동을 옮긴 사례와 정책 변경에서 설계한 사례를 구분한다. FI-S09 Epic 사례는 정책 회귀용이며 모델 행동 실행은 미확인이다. 제품 원본 사례는 제품이 소유한다. FI-S10·S11은 입력 불변 PASS 재사용과 근거 불일치를 구별하는 정책 회귀 사례이며 모델 행동 실행은 미확인이다. FI-S12는 종료 파일 정리 후 최종 검증 근거 확보와 CODE Review 순서의 정책 회귀 사례이며 모델 행동 실행은 미확인이다. 1차 개선의 요구/결정 기록·계획 정정/정책 전환·SDD 참조 보존 사례는 독립적으로 작성한 합성 정책 회귀 명세이며 행동 실행 결과가 아니다.",
   "cases": [
     {
       "id": "FI-S01-runtime-change-doc-before-sdd-delete",
@@ -174,6 +174,47 @@
         "리뷰 수정 후 D에 C의 문서 검증 또는 리뷰 PASS를 자동 승계한다",
         "같은 후보에 기본 CODE Review B나 추가 독립 리뷰를 일괄 적용한다",
         "입력 불변 build를 종료 단계가 두 곳이라는 이유로 두 번 실행한다"
+      ]
+    },
+    {
+      "id": "FI-S13-active-sdd-consumer",
+      "prompt": "구현과 검증이 끝난 작업을 종료해라.",
+      "fixture": "가상 도서 서비스의 현재 SDD 계약을 다른 활성 Issue의 PLAN이 상대 링크로 참조한다. 원문은 삭제 전 exact commit에서 직접 의존 문서와 함께 조회 가능하다. 소비 lane 담당과 링크 전환을 조율할 수 있고 계약 의미는 바뀌지 않는다.",
+      "must": [
+        "소비 lane 담당과 참조 전환을 조율한다",
+        "exact revision·경로 또는 지속 계약으로 필요한 참조를 바꾸고 조회 가능성을 확인한다",
+        "참조 보존 후 현재 SDD를 정리하고 최종 후보의 검증·리뷰를 확인한다"
+      ],
+      "must_not": [
+        "활성 소비자의 필요한 링크를 무조건 제거한다",
+        "다른 lane 문서를 권한·claim 조율 없이 고친다",
+        "Epic 전체 종료까지 항상 SDD 삭제를 금지한다"
+      ]
+    },
+    {
+      "id": "FI-S14-sdd-retention-handoff",
+      "prompt": "완료된 작업의 SDD 정리와 종료 상태를 판단해라.",
+      "fixture": "가상 도서 서비스의 활성 소비자는 아직 SDD 파일 경로를 직접 사용하며 지금은 참조 전환을 마칠 수 없다. 공유된 현재 SDD는 소비자가 조회할 수 있고 정리 담당이 인계를 확인했다. 담당은 소비자의 참조 전환 또는 의존 종료 후 기존 권한 안에서 정리할 예정이다. 나머지 제품 종료 조건은 충족됐다.",
+      "must": [
+        "소비 Issue·보존 이유·정리 담당·해제 조건을 SUMMARY에 기록한다",
+        "조회 가능한 원문과 담당 인계가 확인된 보존을 허용된 정리 상태로 판정한다"
+      ],
+      "must_not": [
+        "파일이 남았다는 이유만으로 제품 종료를 차단한다",
+        "소비자가 사용하는 SDD를 먼저 지운다",
+        "담당·해제 조건 없는 무기한 방치를 허용한다"
+      ]
+    },
+    {
+      "id": "FI-S20-declared-merge-target",
+      "prompt": "병합된 작업을 완료 처리하라.",
+      "fixture": "합성 사례. P의 merge_branch는 release이고 PR이 release에 병합됐다. main에는 해당 변경이 없다.",
+      "must": [
+        "선언한 release 대상 병합과 실제 merge SHA 및 closing reference를 확인한다",
+        "기존 완료 조건 충족 후 PRODUCT COMPLETE를 기록한다"
+      ],
+      "must_not": [
+        "main 병합을 추가 요구한다"
       ]
     }
   ]

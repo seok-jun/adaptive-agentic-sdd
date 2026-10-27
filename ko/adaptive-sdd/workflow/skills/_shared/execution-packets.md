@@ -1,6 +1,6 @@
 # Execution Packet과 인계 계약
 
-입력은 명시한 P/W/M 절대 root다. 이 문서는 packet을 작성·수신·검증하는 해당 phase에서만 읽으며 fixed pre-read 입력이 아니다. 모델 배정·qualification 판정이 필요하면 [execution-routing](execution-routing.md)의 해당 절을 읽는다.
+입력은 명시한 P/S/W/M 절대 root다. S는 설치 root이며 in-repo에서는 P와 같다. 이 문서는 packet을 작성·수신·검증하는 해당 phase에서만 읽으며 fixed pre-read 입력이 아니다. 모델 배정·qualification 판정이 필요하면 [execution-routing](execution-routing.md)의 해당 절을 읽는다.
 
 ## 읽는 조건과 목차
 
@@ -40,6 +40,8 @@ Execution Packet은 전체 source 묶음이 아니라 orchestrator가 이미 판
 - SDD grade gate와 claim의 immutable evidence
 - host-enforced propagation 또는 worker direct-read의 immutable guard application evidence object
 
+적용할 P 코드 컨벤션이 있으면 provenance에 해당 문서·절·identity(또는 확인 시점)를 연결하고 PLAN의 명시적 이탈/예외를 함께 인계한다. 선언이 없으면 그 사실을 표시하며 새 컨벤션 문서를 강제하지 않는다. known blockers에는 [미결 사항의 담당·필요 단계](../../process/sdd-workflow.md#미결-사항과-단계별-의존성)를 연결하고, 미래 단계의 미결을 현재 작업 전체의 blocker로 확대하지 않는다.
+
 ### Guard 적용과 packet 공통 검증
 
 standalone/subagent runtime이 guard 전파를 보장하지 않으면 worker가 `AGENTS.md`의 필요한 hard guard section을 직접 읽는다.
@@ -58,6 +60,8 @@ issue snapshot, PLAN identity/reference, goal, allowed/forbidden, required contr
 - active lane/path conflict 발생
 - hard guard/canonical Skill version 변경
 
+이 event가 계획 전제 오류나 진행 중 정책 변경이면 [계획 정정과 정책 전환](../../process/sdd-artifacts.md#계획-정정과-정책-전환)으로 원본부터 정정한다. Packet만 수정해 기존 PLAN·정책과의 충돌을 덮지 않는다. 새 Packet에는 현재 적용할 원본과 필요한 재검토 근거를 연결한다.
+
 ### 구현 진입의 문맥·최신성 확인
 
 Execution Packet은 새 계층을 만들지 않고 기존 필드에 인계 근거를 연결한다. Large의 검토를 통과한 PLAN에서 IMPLEMENT로 전환할 때 host가 지원하면 같은 모델이라도 별도 구현 문맥을 선택한다. 실제 fresh session/agent 또는 검증된 압축을 사용하며 model tier/qualification/grade별 actor 수 규칙은 변경하지 않는다. host-supported `fresh-context`, `verified-compaction`, `direct-fallback` 중 실제 수행한 방법과 실행 evidence를 기록한다. 압축은 필수 입력 보존과 현재 source 대조를 검증해야 성공이다. 미지원·압축 실패는 사유·최소 입력 참조·실제 남은 이력의 한계를 남기고 직접 구현하며 분리 성공으로 표시하지 않는다. shell에서 대화 명령을 실행하거나 전환을 선언한 것만으로 성공 처리하지 않는다. 필수 source 복구 실패는 `BLOCKED`다.
@@ -68,7 +72,11 @@ Execution Packet은 새 계층을 만들지 않고 기존 필드에 인계 근�
 
 ## Result Packet
 
-어느 phase의 worker/reviewer든 실제 문제를 발견했으면 기존 반환 결과에 P 적용 문서 `P/.adaptive-sdd/project/sdd-workflow.md`의 조건과 [문제 발견 시 기록과 종료 연결](../../process/observations.md#문제-발견-시-기록과-종료-연결)에 따른 사건 정보/원본 참조를 포함한다. 시작·인계 관측은 [관측 시점별 소비와 기록](../../process/observations.md#차세대-방법론의-적용과-개선-관측)을 연결한다. 이 조건부 사건 정보는 아래 필수 `implementation_findings`나 acceptance/verification과 별개이며 새 packet 유효성 gate가 아니다.
+P의 검증 선언은 [검증 계약](../../process/verification.md#verification-strategy)을 따른다. 아래 code+fixture/test 해결 근거에는 P가 선언한 동등한 동작 관찰 근거도 포함할 수 있지만, 현재 head에서 finding의 resolution expectation을 증명해야 한다. temporary test는 보존 위치·test/fixture hash·실행 당시 제품 입력 identity와 최종 후보 대응을 연결한다. 파일이 현재 제품 트리에 없다는 이유로 증거를 생략하지 않는다.
+
+수동 검증 item은 command/exit code 대신 `method: manual`, 확인자·확인 시점·절차·실제 관찰 결과를 사용한다. 실행하지 않은 command를 만들지 않는다. 나머지 대상 commit·immutable evidence identity·입력 불변/재사용·필수 검증 결과 요건은 자동 검증과 동일하며, 값 부재가 허용되는 것은 manual 항목의 command/exit code뿐이다.
+
+어느 phase의 worker/reviewer든 실제 문제를 발견했으면 기존 반환 결과에 P 적용 문서 `S/.adaptive-sdd/project/sdd-workflow.md`의 조건과 [문제 발견 시 기록과 종료 연결](../../process/observations.md#문제-발견-시-기록과-종료-연결)에 따른 사건 정보/원본 참조를 포함한다. 시작·인계 관측은 [관측 시점별 소비와 기록](../../process/observations.md#차세대-방법론의-적용과-개선-관측)을 연결한다. 이 조건부 사건 정보는 아래 필수 `implementation_findings`나 acceptance/verification과 별개이며 새 packet 유효성 gate가 아니다.
 
 IMPLEMENT worker는 full reasoning이나 전체 command log 대신 다음 field를 반환한다.
 
@@ -108,6 +116,8 @@ Review A와 기본 CODE reviewer 입력은 phase별로 제한한다.
 - `PLAN`: current Issue id/title/acceptance, reviewed AS-IS identity, PLAN과 change-plan artifact 경로 및 remote-resolvable exact SHA, remote base/head, 대상 inventory 또는 immutable reference, 필요한 direct contract/evidence, document author identity
 - `CODE`: current Issue acceptance, reviewed PLAN identity, base/head SHA, current head의 전체 changed-file inventory 또는 immutable reference, current diff/patch reference와 필요한 diff hunk, 필요한 public contract, verification evidence identity, implementation actor identity, PLAN implementation finding handoff와 항목별 code+fixture resolution evidence
 
+AS-IS/PLAN의 direct evidence에는 판단을 좌우하는 [조사 근거와 남은 전제](../../process/sdd-artifacts.md#판단에-필요한-조사)를 연결한다. PLAN/CODE에는 선언된 P 컨벤션 참조와 이탈 이유·예외 결정 근거를 포함한다. reviewer는 적용 가능한 기준과 실제 지시/변경을 대조하고, 개인 선호를 새 계약으로 만들지 않는다. 미결의 담당·필요 시점은 reviewer 발견 여부와 별개로 다음 작업의 의존성에 반영한다.
+
 해당 phase의 필수 field는 nested value까지 nonempty여야 한다. Contract reviewer는 제공 목록을 그대로 신뢰하지 않고 phase target/inventory를 독립 확인한 뒤 bounded artifact/diff와 contract를 검토한다. CODE reviewer는 current head의 전체 changed-file inventory를 독립 확인하고 PLAN의 모든 Implementation finding identity가 handoff됐는지와 각 item의 code+fixture evidence가 current head에서 실제 resolution을 증명하는지 확인한다. handoff가 없었던 경우에는 빈 list를 허용한다. reviewer identity는 document/implementation actor와 달라야 한다. 확인을 solution discovery, repository-wide 탐색, full-source handoff로 확장하지 않는다. target/head, inventory, diff 또는 implementation finding resolution evidence가 applicable current target과 다르면 review를 `STALE`로 처리한다. verification evidence는 위 Result Packet의 실제 실행 identity와 필요한 입력 불변·재사용 근거를 함께 확인하며, 그 조건이 유효하지 않으면 `STALE`로 처리한다. handoff 누락이나 unresolved item이 있으면 review를 complete로 판정하지 않는다.
 
 ### Blind Audit Packet
@@ -124,6 +134,25 @@ Large AS-IS/PLAN의 Review B에만 다음 최소 입력을 전달한다.
 - document author와 Review A actor/session identity는 중복 방지용 metadata로만 제공
 
 최초 packet에는 Review A verdict/finding/detailed Contract Review Packet과 이전 Review B finding detail을 포함하지 않는다. reviewer는 exact target에서 직접 인접한 caller/consumer/contract를 확인할 수 있지만 전면 solution discovery로 확장하지 않는다. target identity가 current candidate와 다르거나 author/Review A와의 actor/session 분리를 증명할 수 없으면 `STALE` 또는 `INVALID`다.
+
+#### Blind 입력 준비와 확인
+
+최초 blind에 제공하는 자료는 리뷰 결과와 분리해 준비한다. 혼합 파일을 통째로 전달하고 reviewer에게 뒤쪽을 읽지 말라고만 지시하지 않는다. 원격 exact candidate 게시 조건은 유지하며, 아래 사본은 게시된 원문의 전달 형식이지 local-only 후보를 인정하는 예외가 아니다.
+
+1. target artifact·Issue 본문·상위 목표·직접 계약/컨벤션의 필요한 범위를 고정한다. 원문 자체에 A/B verdict·finding ID·리뷰 유래 설명이 섞였는지 작성자가 먼저 확인한다. 사람 결정과 실질적인 제약·미결·실패 근거는 유지하고 리뷰 결과의 식별/평가 정보만 분리한다. 내용 정정이 필요하면 원본을 정정·게시하고 기존 영향별 재검토를 적용한다. 사본만 임의 요약·삭제해 검토 의미를 바꾸지 않는다.
+2. 원본의 remote·exact commit·path, 선택한 본문/줄 범위, 원본과 출력의 hash를 기록한 불변 사본 또는 동등한 제한 조회를 제공한다. 전체 파일·기록·commit 메시지가 먼저 도구 출력에 나타난 뒤 필터링하는 방식은 쓰지 않는다. local-docs는 [리뷰 입력](../../tracker/local-docs.md#리뷰-입력)의 본문 경계를 사용한다. 기록은 원본에 보존하며 리뷰를 위해 삭제하지 않는다.
+3. reviewer에게는 검토 자료 root와 고정 manifest identity를 전달하고 원본 history·feedback·리뷰 기록을 입력 root에 포함하지 않는다. 실제 reviewer의 OS 계정/host에서 읽을 수 있는 위치와 범위를 확인한다. host가 접근 제한을 제공하면 사용하고, 실제 강제한 범위와 지시로만 제한한 범위를 구별해 Packet에 남긴다. 해시 일치만으로 OS 격리나 의미상 누출 없음이 증명됐다고 하지 않는다.
+4. 최초 verdict 전 추가 직접 근거가 필요하면 같은 exact revision과 결과 제외 조건으로 준비·검증해 추가한다. 자료 제한 때문에 필수 직접 계약을 확인할 수 없으면 범위를 보완하기 전 PASS하지 않는다. 추가 manifest identity도 기록하며 기존 입력을 조용히 덮어쓰지 않는다.
+5. 이전 리뷰 결과가 노출되면 최초 blind 실행은 무효로 기록하고 입력을 고친 뒤 새 분리 session으로 다시 시작한다. 노출된 내용을 잊었다는 자기보고로 계속하지 않는다. 후속 `reconfirmation`은 이전 finding을 받을 수 있지만 최초 blind로 표시하지 않는다.
+
+Git 자료 추출에는 [review_snapshot.py](../../../tools/review_snapshot.py)를 사용할 수 있다. UTF-8 source blob을 직접 읽어 byte를 보존하고 `tracker-body`는 `## 메타`와 `## 기록`을 제외한다. `artifact`는 파일 전체이므로 본문에 섞인 리뷰 결과를 자동 탐지하지 않는다. spec은 `[{"path":"items/T-1.md","kind":"tracker-body"},{"path":"docs/plan.md","kind":"artifact"}]` 형식이며 필요한 source만 지정한다.
+
+```text
+python review_snapshot.py create --repo <원본 저장소> --commit <전체 commit SHA> --spec <spec.json> --output <새 자료 폴더>
+python review_snapshot.py check --repo <원본 저장소> --bundle <자료 폴더> --manifest-sha256 <create 출력 digest>
+```
+
+준비 담당은 원본과의 `check`를 수행하고 Packet에 그 근거와 digest를 연결한다. reviewer 또는 제한된 검증 수단이 동일 digest와 원본 대응을 확인할 수 있게 하되, 검증 명령은 제외한 원문을 출력하지 않아야 한다. 도구는 기존 출력 폴더를 덮어쓰지 않으며 `check`는 원본 선택·내용 변경·추가 파일을 검사한다. 폴더가 파일시스템 수준에서 immutable이 되는 것은 아니므로 전달 후 변경 시 같은 입력으로 취급하지 않는다. 도구 성공은 원격 게시·host 접근·내용 격리 확인을 대체하지 않는다.
 
 최초 verdict output은 exact target과 결합된 immutable verdict identity와 신규 finding 목록을 가진다. 각 신규 finding은 stable identity, 다음 severity 중 하나, exact-candidate evidence를 포함한다.
 

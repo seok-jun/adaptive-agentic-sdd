@@ -3,7 +3,7 @@ name: parallel-development
 description: 이 프로젝트의 병렬 agent 작업의 claim·격리·동기화·해제·통합을 관리한다. 실행 Issue의 SDD·테스트·코드 등 P 작업 파일 최초 수정 전, branch/worktree 생성, 경로 충돌 확인, 공유 contract 처리에 사용한다. Issue 초안이나 읽기 전용 조사만 수행할 때는 사용하지 않는다.
 ---
 
-실행 입력은 절대 경로 `P`(프로젝트 저장소 최상위), `W`(고정 절차 사본 `P/.adaptive-sdd/workflow`), `M`(고정 공통 원칙 `P/.adaptive-sdd/methodology`)이다. cwd나 W의 상위 디렉터리로 P/M을 추정하지 않는다. P의 hard guard(`P/AGENTS.md`의 `## 항상 적용 hard guard`)와 적용 선언(`P/.adaptive-sdd/project/sdd-workflow.md`)을 적용한다. Issue·댓글·라벨·PR 표현은 `P/.adaptive-sdd/project/tracker.md`가 선언한 작업 관리 방식(`W/tracker/`)으로 바꿔 읽는다.
+실행 입력은 절대 경로 `P`(프로젝트 저장소 최상위), `S`(설치 root, in-repo에서는 P), `W`(고정 절차 사본 `S/.adaptive-sdd/workflow`), `M`(고정 공통 원칙 `S/.adaptive-sdd/methodology`)이다. cwd나 W의 상위 디렉터리로 P/M을 추정하지 않는다. P의 hard guard(`P/AGENTS.md`의 `## 항상 적용 hard guard`)와 적용 선언(`S/.adaptive-sdd/project/sdd-workflow.md`)을 적용한다. Issue·댓글·라벨·PR 표현은 `S/.adaptive-sdd/project/tracker.md`가 선언한 작업 관리 방식(`W/tracker/`)으로 바꿔 읽는다.
 
 # Parallel Development
 
@@ -29,29 +29,30 @@ tracker의 Issue·관측·claim/release 기록과 Epic 관리 문서 자체는 �
 implementing 단계가 이미 Issue 경계와 shared 여부를 확인했다면 그대로 재사용한다.
 
 조건부:
-- standalone으로 호출됐거나 allowed path가 P 적용 문서 `module-boundaries.md`의 shared/root 후보(root build/settings 포함)를 포함하면 `W/process/module-boundaries.md`의 공통 경계·lifecycle 계약과 `P/.adaptive-sdd/project/module-boundaries.md`의 실제 제품 경계의 관련 경계를 확인한다.
-- 지시/ownership 충돌을 기존 규칙으로 판정할 수 없을 때만 `W/process/agent-instruction-policy.md` (공통 계약·수행법) / `P/.adaptive-sdd/project/agent-instruction-policy.md` (제품 적용·권한·검증)를 읽는다.
+- standalone으로 호출됐거나 allowed path가 P 적용 문서 `module-boundaries.md`의 shared/root 후보(root build/settings 포함)를 포함하면 `W/process/module-boundaries.md`의 공통 경계·lifecycle 계약과 `S/.adaptive-sdd/project/module-boundaries.md`의 실제 제품 경계의 관련 경계를 확인한다.
+- 지시/ownership 충돌을 기존 규칙으로 판정할 수 없을 때만 `W/process/agent-instruction-policy.md` (공통 계약·수행법) / `S/.adaptive-sdd/project/agent-instruction-policy.md` (제품 적용·권한·검증)를 읽는다.
 
 Issue에 allowed/forbidden이 없으면 신규 lane을 만들거나 claim하지 않고 issue-management workflow로 정규화한다.
 
 ## 신규 lane 생성과 isolation
 
-이 절차는 새 Issue branch 또는 worktree를 만들 때만 적용한다. 신규 lane의 canonical base는 freshly fetched `origin/main`이다. current local HEAD, local `main`, 이전 Issue branch를 implicit base로 사용하지 않는다.
+이 절차는 새 Issue branch 또는 worktree를 만들 때만 적용한다. 신규 lane의 canonical base는 P tracker.md의 freshly fetched `<code-remote>/<base-branch>`이다. current local HEAD, local 기준 branch, 이전 Issue branch를 implicit base로 사용하지 않는다.
 
 1. 현재 repository와 remote가 예상 대상인지 확인하고, current worktree/branch, dirty 상태, branch/worktree path 충돌을 확인한다. 이 local state는 오염·충돌 safety check에만 사용하며 base 선택에는 사용하지 않는다.
 2. Issue allowed path를 active `[CLAIM]`/open PR과 비교하고 shared/root integration-only 경계를 확인한다. overlap 또는 허용되지 않은 shared 경계면 branch/worktree를 만들지 않고 해당 stop condition으로 중단한다.
-3. branch/worktree 생성 직전에 현재 shell에서 `git fetch origin main`을 실행한다. 실패하면 `BLOCKED: origin/main fetch failed`로 중단하고, 기존 remote-tracking ref, local `main`, current HEAD로 fallback하지 않는다.
-4. fetch 성공 직후 `git rev-parse --verify origin/main`으로 base SHA를 확정하고 작업 근거에 기록한다. SHA를 확인할 수 없으면 branch/worktree를 만들지 않는다.
+3. branch/worktree 생성 직전에 현재 shell에서 `git fetch <code-remote> <base-branch>`을 실행한다. 실패하면 `BLOCKED: declared base fetch failed`로 중단하고, 기존 remote-tracking ref, local 기준 branch, current HEAD로 fallback하지 않는다.
+4. fetch 성공 직후 `git rev-parse --verify <code-remote>/<base-branch>`으로 base SHA를 확정하고 작업 근거에 기록한다. SHA를 확인할 수 없으면 branch/worktree를 만들지 않는다.
 5. 확인한 base SHA를 explicit start-point로 사용한다.
    - 같은 local clone에서 둘 이상 lane이면 Issue별 branch와 repository-external worktree를 `git worktree add <path> -b <branch> <base-sha>`로 함께 만든다.
    - 독립 cloud clone/sandbox면 추가 worktree를 만들지 않고 `git switch -c <branch> <base-sha>`로 Issue branch를 만든 뒤 sandbox 자체를 lane으로 사용한다.
    - Windows local worktree는 짧은 경로를 선호한다(P 적용 문서 `sdd-workflow.md`의 `worktree root`).
-6. 생성된 lane의 HEAD가 기록한 base SHA와 같은지 확인한 뒤, 그 lane에서 아래 Claim 절차를 수행한다.
+6. 외부 설치이면 새 checkout에도 전용 harness 쌍을 설치·check한다. 기존 checkout의 연결 파일을 경로만 바꿔 재사용하거나 하나의 lock으로 두 checkout의 입구를 덮어쓰지 않는다. tracker_root는 공유해 claim을 조율한다.
+7. 생성된 lane의 HEAD가 기록한 base SHA와 같은지 확인한 뒤, 그 lane에서 아래 Claim 절차를 수행한다.
 
-W·M 고정 사본(`P/.adaptive-sdd/workflow`, `P/.adaptive-sdd/methodology`)은 lane 작업에서 수정하지 않는다.
+W·M 고정 사본(`S/.adaptive-sdd/workflow`, `S/.adaptive-sdd/methodology`)은 lane 작업에서 수정하지 않는다.
 
 
-- fetch 뒤 branch/worktree 생성 사이에 다른 base를 선택하거나 local `main` checkout/pull을 끼워 넣지 않는다.
+- fetch 뒤 branch/worktree 생성 사이에 다른 base를 선택하거나 local 기준 branch checkout/pull을 끼워 넣지 않는다.
 - 두 agent가 같은 branch에 동시에 commit하지 않는다.
 - 이미 생성되어 진행 중인 branch/worktree는 이 규칙 때문에 자동 rebase하거나 재생성하지 않는다. 기존 lane 갱신은 Synchronization 절차만 적용한다.
 
@@ -80,8 +81,8 @@ forbidden:
 
 ## Synchronization
 
-다른 PR이 `main`에 merge된 뒤 다음 push 전:
-1. current main을 fetch한다.
+선언된 기준/병합 branch에 관련 변경이 들어온 뒤 다음 push 전:
+1. P가 선언한 코드 원격·기준 branch와 병합 branch의 필요한 revision을 fetch한다.
 2. rebase 또는 merge한다.
 3. Issue allowed path 안에서만 conflict를 해결한다.
 4. forbidden/shared path가 필요하면 `BLOCKED`.
@@ -89,16 +90,16 @@ forbidden:
 
 ## SDD review candidate publication
 
-현재 Issue branch의 AS-IS·PLAN 검토 후보 게시에는 [설계 리뷰의 원격 후보 게시](../../process/design-review.md#원격-검토-후보-게시)를 적용한다. candidate·artifact의 remote 조회 근거를 인계하고, 변경 후보의 재검토는 같은 문서의 의미·영향 판정을 따른다. 신규 lane의 base와 기존 claim·worktree lifecycle은 위 절차를 유지한다.
+P가 선언한 게시 저장소·branch의 AS-IS·PLAN 검토 후보 게시에는 [설계 리뷰의 원격 후보 게시](../../process/design-review.md#원격-검토-후보-게시)를 적용한다. candidate·artifact의 remote 조회 근거를 인계하고, 변경 후보의 재검토는 같은 문서의 의미·영향 판정을 따른다. 신규 lane의 base와 기존 claim·worktree lifecycle은 위 절차를 유지한다.
 
 ## Shared contracts
 
 ordinary lane에서 shared/root change 필요성이 새로 확인되면:
 1. 해당 path를 수정하지 않는다.
 2. 필요한 contract/symbol/file을 식별한다.
-3. `W/process/module-boundaries.md`의 공통 경계·lifecycle 계약과 `P/.adaptive-sdd/project/module-boundaries.md`의 실제 제품 경계의 integration 규칙을 확인한다.
+3. `W/process/module-boundaries.md`의 공통 경계·lifecycle 계약과 `S/.adaptive-sdd/project/module-boundaries.md`의 실제 제품 경계의 integration 규칙을 확인한다.
 4. integration Issue/선행 변경으로 분리하고 dependent lane을 pause/release한다.
-5. shared change merge 후 main을 반영하고 재개한다.
+5. shared change merge 후 선언한 통합 revision을 반영하고 재개한다.
 
 ## Release
 
@@ -130,7 +131,7 @@ handoff/중단/merge cleanup 시 먼저 uncommitted/unpushed state, PR 상태, w
 ## Output
 
 - claim status / agent / branch
-- origin/main fetch 결과 / 신규 lane base SHA
+- 선언한 code remote/base branch fetch 결과 / 신규 lane base SHA
 - allowed paths / conflicts
 - isolation mode
 - shared dependency

@@ -1,6 +1,6 @@
 # skill-evals 수행 절차
 
-조건·사례 위치·실행 명령은 P 적용 문서 `P/.adaptive-sdd/project/skill-evals.md`가 원본이다. W는 eval 종류·채점·결과 기록·갱신 규칙과 사건 사례 만들기를 소유한다.
+조건·사례 위치·실행 명령은 P 적용 문서 `S/.adaptive-sdd/project/skill-evals.md`가 원본이다. W는 eval 종류·채점·결과 기록·갱신 규칙과 사건 사례 만들기를 소유한다.
 
 ## 대상
 
@@ -202,9 +202,9 @@ workflow gate를 변경한 case는 happy path뿐 아니라 해당 stop condition
 - PowerShell에서는 첫 read부터 UTF-8 decoding을 명시하고 native pipe/output 영향이 있을 때 process scope의 output encoding도 UTF-8로 두는지
 - Git Bash/WSL/Linux에서는 Markdown/Skill read만을 위해 PowerShell로 전환하지 않는지
 - mojibake 결과로 절차를 판정하지 않고 실제 non-UTF-8 확인 뒤에만 bounded fallback을 한 번 사용하는지
-- 신규 Issue branch/worktree를 생성하기 직전에 `origin/main` fetch를 성공시키고 확인한 SHA를 explicit base로 사용하는지
-- `origin/main` fetch 실패 시 기존 remote-tracking ref, local `main`, current HEAD로 fallback하지 않고 중단하는지
-- fresh remote-main base 규칙을 기존 진행 lane의 자동 rebase/recreate에 소급하지 않는지
+- 신규 Issue branch/worktree를 생성하기 직전에 `<code-remote>/<base-branch>` fetch를 성공시키고 확인한 SHA를 explicit base로 사용하는지
+- `<code-remote>/<base-branch>` fetch 실패 시 기존 remote-tracking ref, local 기준 브랜치, current HEAD로 fallback하지 않고 중단하는지
+- fresh remote-base base 규칙을 기존 진행 lane의 자동 rebase/recreate에 소급하지 않는지
 - Large AS-IS·PLAN local-only candidate는 independent review/PASS로 진행하지 않는지
 - Epic을 실행 grade와 분리하고 새 패키지·모듈만으로 분해를 강제하지 않는지
 - 단일 Large 관리가 충분하면 하위 Issue·Epic 생성을 강제하지 않는지
@@ -221,8 +221,8 @@ workflow gate를 변경한 case는 happy path뿐 아니라 해당 stop condition
 - PLAN을 차단하지 않은 Implementation finding을 Result/CODE Review Packet에 보존하고 CODE/finishing에서 code+fixture 해결을 모두 검증하는지
 - cross-environment reviewer가 작성자의 local path 없이 Issue, remote branch, SHA와 artifact 경로만으로 원문을 확인하는지
 - SDD candidate push 또는 remote resolution 실패 시 local artifact로 fallback하지 않고 `BLOCKED: SDD candidate remote push failed`로 중단하는지
-- review candidate publication이 구현 전 draft PR이나 모든 commit의 즉시 push를 요구하지 않고 fresh `origin/main` lane lifecycle을 유지하는지
-- finishing 단계가 temporary SDD와 stale link를 남긴 채 완료하지 않는지
+- review candidate publication이 구현 전 draft PR이나 모든 commit의 즉시 push를 요구하지 않고 fresh `<code-remote>/<base-branch>` lane lifecycle을 유지하는지
+- finishing 단계가 활성 소비자의 참조를 먼저 보존하고 temporary SDD를 삭제하거나, 조회 가능한 원문·소비 Issue·정리 담당·해제 조건을 명시한 보존으로 정리하는지. 끊긴 링크나 담당 없는 잔존을 완료로 처리하지 않는지
 - grade가 orchestration shape만 정하고 phase risk가 abstract model/reasoning tier를 정하는지
 - Trivial/Small은 Execution Profile에 여러 tier가 있어도 single-agent/no-switch를 유지하는지
 - Medium은 unresolved PLAN decision 또는 required review가 있을 때만 해당 phase를 bounded delegation하는지

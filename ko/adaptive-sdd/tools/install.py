@@ -10,12 +10,15 @@ import hashlib
 import json
 import pathlib
 import re
+import shlex
 import sys
+from datetime import datetime
 
 RENDERER_VERSION = "1"
 EXECUTION_GRADES = ("Trivial", "Small", "Medium", "Large")
 NL = "\n"
 COPY_DIRNAME = ".adaptive-sdd"
+CONNECTION = ".agentics/adaptive-sdd.json"
 COPY_DIRS = ("methodology", "workflow", "templates", "tools")
 TOOL_DIRS = {"claude-code": ".claude/skills", "codex": ".agents/skills"}
 SKILLS = [
@@ -161,6 +164,36 @@ def copy_root(project_root):
     return project_root / COPY_DIRNAME
 
 
+def roots(args):
+    product = pathlib.Path(args.project_root).resolve()
+    explicit = getattr(args, "harness_root", None)
+    connection = product / CONNECTION
+    if explicit:
+        source = pathlib.Path(explicit).resolve()
+    elif connection.is_file():
+        data = json.loads(read_text(connection))
+        if data.get("schema") != 1 or data.get("project_root") != product.as_posix():
+            raise InstallError("external connection belongs to another checkout; use an explicit installation pair")
+        value = data.get("harness_root")
+        if not isinstance(value, str) or not pathlib.Path(value).is_absolute():
+            raise InstallError("external connection needs an absolute harness_root")
+        source = pathlib.Path(value).resolve()
+        if data.get("manifest_sha256") != sha(manifest_path(source).read_bytes()):
+            raise InstallError("external pin changed; explicitly render with --harness-root after reviewing the upgrade")
+    else:
+        source = product
+    if source != product and (source in product.parents or product in source.parents):
+        raise InstallError("external harness and product checkout must not contain each other")
+    lock = load_lock(source)
+    if lock and lock.get("project_root") not in (None, product.as_posix()):
+        raise InstallError("harness is already bound to another checkout")
+    return source, product
+
+
+def output_root(source, product, relative):
+    return source if relative.startswith(COPY_DIRNAME + "/") else product
+
+
 def templates_dir(project_root):
     root = copy_root(project_root)
     for name in ("templates", "project-templates"):
@@ -200,7 +233,88 @@ def load_values(project_root):
                 f"{', '.join(EXECUTION_GRADES)}; Epic is an optional management type, "
                 "not an execution grade. Reclassify the actual change; do not auto-convert it."
             )
+    validate_settings(values)
     return values
+
+
+def settings(values):
+    result = json.loads(json.dumps(values))
+    defaults = {
+        "git": {"remote": "origin", "base_branch": "main", "merge_branch": "main"},
+        "review": {"repository": "", "remote": "", "branch": ""},
+        "tracker": {"id_source": "generated", "id_format": "", "child_id_rule": ""},
+        "project": {"conversation_language": "", "conventions": ""},
+        "build": {"test_mode": "persistent", "test_format": "", "test_preserve_at": ""},
+        "routing": {"capabilities": [], "role_defaults": [], "qualification_records": ""},
+    }
+    for section, fields in defaults.items():
+        target = result.setdefault(section, {})
+        for key, value in fields.items():
+            target.setdefault(key, value)
+    for section, key in (("build", "checks"), ("routing", "capabilities"), ("routing", "role_defaults")):
+        result[section][key] = result[section].get(key) or []
+    result["tracker_external_id"] = result["tracker"]["id_source"] == "external"
+    result["temporary_tests"] = result["build"]["test_mode"] == "temporary"
+    result["no_new_tests"] = result["build"]["test_mode"] == "none"
+    result["review"]["remote"] = result["review"]["remote"] or result["git"]["remote"]
+    return result
+
+
+def validate_settings(values):
+    for section in ("git", "review", "project", "build", "tracker", "routing"):
+        if section in values and not isinstance(values[section], dict):
+            raise InstallError(f"project.json: {section} must be an object")
+    cfg = settings(values)
+    fields = {"git": ("remote", "base_branch", "merge_branch"),
+              "review": ("repository", "remote", "branch"),
+              "project": ("conversation_language", "conventions"),
+              "tracker": ("id_source", "id_format", "child_id_rule"),
+              "build": ("test_mode", "test_format", "test_preserve_at"),
+              "routing": ("qualification_records",)}
+    for section, keys in fields.items():
+        for key in keys:
+            value = cfg[section][key]
+            if not isinstance(value, str) or any(c in value for c in "\r\n\x00"):
+                raise InstallError(f"project.json: {section}.{key} must be a single-line string")
+    def valid_git_name(value):
+        return (bool(re.fullmatch(r"[A-Za-z0-9_][A-Za-z0-9_./-]*", value))
+                and ".." not in value and "//" not in value
+                and not value.endswith(("/", "."))
+                and all(not part.startswith(".") and not part.endswith(".lock")
+                        for part in value.split("/")))
+
+    for key in fields["git"]:
+        if not valid_git_name(cfg["git"][key]):
+            raise InstallError(f"project.json: invalid git.{key}")
+    if cfg["review"]["repository"] and not pathlib.Path(cfg["review"]["repository"]).is_absolute():
+        raise InstallError("review.repository must be an absolute repository path")
+    for key in ("remote", "branch"):
+        value = cfg["review"][key]
+        if value and not valid_git_name(value):
+            raise InstallError(f"invalid review.{key}")
+    if cfg["tracker"]["id_source"] not in ("generated", "external"):
+        raise InstallError("tracker.id_source must be generated or external")
+    if cfg["tracker_external_id"] and not cfg["tracker"]["id_format"].strip():
+        raise InstallError("external IDs require tracker.id_format")
+    if cfg["build"]["test_mode"] not in ("persistent", "temporary", "none"):
+        raise InstallError("build.test_mode must be persistent, temporary, or none")
+    if cfg["temporary_tests"] and not cfg["build"]["test_preserve_at"].strip():
+        raise InstallError("temporary tests require build.test_preserve_at")
+    for check in cfg["build"].get("checks", []):
+        if check["method"] not in ("command", "manual") or check["actor"] not in ("agent", "human") or check["required"] not in ("required", "optional"):
+            raise InstallError("invalid build.checks method/actor/required")
+    for item in cfg["routing"]["capabilities"]:
+        if item["tier"] not in ("cheap", "strong", "frontier"):
+            raise InstallError("routing capability tier must be cheap, strong, or frontier")
+        try:
+            expiry = datetime.fromisoformat(item["valid_until"].replace("Z", "+00:00"))
+            if expiry.tzinfo is None:
+                raise ValueError()
+        except ValueError:
+            raise InstallError("capability valid_until needs an ISO timestamp with timezone")
+    for item in cfg["routing"]["role_defaults"]:
+        if item["role"] not in ("PLAN", "IMPLEMENT", "REVIEW", "TEST_DOCS", "FINISH"):
+            raise InstallError("unknown routing role default")
 
 
 # list fields: None = list of strings, tuple = list of objects with exactly these string keys
@@ -211,12 +325,15 @@ LIST_SHAPES = {
     "human_judgment.delegations": ("scope", "date", "confirmed_by"),
     "build.jdk_candidates": None,
     "build.verification": ("scope", "commands"),
+    "build.checks": ("scope", "method", "actor", "instructions", "evidence", "required"),
     "build.instrumentation_paths": None,
     "modules.list": ("path", "role"),
     "modules.shared_contracts": None,
     "modules.root_integration": None,
     "modules.dependency_rules": None,
     "routing.deny_models": None,
+    "routing.role_defaults": ("role", "model", "reasoning"),
+    "routing.capabilities": ("host", "model", "tier", "reasoning", "source", "identity", "valid_until"),
     "priority.product_examples": ("input", "examples"),
     "evidence.allowed": None,
     "evidence.forbidden": None,
@@ -250,10 +367,30 @@ def values_digest(values):
 
 
 # ---------------------------------------------------------------- outputs
-def plan_outputs(project_root, values):
+def plan_outputs(project_root, values, product_root=None):
     """Return list of (relpath, kind, content). kind: file | block-md | block-gitattributes."""
     tdir = templates_dir(project_root)
-    ctx = dict(values)
+    product_root = product_root or project_root
+    ctx = settings(values)
+    external = product_root != project_root
+    ctx["external"] = external
+    ctx["source_root"] = project_root.as_posix() if external else "P"
+    # Generated commands target PowerShell on Windows and POSIX sh elsewhere.
+    # Never interpolate an absolute path into shell-expanding double quotes.
+    def shell_literal(value):
+        if sys.platform == "win32":
+            return "'" + value.replace("'", "''") + "'"
+        return shlex.quote(value)
+
+    ctx["command_shell"] = (("PowerShell" if sys.platform == "win32" else "POSIX sh")
+                            if external else "PowerShell / POSIX sh")
+    for action, key in (("check", "check_command"), ("check-evals", "check_evals_command")):
+        if external:
+            argv = [f"{project_root.as_posix()}/.adaptive-sdd/tools/install.py", action,
+                    "--project-root", product_root.as_posix(), "--harness-root", project_root.as_posix()]
+            ctx[key] = "python -I -B " + " ".join(shell_literal(arg) for arg in argv)
+        else:
+            ctx[key] = f"python -I -B .adaptive-sdd/tools/install.py {action} --project-root ."
     ctx["tool_dirs"] = [TOOL_DIRS[t] for t in values["tools"]]
     ctx["tracker_is_local"] = values["tracker"]["kind"] == "local-docs"
     outs = []
@@ -273,7 +410,11 @@ def plan_outputs(project_root, values):
         outs.append(("CLAUDE.md", "block-md", render_template(read_text(tdir / "blocks" / "CLAUDE.block.md.tmpl"), ctx)))
     outs.append((".gitattributes", "block-gitattributes",
                  render_template(read_text(tdir / "blocks" / "gitattributes.block.tmpl"), ctx)))
-    return outs
+    if external:
+        outs.append((CONNECTION, "file", canonical({"schema": 1, "project_root": product_root.as_posix(),
+                     "harness_root": project_root.as_posix(), "manifest_sha256": sha(manifest_path(project_root).read_bytes())}).decode("utf-8")))
+    return [(rel, kind, content.strip(NL) + NL if kind.startswith("block-") else content)
+            for rel, kind, content in outs]
 
 
 def _markers(kind):
@@ -363,7 +504,7 @@ def load_lock(project_root):
 
 # ---------------------------------------------------------------- commands
 def cmd_init(args):
-    project_root = pathlib.Path(args.project_root).resolve()
+    project_root, _ = roots(args)
     target = copy_root(project_root) / "project.json"
     if target.exists():
         print(f"exists: {target} (not overwritten)")
@@ -375,7 +516,7 @@ def cmd_init(args):
 
 
 def cmd_render(args):
-    project_root = pathlib.Path(args.project_root).resolve()
+    project_root, product = roots(args)
     copy_status = verify_copy(project_root)
     bad = [r for r in copy_status if r[1] != "OK"]
     if bad:
@@ -384,14 +525,24 @@ def cmd_render(args):
         raise InstallError("pinned copy does not match MANIFEST.json; render refused")
     values = load_values(project_root)
     old_lock = load_lock(project_root) or {}
+    if args.source_tag and not args.source_commit:
+        raise InstallError("--source-tag requires --source-commit; supply the verified tag/commit pair")
+    source = dict(old_lock.get("source", {}))
+    if args.clear_source_tag or (args.source_commit and args.source_commit != source.get("commit")):
+        source.pop("tag", None)
+    if args.source_tag:
+        source["tag"] = args.source_tag
+    if args.source_commit:
+        source["commit"] = args.source_commit
     old_outputs = old_lock.get("outputs", {})
     accepted = set(args.accept_overwrite or [])
     outputs = {}
     skipped = []
     writes = []
-    for rel, kind, content in plan_outputs(project_root, values):
+    for rel, kind, content in plan_outputs(project_root, values, product):
+        destination = output_root(project_root, product, rel)
         new_digest = sha(content.encode("utf-8"))
-        cur = current_digest(project_root, rel, kind)
+        cur = current_digest(destination, rel, kind)
         recorded = old_outputs.get(rel, {}).get("sha256")
         hand_edited = cur is not None and cur != recorded and cur != new_digest
         if hand_edited and rel not in accepted:
@@ -400,7 +551,7 @@ def cmd_render(args):
             outputs[rel] = {"kind": kind, "sha256": recorded}
             print(f"KEPT    {rel} (changed outside the installer; pass --accept-overwrite {rel} to replace)")
             continue
-        path = project_root / rel
+        path = destination / rel
         if kind == "file":
             writes.append((path, content.encode("utf-8")))
         else:
@@ -415,24 +566,20 @@ def cmd_render(args):
         outputs[rel] = {"kind": kind, "sha256": new_digest}
     # outputs from an earlier render that are no longer generated stay in the lock until a human removes them
     for rel, rec in sorted(old_outputs.items()):
-        if rel not in outputs and (project_root / rel).is_file():
+        if rel not in outputs and (output_root(project_root, product, rel) / rel).is_file():
             outputs[rel] = dict(rec, stale=True)
             print(f"STALE   {rel} (no longer generated; the installer does not delete it)")
     # every output is computed before anything is written, so a merge error leaves the project untouched
     for path, data in writes:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(data)
-        print(f"WROTE   {path.relative_to(project_root).as_posix()}")
+        print(f"WROTE   {path}")
     manifest_digest = sha(manifest_path(project_root).read_bytes())
-    source = dict(old_lock.get("source", {}))
-    if args.source_tag:
-        source["tag"] = args.source_tag
-    if args.source_commit:
-        source["commit"] = args.source_commit
     source["manifest_sha256"] = manifest_digest
     lock = {
         "schema": 1,
         "renderer_version": RENDERER_VERSION,
+        "project_root": product.as_posix() if product != project_root else None,
         "source": source,
         "values_sha256": values_digest(values),
         "outputs": outputs,
@@ -446,7 +593,7 @@ def cmd_render(args):
 
 
 def cmd_check(args):
-    project_root = pathlib.Path(args.project_root).resolve()
+    project_root, product = roots(args)
     problems = 0
     for rel, st in verify_copy(project_root):
         if st != "OK":
@@ -463,9 +610,9 @@ def cmd_check(args):
     if lock.get("values_sha256") != values_digest(values):
         problems += 1
         print("DIFF    project.json changed since last render (run render)")
-    for rel, kind, content in plan_outputs(project_root, values):
+    for rel, kind, content in plan_outputs(project_root, values, product):
         expected = sha(content.encode("utf-8"))
-        cur = current_digest(project_root, rel, kind)
+        cur = current_digest(output_root(project_root, product, rel), rel, kind)
         recorded = lock.get("outputs", {}).get(rel, {}).get("sha256")
         if cur is None:
             problems += 1
@@ -473,9 +620,9 @@ def cmd_check(args):
         elif cur != expected or recorded != expected:
             problems += 1
             print(f"DIFF    {rel}")
-    planned = {rel for rel, _, _ in plan_outputs(project_root, values)}
+    planned = {rel for rel, _, _ in plan_outputs(project_root, values, product)}
     for rel in sorted(set(lock.get("outputs", {})) - planned):
-        if (project_root / rel).is_file():
+        if (output_root(project_root, product, rel) / rel).is_file():
             problems += 1
             print(f"STALE   {rel} (no longer generated; remove it or ask a human)")
     if lock.get("renderer_version") != RENDERER_VERSION:
@@ -493,11 +640,11 @@ MIN_CASES_PER_SKILL = 5
 
 
 def cmd_check_evals(args):
-    project_root = pathlib.Path(args.project_root).resolve()
-    roots = [copy_root(project_root) / "workflow" / "skills"]
+    project_root, _ = roots(args)
+    skill_roots = [copy_root(project_root) / "workflow" / "skills"]
     problems = 0
     count = 0
-    for root in roots:
+    for root in skill_roots:
         for f in sorted(root.glob("*/evals/cases.json")):
             try:
                 data = json.loads(read_text(f))
@@ -528,7 +675,7 @@ def cmd_check_evals(args):
                     print(f"DUP     {f}: {c['id']}")
                 ids.add(c["id"])
     for name, _ in SKILLS:
-        skill_md = roots[0] / name / "SKILL.md"
+        skill_md = skill_roots[0] / name / "SKILL.md"
         if not skill_md.is_file():
             problems += 1
             print(f"MISSING {skill_md}")
@@ -557,15 +704,21 @@ def main(argv=None):
     for name in ("init", "render", "check", "check-evals"):
         p = sub.add_parser(name)
         p.add_argument("--project-root", required=True)
+        p.add_argument("--harness-root", help="dedicated external installation root; omit for in-repo or an existing connection")
         if name == "render":
             p.add_argument("--accept-overwrite", action="append", metavar="RELPATH")
-            p.add_argument("--source-tag")
+            tag = p.add_mutually_exclusive_group()
+            tag.add_argument("--source-tag", help="verified tag name; requires --source-commit")
+            tag.add_argument("--clear-source-tag", action="store_true", help="remove an old tag without changing the commit")
             p.add_argument("--source-commit")
     args = ap.parse_args(argv)
     try:
         return {"init": cmd_init, "render": cmd_render, "check": cmd_check, "check-evals": cmd_check_evals}[args.cmd](args)
     except InstallError as e:
         print(f"ERROR   {e}")
+        return 2
+    except (OSError, ValueError, TypeError) as e:
+        print(f"ERROR   installation unavailable or invalid: {type(e).__name__}")
         return 2
 
 
