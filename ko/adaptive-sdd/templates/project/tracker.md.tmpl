@@ -7,10 +7,11 @@
 {{#if tracker.root}}- tracker_root: `{{tracker.root}}`
 {{else}}{{#if tracker_is_local}}- tracker_root: 미정 — 작업 항목을 만들거나 읽는 절차는 `BLOCKED: tracker unavailable`로 멈춘다
 {{/if}}{{/if}}{{#if tracker.repository}}- 저장소: `{{tracker.repository}}`
-{{/if}}{{#if tracker_external_id}}- ID: 외부 티켓의 `{{tracker.id_format}}`를 그대로 사용한다. 번호를 자동 발급하거나 충돌 시 임의 증가하지 않는다. 동일 ID가 있으면 원천과 기존 작업을 확인한다.
+{{/if}}{{#if tracker_is_local}}{{#if tracker_external_id}}- ID: 외부 티켓의 `{{tracker.id_format}}`를 그대로 사용한다. 번호를 자동 발급하거나 충돌 시 임의 증가하지 않는다. 동일 ID가 있으면 원천과 기존 작업을 확인한다.
 {{else}}- ID 형식: `{{tracker.id_prefix}}-<번호>`. 새 번호는 `items/`의 가장 큰 번호 + 1이며 충돌하면 다시 확인한다.
 {{/if}}{{#if tracker.child_id_rule}}- 하위 ID 규칙·발급 권한: {{tracker.child_id_rule}}
 {{else}}- 하위 ID 별도 규칙 없음. generated는 같은 번호 체계, external은 외부 하위 티켓 또는 사람의 명시적 규칙이 필요하다. 임의 접미를 만들지 않는다.
+{{/if}}{{else}}- ID: GitHub가 실제 발급한 Issue/PR 번호를 사용한다. `items/`를 탐색하거나 번호·하위 번호를 임의 발급하지 않는다. 외부 티켓 ID는 별도 참조이며 GitHub 번호를 대체하지 않는다.
 {{/if}}- 허용 작성자: {{#each tracker.allowed_authors}}`{{this}}` {{else}}미정 — 관측 재검토에서 기록의 작성자를 확인할 수 없다{{/each}}
 {{#if tracker_is_local}}- 병합 방법: {{#if tracker.merge_method}}`{{tracker.merge_method}}`{{else}}미정 — 병합과 병합 확인 절차는 `BLOCKED: tracker operation unsupported`로 멈춘다{{/if}}
 {{/if}}- 코드 원격: `{{git.remote}}`, 신규 lane 기준: `{{git.base_branch}}`, 제품 병합 대상: `{{git.merge_branch}}`.
