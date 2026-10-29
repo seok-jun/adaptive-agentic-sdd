@@ -289,6 +289,30 @@ class InstallerPolicyTests(unittest.TestCase):
         self.assertEqual(self.external_command("render", product, source), 3)
         self.assertEqual(entry.read_bytes(), content)
 
+    def test_tracker_id_allocation_is_specific_to_adapter(self):
+        for kind, source in (("github", "generated"), ("github", "external"),
+                             ("local-docs", "generated"), ("local-docs", "external")):
+            with self.subTest(kind=kind, source=source):
+                self.values["tracker"].update(kind=kind, id_source=source,
+                    repository="example/library", id_prefix="BOOK", id_format="EXT-<ticket>",
+                    child_id_rule="Use external child tickets")
+                self.save_values()
+                self.assertEqual(self.command("render")[0], 0)
+                self.assertEqual(self.command("check")[0], 0)
+                tracker = (self.copy / "project/tracker.md").read_text(encoding="utf-8")
+                if kind == "github":
+                    self.assertIn("GitHub가 실제 발급한 Issue/PR 번호", tracker)
+                    self.assertNotIn("가장 큰 번호 + 1", tracker)
+                    self.assertNotIn("EXT-<ticket>", tracker)
+                    self.assertNotIn("Use external child tickets", tracker)
+                elif source == "generated":
+                    self.assertIn("BOOK-<번호>", tracker)
+                    self.assertIn("가장 큰 번호 + 1", tracker)
+                else:
+                    self.assertIn("EXT-<ticket>", tracker)
+                    self.assertIn("Use external child tickets", tracker)
+                    self.assertNotIn("가장 큰 번호 + 1", tracker)
+
     def test_nondefault_project_settings_render_and_check(self):
         self.values["git"] = {"remote": "upstream", "base_branch": "develop", "merge_branch": "release"}
         self.values["review"] = {"repository": self.project.as_posix(), "remote": "local-review", "branch": "reviews"}
