@@ -6,6 +6,10 @@
 
 Agent Execution Spec이다. Human Decision의 rationale을 다시 서술하지 않고 적용하는 `D-xxx`를 참조한다. `02-to-be.md`와 경쟁하는 설계 권위를 만들지 않는다.
 
+TO-BE의 기존 Decision·AC ID/항목을 기준 revision과 함께 연결하고, 적용 위치·실행/검증 세부·추가 fixture 기대값과 차이만 적는다. 결정 설명이나 검증 표 전체를 복제하지 않는다. 실행 명세에만 있는 고유 조건은 중복이 아니며 유지한다. 목록을 삭제·축약할 때는 삭제 구간의 조건을 대체 위치와 대조해 빠짐을 확인한다. 유지 구간의 동일성만으로 보존을 판정하거나 모든 테스트 세부를 TO-BE로 옮기지 않는다.
+
+설계·구현·인계에 적용되는 README의 문제·전제·불변조건·남은 위험은 필요한 절·기준 revision으로 직접 연결한다. 해당 역할이 현재 실행에 필요한 계약을 소비하게 하고, 원인 재조사·감사용 상세 이력은 해당할 때만 읽도록 구별한다. 역할별 리뷰 입력과 Blind Audit 격리는 바꾸지 않는다.
+
 - target file/symbol과 직접 caller/callee, 필요한 코드 근거
 - 변경 내용·구현 순서·보존할 invariant, 해당하는 schema/migration
 - test case·검증 명령·실행 evidence

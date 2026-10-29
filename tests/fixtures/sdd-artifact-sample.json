@@ -17,5 +17,47 @@
     "01-as-is.md": "문제·위험: README.md.\n## 현재 사실과 직접 근거\n기준: fictional-library, code revision 1111111111111111111111111111111111111111. 아래는 합성 fixture이며 실제 저장소 주소가 아니다.\n| 항목 | 경로·심볼 | 확인 사실·미확인 |\n| --- | --- | --- |\n| 취소 진입 | reservation/Cancel.java:cancel | 상태를 CANCELLED로 저장한다 |\n| 알림 진입 | notification/Send.java:send | 작업 시작 시 예약 ID로 조회한다 |\n| 계약 | contract/Reservation.java:status | ACTIVE/CANCELLED 두 상태가 있다 |\n| 직접 호출 | notification/Handler.java:onReservation | send를 호출한다 |\n| 재현 | notification/SendTest.java:cancelled | 취소 fixture에서도 전송됨을 관찰했다 |\n| 운영 소비자 | fixture에는 자료 없음 | 실제 사용을 추정하지 않는다. 담당 구현자가 PLAN 결정 전에 확인 |\n재현 결과는 합성 evidence E-1에서 전송 호출 1회다. 문서의 '취소 후 알림 없음'과 코드가 달라 drift로 기록했다. 외부 소비자 부재와 경합 안정성은 증명되지 않았다.\n",
     "02-to-be.md": "## 변화와 Decision\nD-001: 전송 직전 CANCELLED이면 새 알림을 전송하지 않는다. 기존 전송은 회수하지 않는다. 작업 지시 안의 확정 결정이며 추가 사람 승인을 요구하지 않는다. 대안은 취소 이벤트로 대기 작업을 제거하는 것이지만 이벤트 누락 시 효과가 달라 조회 방식을 선택했다. 추가 조회 비용과 전송 시작 후 취소 경합은 남는 위험이다.\n## 완료 기준과 검증\nAC-1: 취소 예약은 전송 0회, 활성 예약은 1회. 단위 fixture로 호출 횟수를 검증한다. 실행 세부는 change-plans/RES-1.md를 본다. 관련 상태 의미는 현재 계약을 유지한다.\n",
     "change-plans/RES-1.md": "## 실행 명세\n적용: 02-to-be.md D-001/AC-1, AS-IS 기준 revision의 E-1. 결정 이유를 복제하지 않는다.\nnotification/Send.java:send의 전송 직전 status를 확인한다. 직접 caller Handler:onReservation과 contract/Reservation:status의 기존 의미를 보존한다. 새 상태·스케줄·저장 정책을 만들지 않는다.\nnotification/SendTest.java에 CANCELLED/ACTIVE fixture를 보완한다. P의 ./gradlew :notification:test로 AC-1을 확인하고 결과 target과 로그를 기존 검증 기록에 연결한다. 실패 시 send 분기와 호출 횟수를 확인한다. 실제 명령 실행 결과는 아직 없다.\n"
-  }
+  },
+  "condensation": {
+    "kind": "fictional library reservation; no product case copied",
+    "before": {
+      "AC-1": [
+        "cancelled:no-new-delivery",
+        "active:one-delivery"
+      ],
+      "RES-1": [
+        "cancelled:no-new-delivery",
+        "active:one-delivery",
+        "expired-reservation:no-retry",
+        "notification-error:reservation-unchanged"
+      ]
+    },
+    "after": {
+      "AC-1": [
+        "cancelled:no-new-delivery",
+        "active:one-delivery"
+      ],
+      "RES-1": {
+        "references": [
+          "AC-1"
+        ],
+        "additional": [
+          "expired-reservation:no-retry",
+          "notification-error:reservation-unchanged"
+        ]
+      }
+    },
+    "required": [
+      "cancelled:no-new-delivery",
+      "active:one-delivery",
+      "expired-reservation:no-retry",
+      "notification-error:reservation-unchanged"
+    ]
+  },
+  "unchanged_guards": {
+    "workflow/process/design-review.md": "11521cda378794b1b4979ac8e7d89a8f9d19c30981e132e39505ef794d7a2bd3",
+    "workflow/process/verification.md": "bdebd60477acd27701df696e8d111b6ac5936b322aa743e46a8adc563f260407",
+    "workflow/process/sdd/completion.md": "8328219a69ef02f44d406cfd1358203aa9835900794103a84acaf979cd199263"
+  },
+  "blind_packet_sha256": "e29ff8bc79bcb9a2c5fe5e89a8cfb9fb0afa8c7b3710216900277aa62c437e2f"
 }

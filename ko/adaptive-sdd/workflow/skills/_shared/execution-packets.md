@@ -68,6 +68,8 @@ Execution Packet은 새 계층을 만들지 않고 기존 필드에 인계 근�
 
 첫 edit 전 current Issue snapshot, PLAN identity, claim, guard와 직접 contract를 대조한다. Large에는 설계 단계 사람 승인 원본이 없으며 검토한 PLAN의 exact target과 Decision scope를 연결한다. PLAN이 달라지면 `STALE`이다. implementation finding은 검토를 통과한 PLAN의 list와 비교해 누락을 검출한다. resolved decision 이유, failure/recovery, verification 또는 required review 누락도 INVALID다. 현재 source mismatch는 STALE이며 관련 source만 bounded refresh한다. 대화·여러 설계 버전·전체 tool log는 기본 payload가 아니며 불변 source reference를 우선한다.
 
+별도 IMPLEMENT 문맥에서도 적용되는 README의 문제·전제·불변조건·남은 위험을 기존 direct contract/provenance와 failure/recovery 참조에 필요한 절·기준 revision으로 연결한다. Medium 구현 진입에도 같은 관련 입력을 소비하며 새 field나 전체 README 선행 읽기는 요구하지 않는다. 현재 실행의 계약과 재조사·감사 때만 필요한 이력을 구분하고, 필수 근거의 접근 가능성·최신성을 확인한다. Review Packet에는 아래 phase/mode별 허용 입력만 전달하며 이 연결을 Blind Audit의 결과·이력 격리 우회로 사용하지 않는다.
+
 수신자는 필요한 source만 bounded refresh해 유효성을 증명할 때까지 edit하지 않는다. root에는 Result Packet과 필요한 변경·검증 근거만 반환하고 전체 worker 로그를 재합치지 않는다. 이미 IMPLEMENT 중인 lane의 session/branch를 이 규칙 때문에 소급 초기화하지 않는다.
 
 ## Result Packet

@@ -19,6 +19,8 @@ description: 이 프로젝트의 승인된 작업 항목(Issue)을 Issue 번호�
 
 필수 입력은 current Issue, `W/process/sdd/grade.md`·`W/process/sdd/entry.md`·`W/process/sdd/issue.md`의 현재 grade·진입·사람 판단 조건, `S/.adaptive-sdd/project/sdd-workflow.md`의 적용·권한·실제 경로다. 조사에는 Issue와 직접 연결된 business/architecture 문서, 대상 코드·직접 계약·caller/callee를 읽는다.
 
+SDD를 사용하는 설계·Medium 구현 진입 및 별도 IMPLEMENT 문맥에서는 적용되는 `README.md`의 문제·전제·불변조건·남은 위험을 필요한 절·기준 revision으로 직접 확인한다. 사람 중심 표현은 Agent 읽기 면제가 아니며 README 전체나 조건부 조사 이력을 일률적으로 읽지 않는다. review 역할에는 기존 phase/mode별 허용 입력과 Blind Audit 격리를 그대로 적용한다.
+
 아래 원본은 **해당 행동을 수행할 때 필요한 절만** 읽는다. 이 목록을 선행 full-read 목록으로 사용하지 않는다.
 
 | 행동 | 읽을 원본 |

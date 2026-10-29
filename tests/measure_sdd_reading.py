@@ -94,11 +94,14 @@ def measure():
             'total_written_text': metrics(''.join(docs.values())),
             'human_default_read': metrics(''.join(docs[p] for p in human_paths)),
             'agent_as_is_evidence_read': metrics(docs['01-as-is.md']),
+            # A human-oriented file can still contain mandatory agent inputs.
+            'agent_as_is_required_views': metrics(docs['01-as-is.md'] + (docs['README.md'] if side == 'after' else '')),
             'required_file_count': len(docs),
         }
     return {'base': BASE, 'kind': 'static UTF-8 byte proxy; no model execution', 'scenarios': results,
             'large_lifecycle_repeated_reads': repeated, 'sizes': sizes,
             'synthetic_artifact_sample': artifact_sample,
+            'artifact_read_limit': 'single-file evidence size is not role input savings; required views include relevant README contracts; historical detail reads and actual host behavior are unmeasured',
             'total_model_input_tokens': None, 'model_generation_tokens': None,
             'excluded_inputs': 'system/user prompts, tools, P adapters, source code, task artifacts, conditional routing/packets/observations; all remain required when applicable'}
 

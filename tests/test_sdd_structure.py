@@ -27,6 +27,33 @@ def sections(text):
 
 
 class SelectiveReadingTests(unittest.TestCase):
+    def test_condensed_list_preserves_unique_conditions(self):
+        import copy
+        sample = json.loads((ROOT / 'tests/fixtures/sdd-artifact-sample.json').read_text(encoding='utf-8'))['condensation']
+        def consumed(after):
+            plan = after['RES-1']
+            return set(plan['additional']).union(*(set(after[ref]) for ref in plan['references']))
+        required = set(sample['required'])
+        self.assertEqual(set().union(*map(set, sample['before'].values())), required)
+        self.assertEqual(consumed(sample['after']), required)
+        # An unchanged AC does not protect conditions unique to the removed list.
+        for unique in sample['after']['RES-1']['additional']:
+            broken = copy.deepcopy(sample['after'])
+            broken['RES-1']['additional'].remove(unique)
+            self.assertEqual(broken['AC-1'], sample['before']['AC-1'])
+            self.assertEqual(required - consumed(broken), {unique})
+
+    def test_role_inputs_and_existing_guards(self):
+        sample = json.loads((ROOT / 'tests/fixtures/sdd-artifact-sample.json').read_text(encoding='utf-8'))
+        for path, digest in sample['unchanged_guards'].items():
+            self.assertEqual(hashlib.sha256((BUNDLE / path).read_bytes()).hexdigest(), digest)
+        packet = (BUNDLE / 'workflow/skills/_shared/execution-packets.md').read_text(encoding='utf-8')
+        self.assertEqual(hashlib.sha256(packet.split('### Blind Audit Packet', 1)[1].encode()).hexdigest(), sample['blind_packet_sha256'])
+        skill = (BUNDLE / 'workflow/skills/implementing-issues/SKILL.md').read_text(encoding='utf-8').split('## Inputs', 1)[1].split('\n## ', 1)[0]
+        for text in (skill, packet.split('### 구현 진입의 문맥·최신성 확인', 1)[1].split('## Result Packet', 1)[0]):
+            for term in ('Medium', 'IMPLEMENT', 'README', '기준 revision', 'Blind Audit'):
+                self.assertIn(term, text)
+
     def test_epic_measurement_includes_skill_prerequisites(self):
         from measure_sdd_reading import SCENARIOS
         skill = (BUNDLE / 'workflow/skills/managing-issues/SKILL.md').read_text(encoding='utf-8')
