@@ -1,0 +1,16 @@
+# <ID> — Agent Execution Spec
+
+- 적용 Decision·AC: <02-to-be.md의 ID/항목·revision; 이유를 복사하지 않음>
+- 근거·의존성: <01-as-is.md 또는 코드의 revision·경로/심볼>
+- 적용 전제·불변조건·남은 위험: <README.md의 필요한 절·기준 revision; 현재 실행에 필수인 입력>
+- 적용 P 컨벤션·예외: <문서·절·revision/확인 시점; 미확인/선언 없음도 구별>
+
+## 구현 순서와 경계
+<정확한 대상 file/symbol·직접 caller/callee, 변경과 보존 invariant, 해당 schema/migration>
+
+## 검증과 실패 대응
+<기존 Decision/AC 참조와 적용 위치, test case·명령·수행 조건, 추가 fixture 기대값과 차이, 롤백/실패 확인 지점. AC 표를 복사하지 않으며 고유 기대값은 유지. 실행 후 evidence는 기존 결과의 안정적인 참조>
+
+## 인계
+<남은 finding·미결·전제의 원본 참조. 과거 PASS를 현재 target에 자동 승계하지 않음>
+<현재 실행의 필수 계약과 재조사·감사 때만 필요한 상세 이력을 구분. 목록 축약 시 삭제 구간의 고유 조건이 대체 위치에 남았는지 대조>

@@ -17,14 +17,19 @@ description: 이 프로젝트의 승인된 작업 항목(Issue)을 Issue 번호�
 
 현재 run에서 `P/AGENTS.md`의 `## 항상 적용 hard guard` 적용을 보장할 수 없으면 그 절부터 읽는다. 확인한 동일 버전은 재사용한다.
 
-필수 입력은 current Issue, `W/process/sdd-workflow.md`의 현재 grade·진입 조건, `S/.adaptive-sdd/project/sdd-workflow.md`의 적용·권한·실제 경로다. 조사에는 Issue와 직접 연결된 business/architecture 문서, 대상 코드·직접 계약·caller/callee를 읽는다.
+필수 입력은 current Issue, `W/process/sdd/grade.md`·`W/process/sdd/entry.md`·`W/process/sdd/issue.md`의 현재 grade·진입·사람 판단 조건, `S/.adaptive-sdd/project/sdd-workflow.md`의 적용·권한·실제 경로다. 조사에는 Issue와 직접 연결된 business/architecture 문서, 대상 코드·직접 계약·caller/callee를 읽는다.
+
+SDD를 사용하는 설계·Medium 구현 진입 및 별도 IMPLEMENT 문맥에서는 적용되는 `README.md`의 문제·전제·불변조건·남은 위험을 필요한 절·기준 revision으로 직접 확인한다. 사람 중심 표현은 Agent 읽기 면제가 아니며 README 전체나 조건부 조사 이력을 일률적으로 읽지 않는다. review 역할에는 기존 phase/mode별 허용 입력과 Blind Audit 격리를 그대로 적용한다.
 
 아래 원본은 **해당 행동을 수행할 때 필요한 절만** 읽는다. 이 목록을 선행 full-read 목록으로 사용하지 않는다.
 
 | 행동 | 읽을 원본 |
 | --- | --- |
-| AS-IS·PLAN·change-plan 작성·수정 | `W/process/sdd-artifacts.md`의 해당 산출물·trade-off 절 |
-| 구현 중 전제 오류·진행 중 정책 변경 | `W/process/sdd-artifacts.md`의 `계획 정정과 정책 전환` |
+| 최초 SDD 배치 | `W/process/sdd-artifacts.md` |
+| AS-IS 조사·근거 작성 | `W/process/sdd/as-is.md` |
+| PLAN 결정·trade-off 작성 | `W/process/sdd/to-be.md` |
+| 구현 명세 작성·소비 | `W/process/sdd/agent-spec.md` |
+| 구현 중 전제 오류·진행 중 정책 변경 | `W/process/sdd/plan-change.md` |
 | Large AS-IS/PLAN 게시·리뷰·재확인 | `W/process/design-review.md`의 현재 phase와 target에 적용되는 절 |
 | 검증 계획·실행·PASS 재사용·code review 판정 | `W/process/verification.md`와 P 적용 문서 `build.md`의 해당 검증 |
 | 현재 role 진입·유지의 적격 확인, 모델·추론·위임·fallback 선택 | `W/skills/_shared/execution-routing.md`의 해당 role·선택 경로 |
@@ -46,17 +51,17 @@ description: 이 프로젝트의 승인된 작업 항목(Issue)을 Issue 번호�
 
 1. 현재 요청이 읽기 전용 조사인지 제품 수정인지 구분하고, dependencies/blockers가 필요한 단계를 확인한다. 조사 자체의 접근 권한·사람 판단 조건은 유지한다. 상위 미결 결론은 그것을 소비하는 구현·통합·배포를 기다리게 하며 조사 착수를 막지 않는다.
 2. 읽기 전용 조사에는 수정 claim을 요구하지 않는다. 조사 경로의 중복 읽기는 수정 충돌이 아니다. SDD·테스트·코드 등 실행 Issue의 P 작업 파일을 처음 생성·수정·삭제하기 전에는 `parallel-development`로 lane·claim을 확보한다. 현재 단계의 지시·의존성·경계를 적용하며, SDD 작성 claim에 아직 작성하지 않은 AS-IS/PLAN의 PASS를 요구하지 않는다. tracker 기록과 Epic 관리 문서 자체의 기존 예외는 유지한다.
-3. 제품 코드 수정 전에는 Issue의 필수 본문·Priority/grade와 라벨 일치·allowed/forbidden·완료 기준·현재 구현 의존성을 확인하고, `sdd-workflow.md`의 구현 시작 조건과 `parallel-development` claim을 충족한다. 불충족이면 제품 코드를 수정하지 않는다.
+3. 제품 코드 수정 전에는 Issue의 필수 본문·Priority/grade와 라벨 일치·allowed/forbidden·완료 기준·현재 구현 의존성을 확인하고, `W/process/sdd/entry.md`의 구현 시작 조건과 `parallel-development` claim을 충족한다. 불충족이면 제품 코드를 수정하지 않는다.
 4. 각 원본이 정한 시작·변경 전 경계에서 `observations.md`의 시작 기록과 활성화된 `token-diagnostic.md`의 START를 적용한다. 재개·인계는 기존 시작 원본을 참조하며 새 작업의 관측을 이전 작업에서 상속하지 않는다.
 5. 현재 phase/role에 진입할 때는 current/manual model을 그대로 유지하는 경우도 `execution-routing.md`의 해당 적격 경로를 확인한다. canonical DENY·실제 explicit record·fresh capability floor 확인을 model switch 유무로 생략하지 않는다. 같은 run의 해당 role에서 여전히 유효한 근거는 재사용하고 미래 phase의 concrete model PASS를 현재 착수 조건으로 요구하지 않는다.
 
 ## 조사·설계와 grade별 진행
 
-상위·관련 분석은 `sdd-workflow.md`의 `기존 분석 재사용`에 따라 기준 revision·범위·전제·근거를 확인하고 부족하거나 바뀐 부분만 보완한다. 재사용이 해당 grade의 검토를 면제하지 않는다. 공통 변경은 소비 작업의 적용·호환성·전환 영향까지 담당 Issue의 범위와 검증에 포함한다.
+상위·관련 분석은 `W/process/sdd/entry.md`의 `기존 분석 재사용`에 따라 기준 revision·범위·전제·근거를 확인하고 부족하거나 바뀐 부분만 보완한다. 재사용이 해당 grade의 검토를 면제하지 않는다. 공통 변경은 소비 작업의 적용·호환성·전환 영향까지 담당 Issue의 범위와 검증에 포함한다.
 
-1. 선언한 기준 revision의 code를 관찰한 AS-IS, current Issue를 요청한 TO-BE로 삼는다. 직접 관련 business 문서만 비교하며 문서와 다르다는 이유로 코드를 과거 동작에 맞추지 않는다. 기준 구현·외부 동작·운영 소비자가 판단에 영향을 주면 `sdd-artifacts.md`의 `판단에 필요한 조사`를 적용한다.
+1. 선언한 기준 revision의 code를 관찰한 AS-IS, current Issue를 요청한 TO-BE로 삼는다. 직접 관련 business 문서만 비교하며 문서와 다르다는 이유로 코드를 과거 동작에 맞추지 않는다. 기준 구현·외부 동작·운영 소비자가 판단에 영향을 주면 `W/process/sdd/as-is.md`의 `판단에 필요한 조사`를 적용한다.
 2. Issue와 architecture/완료 기준 충돌은 `agent-instruction-policy.md`로 판단하고 해소되지 않으면 `BLOCKED: instruction conflict`로 중단한다.
-3. 저장소 파일의 최초 쓰기 전 lane·claim을 확보한 뒤 아래 순서에 맞춰 현재 산출물을 작성한다. 형식·Decision/실행 명세 구분·실제 경쟁 선택지의 trade-off는 `sdd-artifacts.md`를 따른다. 선택지를 만들기 위한 광범위 탐색은 하지 않는다.
+3. 저장소 파일의 최초 쓰기 전 lane·claim을 확보한 뒤 아래 순서에 맞춰 현재 산출물을 작성한다. 최초 배치는 `W/process/sdd-artifacts.md`, 현재 산출물의 작성은 위 표의 직접 경로를 따른다. 선택지를 만들기 위한 광범위 탐색은 하지 않는다.
 
 | grade | 실행 순서 |
 | --- | --- |
@@ -65,15 +70,15 @@ description: 이 프로젝트의 승인된 작업 항목(Issue)을 Issue 번호�
 | Medium | 필요한 SDD·검증 계획을 작성하고 충돌이 없으면 추가 승인 없이 구현한다. |
 | Large | AS-IS 작성 → 해당 phase의 유효한 design review → PLAN 작성 → 해당 phase의 유효한 design review → 구현 순서로 진행한다. |
 
-Large의 게시·A/B·severity·blind 격리·재확인·반복 정체는 `design-review.md` 한 곳에서 판정한다. 각 phase의 current-target 근거와 `sdd-workflow.md`의 `미결 사항과 단계별 의존성`을 확인하고 결론이 필요한 작업만 진행한다. 누락·stale 근거를 과거 PASS로 대신하지 않는다. 재검토 전에는 같은 원본의 target 유지 조건부터 적용하며, 이 절차를 Medium 이하나 기본 CODE review에 추가하지 않는다.
+Large의 게시·A/B·severity·blind 격리·재확인·반복 정체는 `design-review.md` 한 곳에서 판정한다. 각 phase의 current-target 근거와 `W/process/sdd/issue.md`의 `미결 사항과 단계별 의존성`을 확인하고 결론이 필요한 작업만 진행한다. 누락·stale 근거를 과거 PASS로 대신하지 않는다. 재검토 전에는 같은 원본의 target 유지 조건부터 적용하며, 이 절차를 Medium 이하나 기본 CODE review에 추가하지 않는다.
 
-제품 파일 수정 전에는 `verification.md`에 따라 기준 요구와 완료 기준을 검증에 대응시키고 grade별 `Independent Review` 판정을 확보한다. Medium 이상의 Human Decision Contract와 실행 명세는 `sdd-artifacts.md`를 따른다. 증명할 수 없는 완료 기준이나 허용 경계 밖 필수 검증은 `BLOCKED`다. 선택적 Device QA/Runtime QA를 구현·PR·merge gate로 만들지 않는다.
+제품 파일 수정 전에는 `verification.md`에 따라 기준 요구와 완료 기준을 검증에 대응시키고 grade별 `Independent Review` 판정을 확보한다. Medium 이상의 Human Decision Contract는 `W/process/sdd/to-be.md`, 실행 명세는 `W/process/sdd/agent-spec.md`를 따른다. 증명할 수 없는 완료 기준이나 허용 경계 밖 필수 검증은 `BLOCKED`다. 선택적 Device QA/Runtime QA를 구현·PR·merge gate로 만들지 않는다.
 
 사람 판단은 P 적용 선언의 `사람 판단 지점`을 직접 확인한다. 새 중요한 제품/설계 Decision이나 확정 범위 변경은 `[HUMAN DECISION REQUIRED]`로 영향 작업을 멈추고, 사람이 밝힌 결정을 Human View와 필요한 Issue 본문에 반영한 뒤 재개한다. 파일 존재·Agent 합의·review PASS를 사람 결정으로 추정하지 않는다. 확정 의미·불변조건 안의 실행 세부는 계속 처리한다.
 
 ## Implement
 
-구현·검증에서 PLAN 전제 오류를 발견하거나 진행 중 작업의 정책이 바뀌면 `sdd-artifacts.md`의 `계획 정정과 정책 전환`을 적용한다. SUMMARY 설명만 남기고 잘못된 PLAN을 실행 기준으로 유지하지 않는다.
+구현·검증에서 PLAN 전제 오류를 발견하거나 진행 중 작업의 정책이 바뀌면 `W/process/sdd/plan-change.md`을 적용한다. SUMMARY 설명만 남기고 잘못된 PLAN을 실행 기준으로 유지하지 않는다.
 
 1. current/manual 구현 역할을 유지하거나 위임·모델 전환할 때 `execution-routing.md`의 현재 role 적격 근거를 확인한다. 같은 run에서 확보한 유효한 해당 근거는 재사용한다. 미지원 fallback·required reviewer 분리·Human-selected B 선택 실패는 그 원본의 조건과 상태를 그대로 따른다.
 2. Packet으로 인계받았다면 `execution-packets.md`의 `구현 진입의 문맥·최신성 확인`을 첫 edit 전에 수행한다. 필수 입력·guard·claim·직접 source를 증명하는 VALID 결과 없이 구현하지 않는다.

@@ -40,7 +40,7 @@ Execution Packet은 전체 source 묶음이 아니라 orchestrator가 이미 판
 - SDD grade gate와 claim의 immutable evidence
 - host-enforced propagation 또는 worker direct-read의 immutable guard application evidence object
 
-적용할 P 코드 컨벤션이 있으면 provenance에 해당 문서·절·identity(또는 확인 시점)를 연결하고 PLAN의 명시적 이탈/예외를 함께 인계한다. 선언이 없으면 그 사실을 표시하며 새 컨벤션 문서를 강제하지 않는다. known blockers에는 [미결 사항의 담당·필요 단계](../../process/sdd-workflow.md#미결-사항과-단계별-의존성)를 연결하고, 미래 단계의 미결을 현재 작업 전체의 blocker로 확대하지 않는다.
+적용할 P 코드 컨벤션이 있으면 provenance에 해당 문서·절·identity(또는 확인 시점)를 연결하고 PLAN의 명시적 이탈/예외를 함께 인계한다. 선언이 없으면 그 사실을 표시하며 새 컨벤션 문서를 강제하지 않는다. known blockers에는 [미결 사항의 담당·필요 단계](../../process/sdd/issue.md#미결-사항과-단계별-의존성)를 연결하고, 미래 단계의 미결을 현재 작업 전체의 blocker로 확대하지 않는다.
 
 ### Guard 적용과 packet 공통 검증
 
@@ -60,13 +60,15 @@ issue snapshot, PLAN identity/reference, goal, allowed/forbidden, required contr
 - active lane/path conflict 발생
 - hard guard/canonical Skill version 변경
 
-이 event가 계획 전제 오류나 진행 중 정책 변경이면 [계획 정정과 정책 전환](../../process/sdd-artifacts.md#계획-정정과-정책-전환)으로 원본부터 정정한다. Packet만 수정해 기존 PLAN·정책과의 충돌을 덮지 않는다. 새 Packet에는 현재 적용할 원본과 필요한 재검토 근거를 연결한다.
+이 event가 계획 전제 오류나 진행 중 정책 변경이면 [계획 정정과 정책 전환](../../process/sdd/plan-change.md#계획-정정과-정책-전환)으로 원본부터 정정한다. Packet만 수정해 기존 PLAN·정책과의 충돌을 덮지 않는다. 새 Packet에는 현재 적용할 원본과 필요한 재검토 근거를 연결한다.
 
 ### 구현 진입의 문맥·최신성 확인
 
 Execution Packet은 새 계층을 만들지 않고 기존 필드에 인계 근거를 연결한다. Large의 검토를 통과한 PLAN에서 IMPLEMENT로 전환할 때 host가 지원하면 같은 모델이라도 별도 구현 문맥을 선택한다. 실제 fresh session/agent 또는 검증된 압축을 사용하며 model tier/qualification/grade별 actor 수 규칙은 변경하지 않는다. host-supported `fresh-context`, `verified-compaction`, `direct-fallback` 중 실제 수행한 방법과 실행 evidence를 기록한다. 압축은 필수 입력 보존과 현재 source 대조를 검증해야 성공이다. 미지원·압축 실패는 사유·최소 입력 참조·실제 남은 이력의 한계를 남기고 직접 구현하며 분리 성공으로 표시하지 않는다. shell에서 대화 명령을 실행하거나 전환을 선언한 것만으로 성공 처리하지 않는다. 필수 source 복구 실패는 `BLOCKED`다.
 
 첫 edit 전 current Issue snapshot, PLAN identity, claim, guard와 직접 contract를 대조한다. Large에는 설계 단계 사람 승인 원본이 없으며 검토한 PLAN의 exact target과 Decision scope를 연결한다. PLAN이 달라지면 `STALE`이다. implementation finding은 검토를 통과한 PLAN의 list와 비교해 누락을 검출한다. resolved decision 이유, failure/recovery, verification 또는 required review 누락도 INVALID다. 현재 source mismatch는 STALE이며 관련 source만 bounded refresh한다. 대화·여러 설계 버전·전체 tool log는 기본 payload가 아니며 불변 source reference를 우선한다.
+
+별도 IMPLEMENT 문맥에서도 적용되는 README의 문제·전제·불변조건·남은 위험을 기존 direct contract/provenance와 failure/recovery 참조에 필요한 절·기준 revision으로 연결한다. Medium 구현 진입에도 같은 관련 입력을 소비하며 새 field나 전체 README 선행 읽기는 요구하지 않는다. 현재 실행의 계약과 재조사·감사 때만 필요한 이력을 구분하고, 필수 근거의 접근 가능성·최신성을 확인한다. Review Packet에는 아래 phase/mode별 허용 입력만 전달하며 이 연결을 Blind Audit의 결과·이력 격리 우회로 사용하지 않는다.
 
 수신자는 필요한 source만 bounded refresh해 유효성을 증명할 때까지 edit하지 않는다. root에는 Result Packet과 필요한 변경·검증 근거만 반환하고 전체 worker 로그를 재합치지 않는다. 이미 IMPLEMENT 중인 lane의 session/branch를 이 규칙 때문에 소급 초기화하지 않는다.
 
@@ -116,7 +118,7 @@ Review A와 기본 CODE reviewer 입력은 phase별로 제한한다.
 - `PLAN`: current Issue id/title/acceptance, reviewed AS-IS identity, PLAN과 change-plan artifact 경로 및 remote-resolvable exact SHA, remote base/head, 대상 inventory 또는 immutable reference, 필요한 direct contract/evidence, document author identity
 - `CODE`: current Issue acceptance, reviewed PLAN identity, base/head SHA, current head의 전체 changed-file inventory 또는 immutable reference, current diff/patch reference와 필요한 diff hunk, 필요한 public contract, verification evidence identity, implementation actor identity, PLAN implementation finding handoff와 항목별 code+fixture resolution evidence
 
-AS-IS/PLAN의 direct evidence에는 판단을 좌우하는 [조사 근거와 남은 전제](../../process/sdd-artifacts.md#판단에-필요한-조사)를 연결한다. PLAN/CODE에는 선언된 P 컨벤션 참조와 이탈 이유·예외 결정 근거를 포함한다. reviewer는 적용 가능한 기준과 실제 지시/변경을 대조하고, 개인 선호를 새 계약으로 만들지 않는다. 미결의 담당·필요 시점은 reviewer 발견 여부와 별개로 다음 작업의 의존성에 반영한다.
+AS-IS/PLAN의 direct evidence에는 판단을 좌우하는 [조사 근거와 남은 전제](../../process/sdd/as-is.md#판단에-필요한-조사)를 연결한다. PLAN/CODE에는 선언된 P 컨벤션 참조와 이탈 이유·예외 결정 근거를 포함한다. reviewer는 적용 가능한 기준과 실제 지시/변경을 대조하고, 개인 선호를 새 계약으로 만들지 않는다. 미결의 담당·필요 시점은 reviewer 발견 여부와 별개로 다음 작업의 의존성에 반영한다.
 
 해당 phase의 필수 field는 nested value까지 nonempty여야 한다. Contract reviewer는 제공 목록을 그대로 신뢰하지 않고 phase target/inventory를 독립 확인한 뒤 bounded artifact/diff와 contract를 검토한다. CODE reviewer는 current head의 전체 changed-file inventory를 독립 확인하고 PLAN의 모든 Implementation finding identity가 handoff됐는지와 각 item의 code+fixture evidence가 current head에서 실제 resolution을 증명하는지 확인한다. handoff가 없었던 경우에는 빈 list를 허용한다. reviewer identity는 document/implementation actor와 달라야 한다. 확인을 solution discovery, repository-wide 탐색, full-source handoff로 확장하지 않는다. target/head, inventory, diff 또는 implementation finding resolution evidence가 applicable current target과 다르면 review를 `STALE`로 처리한다. verification evidence는 위 Result Packet의 실제 실행 identity와 필요한 입력 불변·재사용 근거를 함께 확인하며, 그 조건이 유효하지 않으면 `STALE`로 처리한다. handoff 누락이나 unresolved item이 있으면 review를 complete로 판정하지 않는다.
 
