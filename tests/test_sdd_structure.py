@@ -27,6 +27,15 @@ def sections(text):
 
 
 class SelectiveReadingTests(unittest.TestCase):
+    def test_epic_measurement_includes_skill_prerequisites(self):
+        from measure_sdd_reading import SCENARIOS
+        skill = (BUNDLE / 'workflow/skills/managing-issues/SKILL.md').read_text(encoding='utf-8')
+        inputs = skill.split('## Inputs', 1)[1].split('\n## ', 1)[0]
+        required = set(re.findall(r'W/process/(sdd/[\w-]+\.md)', inputs))
+        selected = set(SCENARIOS['Epic management'][0])
+        self.assertTrue(required)
+        self.assertFalse(required - selected, f'Missing mandatory inputs: {required - selected}')
+
     def test_synthetic_split_keeps_each_fact_once(self):
         sample = json.loads((ROOT / 'tests/fixtures/sdd-artifact-sample.json').read_text(encoding='utf-8'))
         self.assertEqual(set(sample['before']), set(sample['after']))
@@ -71,6 +80,10 @@ class SelectiveReadingTests(unittest.TestCase):
         layout = (PROCESS / 'sdd-artifacts.md').read_text(encoding='utf-8')
         self.assertIn('진행 중 작업은 재작성하지 않는다', layout)
         self.assertIn('별도 `evidence.md`는 필수가 아니며', layout)
+        self.assertNotIn('PLAN 작성 뒤에는', layout)
+        self.assertIn('README 최초 작성 때 PLAN 위치', layout)
+        template = (BUNDLE / 'templates/sdd/README.md.tmpl').read_text(encoding='utf-8')
+        self.assertIn('PLAN 예정 경로: `02-to-be.md`', template)
 
 
 if __name__ == '__main__':

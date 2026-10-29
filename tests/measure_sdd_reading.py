@@ -14,6 +14,17 @@ ROOT = Path(__file__).resolve().parents[1]
 PREFIX = 'ko/adaptive-sdd/workflow/'
 MAPPING = json.loads((ROOT / 'tests/fixtures/sdd-section-map.json').read_text(encoding='utf-8'))
 BASE = MAPPING['base']
+ENTRY = ['sdd/grade.md', 'sdd/entry.md', 'sdd/issue.md']
+# Cold phase snapshots, with the skill's mandatory inputs included.
+SCENARIOS = {
+    'Small implementation': (ENTRY, [], 'implementing-issues'),
+    'Medium design and implementation': (ENTRY + ['sdd-artifacts.md', 'sdd/as-is.md', 'sdd/to-be.md', 'sdd/agent-spec.md'], [], 'implementing-issues'),
+    'Large AS-IS review': (ENTRY + ['sdd-artifacts.md', 'sdd/as-is.md'], ['design-review.md'], 'implementing-issues'),
+    'Large PLAN review': (ENTRY + ['sdd/to-be.md', 'sdd/agent-spec.md'], ['design-review.md'], 'implementing-issues'),
+    'Implementation and verification': (ENTRY + ['sdd/agent-spec.md'], [], 'implementing-issues'),
+    'Completion and handoff': (['sdd/completion.md', 'sdd/issue.md'], [], 'finishing-issues'),
+    'Epic management': (['sdd/grade.md', 'sdd/epic.md', 'sdd/issue.md'], [], 'managing-issues'),
+}
 
 
 def read(path, before=False):
@@ -28,22 +39,12 @@ def metrics(text):
 
 
 def measure():
-    entry = ['sdd/grade.md', 'sdd/entry.md', 'sdd/issue.md']
     # Cold phase snapshots. Conditional runtime sources (P, code, decisions,
     # routing, packets, observations) are excluded from BOTH sides, never waived.
-    cases = {
-        'Small implementation': (entry, [], 'implementing-issues'),
-        'Medium design and implementation': (entry + ['sdd-artifacts.md', 'sdd/as-is.md', 'sdd/to-be.md', 'sdd/agent-spec.md'], [], 'implementing-issues'),
-        'Large AS-IS review': (entry + ['sdd-artifacts.md', 'sdd/as-is.md'], ['design-review.md'], 'implementing-issues'),
-        'Large PLAN review': (entry + ['sdd/to-be.md', 'sdd/agent-spec.md'], ['design-review.md'], 'implementing-issues'),
-        'Implementation and verification': (entry + ['sdd/agent-spec.md'], [], 'implementing-issues'),
-        'Completion and handoff': (['sdd/completion.md', 'sdd/issue.md'], [], 'finishing-issues'),
-        'Epic management': (['sdd/epic.md', 'sdd/issue.md'], [], 'managing-issues'),
-    }
     old_workflow = read('process/sdd-workflow.md', True)
     old_sections = {s.splitlines()[0][3:]: s for s in re.split(r'(?=^## )', old_workflow, flags=re.M)[1:]}
     results = {}
-    for name, (selected, common, skill) in cases.items():
+    for name, (selected, common, skill) in SCENARIOS.items():
         after_paths = ['process/' + p for p in selected + common]
         before_paths = ['process/sdd-workflow.md']
         if any(p in selected for p in ('sdd-artifacts.md', 'sdd/as-is.md', 'sdd/to-be.md', 'sdd/agent-spec.md')):

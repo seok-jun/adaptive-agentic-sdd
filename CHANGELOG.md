@@ -6,7 +6,7 @@ Selective reading and artifact layout (Korean workflow only; English workflow re
 
 - Splits grade, entry, issue, Epic, completion, AS-IS, TO-BE, execution spec, and plan corrections into directly addressable files. Skills bypass the small index; rule owners, human boundaries, review independence, and verification gates remain intact.
 - For new Medium/Large work, the existing README carries the human AS-IS view and `01-as-is.md` carries detailed evidence. `02-to-be.md` and change plans retain their human/agent roles. Issue metadata is referenced rather than maintained twice; no extra required artifact or approval is added. AS-IS review includes both views at the same candidate. Existing work is not migrated automatically.
-- Adds optional artifact templates, pinned-manifest coverage, preservation and installation tests, five synthetic behavior cases, and a reproducible static cost comparison. Model behavior and total host input/output tokens have not been measured. See [analysis and limitations](ko/docs/sdd-reading-audit.md).
+- Adds optional artifact templates, pinned-manifest coverage, preservation and installation tests, six synthetic behavior cases, and a reproducible static cost comparison. Model behavior and total host input/output tokens have not been measured. See [analysis and limitations](ko/docs/sdd-reading-audit.md).
 
 Meaning change in the Korean workflow (English workflow edition still pending):
 

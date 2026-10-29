@@ -24,7 +24,7 @@ PLAN은 이미 Human Decision Contract(`02-to-be.md`)와 Agent Execution Spec(`c
 | workflow의 등급·자동 격상 | `sdd/grade.md` | 실행 분류·재판정; P의 위험 매핑 |
 | workflow의 진입·등급별 진행·분석 재사용·routing 안내 | `sdd/entry.md` | 최초 쓰기·구현 진입; grade/issue·조건별 검증/claim/routing |
 | workflow의 Issue 계약·정규화·미결 의존성 | `sdd/issue.md` | 관리·구현·종료; 사람 판단·Issue 본문 원본 |
-| workflow의 Epic 관리·전환 | `sdd/epic.md` | Epic 조율; 공통 질문은 issue, 하위 실행에만 entry/grade |
+| workflow의 Epic 관리·전환 | `sdd/epic.md` | Epic 조율; managing의 분류 입력은 grade, 공통 질문은 issue, 하위 실행 진입에 entry |
 | workflow의 문서 수명·business 동기화·종료 순서 | `sdd/completion.md` | 종료; issue/SUMMARY·verification·finishing |
 | artifact의 AS-IS 조사 | `sdd/as-is.md` | 조사·AS-IS review |
 | artifact의 TO-BE·실제 대안 | `sdd/to-be.md` | PLAN 사람 결정·AC 검증 대응 |
@@ -61,11 +61,11 @@ SDD는 작업 중 작성·갱신하고 최종 코드 기준 business 갱신 및 
 
 기존 workflow의 19개 규칙 섹션은 담당 파일과 내용 hash로 대응한다. 링크 목적지 이동, 교차 파일 지시 표현, 새 AS-IS 두 파일 명시만 정규화하고 본문 누락·중복을 검사한다. 산출물 항목은 위 대응표로 검토했다. M/W/P 원본, 사람 판단 및 STOP, Large A/B·Blind Audit 독립성, grade·claim·진입, 필수 검증/PASS 최신성, 인계, 최종 코드 business 갱신, 산출물 수명은 보존했다. Small/Trivial의 SDD 생략도 유지한다.
 
-- `python -I -B -m unittest discover -s tests -v`: 31개 PASS. 기존 25개와 새 보존·직접 경로·동일 근거 분리·manifest·변조/누락 검사 6개다.
+- `python -I -B -m unittest discover -s tests -v`: 32개 PASS. 기존 25개와 보존·직접 경로·동일 근거 분리·manifest·변조/누락·측정 입력 검사 7개다.
 - 설치 render/check/check-evals, GitHub/local-docs tracker, 외부 harness, Windows 생성 명령, 상대 링크/앵커, review snapshot을 포함한다. 최초 실행에서 깨진 안내 앵커와 Windows 샌드박스 Git 셸 제약을 발견했다. 앵커를 수정하고 같은 테스트를 제약 밖에서 재실행해 통과했다.
-- 기존 행동 사례 60개는 내용 유지, 새 합성 회귀 사례 5개를 추가했다. 총 65개 형식·ID 검증은 PASS다. LLM 행동 평가는 미실행이므로 행동 회귀 없음이나 실제 준수율을 주장하지 않는다.
+- 기존 행동 사례 60개는 내용 유지, 새 합성 회귀 사례 6개를 추가했다. 총 66개 형식·ID 검증은 PASS다. LLM 행동 평가는 미실행이므로 행동 회귀 없음이나 실제 준수율을 주장하지 않는다.
 - `git diff --check`: PASS. 공개물에는 합성 도서 서비스 fixture만 사용했다. 제품 코드·대화·비공개 연구 내용을 옮기지 않았다.
-- 작성자 self-review와 결정적 검사다. 별도 독립 모델 리뷰·실제 host 실행·Linux/macOS 재실행은 미수행이다.
+- 작성자 self-review·결정적 검사와 별도 서브에이전트 독립 리뷰를 수행했다. 실제 host 행동 평가·Linux/macOS 재실행은 미수행이다.
 
 ## 정적 비용 비교
 
@@ -76,18 +76,18 @@ SDD는 작업 중 작성·갱신하고 최종 코드 기준 business 갱신 및 
 | 시나리오 | 기존 파일 전체 proxy | 기존 workflow만 이상적 절 선택 | 새 선택 파일 proxy | 전체 읽기 대비 감소 | 파일 읽기 수 전→후 |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Small 구현 | 13,274 | 11,106 | 11,232 | 15.4% | 3→5 |
-| Medium 설계·구현 | 16,249 | 14,080 | 14,165 | 12.8% | 4→9 |
-| Large AS-IS | 20,893 | 18,724 | 17,861 | 14.5% | 5→8 |
+| Medium 설계·구현 | 16,249 | 14,080 | 14,250 | 12.3% | 4→9 |
+| Large AS-IS | 20,893 | 18,724 | 17,946 | 14.1% | 5→8 |
 | Large PLAN | 20,893 | 18,724 | 16,956 | 18.8% | 5→8 |
 | 구현·검증 | 16,249 | 14,080 | 11,584 | 28.7% | 4→6 |
 | 완료·인계 | 13,885 | 9,989 | 10,079 | 27.4% | 3→4 |
-| Epic 관리 | 8,519 | 4,573 | 4,630 | 45.7% | 2→3 |
+| Epic 관리 | 8,519 | 5,287 | 5,346 | 37.2% | 2→4 |
 
 이상적 절 선택 열도 artifact/Skill/verification은 파일 전체로 계산한다. 모든 파일의 최적 섹션 선택 대비 우위를 뜻하지 않는다. Small·Medium·종료·Epic은 이상적 workflow 절 선택보다 소폭 증가한다. 분리는 부분 읽기의 물리적 안정성을 높이지만 완벽한 부분 읽기보다 항상 작지는 않다.
 
 정해진 직접 경로를 쓰므로 탐색 호출은 모델상 양쪽 0회다. 파일 하나당 호출하면 읽기 호출은 증가한다. 한 도구 요청으로 현재 phase 파일을 함께 읽을 수 있지만 host별 실제 호출 수/지연은 미측정이다. 안내를 매번 경유하거나 파일 전체를 모두 읽으면 이 비교가 성립하지 않는다.
 
-Large AS-IS→PLAN→구현→종료를 각각 cold로 읽으면 반복 bytes는 186,592→129,098이다. 동일 run에서 변경 없는 파일을 한 번씩만 읽는 이상적 경우는 101,066→96,792 bytes로 차이가 작다. 이 숫자는 호출 trace가 아니라 파일 목록을 합산한 모델이다. 재조회 필요 여부는 최신성 규칙이 우선한다.
+Large AS-IS→PLAN→구현→종료를 각각 cold로 읽으면 반복 bytes는 186,592→129,098이다. 동일 run에서 변경 없는 파일을 한 번씩만 읽는 이상적 경우는 101,066→97,131 bytes로 차이가 작다. 이 숫자는 호출 trace가 아니라 파일 목록을 합산한 모델이다. 재조회 필요 여부는 최신성 규칙이 우선한다.
 
 ### 산출물 작성량과 독자 부담 표본
 
@@ -148,3 +148,16 @@ UTF-8 bytes, heading·하위 절 포함. 규칙이 아닌 기존 읽기 안내�
 | change-plan | 649 | 649 | 구현·검증·인계 |
 
 표본에서는 네 사실 묶음이 전후 각각 한 번씩 존재한다. 사실 묶음 중복률은 양쪽 0%이며, 제거한 것은 외부 Issue와 중복되는 metadata의 로컬 사본이다. 실제 문서 corpus의 의미 중복률은 미측정이다. 위 단계 연결은 설계상 소비 위치이며 실제 읽기 횟수와 같다고 보지 않는다.
+
+## PR #2 독립 리뷰와 수정
+
+작성에 참여하지 않은 별도 문맥의 서브에이전트가 `8f268c97c7092c65965d16efcf5fb086facca7d0`을 기준으로 원본 diff·규칙·Human/Agent 배치·측정 코드를 독립 검토했다. 핵심 STOP·사람 판단·검증·수명·원격 candidate·Blind Audit 격리의 추가 누락은 발견하지 않았고 아래 두 P2 지적을 제시했다.
+
+| 지적 | 수정·회귀 방지 |
+| --- | --- |
+| Epic after 측정에서 managing Skill의 필수 grade 입력 누락 | grade를 포함해 절감률 45.7%→37.2%, 읽기 수 2→3에서 2→4로 정정. Skill의 실제 Inputs에서 추출한 필수 경로가 측정 선택에 포함되는지 검사 |
+| AS-IS target인 README에 PLAN 작성 뒤 링크를 추가하면 bytes가 바뀌어 불필요한 재확인 발생 | 최초 README에 예정 PLAN 경로를 둠. 진행 상태는 기존 Issue에서 관리. 실제 사실·전제 변화의 재검토와 PLAN A/B는 유지하며 링크 변경을 일괄 면제하지 않음 |
+
+계획 정정의 AS-IS 범위에 README의 사람용 현황·위험도 포함함을 명확히 했다. 이는 별도 결함 판정이 아닌 stale 사람 판단 방지를 위한 명확화다. 새 합성 사례는 기존 AS-IS target 유지와 PLAN 검토를 구분한다. 모델 행동 실행 결과로 간주하지 않는다.
+
+같은 독립 리뷰어가 수정 diff와 직접 영향 범위를 재확인하여 두 P2의 해결 및 추가 actionable 지적 없음을 보고했다. 리뷰어는 구조 검사 6개와 측정 스크립트를 직접 실행해 결과를 대조했다. 작성 측 전체 회귀 32개도 PASS다. 이는 문서·정적 검사 결과이며 실제 Agent 행동 효과의 실측은 아니다.
