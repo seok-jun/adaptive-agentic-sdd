@@ -231,7 +231,7 @@ Git Bash의 MSYS path conversion 문제는 shell 전환 사유가 아니다. 기
 
 ### Trivial Issue fast-track
 
-`SDD grade: Trivial`은 lock으로 검증한 W `process/sdd-workflow.md`의 공통 비동작 변경 조건을 모두 만족할 때만 사용한다. 제품별 적용은 `docs/sdd-workflow.md`를 따른다.
+`SDD grade: Trivial`은 lock으로 검증한 W `process/sdd/grade.md`의 공통 비동작 변경 조건을 모두 만족할 때만 사용한다. 제품별 적용은 `docs/sdd-workflow.md`를 따른다.
 
 - 별도 SDD와 independent review를 만들지 않는다.
 - 대상 파일과 직접 검증 근거만 읽고 repository-wide 탐색을 하지 않는다.

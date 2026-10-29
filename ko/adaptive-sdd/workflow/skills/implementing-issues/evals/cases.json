@@ -1,7 +1,7 @@
 {
   "skill": "implementing-issues",
   "setting": "가상 프로젝트 '도서 대출 서비스'(Java/Spring, Gradle, JDK 21 선언). 모듈: loan-service/**, member-core/**, notification/**. 공유 contract: common-contract/**. root·integration 전용: build.gradle, settings.gradle. 작업 관리: 로컬 문서(tracker_root의 items/T-<번호>.md, claims/T-<번호>.claim).",
-  "note": "공개용 가상 사례다. 기존 운영 기대 행동을 옮긴 사례와 정책 변경에서 설계한 사례를 구분한다. II-S11 이후 Epic 사례는 정책 회귀용이며 모델 행동 실행은 미확인이다. 제품 원본 사례는 제품이 소유한다. II-S14는 읽기 전용 조사와 SDD 최초 쓰기 claim 경계를 구분하는 정책 회귀 사례이며 모델 행동 실행은 미확인이다. 1차 개선의 요구/결정 기록·계획 정정/정책 전환·SDD 참조 보존 사례는 독립적으로 작성한 합성 정책 회귀 명세이며 행동 실행 결과가 아니다. 2차의 AS-IS 판단 근거·단계별 미결·컨벤션·blind 입력 사례 6개도 새 합성 기대 행동 명세이며 모델 실행 결과가 아니다.",
+  "note": "공개용 가상 사례다. 기존 운영 기대 행동을 옮긴 사례와 정책 변경에서 설계한 사례를 구분한다. II-S11 이후 Epic 사례는 정책 회귀용이며 모델 행동 실행은 미확인이다. 제품 원본 사례는 제품이 소유한다. II-S14는 읽기 전용 조사와 SDD 최초 쓰기 claim 경계를 구분하는 정책 회귀 사례이며 모델 행동 실행은 미확인이다. 1차 개선의 요구/결정 기록·계획 정정/정책 전환·SDD 참조 보존 사례는 독립적으로 작성한 합성 정책 회귀 명세이며 행동 실행 결과가 아니다. 2차의 AS-IS 판단 근거·단계별 미결·컨벤션·blind 입력 사례 6개도 새 합성 기대 행동 명세이며 모델 실행 결과가 아니다. 선택적 읽기·독자 분리 사례는 합성 정책 회귀 명세이며 모델 행동 실행 결과가 아니다.",
   "cases": [
     {
       "id": "II-S01-legacy-missing-boundary",
@@ -374,6 +374,59 @@
       "must_not": [
         "공통 Device QA gate가 없다는 이유로 필수 확인을 면제한다",
         "참고 문서만 있는 다른 작업에 QA gate를 자동 추가한다"
+      ]
+    },
+    {
+      "id": "II-selective-small",
+      "prompt": "현재 Small Issue를 구현한다.",
+      "fixture": "현재 grade/entry/issue 규칙과 P 경계가 같은 run에서 확인되어 있다. 변경 없음. AS-IS/PLAN은 요구되지 않는다.",
+      "must": [
+        "동일 버전의 확인된 규칙을 재사용한다",
+        "현재 검증·claim 조건을 유지한다"
+      ],
+      "must_not": [
+        "안내 링크를 따라 모든 SDD 규칙을 로딩한다",
+        "Small에 SDD를 작성한다"
+      ]
+    },
+    {
+      "id": "II-split-as-is-review",
+      "prompt": "새 Large AS-IS를 검토에 인계한다.",
+      "fixture": "README에 문제·가설·위험이 있고 01-as-is에는 기준 revision·코드 근거와 미조사가 있다. 두 파일은 같은 원격 candidate에 있다.",
+      "must": [
+        "두 파일을 같은 AS-IS target의 검토 범위로 연결한다",
+        "기존 A/B 독립성과 Blind Audit 입력 격리를 유지한다",
+        "미조사를 확정 사실로 만들지 않는다"
+      ],
+      "must_not": [
+        "근거 파일만 검토해 사람용 위험을 제외한다",
+        "별도의 Human View 승인 회차를 추가한다"
+      ]
+    },
+    {
+      "id": "II-reference-unavailable",
+      "prompt": "상위 AS-IS를 재사용해 PLAN을 작성한다.",
+      "fixture": "상위 근거 링크는 있지만 접근할 수 없고 적용 코드 revision도 확인되지 않는다. 해당 사실에 따라 실패 동작이 달라진다.",
+      "must": [
+        "미확인 전제와 담당·필요 단계를 드러낸다",
+        "해당 전제를 소비하는 설계 전에 사실을 확인한다"
+      ],
+      "must_not": [
+        "링크가 있다는 이유로 검증 완료라고 한다",
+        "상위 PASS를 새 target에 승계한다"
+      ]
+    },
+    {
+      "id": "II-human-agent-owner",
+      "prompt": "Medium PLAN의 구현 명세를 작성한다.",
+      "fixture": "02-to-be에 D-001과 AC-1·검증 대응이 확정돼 있다. 변경 범위 안에서 실행 세부만 필요하다.",
+      "must": [
+        "change-plan에서 D-001과 AC-1을 직접 참조한다",
+        "정확한 경로·심볼·불변조건·검증 세부를 기록한다"
+      ],
+      "must_not": [
+        "Decision 이유와 AC 원문을 별도 계약으로 복제한다",
+        "새 evidence 파일이나 승인 단계를 강제한다"
       ]
     }
   ]

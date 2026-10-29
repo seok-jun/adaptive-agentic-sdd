@@ -42,13 +42,13 @@ W 문서에 나오는 `docs/domains/**`(business 문서), `docs/sdd/{feature}/`(
 | 설계와 구현 | `implementing-issues` |
 | 검증과 종료 | `finishing-issues` |
 
-실행 grade는 Trivial·Small·Medium·Large다. Epic은 선택적 관리 단위이며 생성·분해·전체 완료 조율은 `managing-issues`에서 수행한다. 하위 실행 Issue는 각각의 grade를 따르고 분해 리뷰를 조사 착수 조건으로 요구하지 않는다. 정책 원본은 [Epic 관리 단위](process/sdd-workflow.md#epic-관리-단위)다.
+실행 grade는 Trivial·Small·Medium·Large다. Epic은 선택적 관리 단위이며 생성·분해·전체 완료 조율은 `managing-issues`에서 수행한다. 하위 실행 Issue는 각각의 grade를 따르고 분해 리뷰를 조사 착수 조건으로 요구하지 않는다. 정책 원본은 [Epic 관리 단위](process/sdd/epic.md#epic-관리-단위)다.
 
 관측 재검토 스킬(`reviewing-observations`)은 다음 preview에서 옮긴다. 그 전까지 관측 재검토는 M의 `adaptation.md` 절차를 직접 따른다.
 
 ## 상세 규칙의 원본
 
-[sdd-workflow](process/sdd-workflow.md#현재-단계에서-읽을-규칙)는 분류·진입·Epic 관리와 현재 단계의 읽기 경로를 소유한다. 스킬은 실행 순서와 필요한 결과를 연결하며 아래 규칙을 복제하지 않는다.
+[sdd-workflow](process/sdd-workflow.md#현재-단계에서-읽을-규칙)는 현재 단계의 경로만 안내한다. 분류·진입·Issue·Epic·종료 규칙의 원본은 `process/sdd/`의 담당 파일이다. 스킬은 해당 파일을 직접 연결하며 규칙을 복제하지 않는다.
 
 | 규칙 | 원본 |
 | --- | --- |

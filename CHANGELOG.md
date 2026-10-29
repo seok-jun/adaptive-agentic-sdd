@@ -2,6 +2,12 @@
 
 ## 1.0 preview — unreleased
 
+Selective reading and artifact layout (Korean workflow only; English workflow remains pending):
+
+- Splits grade, entry, issue, Epic, completion, AS-IS, TO-BE, execution spec, and plan corrections into directly addressable files. Skills bypass the small index; rule owners, human boundaries, review independence, and verification gates remain intact.
+- For new Medium/Large work, the existing README carries the human AS-IS view and `01-as-is.md` carries detailed evidence. `02-to-be.md` and change plans retain their human/agent roles. Issue metadata is referenced rather than maintained twice; no extra required artifact or approval is added. AS-IS review includes both views at the same candidate. Existing work is not migrated automatically.
+- Adds optional artifact templates, pinned-manifest coverage, preservation and installation tests, five synthetic behavior cases, and a reproducible static cost comparison. Model behavior and total host input/output tokens have not been measured. See [analysis and limitations](ko/docs/sdd-reading-audit.md).
+
 Meaning change in the Korean workflow (English workflow edition still pending):
 
 - Uses four execution grades: Trivial, Small, Medium, Large. Epic becomes an optional management type for separately tracked issues; a single Large issue remains valid. New packages/modules no longer force an Epic or decomposition.
@@ -13,7 +19,7 @@ Meaning change in the Korean workflow (English workflow edition still pending):
 
 Workflow organization in the same preview branch:
 
-- Keeps classification, entry conditions, and Epic orchestration in `sdd-workflow.md`. Moves SDD artifact details, design reviews, verification, observations, and optional token diagnostics into dedicated process documents with explicit read conditions.
+- The earlier organization kept classification, entry conditions, and Epic orchestration in `sdd-workflow.md`; the selective-reading change above now separates those owners as well. SDD artifact details, design reviews, verification, observations, and optional token diagnostics have explicit read conditions.
 - Makes model routing/qualification and execution/result/review packet contracts separate owners. Execution and finishing skills call the relevant contract at the point of use; same-run valid evidence is reused. Packet serialization and size measurement belong to skill evaluation, outside routine execution inputs.
 - Clarifies that read-only investigation does not require an edit claim or a new lane, and that overlapping reads are not write conflicts. Product edits retain claim, grade, access, and dependency requirements.
 - Preserves current/manual model eligibility checks even without a model switch. Aligns packet evidence with existing input-based verification reuse: keep the actual execution identity and prove unchanged command inputs against the current candidate; missing or mismatched evidence remains stale.

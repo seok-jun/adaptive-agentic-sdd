@@ -40,7 +40,7 @@ Execution Packet은 전체 source 묶음이 아니라 orchestrator가 이미 판
 - SDD grade gate와 claim의 immutable evidence
 - host-enforced propagation 또는 worker direct-read의 immutable guard application evidence object
 
-적용할 P 코드 컨벤션이 있으면 provenance에 해당 문서·절·identity(또는 확인 시점)를 연결하고 PLAN의 명시적 이탈/예외를 함께 인계한다. 선언이 없으면 그 사실을 표시하며 새 컨벤션 문서를 강제하지 않는다. known blockers에는 [미결 사항의 담당·필요 단계](../../process/sdd-workflow.md#미결-사항과-단계별-의존성)를 연결하고, 미래 단계의 미결을 현재 작업 전체의 blocker로 확대하지 않는다.
+적용할 P 코드 컨벤션이 있으면 provenance에 해당 문서·절·identity(또는 확인 시점)를 연결하고 PLAN의 명시적 이탈/예외를 함께 인계한다. 선언이 없으면 그 사실을 표시하며 새 컨벤션 문서를 강제하지 않는다. known blockers에는 [미결 사항의 담당·필요 단계](../../process/sdd/issue.md#미결-사항과-단계별-의존성)를 연결하고, 미래 단계의 미결을 현재 작업 전체의 blocker로 확대하지 않는다.
 
 ### Guard 적용과 packet 공통 검증
 
@@ -60,7 +60,7 @@ issue snapshot, PLAN identity/reference, goal, allowed/forbidden, required contr
 - active lane/path conflict 발생
 - hard guard/canonical Skill version 변경
 
-이 event가 계획 전제 오류나 진행 중 정책 변경이면 [계획 정정과 정책 전환](../../process/sdd-artifacts.md#계획-정정과-정책-전환)으로 원본부터 정정한다. Packet만 수정해 기존 PLAN·정책과의 충돌을 덮지 않는다. 새 Packet에는 현재 적용할 원본과 필요한 재검토 근거를 연결한다.
+이 event가 계획 전제 오류나 진행 중 정책 변경이면 [계획 정정과 정책 전환](../../process/sdd/plan-change.md#계획-정정과-정책-전환)으로 원본부터 정정한다. Packet만 수정해 기존 PLAN·정책과의 충돌을 덮지 않는다. 새 Packet에는 현재 적용할 원본과 필요한 재검토 근거를 연결한다.
 
 ### 구현 진입의 문맥·최신성 확인
 
@@ -116,7 +116,7 @@ Review A와 기본 CODE reviewer 입력은 phase별로 제한한다.
 - `PLAN`: current Issue id/title/acceptance, reviewed AS-IS identity, PLAN과 change-plan artifact 경로 및 remote-resolvable exact SHA, remote base/head, 대상 inventory 또는 immutable reference, 필요한 direct contract/evidence, document author identity
 - `CODE`: current Issue acceptance, reviewed PLAN identity, base/head SHA, current head의 전체 changed-file inventory 또는 immutable reference, current diff/patch reference와 필요한 diff hunk, 필요한 public contract, verification evidence identity, implementation actor identity, PLAN implementation finding handoff와 항목별 code+fixture resolution evidence
 
-AS-IS/PLAN의 direct evidence에는 판단을 좌우하는 [조사 근거와 남은 전제](../../process/sdd-artifacts.md#판단에-필요한-조사)를 연결한다. PLAN/CODE에는 선언된 P 컨벤션 참조와 이탈 이유·예외 결정 근거를 포함한다. reviewer는 적용 가능한 기준과 실제 지시/변경을 대조하고, 개인 선호를 새 계약으로 만들지 않는다. 미결의 담당·필요 시점은 reviewer 발견 여부와 별개로 다음 작업의 의존성에 반영한다.
+AS-IS/PLAN의 direct evidence에는 판단을 좌우하는 [조사 근거와 남은 전제](../../process/sdd/as-is.md#판단에-필요한-조사)를 연결한다. PLAN/CODE에는 선언된 P 컨벤션 참조와 이탈 이유·예외 결정 근거를 포함한다. reviewer는 적용 가능한 기준과 실제 지시/변경을 대조하고, 개인 선호를 새 계약으로 만들지 않는다. 미결의 담당·필요 시점은 reviewer 발견 여부와 별개로 다음 작업의 의존성에 반영한다.
 
 해당 phase의 필수 field는 nested value까지 nonempty여야 한다. Contract reviewer는 제공 목록을 그대로 신뢰하지 않고 phase target/inventory를 독립 확인한 뒤 bounded artifact/diff와 contract를 검토한다. CODE reviewer는 current head의 전체 changed-file inventory를 독립 확인하고 PLAN의 모든 Implementation finding identity가 handoff됐는지와 각 item의 code+fixture evidence가 current head에서 실제 resolution을 증명하는지 확인한다. handoff가 없었던 경우에는 빈 list를 허용한다. reviewer identity는 document/implementation actor와 달라야 한다. 확인을 solution discovery, repository-wide 탐색, full-source handoff로 확장하지 않는다. target/head, inventory, diff 또는 implementation finding resolution evidence가 applicable current target과 다르면 review를 `STALE`로 처리한다. verification evidence는 위 Result Packet의 실제 실행 identity와 필요한 입력 불변·재사용 근거를 함께 확인하며, 그 조건이 유효하지 않으면 `STALE`로 처리한다. handoff 누락이나 unresolved item이 있으면 review를 complete로 판정하지 않는다.
 

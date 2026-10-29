@@ -6,16 +6,18 @@ Large의 AS-IS·PLAN 설계 리뷰 절차 원본이다. 실제 해당 phase의 �
 | --- | --- |
 | 최초 AS-IS·PLAN 검토 | [설계 단계](#large-설계-단계), [후보 게시](#원격-검토-후보-게시), [이중 독립 리뷰](#large-설계-이중-독립-리뷰) |
 | 검토 후 candidate 변경 | [의미·영향 판정](#의미영향에-따른-설계-재검토) |
-| 구현 중 PLAN 전제 오류·정책 변경 | [계획 정정과 정책 전환](sdd-artifacts.md#계획-정정과-정책-전환) 뒤 아래 영향 판정 |
+| 구현 중 PLAN 전제 오류·정책 변경 | [계획 정정과 정책 전환](sdd/plan-change.md#계획-정정과-정책-전환) 뒤 아래 영향 판정 |
 | 같은 의미 충돌이 수정·재확인 후 반복 | [반복 정체 시 전환](#반복-정체-시-전환) |
 
 reviewer의 model·floor·qualification은 [execution-routing](../skills/_shared/execution-routing.md), 전달 필드와 evidence identity는 [execution-packets](../skills/_shared/execution-packets.md)가 원본이다. 이 문서는 리뷰 순서·독립성·진행 조건을 소유한다. 프로젝트의 사람 권한은 `S/.adaptive-sdd/project/sdd-workflow.md`를 적용한다.
 
 ## Large 설계 단계
 
-1. `01-as-is.md`를 작성하고 아래 원격 후보 게시 조건으로 검토 대상을 고정한다.
+아래 파일 배치는 새 SDD 작업에 적용한다. 기존 배치로 진행 중인 작업은 기존 AS-IS target(`01-as-is.md`)을 유지하며 재작성·재검토를 소급 요구하지 않는다.
+
+1. AS-IS의 사람용 `README.md`와 근거 `01-as-is.md`를 작성하고 아래 원격 후보 게시 조건으로 검토 대상을 고정한다.
 2. 같은 exact candidate에서 아래 Review A → Review B와 필요한 reconciliation을 완료한다.
-3. 아래 검토 조건과 [단계별 의존성](sdd-workflow.md#미결-사항과-단계별-의존성)을 만족하는 범위에서 사람 승인을 추가로 기다리지 않고 `02-to-be.md`와 `change-plans/**`를 작성한다. 미결 결론이 필요한 작업은 P의 사람 판단 규칙에 따라 기다린다.
+3. 아래 검토 조건과 [단계별 의존성](sdd/issue.md#미결-사항과-단계별-의존성)을 만족하는 범위에서 사람 승인을 추가로 기다리지 않고 `02-to-be.md`와 `change-plans/**`를 작성한다. 미결 결론이 필요한 작업은 P의 사람 판단 규칙에 따라 기다린다.
 4. PLAN도 원격 후보 게시와 A → B를 수행한다. 최초 검토 또는 current-target 재확인 chain이 현재 exact candidate에서 진행 조건을 만족해야 구현한다.
 5. 구현 뒤 [등급별 code review와 필수 검증](verification.md#grade별-review-gate)을 거쳐 PR을 준비한다. Large 병합은 기존 사람 판단 규칙을 따른다.
 
@@ -24,7 +26,7 @@ reviewer의 model·floor·qualification은 [execution-routing](../skills/_shared
 AS-IS·PLAN independent review candidate는 P `tracker.md`가 선언한 게시 저장소·원격·branch의 exact commit으로 고정한다. 미지정 기본값은 현재 제품 저장소와 Issue branch다. 외부 harness 저장소나 reviewer가 접근 가능한 로컬 bare 원격도 가능하다. 제품 claim의 branch와 문서 게시 branch를 별도로 기록한다.
 
 1. 초안 중 local commit은 허용한다. 검토 인계 직전에 artifact를 소유한 선언 저장소에서 candidate를 commit하고 선언된 게시 remote branch로 push한다. 공유 branch는 게시 담당을 조율하고 다른 lane 변경을 포함하거나 force push하지 않는다. P의 commit/push 권한은 별도로 충족한다.
-2. remote branch history에 exact candidate SHA가 있고 해당 SHA의 artifact 원문(AS-IS는 `01-as-is.md`, PLAN은 `02-to-be.md`와 `change-plans/**`)을 remote에서 읽을 수 있는지 확인한다. local-only SHA, local remote-tracking ref, 작성자의 worktree 존재만으로 review/PASS target을 인정하지 않는다.
+2. remote branch history에 exact candidate SHA가 있고 해당 SHA의 artifact 원문(AS-IS는 `README.md`와 `01-as-is.md`, PLAN은 `02-to-be.md`와 `change-plans/**`)을 remote에서 읽을 수 있는지 확인한다. local-only SHA, local remote-tracking ref, 작성자의 worktree 존재만으로 review/PASS target을 인정하지 않는다.
 3. 환경 간 인계·복구에는 Issue 번호, 제품 `[CLAIM]`의 branch, 게시 저장소와 remote branch, phase, 그 저장소 기준 artifact 경로와 exact remote SHA를 남긴다. reviewer가 작성자 worktree 없이 원문을 확인할 수 있어야 한다. 코드 근거가 다른 저장소이면 그 repository·revision·경로도 별도로 연결한다.
 4. review-affecting 변경은 새 commit을 선언된 게시 branch에 push하고 아래 의미·영향 판정과 current-target 재확인 chain을 적용한다. 이전 SHA의 PASS를 자동 승계하지 않는다. 기록/head-only 변경은 먼저 기존 target 유지 조건을 확인한다.
 
@@ -35,7 +37,7 @@ push 실패, remote branch에서 exact SHA 확인 실패, remote 원문 조회 �
 Large의 AS-IS와 PLAN 최초 candidate에는 서로 다른 별도 agent/session의 두 review를 순서대로 적용한다. 이후 revision은 아래 의미·영향 판정과 재확인 chain을 적용한다. Review A는 author와 분리되고 Review B는 author 및 Review A actor/session과 모두 분리된다. Trivial/Small/Medium, 기본 IMPLEMENT/CODE review에는 Review B를 추가하지 않는다.
 
 - **Review A — Contract Review**: current Issue/acceptance, phase artifact identity, reviewed upstream contract, 직접 caller/callee·invariant·allowed/forbidden, source/diff/verification evidence를 bounded하게 확인해 사실·계약·Agent Execution Spec의 correctness와 consistency를 판정한다.
-- Review A는 AS-IS의 판단을 좌우하는 기준·외부 동작·운영 근거와 PLAN의 P 컨벤션 참조·이탈 이유도 대조한다. 선언되지 않은 개인 선호를 기준으로 새 finding을 만들지 않는다. 필요한 조사와 컨벤션 기록의 범위는 [SDD 작업 문서](sdd-artifacts.md)를 따른다.
+- Review A는 AS-IS의 판단을 좌우하는 기준·외부 동작·운영 근거와 PLAN의 P 컨벤션 참조·이탈 이유도 대조한다. 선언되지 않은 개인 선호를 기준으로 새 finding을 만들지 않는다. 필요한 조사는 [AS-IS](sdd/as-is.md), 컨벤션 기록은 [Agent Spec](sdd/agent-spec.md)을 따른다.
 - **Review B — Blind Audit**: 빠진 현재 상태 사실, 숨은 가정, scope/ownership boundary를 바꾸는 omission, 상위 contract 충돌, PLAN 방향을 뒤집을 수 있는 blocking risk를 찾는다. solution discovery, repository-wide redesign 또는 Review A의 반복 검증으로 확장하지 않는다.
 
 Review B finding은 다음 네 severity 중 하나로 분류한다.
@@ -75,7 +77,7 @@ unresolved Human Decision blocker: 0
 unresolved Execution-contract blocker: 0
 ```
 
-이 조건은 검토의 진행 조건이다. 충족하면 Implementation finding 또는 Non-blocking observation이 남아 있어도 Review B PASS가 가능하지만, 실제 다음 작업은 [미결 사항과 단계별 의존성](sdd-workflow.md#미결-사항과-단계별-의존성)도 확인한다. reviewer가 finding으로 만들지 않은 미결 결정도 결론이 필요한 작업의 선행 조건이다. Implementation finding은 IMPLEMENT handoff에서 누락할 수 없고 CODE/finishing에서 코드와 fixture 해결이 확인되지 않으면 완료할 수 없다.
+이 조건은 검토의 진행 조건이다. 충족하면 Implementation finding 또는 Non-blocking observation이 남아 있어도 Review B PASS가 가능하지만, 실제 다음 작업은 [미결 사항과 단계별 의존성](sdd/issue.md#미결-사항과-단계별-의존성)도 확인한다. reviewer가 finding으로 만들지 않은 미결 결정도 결론이 필요한 작업의 선행 조건이다. Implementation finding은 IMPLEMENT handoff에서 누락할 수 없고 CODE/finishing에서 코드와 fixture 해결이 확인되지 않으면 완료할 수 없다.
 
 IMPLEMENT/CODE는 기존 independent code review 1회를 유지한다. destructive migration, cross-DB atomicity, recovery처럼 명시적인 고위험 escalation 근거가 있을 때만 별도 code audit을 추가할 수 있으며 이를 Large의 기본 이중 review로 만들지 않는다.
 

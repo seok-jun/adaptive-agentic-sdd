@@ -95,7 +95,7 @@ agent가 Issue 생성 API에서 두 라벨을 함께 지정할 수 있으면 생
 
 ### Epic 관리 문서의 본문과 라벨
 
-위 실행 Issue의 필수 본문·grade 규칙은 Epic 관리 문서에 그대로 적용하지 않는다. Epic에는 `## 작업 유형`에 `Epic`을 적고 `type:epic` 라벨과 Priority 라벨을 부여하며, `## SDD grade`와 `grade:*`는 두지 않는다. 목표·전체 완료 기준·공통 가이드, 하위 Issue 참조와 책임·의존성, 미결 사항 담당·필요한 후속 단계, 전체 완료 근거와 담당을 기존 본문에 둔다. 제품 수정 경로·구체 검증은 담당 실행 Issue에 둔다. `W/process/sdd-workflow.md`의 `Epic 관리 단위`와 `기존 Epic 전환`을 따른다.
+위 실행 Issue의 필수 본문·grade 규칙은 Epic 관리 문서에 그대로 적용하지 않는다. Epic에는 `## 작업 유형`에 `Epic`을 적고 `type:epic` 라벨과 Priority 라벨을 부여하며, `## SDD grade`와 `grade:*`는 두지 않는다. 목표·전체 완료 기준·공통 가이드, 하위 Issue 참조와 책임·의존성, 미결 사항 담당·필요한 후속 단계, 전체 완료 근거와 담당을 기존 본문에 둔다. 제품 수정 경로·구체 검증은 담당 실행 Issue에 둔다. `W/process/sdd/epic.md`을 따른다.
 
 ## Priority 변경
 
@@ -106,6 +106,6 @@ Priority를 변경할 때는 한 번의 정리 작업에서 다음을 모두 갱
 3. 기존 `priority:*` 라벨 제거
 4. 새 `priority:*` 라벨 추가
 
-Priority 변경만으로 SDD grade를 바꾸지 않는다. 구현 범위가 달라졌을 때만 이 방법론의 `process/sdd-workflow.md` 공통 등급과 프로젝트별 적용 조건로 grade를 다시 판정한다.
+Priority 변경만으로 SDD grade를 바꾸지 않는다. 구현 범위가 달라졌을 때만 이 방법론의 `process/sdd/grade.md` 공통 등급과 프로젝트별 적용 조건로 grade를 다시 판정한다.
 
 프로젝트의 구현 queue·착수 가능 Priority는 해당 프로젝트의 현재 단계 조건을 따른다. 선행 관계나 grade만으로 Priority를 승격하지 않는다.

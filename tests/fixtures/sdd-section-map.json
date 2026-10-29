@@ -1,0 +1,83 @@
+{
+  "base": "068618bdda2f8d0571da3099f5e132e4ff17ff1e",
+  "workflow": {
+    "grade": [
+      "SDD grade"
+    ],
+    "entry": [
+      "공통 계약과 프로젝트 적용",
+      "구현 시작 조건",
+      "grade별 산출물과 게이트",
+      "기존 분석 재사용",
+      "Verification Strategy",
+      "Grade별 review gate",
+      "SDD 작업 문서 구조",
+      "실행 routing과 packet",
+      "차세대 방법론의 적용과 개선 관측",
+      "안정화 기간 token diagnostic",
+      "병렬 작업"
+    ],
+    "issue": [
+      "Issue 본문 규약",
+      "Legacy Issue 정규화",
+      "미결 사항과 단계별 의존성"
+    ],
+    "epic": [
+      "Epic 관리 단위"
+    ],
+    "completion": [
+      "문서 역할",
+      "business 문서 갱신",
+      "완료 절차"
+    ]
+  },
+  "anchors": {
+    "sdd-grade": "sdd/grade.md",
+    "일반-자동-격상": "sdd/grade.md",
+    "공통-계약과-프로젝트-적용": "sdd/entry.md",
+    "구현-시작-조건": "sdd/entry.md",
+    "grade별-산출물과-게이트": "sdd/entry.md",
+    "trivial": "sdd/entry.md",
+    "small": "sdd/entry.md",
+    "medium": "sdd/entry.md",
+    "large": "sdd/entry.md",
+    "기존-분석-재사용": "sdd/entry.md",
+    "verification-strategy": "sdd/entry.md",
+    "grade별-review-gate": "sdd/entry.md",
+    "sdd-작업-문서-구조": "sdd/entry.md",
+    "실행-routing과-packet": "sdd/entry.md",
+    "plan-확정-뒤-구현-문맥-인계": "sdd/entry.md",
+    "차세대-방법론의-적용과-개선-관측": "sdd/entry.md",
+    "안정화-기간-token-diagnostic": "sdd/entry.md",
+    "병렬-작업": "sdd/entry.md",
+    "issue-본문-규약": "sdd/issue.md",
+    "legacy-issue-정규화": "sdd/issue.md",
+    "미결-사항과-단계별-의존성": "sdd/issue.md",
+    "epic-관리-단위": "sdd/epic.md",
+    "기존-epic-전환": "sdd/epic.md",
+    "문서-역할": "sdd/completion.md",
+    "business-문서-갱신": "sdd/completion.md",
+    "완료-절차": "sdd/completion.md"
+  },
+  "section_sha256": {
+    "SDD grade": "3eb0ff302cbe85ea910b886b8348e14a015ad2ce79ef3c104b224a6183f2afd2",
+    "공통 계약과 프로젝트 적용": "335d38ef1b5d9eb5e86490cdd2f2d933681c1a09fcd4c10cc789baae28079e0e",
+    "구현 시작 조건": "51fc4bbdbfc8a1cc41b37aed2fea235594f548ea66d469e02908be0a42488918",
+    "grade별 산출물과 게이트": "e6cf921acf40e95309b7fe3df3e88aa14ec7b1d8f9e31b914dd4d1c9afac5f52",
+    "기존 분석 재사용": "60beb30dbfd0cde2dc8baaac259b1f2e5540feb7c2eeea19fabd5de334f5b881",
+    "Verification Strategy": "a4e3c8986f838382e2759ef5bc011d22293ba3a9c47e11caf6314cfbf8cca937",
+    "Grade별 review gate": "7b96b83515d56a9548a25ae607c87b14f45111b9a2d3838ab3b5d7bcd1a7baef",
+    "SDD 작업 문서 구조": "ff5310ea321cfc138c1b0ec608897a6fc06687f75cda96393e005cff70b2e7ad",
+    "실행 routing과 packet": "5340a08a4df10f4c47356969329a1c843311d1541936b08d833fad18fb7cb6f5",
+    "차세대 방법론의 적용과 개선 관측": "7f43897e837c09c06facbc0d478957bf6e8d16407cc6105be38b0302c5e28591",
+    "안정화 기간 token diagnostic": "32e66deb0eafd6f176bd9bca07fd183b5faea54120e24a45220e744be293aebc",
+    "병렬 작업": "2e67cc7aaca192d0f0499cd7551f06b21753fd35bdb41e1843f9aa025c329163",
+    "Issue 본문 규약": "348f9e3bea385b33ecfd5f3f6d131c104218ea66c8b2fe1ce4fa5c90b7bf00a7",
+    "Legacy Issue 정규화": "e952613634abefd8f56eeeac268bff76743a0f02a5323c3c7145465f6ba69ee9",
+    "미결 사항과 단계별 의존성": "d47360d75bc068d4f3c48a5a1029e187f882412f8ec9cd96721c80726c91f14a",
+    "Epic 관리 단위": "11043a41d02a19cb681344cd50a6454a4b26efd01ec811b6e3e04643e25c8e13",
+    "문서 역할": "1157aaecf7bd82206fcd547b38ca7fc6a54afb26ef07427b46b2e5a9bd684983",
+    "business 문서 갱신": "fe8ca56961de5508e1f75379cdbcccda8a3ac00b3bfdd758a4004aeffc25fada",
+    "완료 절차": "f5ead7071bc67fe1169fab174f4930793ca398424e11212f30271469085bb429"
+  }
+}

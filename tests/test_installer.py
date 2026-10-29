@@ -190,6 +190,18 @@ class InstallerPolicyTests(unittest.TestCase):
                     if separator:
                         self.assertIn(fragment, markdown_anchors(target.read_text(encoding="utf-8")))
 
+    def test_split_rules_and_artifact_templates_are_verified_in_installed_copy(self):
+        self.assertEqual(self.command("render")[0], 0)
+        for relative in ("workflow/process/sdd/issue.md", "templates/sdd/01-as-is.md.tmpl"):
+            path = self.copy / relative
+            original = path.read_bytes()
+            path.write_bytes(original + b"\ntampered\n")
+            self.assertIn((relative, "DIFF"), installer.verify_copy(self.project))
+            path.unlink()
+            self.assertIn((relative, "MISSING"), installer.verify_copy(self.project))
+            path.write_bytes(original)
+        self.assertEqual(self.command("check")[0], 0)
+
     def external_install(self):
         product = self.project / "product"
         source = self.project / "harness"

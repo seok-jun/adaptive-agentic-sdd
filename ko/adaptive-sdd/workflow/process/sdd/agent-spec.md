@@ -1,0 +1,16 @@
+# SDD agent-spec
+
+실제 경쟁 대안의 제품·설계 판단은 [TO-BE의 trade-off](to-be.md#bounded-trade-off-capture), 전제 오류는 [계획 정정](plan-change.md)을 해당할 때 적용한다.
+
+### `change-plans/{ID}.md`
+
+Agent Execution Spec이다. Human Decision의 rationale을 다시 서술하지 않고 적용하는 `D-xxx`를 참조한다. `02-to-be.md`와 경쟁하는 설계 권위를 만들지 않는다.
+
+- target file/symbol과 직접 caller/callee, 필요한 코드 근거
+- 변경 내용·구현 순서·보존할 invariant, 해당하는 schema/migration
+- test case·검증 명령·실행 evidence
+- 롤백 또는 실패 시 확인 지점
+
+적용할 P 컨벤션의 문서·절·revision 또는 확인 시점을 연결하고, 지시한 구조가 그 기준과 다른 경우 이유와 필요한 예외 결정 근거를 적는다. 기존에 허용된 여러 스타일 중 하나를 고른 것을 나중의 선호만으로 위반 처리하지 않는다. 새 스타일을 공통 규칙으로 만들지 않으며 선언된 기준이 없다는 이유로 별도 컨벤션 문서나 승인 단계를 강제하지 않는다. 확인되지 않은 기준은 인계에 드러내고 실제 지시 충돌만 기존 권한 규칙으로 해결한다.
+
+`관련 파일`, `필요한 부분`, `적절한 처리`처럼 정확한 대상을 특정하지 않는 문장을 change plan에 쓰지 않는다.

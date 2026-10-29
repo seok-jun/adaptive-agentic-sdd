@@ -13,7 +13,7 @@ Epic 관리 문서의 종료는 `managing-issues`의 `Epic 조율`에서 전체 
 
 현재 run에서 `P/AGENTS.md`의 `## 항상 적용 hard guard` 적용을 보장할 수 없으면 그 절부터 읽는다. implementing에서 확인한 변경 없는 입력·검증 결과는 재사용한다. 조회·갱신은 `implementing-issues`의 `입력 재사용과 조회` 절을 적용하며 그 스킬 전체를 다시 읽지 않는다.
 
-필수 입력은 current Issue body/labels, current diff, `W/process/sdd-workflow.md`의 현재 grade·종료 관련 진입 조건, P 적용 선언의 권한·경로·검증이다. PR이 있으면 필요한 PR/CI metadata를, runtime 동작이 바뀌었으면 직접 관련 business 문서를 읽는다.
+필수 입력은 current Issue body/labels, current diff, `W/process/sdd/completion.md`·`W/process/sdd/issue.md`의 종료 순서·SUMMARY 계약(grade 재판정 시 `W/process/sdd/grade.md`), P 적용 선언의 권한·경로·검증이다. PR이 있으면 필요한 PR/CI metadata를, runtime 동작이 바뀌었으면 직접 관련 business 문서를 읽는다.
 
 아래 순서에서 필요한 원본의 **해당 절만** 읽는다.
 
@@ -23,7 +23,7 @@ Epic 관리 문서의 종료는 `managing-issues`의 `Epic 조율`에서 전체 
 | 검증·grade별 code review·PASS 재사용 | `W/process/verification.md`와 P 적용 문서 `build.md`의 해당 검증 |
 | Packet·구현 문맥 전환·선언된 영향 결과 소비 | `W/skills/_shared/execution-packets.md`의 해당 Packet·영향 결과 절 |
 | current/manual 종료 역할의 진입·유지 또는 reviewer 배정의 적격 확인 | `W/skills/_shared/execution-routing.md`의 해당 role·선택 경로 |
-| SDD의 Decision/실행 명세 확인 | `W/process/sdd-artifacts.md`의 해당 산출물 절 |
+| SDD의 Decision/실행 명세 확인 | `W/process/sdd/to-be.md`·`W/process/sdd/agent-spec.md` 중 확인할 계약 |
 | business lifecycle·shared/root 경계 판단 | W/P `module-boundaries.md`의 관련 경계 |
 | 지시·diff와 Issue·code와 business 충돌 | W/P `agent-instruction-policy.md`의 해당 충돌 절 |
 | 관측 취합·SDD 삭제 전 보존·제품 완료 관측 | `W/process/observations.md`의 해당 단계 절 |
