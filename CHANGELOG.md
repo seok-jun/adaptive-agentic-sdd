@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased — skill and evaluation clarity
+
+- Validation (2026-10-30, Windows, Python 3.14.7): 36 installer/edition tests and 8 SDD structure tests passed; both 66-file manifests matched; disposable installs of both editions passed init/render/check/check-evals (77 cases). No model behavior run was performed.
+
+- II-S02: restate the existing owning-module/test-class-first rule at the implementation step in both editions. The verification policy and required broad checks are unchanged.
+- FI-S02: provide the synthetic failing command and its result in the fixture. Add FI-S02b for missing command/result evidence; do not invent unavailable details. Both editions clarify the existing incomplete-status report at the finishing step.
+- Regenerate both bundle manifests. Historical preview.5 behavior results remain unchanged. These are wording and evaluation-input corrections, not demonstrated behavior improvements; revised-case model runs and comparative validation are not yet performed.
+
 ## 1.0.0-preview.5 — 2026-10-30
 
 Packages the candidate from `110d943c6db638d72bbafbbdc2bad4037e66b45c` on `v1-preview`, following preview.4 (`5760ac66b2a4c943360a56c22892fe35e1a076db`). This packaging step changes release documentation and records the evaluation limitations; both bundles and earlier tags are unchanged. `methodology/` (English M) is unchanged.

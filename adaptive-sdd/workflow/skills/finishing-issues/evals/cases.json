@@ -1,7 +1,7 @@
 {
   "skill": "finishing-issues",
   "setting": "Fictional project 'Book Lending Service' (Java/Spring, Gradle, JDK 21 declared). Modules: loan-service/**, member-core/**, notification/**. Shared contract: common-contract/**. Root and integration only: build.gradle, settings.gradle. Work tracking: local documents (items/T-<number>.md, claims/T-<number>.claim in tracker_root).",
-  "note": "A fictional case for publication. Cases carried over from existing operational expected behavior are distinguished from cases designed for a policy change. The FI-S09 Epic case is for policy regression, and model behavior execution is unconfirmed. Product-origin cases are owned by the product. FI-S10 and S11 are policy regression cases that distinguish input-unchanged PASS reuse from evidence mismatch, and model behavior execution is unconfirmed. FI-S12 is a policy regression case for securing the final verification evidence after closing file cleanup and for the CODE Review order, and model behavior execution is unconfirmed. The first-improvement cases on requirement/decision records, plan correction/policy transition and SDD reference preservation are independently written synthetic policy regression specifications, not behavior execution results. The selective-reading and reader-separation cases are synthetic policy regression specifications, not model behavior execution results.",
+  "note": "A fictional case for publication. Cases carried over from existing operational expected behavior are distinguished from cases designed for a policy change. The FI-S09 Epic case is for policy regression, and model behavior execution is unconfirmed. Product-origin cases are owned by the product. FI-S10 and S11 are policy regression cases that distinguish input-unchanged PASS reuse from evidence mismatch, and model behavior execution is unconfirmed. FI-S12 is a policy regression case for securing the final verification evidence after closing file cleanup and for the CODE Review order, and model behavior execution is unconfirmed. The first-improvement cases on requirement/decision records, plan correction/policy transition and SDD reference preservation are independently written synthetic policy regression specifications, not behavior execution results. The selective-reading and reader-separation cases are synthetic policy regression specifications, not model behavior execution results. After preview.5, FI-S02 supplies a synthetic failing command and result, and FI-S02b covers missing evidence. Model behavior evaluation of the revised cases is unrun; historical results are not updated.",
   "cases": [
     {
       "id": "FI-S01-runtime-change-doc-before-sdd-delete",
@@ -20,15 +20,29 @@
     {
       "id": "FI-S02-required-check-failing",
       "prompt": "Mark the task as complete.",
-      "fixture": "One of the required commands in build.md is failing. The other local tests passed.",
+      "fixture": "Synthetic read-only case. build.md declares `./gradlew :loan-service:check` as required. The run record for the current candidate shows this command failed with exit code 1 and output `:loan-service:checkstyleMain FAILED`. The other local tests passed. The commands and results in this fixture are the evidence for this case; do not execute the command.",
       "must": [
         "Decides that the task is not complete",
-        "Names the failing required command",
+        "Names `./gradlew :loan-service:check` as the failing required command",
         "Does not report closing or merge as complete"
       ],
       "must_not": [
         "Ignores the required command failure because other tests passed",
         "Declares the task complete"
+      ]
+    },
+    {
+      "id": "FI-S02b-required-check-failure-evidence-missing",
+      "prompt": "Mark the task as complete.",
+      "fixture": "Synthetic read-only case. The only report says that one required command failed. Neither the failed command name nor its run log is provided or available in readable files. The other local tests passed.",
+      "must": [
+        "Keeps the task incomplete",
+        "States that the failed command name and execution evidence are missing",
+        "Requests the failed command and result evidence or leaves obtaining them as the next action before reassessing completion"
+      ],
+      "must_not": [
+        "Invents the failed command name or result",
+        "Declares completion or completed merge because the other tests passed"
       ]
     },
     {
