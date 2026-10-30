@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased — M/W/P installation paths
+## 1.0.0-preview.4 — 2026-10-30
+
+Packages the M/W/P correction from `6d37203f23d9fbe640b93c57930e3d3164ebfd76`. Only release documentation changes in this packaging step; the reviewed and tested bundle is unchanged. Earlier preview tags are preserved.
 
 - Validation (2026-10-30): 36 Windows tests passed, including default/external entry-path resolution, existing connection and tamper checks, hand-edit protection, cross-host rendering and policy preservation. Original policy fixture hashes remain unchanged; only the renamed project-document path prefix is normalized for that comparison.
 - Independent read-only review requested as `gpt-6.1-sol/high` found no actionable issue in the change against `bd3dd97`; manifest bytes and paths were independently checked. Served model identity and model behavior were not independently verified. Real consumer deployment and actual POSIX execution remain unverified.

@@ -1,6 +1,6 @@
-# Customization guide (1.0 preview — unreleased correction)
+# Customization guide (1.0 preview.4)
 
-This guide covers corrections after preview.3. Pin the copy and guide to the same reviewed commit SHA. For the published preview.3 use [its guide](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.3/docs/customization.md). To install the published `v1.0.0-preview.2`, use [its English guide](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/docs/customization.md) or [its Korean installer guide](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/ko/docs/customization.md). That tag does not support `--harness-root` or the new operating settings described here.
+This guide accompanies `v1.0.0-preview.4`, including the M/W/P installation-path correction. Verify the tag's full commit SHA and pin the copy and guide to that commit. For the published preview.3 use [its guide](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.3/docs/customization.md). To install the published `v1.0.0-preview.2`, use [its English guide](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/docs/customization.md) or [its Korean installer guide](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/ko/docs/customization.md). That tag does not support `--harness-root` or the new operating settings described here.
 
 Generated default check and check-evals commands use literal path quoting for PowerShell on Windows and POSIX sh elsewhere; use the named shell. Custom commands remain project-owned.
 
@@ -106,11 +106,11 @@ Starting shape of the adapter:
 
 ## 1. Getting the copy and recording the pin
 
-1. Select and review the full candidate commit SHA with `git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd refs/heads/v1-preview`. Keep that SHA even if `v1-preview` advances later. Download `https://github.com/seok-jun/adaptive-agentic-sdd/archive/<commit-sha>.zip`, replacing `<commit-sha>` with that SHA. The archive contains one top-level folder.
+1. Verify the release commit SHA with `git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.4^{}"`. Keep that SHA even if `v1-preview` advances later. Download `https://github.com/seok-jun/adaptive-agentic-sdd/archive/<commit-sha>.zip`, replacing `<commit-sha>` with that SHA. The archive contains one top-level folder.
 2. Copy the archive's `methodology/` contents (`core.md`, `adaptation.md`, `supports/`, `manifest.json`) to `.adaptive-sdd/methodology/` and `LICENSE` to `.adaptive-sdd/LICENSE`, **byte for byte**. Keep the LICENSE (MIT) with the copy because it requires the copyright and permission notice to be retained. Do not rewrite the files with a text editor or an Agent's file-writing tool; a BOM or CRLF would change the hashes. Windows PowerShell example:
 
 ```powershell
-$sourceCommit = "<reviewed full commit SHA>"
+$sourceCommit = "<full commit SHA verified for v1.0.0-preview.4>"
 if ($sourceCommit -notmatch '^[0-9a-f]{40}$') { throw "Set sourceCommit to the reviewed full commit SHA." }
 $zip = "adaptive-sdd-$sourceCommit.zip"
 Invoke-WebRequest "https://github.com/seok-jun/adaptive-agentic-sdd/archive/$sourceCommit.zip" -OutFile $zip
@@ -145,7 +145,7 @@ cd .adaptive-sdd/methodology && sha256sum core.md adaptation.md supports/ordered
 
 On macOS, use `shasum -a 256` instead of `sha256sum`.
 
-5. Record the full commit SHA and manifest hash in the adapter's "Pin" section. For this unreleased commit, record no tag; record a published tag only after verifying its commit. A tag or branch name alone cannot stand in for the source (`core.md` "Application and improvement observation").
+5. Record the verified `v1.0.0-preview.4` tag, full commit SHA and manifest hash in the adapter's "Pin" section. For an unreleased commit, record no tag. A tag or branch name alone cannot stand in for the source (`core.md` "Application and improvement observation").
 
 ## 2. Placing it in the project
 

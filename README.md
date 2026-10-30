@@ -1,10 +1,10 @@
-# Adaptive Agentic SDD — 1.0 preview (unreleased correction)
+# Adaptive Agentic SDD — 1.0 preview.4
 
 **English** | [한국어](ko/README.md)
 
-> **Preview.** This branch carries the next correction to the 1.0 preview. The latest published release is `v1.0.0-preview.3`. Its effect has not been measured, and its structure may change before 1.0. The v0.2 methodology remains on `main` and at tag [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0).
+> **Preview.** This release is `v1.0.0-preview.4` on the `v1-preview` branch. Its effect has not been measured, and its structure may change before 1.0. The v0.2 methodology remains on `main` and at tag [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0).
 
-This branch contains an unreleased M/W/P installation-path clarification after preview.3. External placement does not change ownership; generated entries declare M/W paths and the location of P-owned settings. Existing `--harness-root` connections remain supported. For preview.3, use its tagged files and guide.
+Preview.4 includes the M/W/P installation-path clarification. External placement does not change ownership; generated entries declare M/W paths and the location of P-owned settings. Existing `--harness-root` connections remain supported. Use the archive and guide from the same release tag.
 
 ## What this is
 
@@ -28,7 +28,7 @@ A common layer that a project copies, pins, and adjusts to itself.
 
 The English edition of these parts is pending and planned for a later preview. Until then, the Korean edition is the only source for them, and English-only projects use the methodology documents above.
 
-The Korean workflow in preview.3 uses four execution grades (Trivial, Small, Medium, Large). Epic is an optional grouping for independently tracked issues, with no separate decomposition review gate. A single Large issue remains valid; shared-change verification, human-decision boundaries, and evidence for the overall outcome remain required. See the [Korean workflow](ko/adaptive-sdd/workflow/process/sdd/epic.md#epic-관리-단위) for the policy; its English edition is still pending.
+The Korean workflow in preview.4 uses four execution grades (Trivial, Small, Medium, Large). Epic is an optional grouping for independently tracked issues, with no separate decomposition review gate. A single Large issue remains valid; shared-change verification, human-decision boundaries, and evidence for the overall outcome remain required. See the [Korean workflow](ko/adaptive-sdd/workflow/process/sdd/epic.md#epic-관리-단위) for the policy; its English edition is still pending.
 
 ## What this is not
 
@@ -48,11 +48,11 @@ The Korean workflow in preview.3 uses four execution grades (Trivial, Small, Med
 - **English (methodology only):** read [docs/customization.md](docs/customization.md). Copy `methodology/` and `LICENSE` byte for byte, check the hashes, pin line endings, add a few lines to the entry file, and let an Agent draft the adapter; a human decides the human-judgment points.
 - **Korean (full copy with installer):** read [ko/docs/customization.md](ko/docs/customization.md). Copy `ko/adaptive-sdd/` to `.adaptive-sdd/`, run `install.py init`, fill `project.json` (an Agent drafts, a human decides), then run `install.py render` and `install.py check`.
 
-These branch guides cover the unreleased correction; use a matching reviewed commit for the archive and guide. `v1.0.0-preview.2` does not include the external installer features described here.
+These guides cover `v1.0.0-preview.4`; verify its full commit SHA and use the matching archive and guide. `v1.0.0-preview.2` does not include the external installer features described here.
 
 ## Versions
 
-- Current preview: [`v1.0.0-preview.3`](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.0.0-preview.3).
+- Current preview: [`v1.0.0-preview.4`](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.0.0-preview.4).
 - Preview tags: `v1.0.0-preview.N`. Published tags are never moved; fixes come as new tags.
 - Pin a copy by tag, commit SHA, and manifest hash, not by tag name alone.
 - Upgrading replaces only the copy; project values, the adapter, and work records stay.

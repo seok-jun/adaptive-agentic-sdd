@@ -1,10 +1,10 @@
-# Adaptive Agentic SDD — 1.0 preview (미출시 보정)
+# Adaptive Agentic SDD — 1.0 preview.4
 
 [English](../README.md) | **한국어**
 
-> **Preview.** 이 브랜치는 차세대 방법론 1.0 preview의 후속 보정을 담습니다. 최신 공개 릴리스는 `v1.0.0-preview.3`입니다. 효과는 측정하지 않았고, 1.0 전에 구조가 바뀔 수 있습니다. v0.2 방법론(영문)은 `main`과 태그 [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0)에 그대로 있습니다. 한국어판 v0.2는 더 이상 제공하지 않습니다.
+> **Preview.** 이 릴리스는 `v1-preview` 브랜치의 `v1.0.0-preview.4`입니다. 효과는 측정하지 않았고, 1.0 전에 구조가 바뀔 수 있습니다. v0.2 방법론(영문)은 `main`과 태그 [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0)에 그대로 있습니다. 한국어판 v0.2는 더 이상 제공하지 않습니다.
 
-이 브랜치는 preview.3 이후 M·W·P 설치 경로 보정을 담는다. 외부 배치는 소유를 바꾸지 않으며 생성 진입 파일이 M/W 경로와 P 소유 설정 위치를 선언한다. 기존 `--harness-root` 연결은 유지된다. preview.3을 사용할 때는 해당 태그의 파일과 안내를 따른다.
+preview.4에는 M·W·P 설치 경로 보정이 포함되어 있다. 외부 배치는 소유를 바꾸지 않으며 생성 진입 파일이 M/W 경로와 P 소유 설정 위치를 선언한다. 기존 `--harness-root` 연결은 유지된다. 같은 릴리스 태그의 파일과 안내를 사용한다.
 
 ## 무엇인가
 
@@ -23,7 +23,7 @@
 
 실행 절차·Skill·eval·설치 도구의 영문판은 아직 없고 다음 preview에서 냅니다. 그때까지 이 부분은 한국어판이 유일한 원본입니다.
 
-preview.3의 W 정책은 실행 등급을 Trivial·Small·Medium·Large 네 개로 구분합니다. Epic은 개별 추적이 필요한 Issue를 묶는 선택적 관리 단위이며 분해 전용 리뷰 gate를 두지 않습니다. 단일 Large 수행도 허용하고 공통 변경 검증·사람 판단 경계·전체 완료 근거는 유지합니다. 자세한 정책은 [Epic 관리 단위](adaptive-sdd/workflow/process/sdd/epic.md#epic-관리-단위)를 따릅니다. 이 부분의 영문 실행 절차는 아직 미제공입니다.
+preview.4의 W 정책은 실행 등급을 Trivial·Small·Medium·Large 네 개로 구분합니다. Epic은 개별 추적이 필요한 Issue를 묶는 선택적 관리 단위이며 분해 전용 리뷰 gate를 두지 않습니다. 단일 Large 수행도 허용하고 공통 변경 검증·사람 판단 경계·전체 완료 근거는 유지합니다. 자세한 정책은 [Epic 관리 단위](adaptive-sdd/workflow/process/sdd/epic.md#epic-관리-단위)를 따릅니다. 이 부분의 영문 실행 절차는 아직 미제공입니다.
 
 ## 무엇이 아닌가
 
@@ -47,11 +47,11 @@ preview.3의 W 정책은 실행 등급을 Trivial·Small·Medium·Large 네 개�
 3. `install.py render`로 프로젝트 종속 파일을 생성하고 `install.py check`로 확인합니다.
 4. Agent에게 Skill로 일을 시킵니다.
 
-현재 브랜치 가이드는 미출시 보정을 다룹니다. 압축 파일과 안내를 같은 검토한 commit SHA로 고정하세요. `v1.0.0-preview.2`에는 여기서 설명하는 외부 설치 기능이 없습니다.
+현재 가이드는 `v1.0.0-preview.4`를 다룹니다. 태그의 전체 commit SHA를 확인하고 압축 파일과 안내를 같은 버전으로 고정하세요. `v1.0.0-preview.2`에는 여기서 설명하는 외부 설치 기능이 없습니다.
 
 ## 버전
 
-- 현재 preview: [`v1.0.0-preview.3`](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.0.0-preview.3).
+- 현재 preview: [`v1.0.0-preview.4`](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.0.0-preview.4).
 - preview 태그: `v1.0.0-preview.N`. 공개한 태그는 옮기지 않습니다. 고칠 것이 있으면 새 태그로 냅니다.
 - 사본은 태그 이름만이 아니라 태그, commit SHA, manifest 해시로 고정합니다.
 - 버전을 올릴 때는 사본만 바꾸고 `project.json`과 작업 기록은 그대로 둔 뒤 다시 생성합니다.
