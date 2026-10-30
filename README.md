@@ -1,10 +1,10 @@
-# Adaptive Agentic SDD — 1.0 preview.5 candidate (unreleased)
+# Adaptive Agentic SDD — 1.0 preview.5
 
 **English** | [한국어](ko/README.md)
 
-> **Preview.** This branch is the candidate for `v1.0.0-preview.5`. The latest published release is `v1.0.0-preview.4` on the `v1-preview` branch; to use preview.4, take the files and guide from that tag. Its effect has not been measured, and its structure may change before 1.0. The English v0.2 methodology remains on `main` and at tag [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0). The Korean v0.2 edition is no longer provided.
+> **Preview.** This release is `v1.0.0-preview.5` on the `v1-preview` branch. Use the files and guide from the same release tag. Its effect has not been measured, and its structure may change before 1.0. The English v0.2 methodology remains on `main` and at tag [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0). The Korean v0.2 edition is no longer provided.
 
-The preview.5 candidate adds:
+Preview.5 adds:
 
 - **Three execution-profile settings** — `review.large_mode` (dual or single Large design review), `review.blind_reviewer_selection` (whether a human must choose the Review B model) and `sdd.medium_artifacts` (four documents or one page for a Medium SDD). The defaults keep the earlier behavior; none of them reduces M's human-judgment requirements, automatic grade escalation, required verification, the CODE Review or human judgment on Large merges.
 - **A glossary** (`adaptive-sdd/workflow/glossary.md`) and **plain-language rewording of the four skills** (Korean edition). The meaning, order and stop conditions of the rules are unchanged.
@@ -40,7 +40,8 @@ The workflow uses four execution grades (Trivial, Small, Medium, Large). Epic is
 - **Published `v1.0.0-preview.2`:** manifest checks, installer unit tests, one Windows installation rehearsal using a locally built archive and a fictional project, and one independent review were recorded for that release. They do not validate subsequent changes.
 - **Unreleased commit `068618bdda2f8d0571da3099f5e132e4ff17ff1e`, checked on 2026-10-27:** all 25 executable tests passed on Windows with Python 3.14.7; both methodology manifests and the 51-file bundle manifest matched. A ZIP built from that commit passed `init`, `render`, `check`, and `check-evals` in a disposable project. The 60 cases across four skills passed structural checks; they were not executed as model behavior evaluations.
 - **Integration candidate, checked on 2026-10-30:** based on `5a81d647771cb56fcf1f1d84e94d580f2ca2d963` plus the guide, verification-scope, changelog, observation-evidence and manifest corrections in this change. All 35 executable tests passed on Windows with Python 3.14.7. Both methodology manifests and the 64-file bundle manifest matched. A ZIP of the candidate passed `init`, `render`, `check`, and `check-evals` in disposable local-docs and GitHub-adapter projects; 70 cases across four skills passed structural checks. No live GitHub tracker operations or model behavior evaluations were run.
-- **preview.5 candidate, checked on 2026-10-30 (uncommitted working tree):** all 53 executable tests passed on Windows with Python 3.14.7, including execution-profile checks, cross-edition comparison of file sets, headings, template tokens and case IDs, link and anchor resolution after an English install, re-installation after switching editions, and edition-wording validation. Both bundle manifests (66 files each) matched, and both editions passed `init`, `render`, `check` and `check-evals` (76 cases) in disposable projects. The Korean edition's generated files are byte-identical to preview.4 except `sdd-workflow.md`, which gains the execution-profile table. The English edition is a translation. It had one independent translation review against the Korean edition on 2026-10-30 (gpt-6-astra, reasoning medium); the accepted findings are fixed in this change. Behavior evaluation results are in the [evaluation record](docs/eval-results/2026-10-30/README.md).
+- **preview.5 release commit (the commit tagged `v1.0.0-preview.5`), checked on 2026-10-30:** all 53 executable tests passed on Windows with Python 3.14.7. Both bundle manifests (66 files each) matched the actual files, and both editions passed `init`, `render`, `check` and `check-evals` (76 cases) in disposable projects. `git diff --check` passed. The initial sandbox run hit Windows temporary-directory locks (WinError 32) and a Git/MSYS access denial; the full suite was rerun outside the sandbox. These release checks do not rerun the earlier translation review or model behavior evaluation; their historical evidence is in the changelog and [evaluation record](docs/eval-results/2026-10-30/README.md).
+- **Known limitations:** Claude missed the first targeted verification in `II-S02` in all three runs, although both editions explicitly require it in `verification.md`. `FI-S02` asks for the failing command name without supplying that name or a failure log; its three misses do not establish a skill defect. Raw answers are unavailable for a grading audit. Skill changes and evaluation-case repair are deferred; recorded results are unchanged, and no behavior improvement is claimed.
 - **Review and remaining limits:** [CHANGELOG.md](CHANGELOG.md) records the scope and timing of earlier reviews. Apart from that translation review, the checks above are not a new independent review. Actual POSIX execution, live remote/host integration, and effects on outcomes, rework, or cost remain unverified.
 
 ## Getting started
@@ -58,7 +59,7 @@ These guides cover `v1.0.0-preview.5`; verify its full commit SHA and use the ma
 
 ## Versions
 
-- Latest published preview: [`v1.0.0-preview.4`](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.0.0-preview.4). This branch is the `v1.0.0-preview.5` candidate.
+- Latest published preview: [`v1.0.0-preview.5`](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.0.0-preview.5).
 - Preview tags: `v1.0.0-preview.N`. Published tags are never moved; fixes come as new tags.
 - Pin a copy by tag, commit SHA, and manifest hash, not by tag name alone.
 - When upgrading, replace only the pinned copy, keep `project.json`, the adapter and work records, and regenerate the project-dependent files.

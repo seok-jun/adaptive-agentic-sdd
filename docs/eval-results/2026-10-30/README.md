@@ -55,6 +55,15 @@ Per case (runs 1–3; P = PASS, F = FAIL, I = INVALID):
 - **Run-to-run variance is real.** The same case passed and failed across runs for both agents (`II-S05` for both; `MI-S01`, `II-S03`, `PD-S02`, `FI-S11` for Codex). One success is not evidence, as `adaptation.md` says.
 - **Consistent misses are candidates for investigation, not conclusions.** Claude missed the same item 3/3 in `II-S02` and `FI-S02`; both agents often missed the exact claim format in `PD-S01`. Under skill-evals.md the first thing to check is whether the source document or skill step is ambiguous; no rule was changed on the basis of this run.
 
+## Release source comparison — 2026-10-30
+
+This is a static comparison of the source, fixture and saved grading items, not a new behavior run or an independent grading audit. The original result files and counts above are unchanged.
+
+- **II-S02:** `implementing-issues/SKILL.md` (Implement step 5 and Verify and handoff step 2) routes to `process/verification.md`, whose implementation-loop paragraph explicitly requires the directly related test class or owning-module tests first. The Korean edition has the same ordering. This matches the case criterion. Claude missed that item in all three runs and also missed the claim procedure in runs 1 and 2. The claim requirement is explicit in the skill. The static comparison found no missing rule or translation mismatch that justifies changing the skill in this release; it does not explain why the answers missed these items.
+- **FI-S02:** finishing step 3.4 explicitly makes failed or unrun required verification incomplete, in both editions. The saved failed item is only “Names the failing required command”; there are no recorded must-not violations. Yet the fixture says only that one required command failed, without identifying it or supplying a failure log. The runner initializes a default project whose `build.verification` and `build.checks` lists are empty; it does not populate a case-specific failing command. Thus the required command identity cannot be recovered from those inputs. A future case should provide a synthetic command and failure evidence, or explicitly accept identifying the missing information without inventing a command. No raw answers were retained, so this comparison cannot establish whether a particular answer or grading decision was correct.
+
+**Release disposition:** preserve both skills and the original case/results for preview.5, disclose these limitations, and defer case repair and any evidence-backed skill change to a later version. No improvement, new PASS or causal conclusion follows from this comparison.
+
 ## Limits
 
 - 12 of 76 cases, Korean edition only. The English edition's cases received static checks only.

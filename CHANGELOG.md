@@ -1,8 +1,8 @@
 # Changelog
 
-## 1.0.0-preview.5 candidate — unreleased (2026-10-30)
+## 1.0.0-preview.5 — 2026-10-30
 
-Prepared on a branch from `v1-preview` (= `v1.0.0-preview.4`, `5760ac66b2a4c943360a56c22892fe35e1a076db`). Not committed, tagged or published; earlier tags are unchanged. `methodology/` (English M) is unchanged.
+Packages the candidate from `110d943c6db638d72bbafbbdc2bad4037e66b45c` on `v1-preview`, following preview.4 (`5760ac66b2a4c943360a56c22892fe35e1a076db`). This packaging step changes release documentation and records the evaluation limitations; both bundles and earlier tags are unchanged. `methodology/` (English M) is unchanged.
 
 - Independent translation review (2026-10-30): gpt-6-astra (reasoning medium) compared the entire English edition against the Korean edition in five groups. It reported 14 findings (2 P1, 10 P2, 2 P3): 11 accepted, 2 partially accepted and 1 rejected. Partial acceptance: the README upgrade sentence was corrected, but the finding was treated as P2 because the sentence already existed in preview.4; the Methodology-only copy section was retained as existing content carried over from the preview.4 English guide, with its provenance stated and a pointer added in the Korean guide. The proposed `cross-agent` → `cross-tool` change was rejected to follow the source term `Cross-agent behavior eval` and the preview.4 English README. The finishing-issues cleanup exception was clarified in both editions; its ambiguity originated in the Korean plain-language rewording.
 
@@ -32,9 +32,10 @@ Evaluation:
 
 - First executed cross-agent behavior run of 12 pre-selected Korean cases × Claude Code and Codex × 3 runs, cross-graded; runner `tests/run_behavior_evals.py`; record in `docs/eval-results/2026-10-30/`. 71 valid runs: Claude Code 21 PASS / 14 FAIL / 1 INVALID, Codex 22 PASS / 14 FAIL. A usage limit invalidated 65 first-attempt runs; each was retried once (31 reruns, 34 regrades of saved answers) as skill-evals.md allows. This is a baseline, not evidence of effect.
 - It found one case defect: `PD-S06` required `BLOCKED: origin/main fetch failed`, while the skill says `BLOCKED: declared base fetch failed`; all six FAILs of that case came from the stale case. The recorded results are unchanged; the case is corrected in both editions.
+- Known limitations: `II-S02` missed the explicit first-targeted-verification requirement in all three Claude runs. `FI-S02` requires naming a failing command but supplies neither its name nor a failure log; this is an evaluation-input limitation, not established evidence of a skill defect. Raw answers are unavailable for a grading audit. Skill changes and case repair are deferred to a later version; existing results remain unchanged. See the source comparison in the evaluation record.
 - Six execution-profile policy-regression cases (`II-K01`–`K06` and their English counterparts) were added; they are expected-behavior specifications and were not executed.
 
-Validation (2026-10-30, Windows, Python 3.14.7): all 53 executable tests passed, both bundle manifests (66 files each) matched, and both editions passed `init`, `render`, `check` and `check-evals` (76 cases) in disposable projects. Actual POSIX execution, live remote/host integration and an independent review of this change remain undone.
+Release-commit validation (2026-10-30, Windows, Python 3.14.7): all 53 executable tests passed, both bundle manifests (66 files each) matched, and both editions passed `init`, `render`, `check` and `check-evals` (76 cases) in disposable projects. The initial sandbox run hit Windows temporary-directory locks (WinError 32) and a Git/MSYS access denial; the full suite was rerun outside the sandbox. Actual POSIX execution, live remote/host integration and an independent review of this change remain undone.
 
 ## 1.0.0-preview.4 — 2026-10-30
 
