@@ -2,7 +2,7 @@
 
 ## Issue 본문 규약
 
-신규 구현/버그 Issue의 필수 section과 canonical 본문 형식은 고정 W의 `process/issue-priority.md`의 `## 신규 Issue 필수 본문`이 Source of Truth다. 제품별 적용 조건은 `S/.adaptive-sdd/project/issue-priority.md`를 읽는다. 이 문서는 같은 template을 복제하지 않는다.
+신규 구현/버그 Issue의 필수 section과 canonical 본문 형식은 고정 W의 `process/issue-priority.md`의 `## 신규 Issue 필수 본문`이 Source of Truth다. 제품별 적용 조건은 `W/../project/issue-priority.md`를 읽는다. 이 문서는 같은 template을 복제하지 않는다.
 
 본문 값과 `priority:*`, `grade:*` 라벨은 항상 일치해야 한다.
 

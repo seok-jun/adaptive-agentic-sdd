@@ -1,4 +1,4 @@
-<!-- 생성 파일. 직접 고치지 않는다. 값은 S/.adaptive-sdd/project.json을 고치고 다시 생성한다. -->
+<!-- 생성 파일. 직접 고치지 않는다. 값은 {{bundle_path}}/project.json을 고치고 다시 생성한다. -->
 # {{project.name}} Agent 적용과 문서 매핑
 
 공통 지시 해석·문맥/문서 로딩·UTF-8/shell·완료 보고 계약은 W `process/agent-instruction-policy.md`를 조건부로 읽는다. 모든 작업의 선행 full-read가 아니다.
@@ -11,7 +11,7 @@
 | 이슈의 목표·범위·완료 기준 | 해당 Issue의 현재 본문 | 기록 항목·댓글만으로 범위를 변경하지 않는다 |
 | 공통 agent hard guard | `AGENTS.md`의 표시 구간 | agent별 파일이나 Skill이 완화할 수 없다 |
 | 작업 절차 | W 스킬과 스킬이 지정한 W process | 충돌하면 구현하지 말고 충돌 문서를 특정한다 |
-| 모듈 의존성과 수정 경계 | `S/.adaptive-sdd/project/module-boundaries.md` | 승인된 architecture 변경이 아니면 경계를 넘지 않는다 |
+| 모듈 의존성과 수정 경계 | `{{bundle_path}}/project/module-boundaries.md` | 승인된 architecture 변경이 아니면 경계를 넘지 않는다 |
 | 현재 실행 동작(as-is) | 선언한 `{{git.remote}}/{{git.base_branch}}`의 확인 revision | business 문서와 다르면 코드를 관찰된 as-is로 취급한다 |
 | 구현 완료 후 제품 규칙 | `{{docs.business}}` | Issue to-be가 바꾸면 완료 단계에서 최종 코드와 동기화한다 |
 | 과거 결정 근거 | `{{docs.reviews}}` | 역사 기록이며 현재 요구사항을 덮어쓰지 않는다 |

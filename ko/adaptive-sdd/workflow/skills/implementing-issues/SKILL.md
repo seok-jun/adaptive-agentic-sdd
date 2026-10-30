@@ -3,7 +3,7 @@ name: implementing-issues
 description: 이 프로젝트의 승인된 작업 항목(Issue)을 Issue 번호나 명시한 참조로 받아 조사·설계·구현한다. 기존 Issue의 진행·구현·작업·마무리 요청에 사용하며, 현재 단계의 SDD·경계·검증 절차를 연결한다. 새 Issue만 작성할 때는 사용하지 않는다.
 ---
 
-실행 입력은 절대 경로 `P`(프로젝트 저장소 최상위), `S`(설치 root, in-repo에서는 P), `W`(고정 절차 사본 `S/.adaptive-sdd/workflow`), `M`(고정 공통 원칙 `S/.adaptive-sdd/methodology`)이다. cwd나 W의 상위 디렉터리로 P/M을 추정하지 않는다. P의 hard guard와 적용 선언을 따르고, Issue·댓글·라벨·PR 표현은 `S/.adaptive-sdd/project/tracker.md`가 선언한 `W/tracker/` 방식으로 읽는다.
+실행 입력은 절대 경로 `P`(프로젝트 저장소 최상위), `W`(고정 절차 사본 `W`), `M`(고정 공통 원칙 `M`)이다. cwd나 W의 상위 디렉터리로 P/M을 추정하지 않는다. P의 hard guard와 적용 선언을 따르고, Issue·댓글·라벨·PR 표현은 `W/../project/tracker.md`가 선언한 `W/tracker/` 방식으로 읽는다.
 
 # Implementing Issues
 
@@ -17,7 +17,7 @@ description: 이 프로젝트의 승인된 작업 항목(Issue)을 Issue 번호�
 
 현재 run에서 `P/AGENTS.md`의 `## 항상 적용 hard guard` 적용을 보장할 수 없으면 그 절부터 읽는다. 확인한 동일 버전은 재사용한다.
 
-필수 입력은 current Issue, `W/process/sdd/grade.md`·`W/process/sdd/entry.md`·`W/process/sdd/issue.md`의 현재 grade·진입·사람 판단 조건, `S/.adaptive-sdd/project/sdd-workflow.md`의 적용·권한·실제 경로다. 조사에는 Issue와 직접 연결된 business/architecture 문서, 대상 코드·직접 계약·caller/callee를 읽는다.
+필수 입력은 current Issue, `W/process/sdd/grade.md`·`W/process/sdd/entry.md`·`W/process/sdd/issue.md`의 현재 grade·진입·사람 판단 조건, `W/../project/sdd-workflow.md`의 적용·권한·실제 경로다. 조사에는 Issue와 직접 연결된 business/architecture 문서, 대상 코드·직접 계약·caller/callee를 읽는다.
 
 SDD를 사용하는 설계·Medium 구현 진입 및 별도 IMPLEMENT 문맥에서는 적용되는 `README.md`의 문제·전제·불변조건·남은 위험을 필요한 절·기준 revision으로 직접 확인한다. 사람 중심 표현은 Agent 읽기 면제가 아니며 README 전체나 조건부 조사 이력을 일률적으로 읽지 않는다. review 역할에는 기존 phase/mode별 허용 입력과 Blind Audit 격리를 그대로 적용한다.
 

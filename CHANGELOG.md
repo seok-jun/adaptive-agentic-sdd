@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased — M/W/P installation paths
+
+- Validation (2026-10-30): 36 Windows tests passed, including default/external entry-path resolution, existing connection and tamper checks, hand-edit protection, cross-host rendering and policy preservation. Original policy fixture hashes remain unchanged; only the renamed project-document path prefix is normalized for that comparison.
+- Independent read-only review requested as `gpt-6.1-sol/high` found no actionable issue in the change against `bd3dd97`; manifest bytes and paths were independently checked. Served model identity and model behavior were not independently verified. Real consumer deployment and actual POSIX execution remain unverified.
+
+- Retains M/W/P ownership and treats external installation solely as the `--harness-root` storage option. Removes S as a required workflow/Skill role. Generated entries and project documents now declare concrete bundle paths; fixed workflow documents reference M/W and the adjacent P-owned project documents.
+- Preserves the connection schema, CLI option, checkout binding, integrity checks and hand-edit protection. Existing installations must explicitly adopt the new bundle and render/check; previous tags are unchanged.
+
 ## 1.0.0-preview.3 — 2026-10-30
 
 Packages the changes since preview.2 as a new pre-release. The README and both installation guides identify preview.3, resolve the annotated tag to its full commit SHA, and keep the archive, guide and recorded pin aligned. The methodology, workflow, installer and bundle manifest are unchanged from integration commit `01ca9a69bcb6a6267b4b4c703c0562ed878f362f`; earlier validation and independent-review scopes below remain limited to their stated revisions and changes.

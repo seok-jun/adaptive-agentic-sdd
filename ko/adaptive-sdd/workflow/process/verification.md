@@ -1,6 +1,6 @@
 # 검증 계약
 
-완료 기준을 검증에 연결하고 구현 중·종료 시 검증을 실행할 때 읽는다. grade 분류는 [sdd-workflow](sdd/grade.md#sdd-grade), 실제 프로젝트 명령은 `S/.adaptive-sdd/project/build.md`가 원본이다. 새 검증을 수량으로 채우지 않으며 해당 grade·변경 영향·Issue가 요구한 범위에 적용한다.
+완료 기준을 검증에 연결하고 구현 중·종료 시 검증을 실행할 때 읽는다. grade 분류는 [sdd-workflow](sdd/grade.md#sdd-grade), 실제 프로젝트 명령은 `W/../project/build.md`가 원본이다. 새 검증을 수량으로 채우지 않으며 해당 grade·변경 영향·Issue가 요구한 범위에 적용한다.
 
 | 현재 작업 | 읽을 절 |
 | --- | --- |

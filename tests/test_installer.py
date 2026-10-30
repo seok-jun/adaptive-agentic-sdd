@@ -232,6 +232,34 @@ class InstallerPolicyTests(unittest.TestCase):
         self.assertEqual(connection["harness_root"], source.as_posix())
         self.assertEqual(installer.load_lock(source)["project_root"], product.as_posix())
 
+    def test_entry_paths_resolve_without_a_fourth_role(self):
+        for external in (False, True):
+            with self.subTest(external=external):
+                if external:
+                    source, product = self.external_install()
+                    self.assertEqual(self.external_command("render", product, source), 0)
+                    bundle = (source / ".adaptive-sdd").as_posix()
+                else:
+                    source, product = self.project, self.project
+                    self.assertEqual(self.command("render")[0], 0)
+                    bundle = "P/.adaptive-sdd"
+                for rel in ("AGENTS.md", ".agents/skills/implementing-issues/SKILL.md",
+                            ".claude/skills/implementing-issues/SKILL.md"):
+                    text = (product / rel).read_text(encoding="utf-8")
+                    self.assertNotIn("`S`", text)
+                    self.assertNotIn("S/.adaptive-sdd", text)
+                    self.assertNotIn("{{", text)
+                    for suffix in ("workflow", "methodology", "project.json", "project/"):
+                        self.assertIn(bundle + "/" + suffix, text)
+                        self.assertTrue((source / ".adaptive-sdd" / suffix).exists())
+                # Fixed W references must resolve at either installation location.
+                workflow = source / ".adaptive-sdd/workflow"
+                for path in workflow.rglob("*.md"):
+                    text = path.read_text(encoding="utf-8")
+                    for relative in re.findall(r"`W/([^`*<>]+)`", text):
+                        self.assertTrue((workflow / relative.split("#")[0]).exists(),
+                                        (path, relative))
+
     def test_in_repo_outputs_are_identical_across_shell_hosts(self):
         with mock.patch.object(installer.sys, "platform", "win32"):
             self.assertEqual(self.command("render")[0], 0)

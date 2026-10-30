@@ -165,6 +165,10 @@ def copy_root(project_root):
 
 
 def roots(args):
+    """Resolve installation location and product checkout; ownership remains M/W/P.
+
+    harness_root is a storage option (and legacy connection key), not a role.
+    """
     product = pathlib.Path(args.project_root).resolve()
     explicit = getattr(args, "harness_root", None)
     connection = product / CONNECTION
@@ -374,7 +378,7 @@ def plan_outputs(project_root, values, product_root=None):
     ctx = settings(values)
     external = product_root != project_root
     ctx["external"] = external
-    ctx["source_root"] = project_root.as_posix() if external else "P"
+    ctx["bundle_path"] = copy_root(project_root).as_posix() if external else "P/.adaptive-sdd"
     # Generated commands target PowerShell on Windows and POSIX sh elsewhere.
     # Never interpolate an absolute path into shell-expanding double quotes.
     def shell_literal(value):
@@ -704,7 +708,7 @@ def main(argv=None):
     for name in ("init", "render", "check", "check-evals"):
         p = sub.add_parser(name)
         p.add_argument("--project-root", required=True)
-        p.add_argument("--harness-root", help="dedicated external installation root; omit for in-repo or an existing connection")
+        p.add_argument("--harness-root", help="optional external storage directory; M/W/P ownership is unchanged; omit for in-repo or an existing connection")
         if name == "render":
             p.add_argument("--accept-overwrite", action="append", metavar="RELPATH")
             tag = p.add_mutually_exclusive_group()

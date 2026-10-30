@@ -1,6 +1,6 @@
 # agent-instruction-policy 수행 절차
 
-조건·제품 사실·필수 검증·사람 권한은 P 적용 문서 `S/.adaptive-sdd/project/agent-instruction-policy.md`가 원본이다. W는 공통 규칙과 수행법을 소유한다.
+조건·제품 사실·필수 검증·사람 권한은 P 적용 문서 `W/../project/agent-instruction-policy.md`가 원본이다. W는 공통 규칙과 수행법을 소유한다.
 
 ## 공통 원본과 로컬 guard
 

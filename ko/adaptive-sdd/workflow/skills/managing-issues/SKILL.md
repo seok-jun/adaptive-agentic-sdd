@@ -3,7 +3,7 @@ name: managing-issues
 description: 이 프로젝트의 작업 항목(Issue)을 생성·분류·우선순위 재조정·본문 재작성하고 선택적 Epic의 작업 구성·의존성을 조율할 때 사용한다. Priority/실행 grade 판정, 작업 경계, Mermaid 흐름 판단, UI/UX HTML Visual Spec 연결에 쓴다. 코드 구현에는 사용하지 않는다.
 ---
 
-실행 입력은 절대 경로 `P`(프로젝트 저장소 최상위), `S`(설치 root, in-repo에서는 P), `W`(고정 절차 사본 `S/.adaptive-sdd/workflow`), `M`(고정 공통 원칙 `S/.adaptive-sdd/methodology`)이다. cwd나 W의 상위 디렉터리로 P/M을 추정하지 않는다. P의 hard guard(`P/AGENTS.md`의 `## 항상 적용 hard guard`)와 적용 선언(`S/.adaptive-sdd/project/sdd-workflow.md`)을 적용한다. Issue·댓글·라벨·PR 표현은 `S/.adaptive-sdd/project/tracker.md`가 선언한 작업 관리 방식(`W/tracker/`)으로 바꿔 읽는다.
+실행 입력은 절대 경로 `P`(프로젝트 저장소 최상위), `W`(고정 절차 사본 `W`), `M`(고정 공통 원칙 `M`)이다. cwd나 W의 상위 디렉터리로 P/M을 추정하지 않는다. P의 hard guard(`P/AGENTS.md`의 `## 항상 적용 hard guard`)와 적용 선언(`W/../project/sdd-workflow.md`)을 적용한다. Issue·댓글·라벨·PR 표현은 `W/../project/tracker.md`가 선언한 작업 관리 방식(`W/tracker/`)으로 바꿔 읽는다.
 
 # Managing Issues
 
@@ -14,17 +14,17 @@ description: 이 프로젝트의 작업 항목(Issue)을 생성·분류·우선�
 선행 입력:
 
 1. 현재 사용자 요청
-2. `W/process/issue-priority.md`의 `## Priority 판정 순서`·`## 증거가 부족할 때`와 `S/.adaptive-sdd/project/issue-priority.md`의 현재 단계·제품 적용. 신규 생성이면 W의 `## 신규 Issue 필수 본문`·`## 필수 라벨`, reprioritize면 W의 `## Priority 변경`
-3. `W/process/sdd/grade.md`과 `S/.adaptive-sdd/project/sdd-workflow.md`의 제품별 `### 자동 격상`; Issue 변경·사람 판단·미결 의존성은 `W/process/sdd/issue.md`(정규화도 이 원본)
-4. `W/process/issue-writing-guide.md`의 `## 근거 기록 규칙`, `## Mermaid 생성 조건`, `## HTML Visual Spec 생성 조건`과 `S/.adaptive-sdd/project/issue-writing-guide.md`의 `## 근거 기록 규칙`(개인정보·허용 근거). HTML이 필요할 때만 제품 저장 위치·의존성 제한도 확인한다.
+2. `W/process/issue-priority.md`의 `## Priority 판정 순서`·`## 증거가 부족할 때`와 `W/../project/issue-priority.md`의 현재 단계·제품 적용. 신규 생성이면 W의 `## 신규 Issue 필수 본문`·`## 필수 라벨`, reprioritize면 W의 `## Priority 변경`
+3. `W/process/sdd/grade.md`과 `W/../project/sdd-workflow.md`의 제품별 `### 자동 격상`; Issue 변경·사람 판단·미결 의존성은 `W/process/sdd/issue.md`(정규화도 이 원본)
+4. `W/process/issue-writing-guide.md`의 `## 근거 기록 규칙`, `## Mermaid 생성 조건`, `## HTML Visual Spec 생성 조건`과 `W/../project/issue-writing-guide.md`의 `## 근거 기록 규칙`(개인정보·허용 근거). HTML이 필요할 때만 제품 저장 위치·의존성 제한도 확인한다.
 5. 기존 Issue 변경이면 그 Issue의 current body/labels/assignees/comments/linked PRs
 
 heading/section 단위 조회를 지원하지 않는 host에서는 위 파일을 full-read해도 된다. section 조회가 가능한데 일반 프로젝트 이해를 이유로 세 파일 전체를 선행 로딩하지 않는다.
 
 조건부:
 
-- product/shared/root ownership 또는 integration 판단이 필요할 때만 `W/process/module-boundaries.md`의 공통 경계·lifecycle 계약과 `S/.adaptive-sdd/project/module-boundaries.md`의 실제 제품 경계.
-- instruction conflict, code↔business drift, 모호한 scope가 실제로 생길 때만 `W/process/agent-instruction-policy.md` (공통 계약·수행법) / `S/.adaptive-sdd/project/agent-instruction-policy.md` (제품 적용·권한·검증).
+- product/shared/root ownership 또는 integration 판단이 필요할 때만 `W/process/module-boundaries.md`의 공통 경계·lifecycle 계약과 `W/../project/module-boundaries.md`의 실제 제품 경계.
+- instruction conflict, code↔business drift, 모호한 scope가 실제로 생길 때만 `W/process/agent-instruction-policy.md` (공통 계약·수행법) / `W/../project/agent-instruction-policy.md` (제품 적용·권한·검증).
 - 같은 run에서 이미 확인한 변경 없는 입력은 재사용한다.
 
 Issue 분류에 필요하지 않으면 product code를 넓게 탐색하지 않는다.

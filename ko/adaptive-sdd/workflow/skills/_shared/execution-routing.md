@@ -1,6 +1,6 @@
 # Execution routing
 
-입력은 명시한 P/S/W/M 절대 root다. S는 설치 root이며 in-repo에서는 P와 같다. P 적용 문서 `S/.adaptive-sdd/project/execution-routing.md`의 모델 제한·영향 분석·probe 조건을 먼저 확인한다.
+입력은 진입 파일에 명시한 M·W·P 경로다. 외부 설치 경로는 설치 도구의 옵션이며 별도 실행 역할이 아니다. P 적용 문서 `W/../project/execution-routing.md`의 모델 제한·영향 분석·probe 조건을 먼저 확인한다.
 
 현재 phase/role 진입·유지의 current/manual 적격 확인, model/reasoning 선택, switch/delegation 또는 reviewer 배정 시 읽는다. 같은 run의 해당 role에서 여전히 유효한 근거는 재사용하며, model switch가 없다는 이유로 자격 확인을 생략하지 않는다. fixed pre-read 입력은 아니다. packet 작성·수신·검증만 필요하면 [Execution Packet과 인계 계약](execution-packets.md)의 해당 절을 읽는다.
 

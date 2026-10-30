@@ -1,6 +1,6 @@
 # Execution Packet과 인계 계약
 
-입력은 명시한 P/S/W/M 절대 root다. S는 설치 root이며 in-repo에서는 P와 같다. 이 문서는 packet을 작성·수신·검증하는 해당 phase에서만 읽으며 fixed pre-read 입력이 아니다. 모델 배정·qualification 판정이 필요하면 [execution-routing](execution-routing.md)의 해당 절을 읽는다.
+입력은 진입 파일에 명시한 M·W·P 경로다. 외부 설치 경로는 설치 도구의 옵션이며 별도 실행 역할이 아니다. 이 문서는 packet을 작성·수신·검증하는 해당 phase에서만 읽으며 fixed pre-read 입력이 아니다. 모델 배정·qualification 판정이 필요하면 [execution-routing](execution-routing.md)의 해당 절을 읽는다.
 
 ## 읽는 조건과 목차
 
@@ -78,7 +78,7 @@ P의 검증 선언은 [검증 계약](../../process/verification.md#verification
 
 수동 검증 item은 command/exit code 대신 `method: manual`, 확인자·확인 시점·절차·실제 관찰 결과를 사용한다. 실행하지 않은 command를 만들지 않는다. 나머지 대상 commit·immutable evidence identity·입력 불변/재사용·필수 검증 결과 요건은 자동 검증과 동일하며, 값 부재가 허용되는 것은 manual 항목의 command/exit code뿐이다.
 
-어느 phase의 worker/reviewer든 실제 문제를 발견했으면 기존 반환 결과에 P 적용 문서 `S/.adaptive-sdd/project/sdd-workflow.md`의 조건과 [문제 발견 시 기록과 종료 연결](../../process/observations.md#문제-발견-시-기록과-종료-연결)에 따른 사건 정보/원본 참조를 포함한다. 시작·인계 관측은 [관측 시점별 소비와 기록](../../process/observations.md#차세대-방법론의-적용과-개선-관측)을 연결한다. 이 조건부 사건 정보는 아래 필수 `implementation_findings`나 acceptance/verification과 별개이며 새 packet 유효성 gate가 아니다.
+어느 phase의 worker/reviewer든 실제 문제를 발견했으면 기존 반환 결과에 P 적용 문서 `W/../project/sdd-workflow.md`의 조건과 [문제 발견 시 기록과 종료 연결](../../process/observations.md#문제-발견-시-기록과-종료-연결)에 따른 사건 정보/원본 참조를 포함한다. 시작·인계 관측은 [관측 시점별 소비와 기록](../../process/observations.md#차세대-방법론의-적용과-개선-관측)을 연결한다. 이 조건부 사건 정보는 아래 필수 `implementation_findings`나 acceptance/verification과 별개이며 새 packet 유효성 gate가 아니다.
 
 IMPLEMENT worker는 full reasoning이나 전체 command log 대신 다음 field를 반환한다.
 

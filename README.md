@@ -1,8 +1,10 @@
-# Adaptive Agentic SDD — 1.0 preview.3
+# Adaptive Agentic SDD — 1.0 preview (unreleased correction)
 
 **English** | [한국어](ko/README.md)
 
-> **Preview.** This release (`v1.0.0-preview.3`, on `v1-preview`) carries the 1.0 preview of the next-generation methodology. Its effect has not been measured, and its structure may change before 1.0. The v0.2 methodology remains on `main` and at tag [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0).
+> **Preview.** This branch carries the next correction to the 1.0 preview. The latest published release is `v1.0.0-preview.3`. Its effect has not been measured, and its structure may change before 1.0. The v0.2 methodology remains on `main` and at tag [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0).
+
+This branch contains an unreleased M/W/P installation-path clarification after preview.3. External placement does not change ownership; generated entries declare M/W paths and the location of P-owned settings. Existing `--harness-root` connections remain supported. For preview.3, use its tagged files and guide.
 
 ## What this is
 
@@ -46,7 +48,7 @@ The Korean workflow in preview.3 uses four execution grades (Trivial, Small, Med
 - **English (methodology only):** read [docs/customization.md](docs/customization.md). Copy `methodology/` and `LICENSE` byte for byte, check the hashes, pin line endings, add a few lines to the entry file, and let an Agent draft the adapter; a human decides the human-judgment points.
 - **Korean (full copy with installer):** read [ko/docs/customization.md](ko/docs/customization.md). Copy `ko/adaptive-sdd/` to `.adaptive-sdd/`, run `install.py init`, fill `project.json` (an Agent drafts, a human decides), then run `install.py render` and `install.py check`.
 
-These guides cover `v1.0.0-preview.3`. Use the archive and guide from this same tag and verify its full commit SHA before recording the pin. `v1.0.0-preview.2` does not include the external installer features described here.
+These branch guides cover the unreleased correction; use a matching reviewed commit for the archive and guide. `v1.0.0-preview.2` does not include the external installer features described here.
 
 ## Versions
 

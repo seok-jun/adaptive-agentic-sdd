@@ -94,4 +94,4 @@ P의 mode가 `ENABLED`일 때만 [token-diagnostic](../token-diagnostic.md)의 S
 
 ## 병렬 작업
 
-claim/release, branch/worktree, cloud sandbox의 실행 절차는 `W/skills/parallel-development/SKILL.md`가 canonical owner다. 모듈 ownership, shared/root integration 경계는 `S/.adaptive-sdd/project/module-boundaries.md`가 Source of Truth다.
+claim/release, branch/worktree, cloud sandbox의 실행 절차는 `W/skills/parallel-development/SKILL.md`가 canonical owner다. 모듈 ownership, shared/root integration 경계는 `W/../project/module-boundaries.md`가 Source of Truth다.

@@ -10,7 +10,14 @@ BUNDLE = ROOT / 'ko/adaptive-sdd'
 PROCESS = BUNDLE / 'workflow/process'
 
 
+def historical_paths(text):
+    # Compare against the original contract hashes after the explicit storage-path rename.
+    # Only this exact path prefix is normalized; policy text remains byte-sensitive.
+    return text.replace("W/../project", "S/.adaptive-sdd/project")
+
+
 def normalize(text):
+    text = historical_paths(text)
     # Ignore relocated link destinations, not the contract text.
     text = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', text)
     for before, after in {
@@ -46,7 +53,7 @@ class SelectiveReadingTests(unittest.TestCase):
     def test_role_inputs_and_existing_guards(self):
         sample = json.loads((ROOT / 'tests/fixtures/sdd-artifact-sample.json').read_text(encoding='utf-8'))
         for path, digest in sample['unchanged_guards'].items():
-            self.assertEqual(hashlib.sha256((BUNDLE / path).read_bytes()).hexdigest(), digest)
+            self.assertEqual(hashlib.sha256(historical_paths((BUNDLE / path).read_text(encoding="utf-8")).encode("utf-8")).hexdigest(), digest)
         packet = (BUNDLE / 'workflow/skills/_shared/execution-packets.md').read_text(encoding='utf-8')
         self.assertEqual(hashlib.sha256(packet.split('### Blind Audit Packet', 1)[1].encode()).hexdigest(), sample['blind_packet_sha256'])
         skill = (BUNDLE / 'workflow/skills/implementing-issues/SKILL.md').read_text(encoding='utf-8').split('## Inputs', 1)[1].split('\n## ', 1)[0]

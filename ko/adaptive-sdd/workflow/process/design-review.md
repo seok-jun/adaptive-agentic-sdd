@@ -9,7 +9,7 @@ Large의 AS-IS·PLAN 설계 리뷰 절차 원본이다. 실제 해당 phase의 �
 | 구현 중 PLAN 전제 오류·정책 변경 | [계획 정정과 정책 전환](sdd/plan-change.md#계획-정정과-정책-전환) 뒤 아래 영향 판정 |
 | 같은 의미 충돌이 수정·재확인 후 반복 | [반복 정체 시 전환](#반복-정체-시-전환) |
 
-reviewer의 model·floor·qualification은 [execution-routing](../skills/_shared/execution-routing.md), 전달 필드와 evidence identity는 [execution-packets](../skills/_shared/execution-packets.md)가 원본이다. 이 문서는 리뷰 순서·독립성·진행 조건을 소유한다. 프로젝트의 사람 권한은 `S/.adaptive-sdd/project/sdd-workflow.md`를 적용한다.
+reviewer의 model·floor·qualification은 [execution-routing](../skills/_shared/execution-routing.md), 전달 필드와 evidence identity는 [execution-packets](../skills/_shared/execution-packets.md)가 원본이다. 이 문서는 리뷰 순서·독립성·진행 조건을 소유한다. 프로젝트의 사람 권한은 `W/../project/sdd-workflow.md`를 적용한다.
 
 ## Large 설계 단계
 

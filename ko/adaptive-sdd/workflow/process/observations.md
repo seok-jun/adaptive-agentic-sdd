@@ -41,7 +41,7 @@
 수집 공백·외부 문서 부재는 기존 제품 완료의 새 gate가 아니다. 구현·검증 실패는 기존 규칙대로 처리한다. 이 연결 자체를 변경하는 Issue는 지정한 연결 완료 기준을 검증해야 한다. 기존 기록이 같은 연결을 제공하거나 기록 부담·반복 미사용이 확인되면 기존 권한 안에서 중복 기록의 유지·축소를 검토한다.
 
 
-공통 원본은 `S/.adaptive-sdd/install.lock.json`의 고정 정보(태그·commit·manifest 해시)를 사용한다.
+공통 원본은 `W/../install.lock.json`의 고정 정보(태그·commit·manifest 해시)를 사용한다.
 ### 작성 모델 기록
 
 모든 grade의 `[IMPLEMENTATION SUMMARY]`는 SUMMARY를 작성한 Agent의 모델을 한 줄로 남긴다.

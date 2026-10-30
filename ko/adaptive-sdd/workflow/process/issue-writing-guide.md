@@ -1,6 +1,6 @@
 # issue-writing-guide 수행 절차
 
-조건·제품 사실·필수 검증·사람 권한은 P 적용 문서 `S/.adaptive-sdd/project/issue-writing-guide.md`가 원본이다. W는 공통 분류 기준과 수행법을 소유한다.
+조건·제품 사실·필수 검증·사람 권한은 P 적용 문서 `W/../project/issue-writing-guide.md`가 원본이다. W는 공통 분류 기준과 수행법을 소유한다.
 
 공통 Priority·SDD grade와 본문/라벨은 [공통 우선순위](issue-priority.md) 및 [공통 등급](sdd/grade.md#sdd-grade)을 따른다. 제품별 적용과 권한은 P 원본을 함께 읽는다.
 

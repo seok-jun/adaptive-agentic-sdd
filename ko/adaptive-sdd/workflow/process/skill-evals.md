@@ -1,6 +1,6 @@
 # skill-evals 수행 절차
 
-조건·사례 위치·실행 명령은 P 적용 문서 `S/.adaptive-sdd/project/skill-evals.md`가 원본이다. W는 eval 종류·채점·결과 기록·갱신 규칙과 사건 사례 만들기를 소유한다.
+조건·사례 위치·실행 명령은 P 적용 문서 `W/../project/skill-evals.md`가 원본이다. W는 eval 종류·채점·결과 기록·갱신 규칙과 사건 사례 만들기를 소유한다.
 
 ## 대상
 

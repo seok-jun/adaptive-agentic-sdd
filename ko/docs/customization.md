@@ -1,6 +1,6 @@
-# 설치와 커스터마이징 안내 (1.0 preview.3)
+# 설치와 커스터마이징 안내 (1.0 preview — 미출시 보정)
 
-이 안내는 `v1.0.0-preview.3`을 다룬다. 같은 태그의 사본과 안내를 사용하고 태그의 전체 commit SHA를 확인해 고정한다. 공개된 `v1.0.0-preview.2`를 설치하려면 [해당 태그의 한국어 설치 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/ko/docs/customization.md) 또는 [영문 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/docs/customization.md)를 사용한다. 그 태그는 여기서 설명하는 `--harness-root`와 새 운영 설정을 지원하지 않는다.
+이 안내는 preview.3 이후 보정을 다룬다. 사본과 안내를 같은 검토한 commit SHA로 고정한다. 공개된 preview.3은 [태그의 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.3/ko/docs/customization.md)를 따른다. 공개된 `v1.0.0-preview.2`를 설치하려면 [해당 태그의 한국어 설치 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/ko/docs/customization.md) 또는 [영문 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/docs/customization.md)를 사용한다. 그 태그는 여기서 설명하는 `--harness-root`와 새 운영 설정을 지원하지 않는다.
 
 생성된 기본 check/check-evals 명령은 Windows에서는 PowerShell, 그 외에서는 POSIX sh의 경로 리터럴 인용을 사용한다. 표시된 셸에서 실행한다. 사용자 지정 명령의 인용은 프로젝트가 관리한다.
 
@@ -29,12 +29,12 @@
 
 ## 1. 사본 받기
 
-기본은 저장소 안 설치다. 외부 설치를 선택하면 아래 파일 복사의 목적지를 제품 P가 아닌 전용 설치 root S의 `.adaptive-sdd/`로 바꾸고 다음 절의 명시적 root 옵션을 사용한다. OS junction·하드링크는 필요하지 않다.
+기본은 저장소 안 설치다. 외부 설치를 선택하면 아래 파일 복사의 목적지를 제품 checkout 밖의 전용 설치 경로 아래 `.adaptive-sdd/`로 바꾸고 다음 절의 명시적 root 옵션을 사용한다. OS junction·하드링크는 필요하지 않다.
 
-`git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.3^{}"`로 이 릴리스의 전체 commit SHA를 확인한다. 이후 `v1-preview` 브랜치가 이동해도 확인한 SHA를 유지한다. 그 commit의 소스 압축 파일을 받아 `ko/adaptive-sdd/`를 프로젝트의 `.adaptive-sdd/`로 **바이트 그대로** 복사한다. 텍스트 편집 도구나 Agent의 파일 쓰기 도구로 다시 쓰지 않는다. Windows PowerShell 예:
+`git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd refs/heads/v1-preview`로 후보를 확인하고 적용할 전체 commit SHA를 검토해 고정한다. 이후 `v1-preview` 브랜치가 이동해도 확인한 SHA를 유지한다. 그 commit의 소스 압축 파일을 받아 `ko/adaptive-sdd/`를 프로젝트의 `.adaptive-sdd/`로 **바이트 그대로** 복사한다. 텍스트 편집 도구나 Agent의 파일 쓰기 도구로 다시 쓰지 않는다. Windows PowerShell 예:
 
 ```powershell
-$sourceCommit = "<v1.0.0-preview.3에서 확인한 전체 commit SHA>"
+$sourceCommit = "<검토한 전체 commit SHA>"
 if ($sourceCommit -notmatch '^[0-9a-f]{40}$') { throw "sourceCommit에 검토한 전체 commit SHA를 입력하세요." }
 $zip = Join-Path $env:TEMP "adaptive-sdd-$sourceCommit.zip"
 Invoke-WebRequest "https://github.com/seok-jun/adaptive-agentic-sdd/archive/$sourceCommit.zip" -OutFile $zip
@@ -54,19 +54,19 @@ Remove-Item $tmp -Recurse -Force; Remove-Item $zip -Force
 
 ### 외부 설치와 연결
 
-제품 checkout P와 서로 포함하지 않는 전용 폴더 S를 정하고 사본을 `S/.adaptive-sdd/`에 둔다. 다음 명령은 경로 예시이며 실제 허용된 위치로 바꾼다. Windows JSON 경로에는 `/`를 쓰면 역슬래시 이스케이프 혼동을 줄일 수 있다.
+M·W·P는 각각 공통 원칙·실행 절차·제품 사실과 설정의 소유 구분이다. 외부 설치 경로는 저장 위치 옵션이며 S라는 별도 계층이나 실행 입력을 추가하지 않는다. 제품 checkout과 서로 포함하지 않는 전용 폴더를 선택하고 그 아래 `.adaptive-sdd/`에 사본을 둔다. 다음 명령은 경로 예시이며 실제 허용된 위치로 바꾼다. Windows JSON 경로에는 `/`를 쓰면 역슬래시 이스케이프 혼동을 줄일 수 있다.
 
 ```text
-python -I -B <S>/.adaptive-sdd/tools/install.py init --project-root <P> --harness-root <S>
-python -I -B <S>/.adaptive-sdd/tools/install.py render --project-root <P> --harness-root <S> --source-commit <확인한 SHA>
-python -I -B <S>/.adaptive-sdd/tools/install.py check --project-root <P> --harness-root <S>
+python -I -B <외부 설치 경로>/.adaptive-sdd/tools/install.py init --project-root <제품 checkout> --harness-root <외부 설치 경로>
+python -I -B <외부 설치 경로>/.adaptive-sdd/tools/install.py render --project-root <제품 checkout> --harness-root <외부 설치 경로> --source-commit <확인한 SHA>
+python -I -B <외부 설치 경로>/.adaptive-sdd/tools/install.py check --project-root <제품 checkout> --harness-root <외부 설치 경로>
 ```
 
-설정·적용 문서·lock은 S, `.agentics/adaptive-sdd.json`·도구별 Skill 입구·AGENTS/CLAUDE 표시 구간은 P에 생성한다. S에는 중복 Skill 입구를 만들지 않는다. 연결의 manifest hash, S의 lock source, 사본 byte, P/S 생성물을 함께 검사한다. 연결이 없거나 접근/고정 정보가 틀리면 다른 사본으로 fallback하지 않는다. 사본 업그레이드 후에는 검토한 S를 `--harness-root`로 명시해 render하고 연결을 갱신한다. 도구가 원격 source commit의 진위를 검증하는 것은 아니다.
+P 소유 설정·적용 문서·lock은 외부 설치 경로에, `.agentics/adaptive-sdd.json`·도구별 Skill 입구·AGENTS/CLAUDE 표시 구간은 P에 생성한다. 외부 설치 경로에는 중복 Skill 입구를 만들지 않는다. 연결의 manifest hash, 외부 설치 경로의 lock source, 사본 byte, 제품·설치 경로의 생성물을 함께 검사한다. 연결이 없거나 접근/고정 정보가 틀리면 다른 사본으로 fallback하지 않는다. 사본 업그레이드 후에는 검토한 외부 설치 경로를 `--harness-root`로 명시해 render하고 연결을 갱신한다. 도구가 원격 source commit의 진위를 검증하는 것은 아니다.
 
-한 S의 lock은 한 P checkout에만 묶인다. 새 worktree/다른 checkout은 전용 S와 연결을 만들고 같은 tracker_root를 공유할 수 있다. 이미 연결된 S를 다른 P로 몰래 재지정하지 않는다. 여러 checkout에 하나의 생성물 lock을 공유하는 모드는 지원하지 않는다. 클라우드 host가 S를 읽을 수 없으면 in-repo 설치를 사용하거나 접근 가능한 배치를 별도로 정해야 한다.
+한 외부 설치 경로의 lock은 한 P checkout에만 묶인다. 새 worktree/다른 checkout은 전용 설치 경로와 연결을 만들고 같은 tracker_root를 공유할 수 있다. 이미 연결된 설치 경로를 다른 P로 몰래 재지정하지 않는다. 여러 checkout에 하나의 생성물 lock을 공유하는 모드는 지원하지 않는다. 클라우드 host가 외부 설치 경로를 읽을 수 없으면 in-repo 설치를 사용하거나 접근 가능한 배치를 별도로 정해야 한다.
 
-기존 설치를 옮길 때는 새 S에 고정 사본과 검토한 project.json을 복사하고 위 명령으로 연결한다. P에 남은 손편집 입구는 KEPT로 보존되므로 diff 검토 후 해당 경로에만 `--accept-overwrite`를 사용한다. 옛 사본·입구·연결은 도구가 자동 삭제하지 않는다. 검증 후 소유·사용 여부를 확인해 별도로 정리한다. 로컬 전용이면 생성 경로의 commit/exclude 여부를 P에서 정하며 설치가 push 권한을 부여하지 않는다. S를 Git으로 관리할 때에도 사본은 LF byte를 유지한다.
+기존 설치를 옮길 때는 새 설치 경로에 고정 사본과 검토한 project.json을 복사하고 위 명령으로 연결한다. P에 남은 손편집 입구는 KEPT로 보존되므로 diff 검토 후 해당 경로에만 `--accept-overwrite`를 사용한다. 옛 사본·입구·연결은 도구가 자동 삭제하지 않는다. 검증 후 소유·사용 여부를 확인해 별도로 정리한다. 로컬 전용이면 생성 경로의 commit/exclude 여부를 P에서 정하며 설치가 push 권한을 부여하지 않는다. 외부 설치 경로를 Git으로 관리할 때에도 사본은 LF byte를 유지한다.
 
 ### 프로젝트별 운영 설정
 
@@ -153,7 +153,7 @@ python -I -B .adaptive-sdd/tools/install.py init --project-root .
 
 ```text
 방금 정한 대로 .adaptive-sdd/project.json을 쓰고, 아래 명령으로 생성해줘. 고정 사본은 수정하지 마.
-python -I -B .adaptive-sdd/tools/install.py render --project-root . --source-tag v1.0.0-preview.3 --source-commit <확인한 SHA>
+python -I -B .adaptive-sdd/tools/install.py render --project-root . --source-commit <확인한 SHA>
 python -I -B .adaptive-sdd/tools/install.py check --project-root .
 로컬 문서 방식이면 tracker.root 아래에 items/와 claims/ 폴더를 만들어줘.
 생성된 AGENTS.md·CLAUDE.md·.gitattributes 구간과 .adaptive-sdd/project/ 문서를 보여줘.
@@ -163,7 +163,7 @@ python -I -B .adaptive-sdd/tools/install.py check --project-root .
 
 **저장소 밖 쓰기 허용.** `tracker.root`와 `worktree_root`는 저장소 밖이다. Agent 도구의 기본 작업 범위가 저장소 안뿐이면 그 쓰기가 막히거나 매번 확인을 묻는다. 두 폴더를 도구의 추가 작업 폴더로 허용한다. 예: Claude Code는 실행 시 `--add-dir <경로>` 또는 설정의 `permissions.additionalDirectories`, Codex CLI는 `--add-dir <경로>` 또는 `config.toml`의 `[sandbox_workspace_write]` `writable_roots`. 옵션 이름은 도구 버전마다 다를 수 있으니 쓰는 버전의 문서로 확인한다. 허용은 사람이 한다.
 
-**commit과 push.** 저장소 안 설치는 생성물과 고정 사본을 검토한 뒤 P가 선언한 코드 원격·기준 브랜치에 반영한다. 새 lane에서 같은 사본을 조회할 수 있어야 한다. 병합·push 주체와 방법은 P 권한을 따르며 공유 기준 브랜치 직접 push를 강제하지 않는다. 외부 설치는 checkout별 S와 연결을 준비하고 check한다. 로컬 절대 경로를 담은 연결의 공유 여부와 설치 파일의 commit/exclude 정책은 P에서 정한다.
+**commit과 push.** 저장소 안 설치는 생성물과 고정 사본을 검토한 뒤 P가 선언한 코드 원격·기준 브랜치에 반영한다. 새 lane에서 같은 사본을 조회할 수 있어야 한다. 병합·push 주체와 방법은 P 권한을 따르며 공유 기준 브랜치 직접 push를 강제하지 않는다. 외부 설치는 checkout별 외부 설치 경로와 연결을 준비하고 check한다. 로컬 절대 경로를 담은 연결의 공유 여부와 설치 파일의 commit/exclude 정책은 P에서 정한다.
 
 **⑤ 작은 작업으로 시운전.**
 

@@ -1,6 +1,6 @@
-# Customization guide (1.0 preview.3)
+# Customization guide (1.0 preview — unreleased correction)
 
-This guide accompanies `v1.0.0-preview.3`. Use the copy and guide from that same tag and verify its full commit SHA. To install the published `v1.0.0-preview.2`, use [its English guide](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/docs/customization.md) or [its Korean installer guide](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/ko/docs/customization.md). That tag does not support `--harness-root` or the new operating settings described here.
+This guide covers corrections after preview.3. Pin the copy and guide to the same reviewed commit SHA. For the published preview.3 use [its guide](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.3/docs/customization.md). To install the published `v1.0.0-preview.2`, use [its English guide](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/docs/customization.md) or [its Korean installer guide](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/ko/docs/customization.md). That tag does not support `--harness-root` or the new operating settings described here.
 
 Generated default check and check-evals commands use literal path quoting for PowerShell on Windows and POSIX sh elsewhere; use the named shell. Custom commands remain project-owned.
 
@@ -12,9 +12,9 @@ The same Korean upgrade guide now covers in-progress policy transitions and inst
 
 ## Korean installer: external placement and operating settings
 
-The unreleased Korean installer accepts `--harness-root S` alongside product checkout `--project-root P`. Place the pinned bundle at `S/.adaptive-sdd/`; neither root may contain the other. Settings, generated project documents and the lock stay in S. Product entry skills, marked AGENTS/CLAUDE blocks and `.agentics/adaptive-sdd.json` stay in P. External entry checks explicitly bind both roots and check the connection, manifest, lock and generated outputs. A changed bundle requires an explicit render with the reviewed S. Source commit authenticity is still the caller's responsibility.
+M (common principles), W (workflow) and P (product facts, settings and authority) remain the ownership structure. An external installation path is a storage option, not a fourth role or Skill input. The Korean installer accepts `--harness-root <external-install-path>` alongside product checkout `--project-root <product-checkout>`. Place the pinned bundle at `<external-install-path>/.adaptive-sdd/`; neither root may contain the other. Settings, generated project documents and the lock stay at the external installation location and remain project-owned. Product entry skills, marked AGENTS/CLAUDE blocks and `.agentics/adaptive-sdd.json` stay in P. External entry checks explicitly bind both roots and check the connection, manifest, lock and generated outputs. A changed bundle requires an explicit render with the reviewed installation path. Source commit authenticity is still the caller's responsibility.
 
-One S is bound to one checkout. A new worktree needs its own S/connection; tracker storage may be shared. Hosts unable to read S need another accessible placement. Migration does not delete old copies or overwrite hand edits: review KEPT output before accepting individual replacements. The project decides whether to commit or exclude local connection files. In-repository installation must reach the declared base branch through the project's authorized integration process, not a mandatory direct push to main. Preserve LF bytes when versioning S.
+One external installation location is bound to one checkout. A new worktree needs its own installation location/connection; tracker storage may be shared. Hosts unable to read the external installation need another accessible placement. Migration does not delete old copies or overwrite hand edits: review KEPT output before accepting individual replacements. The project decides whether to commit or exclude local connection files. In-repository installation must reach the declared base branch through the project's authorized integration process, not a mandatory direct push to main. Preserve LF bytes when versioning the external installation.
 
 Optional schema-1 settings retain defaults for existing installations:
 
@@ -106,11 +106,11 @@ Starting shape of the adapter:
 
 ## 1. Getting the copy and recording the pin
 
-1. Verify the full commit SHA behind this release with `git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.3^{}"`. Keep that SHA even if `v1-preview` advances later. Download `https://github.com/seok-jun/adaptive-agentic-sdd/archive/<commit-sha>.zip`, replacing `<commit-sha>` with that SHA. The archive contains one top-level folder.
+1. Select and review the full candidate commit SHA with `git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd refs/heads/v1-preview`. Keep that SHA even if `v1-preview` advances later. Download `https://github.com/seok-jun/adaptive-agentic-sdd/archive/<commit-sha>.zip`, replacing `<commit-sha>` with that SHA. The archive contains one top-level folder.
 2. Copy the archive's `methodology/` contents (`core.md`, `adaptation.md`, `supports/`, `manifest.json`) to `.adaptive-sdd/methodology/` and `LICENSE` to `.adaptive-sdd/LICENSE`, **byte for byte**. Keep the LICENSE (MIT) with the copy because it requires the copyright and permission notice to be retained. Do not rewrite the files with a text editor or an Agent's file-writing tool; a BOM or CRLF would change the hashes. Windows PowerShell example:
 
 ```powershell
-$sourceCommit = "<full commit SHA verified for v1.0.0-preview.3>"
+$sourceCommit = "<reviewed full commit SHA>"
 if ($sourceCommit -notmatch '^[0-9a-f]{40}$') { throw "Set sourceCommit to the reviewed full commit SHA." }
 $zip = "adaptive-sdd-$sourceCommit.zip"
 Invoke-WebRequest "https://github.com/seok-jun/adaptive-agentic-sdd/archive/$sourceCommit.zip" -OutFile $zip
@@ -145,7 +145,7 @@ cd .adaptive-sdd/methodology && sha256sum core.md adaptation.md supports/ordered
 
 On macOS, use `shasum -a 256` instead of `sha256sum`.
 
-5. Record the verified `v1.0.0-preview.3` tag, full commit SHA and manifest hash in the adapter's "Pin" section. For a future unreleased commit, record no tag. A tag or branch name alone cannot stand in for the source (`core.md` "Application and improvement observation").
+5. Record the full commit SHA and manifest hash in the adapter's "Pin" section. For this unreleased commit, record no tag; record a published tag only after verifying its commit. A tag or branch name alone cannot stand in for the source (`core.md` "Application and improvement observation").
 
 ## 2. Placing it in the project
 
