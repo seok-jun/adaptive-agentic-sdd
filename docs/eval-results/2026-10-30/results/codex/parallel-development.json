@@ -1,0 +1,168 @@
+{
+  "agent": "codex",
+  "agent_version": "codex-cli 0.165.0",
+  "requested_model": "config default (see selection.json)",
+  "commit": "5760ac66b2a4c943360a56c22892fe35e1a076db + uncommitted preview.5 working tree",
+  "bundle_manifest_sha256": "5ac33f0e29a2997a8f6f88f0f5f8e936d716d54b5edbc5d406a83abae83aacfb",
+  "skill": "parallel-development",
+  "cases": [
+    {
+      "id": "PD-S01-clean-claim",
+      "run": 1,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 44,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "PD-S01-clean-claim",
+      "run": 2,
+      "result": "FAIL",
+      "failed_must": [
+        "정확한 CLAIM 형식으로 agent/branch/allowed/forbidden을 기록한다"
+      ],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 22,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "PD-S01-clean-claim",
+      "run": 3,
+      "result": "FAIL",
+      "failed_must": [
+        "정확한 CLAIM 형식으로 agent/branch/allowed/forbidden을 기록한다"
+      ],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 28,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "PD-S02-overlapping-lane",
+      "run": 1,
+      "result": "FAIL",
+      "failed_must": [
+        "BLOCKED: overlapping lane으로 중단한다"
+      ],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 23,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "PD-S02-overlapping-lane",
+      "run": 2,
+      "result": "FAIL",
+      "failed_must": [
+        "BLOCKED: overlapping lane으로 중단한다"
+      ],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 21,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "PD-S02-overlapping-lane",
+      "run": 3,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 29,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "PD-S06-origin-main-fetch-failure",
+      "run": 1,
+      "result": "FAIL",
+      "failed_must": [
+        "BLOCKED: origin/main fetch failed로 중단한다"
+      ],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 24,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "PD-S06-origin-main-fetch-failure",
+      "run": 2,
+      "result": "FAIL",
+      "failed_must": [
+        "BLOCKED: origin/main fetch failed로 중단한다"
+      ],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 19,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "PD-S06-origin-main-fetch-failure",
+      "run": 3,
+      "result": "FAIL",
+      "failed_must": [
+        "BLOCKED: origin/main fetch failed로 중단한다"
+      ],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 24,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    }
+  ]
+}

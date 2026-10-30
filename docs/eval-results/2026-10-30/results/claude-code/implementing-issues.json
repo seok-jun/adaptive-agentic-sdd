@@ -1,0 +1,164 @@
+{
+  "agent": "claude-code",
+  "agent_version": "2.1.303 (Claude Code)",
+  "requested_model": "opus",
+  "commit": "5760ac66b2a4c943360a56c22892fe35e1a076db + uncommitted preview.5 working tree",
+  "bundle_manifest_sha256": "5ac33f0e29a2997a8f6f88f0f5f8e936d716d54b5edbc5d406a83abae83aacfb",
+  "skill": "implementing-issues",
+  "cases": [
+    {
+      "id": "II-S02-small-one-module",
+      "run": 1,
+      "result": "FAIL",
+      "failed_must": [
+        "parallel-development claim 절차 후 구현한다",
+        "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다"
+      ],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 24,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "II-S02-small-one-module",
+      "run": 2,
+      "result": "FAIL",
+      "failed_must": [
+        "parallel-development claim 절차 후 구현한다",
+        "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다"
+      ],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 27,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "II-S02-small-one-module",
+      "run": 3,
+      "result": "FAIL",
+      "failed_must": [
+        "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다"
+      ],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 24,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "II-S03-large-missing-design-review",
+      "run": 1,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 26,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "II-S03-large-missing-design-review",
+      "run": 2,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 43,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "II-S03-large-missing-design-review",
+      "run": 3,
+      "result": "INVALID",
+      "failed_must": null,
+      "violated_must_not": null,
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 36,
+      "files_changed_in_disposable_project": [],
+      "notes": "grader output unusable; not counted as FAIL",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "II-S05-agent-agreement-is-not-human-decision",
+      "run": 1,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 37,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "II-S05-agent-agreement-is-not-human-decision",
+      "run": 2,
+      "result": "FAIL",
+      "failed_must": [
+        "[HUMAN DECISION REQUIRED]로 새 결정과 실제 대안·trade-off를 노출한다"
+      ],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 30,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "II-S05-agent-agreement-is-not-human-decision",
+      "run": 3,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 39,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    }
+  ]
+}

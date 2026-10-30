@@ -1,0 +1,50 @@
+<!-- Generated file. Do not edit directly. For values, edit {{bundle_path}}/project.json and generate again. -->
+# {{project.name}} build and verification declaration
+
+W `skills/_shared/build-preflight.md` and the verification sections of the skills use these values. An empty value is not guessed; it stays unverified.
+
+| Item | Value |
+| --- | --- |
+| Build tool | {{#if build.tool}}{{build.tool}}{{else}}Not set{{/if}} |
+| JDK major | {{#if build.jdk_major}}{{build.jdk_major}}{{else}}Not set — leave empty if it is not a JVM build{{/if}} |
+| Additional JDK candidates | {{#each build.jdk_candidates}}`{{this}}` {{else}}None{{/each}} |
+| Module unit | {{#if build.module_unit}}{{build.module_unit}}{{else}}Not set{{/if}} |
+| Windows execution | {{#if build.windows_wrapper}}`{{build.windows_wrapper}}`{{else}}Not set{{/if}} |
+| Execution on other OSes | {{#if build.unix_wrapper}}`{{build.unix_wrapper}}`{{else}}Not set{{/if}} |
+| Clean command | {{#if build.clean}}`{{build.clean}}`{{else}}None — skip build cleanup during worktree cleanup and record the reason{{/if}} |
+| Static analysis | {{#if build.static_analysis}}{{build.static_analysis}}{{else}}None{{/if}} |
+| Instrumentation/device test paths | {{#each build.instrumentation_paths}}`{{this}}` {{else}}None{{/each}} |
+| Device procedure | {{#if build.device_procedure}}{{build.device_procedure}}{{else}}None — do not do device or emulator work{{/if}} |
+| CI | {{#if build.ci}}{{build.ci}}{{else}}None — the local commands below are the verification baseline{{/if}} |
+
+## Verification baseline
+
+| Change scope | Minimum verification |
+| --- | --- |
+{{#each build.verification}}| {{.scope}} | {{.commands}} |
+{{else}}{{#if build.checks}}| Separate verification | Apply the actors, methods and evidence below |
+{{else}}| Not set | Without a verification means, the acceptance criteria cannot be proven, so `BLOCKED` before implementation |
+{{/if}}
+{{/each}}
+
+If a verification baseline command cannot be run, do not substitute a local success for it. Write the commands that could not be run under `Unverified` in the closing summary.
+
+{{#if build.checks}}## Actors and verification evidence
+
+Apply the existing verification commands and the items below together. Adding a declaration does not by itself remove an existing required verification.
+
+| Scope | Method | Actor | Procedure/command | Evidence to keep | Required |
+| --- | --- | --- | --- | --- | --- |
+{{#each build.checks}}| {{.scope}} | {{.method}} | {{.actor}} | {{.instructions}} | {{.evidence}} | {{.required}} |
+{{/each}}
+For items a human performs, hand the verification target and procedure to the owner, and decide only after receiving the actual result, the person who checked, the time and the target identity. The fact that it was requested is not PASS. Optional items are not raised to required gates, and an unconfirmed required item is not treated as complete.
+{{/if}}
+## Test lifetime
+
+- New test policy: `{{build.test_mode}}`.
+{{#if build.test_format}}- Test format/execution basis: {{build.test_format}}
+{{/if}}{{#if temporary_tests}}- Temporary test preservation location: `{{build.test_preserve_at}}`. Preserve the tests, fixtures, execution commands/environment, results and the identity of the product inputs verified, look them up again, and then remove them from the product tree. After deletion, prove the correspondence between the final candidate and the inputs at execution time; if the removal changes the verification inputs, update the impact verification. Pass the preservation reference in the Packet.
+{{else}}{{#if no_new_tests}}- Do not create new tests. If there is no declared alternative evidence to prove the acceptance criteria and the PLAN findings, that work is BLOCKED. Existing required tests cannot be deleted, and not running them cannot be made PASS.
+{{else}}- Keep the needed regression tests in the product tree.
+{{/if}}{{/if}}
+Whether a test is temporary or permanent does not exempt it from the write boundary. Before implementation, map the allowed paths, actors and verification means, and switch policy through W's existing transition procedure.

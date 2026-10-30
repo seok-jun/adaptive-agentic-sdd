@@ -1,0 +1,34 @@
+<!-- Generated file. Do not edit directly. For values, edit {{bundle_path}}/project.json and generate again. -->
+# {{project.name}} issue writing application
+
+W `process/issue-writing-guide.md` is the source of the common forms of expression, the Mermaid/HTML conditions and the Issue body structure. This document declares the allowed and forbidden scope of evidence records and the Visual Spec storage location.
+
+## Evidence recording rules
+
+Evidence prefers references to the original. Under `Evidence recording rules` in W `process/issue-writing-guide.md`, the requirements a human provided and the decisions explicitly settled may be summarized, limited to what the work needs. They are not forbidden merely because they were conveyed in conversation; link their source, scope and time. Do not turn an investigation request or proposal into a decision. The protection scope below applies to all Issues, records, commit messages, source, test/eval fixtures, documents, logs, tool output, screenshots and temporary files.
+
+### What may be written as is
+
+{{#each evidence.allowed}}- {{this}}
+{{/each}}- `file:line` and source strings already committed to the repository
+- Measurements such as file size, character count and number of occurrences
+- **Category names** from which the content cannot be reconstructed
+
+### What is not copied
+
+{{#each evidence.forbidden}}- {{this}}
+{{/each}}- Conversation logs and their original text, partial quotes, translations and reconstructable summaries. Distinguish these from the minimal record of work requirements and settled decisions under the rules above
+- API keys, tokens, passwords, personal information
+
+If reproduction requires the same form as the original, create synthetic data with the same structure. Check for forbidden content just before recording, and read the record again afterwards to confirm. Remove forbidden content already recorded by a method the work tracking method allows; if it cannot be removed, tell a human.
+
+## Visual Spec
+
+{{#if visual_spec.repository}}- Repository: `{{visual_spec.repository}}`
+- Path: `{{visual_spec.path}}`
+- Check command: {{#if visual_spec.check_command}}`{{visual_spec.check_command}}`{{else}}None{{/if}}
+- Preview: {{#if visual_spec.preview}}{{visual_spec.preview}}{{else}}None{{/if}}
+
+Apply W's HTML Visual Spec, design PR and link rules to the repository above. The implementation baseline is the immutable commit HTML.
+{{else}}No Visual Spec repository is declared. Do not create an HTML Visual Spec; show UI changes with Mermaid, tables and short descriptions.
+{{/if}}

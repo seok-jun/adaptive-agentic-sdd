@@ -245,5 +245,8 @@ workflow gate를 변경한 case는 happy path뿐 아니라 해당 stop condition
 - runtime에서 소비되는 Markdown/resource/manifest/asset을 확장자만으로 non-runtime docs로 오판하지 않는지
 - 선언된 계측·기기 테스트 경로를 명시적 요구 없이 모든 owning-module 변경의 기본 gate로 추가하지 않는지
 - Issue가 명시한 더 넓은 verification command가 module-targeted 기본 최적화보다 우선하는지
+- `review.large_mode = single`에서 Review B·사람의 B 선택을 요구하지 않되, 독립 리뷰 1회와 blocker 0 진행 조건은 유지하는지
+- `review.blind_reviewer_selection = optional`에서 사람 선택이 없을 때만 자동 선택 조건으로 B reviewer를 고르고, 사람이 고른 reviewer를 쓸 수 없으면 자동 대체 없이 멈추는지
+- `sdd.medium_artifacts = condensed`에서 새 Medium만 README 한 장의 세 절로 쓰고 각 절의 필수 내용은 유지하며, Large로 다시 판정되면 검토 전에 네 문서 구조로 나누는지
 
 버그가 실제 agent 오작동으로 발견되면 수정 전에 그 오작동을 재현하는 eval case를 먼저 추가한다. 그 case가 실패하는 것을 확인한 뒤 규칙을 수정하고 다시 평가한다.

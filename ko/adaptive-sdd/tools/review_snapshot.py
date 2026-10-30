@@ -55,8 +55,9 @@ def select_body(data):
         heading = re.match(r"^ {0,3}##\s+(.+?)\s*#*\s*$", text)
         if heading:
             headings.append((index, heading[1]))
-    meta = [i for i, title in headings if title == "메타"]
-    records = [i for i, title in headings if title == "기록"]
+    # Tracker document headings of each published edition (ko: 메타/기록, en: Meta/Records).
+    meta = [i for i, title in headings if title in ("메타", "Meta")]
+    records = [i for i, title in headings if title in ("기록", "Records")]
     if len(meta) != 1 or len(records) != 1 or meta[0] >= records[0]:
         raise SnapshotError("tracker-body needs one ordered metadata and records heading")
     meta_end = next((i for i, _ in headings if i > meta[0]), records[0])

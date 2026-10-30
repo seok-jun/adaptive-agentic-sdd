@@ -1,0 +1,22 @@
+<!-- Generated file. Do not edit directly. For values, edit {{bundle_path}}/project.json and generate again. -->
+# {{project.name}} work tracking
+
+Execution Issues use the four execution grades. An Epic management document is distinguished by `Work type: Epic` in its body and `type:epic` (meta `type: epic` for local-docs), and has no grade. It links child Issues and is closed on evidence that the overall goal was achieved. Transition of an existing `grade:Epic` follows `Transition of existing Epics` in W `process/sdd/epic.md`.
+
+- Method: `{{tracker.kind}}` — read the Issues, comments, labels, assignees, PRs and closing references of the W procedures through the mapping table in W `{{bundle_path}}/workflow/tracker/{{tracker.kind}}.md`.
+{{#if tracker.root}}- tracker_root: `{{tracker.root}}`
+{{else}}{{#if tracker_is_local}}- tracker_root: Not set — procedures that create or read work items stop with `BLOCKED: tracker unavailable`
+{{/if}}{{/if}}{{#if tracker.repository}}- Repository: `{{tracker.repository}}`
+{{/if}}{{#if tracker_is_local}}{{#if tracker_external_id}}- ID: use the external ticket's `{{tracker.id_format}}` as is. Do not issue numbers automatically or increment them arbitrarily on a conflict. If the same ID exists, check the source and the existing work.
+{{else}}- ID format: `{{tracker.id_prefix}}-<number>`. A new number is the largest number in `items/` + 1; on a conflict, check again.
+{{/if}}{{#if tracker.child_id_rule}}- Child ID rule and issuing authority: {{tracker.child_id_rule}}
+{{else}}- No separate child ID rule. generated uses the same numbering scheme; external needs external child tickets or an explicit rule from a human. Do not invent suffixes.
+{{/if}}{{else}}- ID: use the Issue/PR numbers that GitHub actually issued. Do not search `items/`, and do not issue numbers or child numbers arbitrarily. An external ticket ID is a separate reference and does not replace the GitHub number.
+{{/if}}- Allowed authors: {{#each tracker.allowed_authors}}`{{this}}` {{else}}Not set — the author of a record cannot be checked in an observation re-review{{/each}}
+{{#if tracker_is_local}}- Merge method: {{#if tracker.merge_method}}`{{tracker.merge_method}}`{{else}}Not set — merge and merge-confirmation procedures stop with `BLOCKED: tracker operation unsupported`{{/if}}
+{{/if}}- Code remote: `{{git.remote}}`, base for new lanes: `{{git.base_branch}}`, product merge target: `{{git.merge_branch}}`.
+- SDD publication repository: {{#if review.repository}}`{{review.repository}}`{{else}}the current product repository P{{/if}}, remote: `{{review.remote}}`, publication branch: {{#if review.branch}}`{{review.branch}}`{{else}}the current Issue branch{{/if}}. Record the product branch and the publication branch as separate references.
+- The declarations above do not grant Git permissions. Actual creation, push and merge follow P's human judgment and delegations. The artifact must be retrievable at the remote exact SHA, and a local bare repository may also be used as the publication remote once reviewer access is confirmed.
+
+{{#if tracker.root}}`tracker_root` is not placed inside the worktree of any lane. If access or writing fails, stop the dependent work with `BLOCKED: tracker unavailable`.
+{{/if}}

@@ -146,6 +146,102 @@ class InstallerPolicyTests(unittest.TestCase):
                 self.save_values()
                 self.assertEqual(installer.load_values(self.project)["grade_mapping"], value)
 
+    # ---- execution profile knobs (preview.5) ----
+    def rendered_workflow(self):
+        code, output = self.command("render")
+        self.assertEqual(code, 0, output)
+        return (self.copy / "project" / "sdd-workflow.md").read_text(encoding="utf-8")
+
+    def test_profile_defaults_keep_previous_behavior_when_keys_are_absent(self):
+        # A project.json written before preview.5 has none of the profile keys.
+        for key in ("large_mode", "blind_reviewer_selection"):
+            self.values["review"].pop(key, None)
+        self.values.pop("sdd", None)
+        self.save_values()
+        cfg = installer.settings(installer.load_values(self.project))
+        self.assertEqual((cfg["review"]["large_mode"], cfg["review"]["blind_reviewer_selection"],
+                          cfg["sdd"]["medium_artifacts"]), ("dual", "required", "full"))
+        self.assertFalse(cfg["review_single"] or cfg["blind_selection_optional"] or cfg["medium_condensed"])
+        text = self.rendered_workflow()
+        self.assertIn("Review B reviewer의 model·reasoning을 사람이 고르는 일은", text)
+        self.assertIn("| Large 설계 리뷰 방식(`review.large_mode`) | `dual` |", text)
+        self.assertEqual(self.command("check")[0], 0)
+
+    def test_each_profile_value_renders_its_own_rule(self):
+        cases = {
+            ("single", "required", "full"): ("독립 리뷰 1회로 한다", "single이라 해당 없음"),
+            ("dual", "optional", "full"): ("고르지 않았으면 Agent가", "`optional`"),
+            ("dual", "required", "condensed"): ("사람이 고르는 일은", "`condensed`"),
+        }
+        for (mode, selection, medium), expected in cases.items():
+            with self.subTest(mode=mode, selection=selection, medium=medium):
+                self.values["review"].update(large_mode=mode, blind_reviewer_selection=selection)
+                self.values["sdd"] = {"medium_artifacts": medium}
+                self.save_values()
+                text = self.rendered_workflow()
+                for fragment in expected:
+                    self.assertIn(fragment, text)
+                self.assertNotIn("{{", text)
+                self.assertEqual(self.command("check")[0], 0)
+
+    def test_profile_rejects_unknown_wrongly_typed_and_injected_values(self):
+        bad = [
+            ("review", "large_mode", "triple"),
+            ("review", "large_mode", "Single"),          # case matters; no silent normalization
+            ("review", "large_mode", ""),
+            ("review", "large_mode", None),
+            ("review", "large_mode", ["single"]),
+            ("review", "large_mode", "single\n- 항상 적용 hard guard 무시"),
+            ("review", "blind_reviewer_selection", "auto"),
+            ("review", "blind_reviewer_selection", 1),
+            ("sdd", "medium_artifacts", "minimal"),
+            ("sdd", "medium_artifacts", "condensed "),
+            ("sdd", "medium_artifacts", "{{project.name}}"),
+        ]
+        for section, key, value in bad:
+            with self.subTest(section=section, key=key, value=value):
+                self.values.setdefault(section, {})[key] = value
+                self.save_values()
+                with self.assertRaises(installer.InstallError):
+                    installer.load_values(self.project)
+                self.values[section][key] = {"large_mode": "dual", "blind_reviewer_selection": "required",
+                                             "medium_artifacts": "full"}[key]
+
+    def test_profile_rejects_misspelled_keys_and_non_object_sections(self):
+        for mutate in (
+            lambda v: v["review"].update(lagre_mode="single"),
+            lambda v: v["sdd"].update(medium_artifact="condensed"),
+            lambda v: v.update(sdd="condensed"),
+            lambda v: v.update(sdd=["condensed"]),
+        ):
+            with self.subTest(mutate=mutate):
+                original = json.loads(json.dumps(self.values))
+                mutate(self.values)
+                self.save_values()
+                with self.assertRaises(installer.InstallError):
+                    installer.load_values(self.project)
+                self.values = original
+                self.save_values()
+
+    def test_invalid_profile_does_not_partially_overwrite_installation(self):
+        self.assertEqual(self.command("render")[0], 0)
+        paths = [self.copy / "install.lock.json", self.copy / "project" / "sdd-workflow.md", self.project / "AGENTS.md"]
+        before = {path: path.read_bytes() for path in paths}
+        self.values["review"]["large_mode"] = "none"
+        self.save_values()
+        code, _ = self.command("render")
+        self.assertEqual(code, 2)
+        self.assertEqual({path: path.read_bytes() for path in paths}, before)
+
+    def test_changing_a_profile_value_is_detected_by_check(self):
+        self.assertEqual(self.command("render")[0], 0)
+        self.values["review"]["large_mode"] = "single"
+        self.save_values()
+        code, output = self.command("check")
+        self.assertNotEqual(code, 0, output)
+        self.assertEqual(self.command("render")[0], 0)
+        self.assertEqual(self.command("check")[0], 0)
+
     def test_legacy_epic_mapping_cannot_partially_overwrite_installation(self):
         self.assertEqual(self.command("render")[0], 0)
         paths = [self.copy / "install.lock.json", self.copy / "project" / "sdd-workflow.md", self.project / "AGENTS.md"]
@@ -397,6 +493,163 @@ class InstallerPolicyTests(unittest.TestCase):
         self.assertEqual(cfg["git"], {"remote": "origin", "base_branch": "main", "merge_branch": "main"})
         self.assertEqual(cfg["build"]["test_mode"], "persistent")
         self.assertFalse(cfg["tracker_external_id"])
+
+
+EN_SOURCE = ROOT / "adaptive-sdd"
+HANGUL = re.compile("[가-힣]")
+TEMPLATE_TOKEN = re.compile(r"\{\{[^}]*\}\}")
+
+
+def bundle_files(root):
+    return sorted(p.relative_to(root).as_posix() for p in root.rglob("*")
+                  if p.is_file() and "__pycache__" not in p.parts)
+
+
+class EditionTests(unittest.TestCase):
+    """The English bundle (canonical from preview.5) and the Korean bundle stay structurally in sync."""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix="sdd-edition-test-", dir=ROOT)
+        self.project = Path(self.temp.name).resolve()
+        self.assertIn(ROOT, self.project.parents)
+        self.addCleanup(self.temp.cleanup)
+
+    def install(self, source, name):
+        project = self.project / name
+        project.mkdir()
+        shutil.copytree(source, project / ".adaptive-sdd", ignore=shutil.ignore_patterns("__pycache__"))
+        values = json.loads((project / ".adaptive-sdd/templates/project.example.json").read_text(encoding="utf-8"))
+        values["tracker"]["root"] = (self.project / "tracker").as_posix()
+        (project / ".adaptive-sdd/project.json").write_text(json.dumps(values, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        return project
+
+    def run_tool(self, project, *args):
+        with contextlib.redirect_stdout(io.StringIO()) as out:
+            code = installer.main([args[0], "--project-root", str(project), *args[1:]])
+        return code, out.getvalue()
+
+    def test_same_file_set_and_identical_shared_files(self):
+        self.assertEqual(bundle_files(EN_SOURCE), bundle_files(SOURCE))
+        for rel in ("tools/install.py", "tools/review_snapshot.py", "LICENSE"):
+            with self.subTest(rel=rel):
+                self.assertEqual((EN_SOURCE / rel).read_bytes(), (SOURCE / rel).read_bytes())
+        # The English bundle's M is the canonical root methodology, byte for byte.
+        for path in (ROOT / "methodology").rglob("*"):
+            if path.is_file():
+                rel = path.relative_to(ROOT).as_posix()
+                self.assertEqual((EN_SOURCE / rel).read_bytes(), path.read_bytes(), rel)
+
+    def test_english_bundle_has_no_korean_text(self):
+        for rel in bundle_files(EN_SOURCE):
+            if rel.startswith("tools/") or rel == "LICENSE":
+                # the shared tools recognize the Korean edition's markers on purpose;
+                # LICENSE carries the copyright holder's name and is identical in both editions
+                continue
+            with self.subTest(rel=rel):
+                self.assertIsNone(HANGUL.search((EN_SOURCE / rel).read_text(encoding="utf-8")))
+
+    def test_templates_keep_the_same_token_sequence(self):
+        for rel in bundle_files(SOURCE):
+            if rel.startswith("templates/") and rel.endswith(".tmpl"):
+                with self.subTest(rel=rel):
+                    ko = TEMPLATE_TOKEN.findall((SOURCE / rel).read_text(encoding="utf-8"))
+                    en = TEMPLATE_TOKEN.findall((EN_SOURCE / rel).read_text(encoding="utf-8"))
+                    self.assertEqual(en, ko)
+
+    def test_eval_cases_have_the_same_ids_in_both_editions(self):
+        for path in SOURCE.glob("workflow/skills/*/evals/cases.json"):
+            rel = path.relative_to(SOURCE)
+            with self.subTest(rel=rel.as_posix()):
+                ko = json.loads(path.read_text(encoding="utf-8"))
+                en = json.loads((EN_SOURCE / rel).read_text(encoding="utf-8"))
+                self.assertEqual(en["skill"], ko["skill"])
+                self.assertEqual([c["id"] for c in en["cases"]], [c["id"] for c in ko["cases"]])
+                for a, b in zip(en["cases"], ko["cases"]):
+                    self.assertEqual((len(a["must"]), len(a["must_not"])), (len(b["must"]), len(b["must_not"])), a["id"])
+
+    def test_headings_correspond_one_to_one(self):
+        heading = re.compile(r"^(#{1,6})\s", re.M)
+        for rel in bundle_files(SOURCE):
+            if rel.endswith((".md", ".tmpl")):
+                with self.subTest(rel=rel):
+                    ko = heading.findall(markdown_body((SOURCE / rel).read_text(encoding="utf-8")))
+                    en = heading.findall(markdown_body((EN_SOURCE / rel).read_text(encoding="utf-8")))
+                    self.assertEqual(en, ko)
+
+    def test_english_install_renders_checks_and_links_resolve(self):
+        project = self.install(EN_SOURCE, "en")
+        for command in ("render", "check", "check-evals"):
+            code, output = self.run_tool(project, command)
+            self.assertEqual(code, 0, output)
+        agents = (project / "AGENTS.md").read_text(encoding="utf-8")
+        self.assertIn("<!-- adaptive-sdd:begin (generated block; do not edit by hand) -->", agents)
+        self.assertIn("## Always-applied hard guard", agents)
+        for rel in ("AGENTS.md", "CLAUDE.md", ".claude/skills/implementing-issues/SKILL.md",
+                    ".adaptive-sdd/project/sdd-workflow.md", ".adaptive-sdd/project/build.md"):
+            with self.subTest(rel=rel):
+                text = (project / rel).read_text(encoding="utf-8")
+                self.assertIsNone(HANGUL.search(text))
+                self.assertNotIn("{{", text)
+        copy = project / ".adaptive-sdd"
+        for document in list((copy / "workflow").rglob("*.md")) + list((copy / "project").rglob("*.md")):
+            body = markdown_body(document.read_text(encoding="utf-8"))
+            for reference in re.findall(r"\[[^\]\n]+\]\(([^)\s]+)\)", body):
+                if re.match(r"\w+://|mailto:", reference) or any(c in reference for c in "{}<>"):
+                    continue
+                path, separator, fragment = unquote(reference).partition("#")
+                target = (document.parent / path).resolve() if path else document
+                with self.subTest(document=document.relative_to(copy).as_posix(), reference=reference):
+                    self.assertTrue(target.is_file(), f"Missing installed target: {target}")
+                    if separator:
+                        self.assertIn(fragment, markdown_anchors(target.read_text(encoding="utf-8")))
+
+    def test_switching_edition_replaces_the_block_instead_of_failing(self):
+        project = self.install(SOURCE, "switch")
+        (project / "AGENTS.md").write_text("# Product rules\n\nkeep me\n", encoding="utf-8")
+        self.assertEqual(self.run_tool(project, "render")[0], 0)
+        shutil.rmtree(project / ".adaptive-sdd" / "workflow")
+        for part in ("workflow", "templates", "methodology"):
+            shutil.rmtree(project / ".adaptive-sdd" / part, ignore_errors=True)
+            shutil.copytree(EN_SOURCE / part, project / ".adaptive-sdd" / part)
+        shutil.copyfile(EN_SOURCE / "MANIFEST.json", project / ".adaptive-sdd" / "MANIFEST.json")
+        code, output = self.run_tool(project, "render")
+        self.assertEqual(code, 0, output)
+        agents = (project / "AGENTS.md").read_text(encoding="utf-8")
+        self.assertTrue(agents.startswith("# Product rules\n\nkeep me\n"))
+        self.assertEqual(agents.count("adaptive-sdd:begin"), 1)
+        self.assertIn("generated block; do not edit by hand", agents)
+        self.assertEqual(self.run_tool(project, "check")[0], 0)
+
+    def test_unknown_marker_note_or_incomplete_strings_are_rejected(self):
+        project = self.install(SOURCE, "strings")
+        strings = project / ".adaptive-sdd/templates/strings.json"
+        original = json.loads(strings.read_text(encoding="utf-8"))
+        for mutate in (
+            lambda d: d.update(marker_note="edit freely"),
+            lambda d: d["skill_descriptions"].pop("finishing-issues"),
+            lambda d: d["skill_descriptions"].update({"extra-skill": "x"}),
+            lambda d: d["skill_descriptions"].update({"managing-issues": "line one\nline two"}),
+            lambda d: d.update(schema=2),
+        ):
+            with self.subTest(mutate=mutate):
+                data = json.loads(json.dumps(original))
+                mutate(data)
+                strings.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+                with self.assertRaises(installer.InstallError):
+                    installer.load_strings(project)
+
+    def test_damaged_block_with_both_edition_markers_is_rejected(self):
+        ko_begin = "<!-- adaptive-sdd:begin (생성 구간. 직접 고치지 않는다) -->"
+        en_begin = "<!-- adaptive-sdd:begin (generated block; do not edit by hand) -->"
+        end = "<!-- adaptive-sdd:end -->"
+        doubled = f"{ko_begin}\nA\n{end}\n{en_begin}\nB\n{end}\n"
+        self.assertIsNone(installer.extract_block(doubled, "block-md"))
+        with self.assertRaises(installer.InstallError):
+            installer.merge_block(doubled, "new\n", "block-md", "generated block; do not edit by hand")
+        # A look-alike note is not a marker: the block is appended, never spliced into the user's text.
+        fake = "<!-- adaptive-sdd:begin (anything) -->\nuser text\n"
+        merged = installer.merge_block(fake, "new\n", "block-md", "generated block; do not edit by hand")
+        self.assertTrue(merged.startswith(fake))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,16 @@
+# <ID> — Agent Execution Spec
+
+- Applied Decision and AC: <ID/item and revision in 02-to-be.md; do not copy the reasons>
+- Evidence and dependencies: <revision and path/symbol in 01-as-is.md or the code>
+- Premises, invariants and remaining risks: <the needed sections and base revision of README.md; inputs required for the current execution>
+- Applied P conventions and exceptions: <document, section, revision/time checked; also distinguish unconfirmed and not declared>
+
+## Implementation order and boundaries
+<exact target files/symbols and direct callers/callees, changes and preserved invariants, relevant schema/migration>
+
+## Verification and failure handling
+<references to existing Decisions/ACs and where they apply, test cases, commands and execution conditions, expected values of added fixtures and their differences, rollback/failure checkpoints. Do not copy the AC table, but keep unique expected values. Evidence after execution is a stable reference to the existing result>
+
+## Handoff
+<source references for remaining findings, open items and premises. Do not automatically carry a past PASS over to the current target>
+<distinguish the required contract of the current execution from detailed history needed only for re-investigation or audit. When shortening a list, check that the unique conditions of the removed part remain in the replacement location>

@@ -1,0 +1,27 @@
+<!-- Generated file. Do not edit directly. For values, edit {{bundle_path}}/project.json and generate again. -->
+# {{project.name}} agent application and document mapping
+
+Read W `process/agent-instruction-policy.md` conditionally for the common contract on instruction interpretation, context/document loading, UTF-8/shell and completion reports. It is not a full read required before every task.
+
+## Document mapping
+
+| Kind of information | Source of Truth | Action on conflict |
+| --- | --- | --- |
+| The current user's work instruction | The explicit user instruction in the current session | If it changes the goal of an existing Issue, update the Issue body too before implementation |
+| An Issue's goal, scope and acceptance criteria | The current body of that Issue | Do not change the scope through record entries or comments alone |
+| Common agent hard guard | The marked block in `AGENTS.md` | Per-agent files or Skills cannot relax it |
+| Work procedure | W skills and the W process documents the skills designate | If they conflict, do not implement; identify the conflicting documents |
+| Module dependencies and edit boundaries | `{{bundle_path}}/project/module-boundaries.md` | Do not cross a boundary unless it is an approved architecture change |
+| Current runtime behavior (as-is) | The checked revision of the declared `{{git.remote}}/{{git.base_branch}}` | If it differs from the business documents, treat the code as the observed as-is |
+| Product rules after implementation is complete | `{{docs.business}}` | If the Issue's to-be changes them, synchronize them with the final code at the completion step |
+| Basis of past decisions | `{{docs.reviews}}` | A historical record; it does not override current requirements |
+| SDD working documents | `{{docs.sdd}}` | A temporary plan; it does not change Issue or business rules on its own |
+
+## Language of human-facing artifacts
+
+{{#if project.artifact_language}}Write human-facing development artifacts (Issues, records, commit messages, SDD, reviews, business documents, completion summaries) in {{project.artifact_language}}. Keep code identifiers, file paths, commands, setting values, original tool output, proper nouns and established technical terms in their original form.
+{{else}}Not set — follow the existing repository convention.
+{{/if}}
+## External agents and tool permissions
+
+The fact that an Issue or checklist names an external agent or tool is not permission to install, authenticate or call that tool. Call it only when the current user instruction or a W procedure explicitly grants it.

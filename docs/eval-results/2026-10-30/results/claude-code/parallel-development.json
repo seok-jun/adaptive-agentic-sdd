@@ -1,0 +1,167 @@
+{
+  "agent": "claude-code",
+  "agent_version": "2.1.303 (Claude Code)",
+  "requested_model": "opus",
+  "commit": "5760ac66b2a4c943360a56c22892fe35e1a076db + uncommitted preview.5 working tree",
+  "bundle_manifest_sha256": "5ac33f0e29a2997a8f6f88f0f5f8e936d716d54b5edbc5d406a83abae83aacfb",
+  "skill": "parallel-development",
+  "cases": [
+    {
+      "id": "PD-S01-clean-claim",
+      "run": 1,
+      "result": "FAIL",
+      "failed_must": [
+        "claims/T-<번호>.claim을 이미 있으면 실패하는 방식으로 만든다"
+      ],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 32,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "PD-S01-clean-claim",
+      "run": 2,
+      "result": "FAIL",
+      "failed_must": [
+        "claims/T-<번호>.claim을 이미 있으면 실패하는 방식으로 만든다",
+        "정확한 CLAIM 형식으로 agent/branch/allowed/forbidden을 기록한다"
+      ],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 26,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "PD-S01-clean-claim",
+      "run": 3,
+      "result": "FAIL",
+      "failed_must": [
+        "정확한 CLAIM 형식으로 agent/branch/allowed/forbidden을 기록한다"
+      ],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 40,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "PD-S02-overlapping-lane",
+      "run": 1,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 25,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "PD-S02-overlapping-lane",
+      "run": 2,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 25,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "PD-S02-overlapping-lane",
+      "run": 3,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 26,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "PD-S06-origin-main-fetch-failure",
+      "run": 1,
+      "result": "FAIL",
+      "failed_must": [
+        "BLOCKED: origin/main fetch failed로 중단한다"
+      ],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 23,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "PD-S06-origin-main-fetch-failure",
+      "run": 2,
+      "result": "FAIL",
+      "failed_must": [
+        "BLOCKED: origin/main fetch failed로 중단한다"
+      ],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 41,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "PD-S06-origin-main-fetch-failure",
+      "run": 3,
+      "result": "FAIL",
+      "failed_must": [
+        "BLOCKED: origin/main fetch failed로 중단한다"
+      ],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 34,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    }
+  ]
+}

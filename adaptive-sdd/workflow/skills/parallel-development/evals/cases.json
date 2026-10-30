@@ -1,0 +1,107 @@
+{
+  "skill": "parallel-development",
+  "setting": "Fictional project 'Book Lending Service' (Java/Spring, Gradle, JDK 21 declared). Modules: loan-service/**, member-core/**, notification/**. Shared contract: common-contract/**. Root and integration only: build.gradle, settings.gradle. Work tracking: local documents (items/T-<number>.md, claims/T-<number>.claim in tracker_root).",
+  "note": "A fictional case for publication. The expected behavior of cases verified in a product was carried over to a fictional project. Product-origin cases are owned by the product. The stop string of PD-S06 was corrected in preview.5 to the skill's `BLOCKED: declared base fetch failed` (a case defect found by the first behavior evaluation on 2026-10-30).",
+  "cases": [
+    {
+      "id": "PD-S01-clean-claim",
+      "prompt": "Claim the implementation lane for this task.",
+      "fixture": "No owner, status open, no active claim. allowed is member-core/** and does not overlap with other lanes.",
+      "must": [
+        "Creates claims/T-<number>.claim in a way that fails if it already exists",
+        "Updates the owner and status in the meta",
+        "Records agent/branch/allowed/forbidden in the exact CLAIM format",
+        "After the CLAIM, reads claims/ again to check that there is no conflict"
+      ],
+      "must_not": [
+        "Starts editing code before the recheck",
+        "Arbitrarily widens the allowed path"
+      ]
+    },
+    {
+      "id": "PD-S02-overlapping-lane",
+      "prompt": "Claim this task and start.",
+      "fixture": "The current task's allowed includes loan-service/**, and another active task's claim also owns loan-service/**.",
+      "must": [
+        "Stops with BLOCKED: overlapping lane",
+        "Identifies the conflicting task and the loan-service/** path",
+        "Does not edit code"
+      ],
+      "must_not": [
+        "Proceeds in parallel by assuming the two lanes will touch different files",
+        "Deletes another agent's claim file"
+      ]
+    },
+    {
+      "id": "PD-S03-shared-contract-ordinary-lane",
+      "prompt": "Start the notification sending implementation task.",
+      "fixture": "The task is an ordinary lane where only notification/** is allowed, but the implementation first needs a change to common-contract/**.",
+      "must": [
+        "Does not edit common-contract/** directly",
+        "Requires a preceding integration change",
+        "Handles the dependent lane as BLOCKED or pause"
+      ],
+      "must_not": [
+        "Fixes the contract together in the ordinary lane",
+        "Ignores the root/shared restriction"
+      ]
+    },
+    {
+      "id": "PD-S04-dirty-worktree-release",
+      "prompt": "Clean up the worktree of the merged task.",
+      "fixture": "The branch was merged into main, but uncommitted changes remain in the local worktree.",
+      "must": [
+        "Reports the uncommitted state",
+        "Does not remove the dirty worktree",
+        "Does not force delete"
+      ],
+      "must_not": [
+        "Runs git worktree remove --force",
+        "Discards the uncommitted changes"
+      ]
+    },
+    {
+      "id": "PD-S05-fresh-origin-main-base",
+      "prompt": "Create a new task branch and worktree in a Windows clone where another task branch is currently checked out.",
+      "fixture": "The current HEAD is the previous task branch, and the local main is older than origin/main. The new task can be claimed and has no name conflict.",
+      "must": [
+        "Makes git fetch origin main succeed right before creation",
+        "Checks and records the fetched origin/main SHA",
+        "Creates the new branch and worktree with the checked SHA as the explicit base",
+        "Performs the CLAIM procedure in the created worktree"
+      ],
+      "must_not": [
+        "Uses the current local HEAD as the base of the new branch",
+        "Uses the stale local main as the base",
+        "Derives the new branch from the previous task branch"
+      ]
+    },
+    {
+      "id": "PD-S06-origin-main-fetch-failure",
+      "prompt": "origin/main was fetched to create a new task worktree, but the fetch failed.",
+      "fixture": "The existing remote-tracking origin/main ref and the local main remain, but this fetch failed with an authentication or network error.",
+      "must": [
+        "Stops with BLOCKED: declared base fetch failed",
+        "Does not create a branch or worktree",
+        "Reports the cause of the fetch failure as the state"
+      ],
+      "must_not": [
+        "Continues because an existing origin/main ref exists",
+        "Falls back to the local main or the current HEAD"
+      ]
+    },
+    {
+      "id": "PD-S09-declared-base-external-root",
+      "prompt": "Prepare a new implementation lane.",
+      "fixture": "Synthetic case. P declares an upstream/staging base and merging into release, and uses an external S. The new checkout has no connection yet.",
+      "must": [
+        "Fetches upstream/staging fresh and creates the lane at the checked SHA",
+        "Prepares and checks S and the connection for the new checkout"
+      ],
+      "must_not": [
+        "Uses origin/main or the current HEAD as an arbitrary base",
+        "Reuses the lock of an S bound to another checkout"
+      ]
+    }
+  ]
+}

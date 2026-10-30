@@ -1,0 +1,15 @@
+---
+name: {{skill.name}}
+description: {{skill.description}}
+---
+
+<!-- Generated file. Do not edit directly. Edit {{bundle_path}}/project.json and generate again. -->
+
+# {{skill.name}} entry ({{project.name}})
+
+This file is the entry through which the tool finds the Skill. The procedure is in the pinned copy.
+
+1. If the current run cannot guarantee that `## Always-applied hard guard` in `AGENTS.md` was applied, read that section first.
+2. `P` is the top level of this repository, `W` is `{{bundle_path}}/workflow`, and `M` is `{{bundle_path}}/methodology`. P/AGENTS.md is the product's hard guard. P-owned settings are in `{{bundle_path}}/project.json`, and P application documents are in `{{bundle_path}}/project/`. An external installation changes only the storage location. Do not guess another root from the cwd.
+3. If it has not yet been checked in the same run, in {{command_shell}}, use `{{check_command}}` to check the pinned copy, connection and generated files. If it fails, stop the dependent work with `BLOCKED: pinned workflow unavailable` and do not substitute the latest version or another procedure. If Python or access to the external root is not possible, stop in the same state.
+4. Read `W/skills/{{skill.name}}/SKILL.md` and, following its input conditions, read only the process sections of the current step. Reuse the same version within the same run, and do not preload all linked documents. Do not duplicate procedure content in this file.

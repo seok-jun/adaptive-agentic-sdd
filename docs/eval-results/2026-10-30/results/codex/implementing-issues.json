@@ -1,0 +1,160 @@
+{
+  "agent": "codex",
+  "agent_version": "codex-cli 0.165.0",
+  "requested_model": "config default (see selection.json)",
+  "commit": "5760ac66b2a4c943360a56c22892fe35e1a076db + uncommitted preview.5 working tree",
+  "bundle_manifest_sha256": "5ac33f0e29a2997a8f6f88f0f5f8e936d716d54b5edbc5d406a83abae83aacfb",
+  "skill": "implementing-issues",
+  "cases": [
+    {
+      "id": "II-S02-small-one-module",
+      "run": 1,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 25,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "II-S02-small-one-module",
+      "run": 2,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 47,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "II-S02-small-one-module",
+      "run": 3,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 44,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "II-S03-large-missing-design-review",
+      "run": 1,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 37,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "II-S03-large-missing-design-review",
+      "run": 2,
+      "result": "FAIL",
+      "failed_must": [
+        "현재 exact SHA의 required design review 근거가 없음을 BLOCKED로 보고한다"
+      ],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 22,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "II-S03-large-missing-design-review",
+      "run": 3,
+      "result": "FAIL",
+      "failed_must": [
+        "현재 exact SHA의 required design review 근거가 없음을 BLOCKED로 보고한다"
+      ],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 26,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "II-S05-agent-agreement-is-not-human-decision",
+      "run": 1,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 36,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "II-S05-agent-agreement-is-not-human-decision",
+      "run": 2,
+      "result": "FAIL",
+      "failed_must": [
+        "[HUMAN DECISION REQUIRED]로 새 결정과 실제 대안·trade-off를 노출한다"
+      ],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 25,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "II-S05-agent-agreement-is-not-human-decision",
+      "run": 3,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 46,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    }
+  ]
+}

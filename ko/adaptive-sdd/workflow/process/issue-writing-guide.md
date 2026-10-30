@@ -172,7 +172,7 @@ HTML이 필요한 Issue는 다음 순서로 처리한다.
 3. commit SHA가 포함된 immutable permalink를 확보한다.
 4. 앱 Issue 본문에 `## Visual Spec`을 추가한다.
 5. 구현 시작 전에 링크가 immutable permalink인지 확인한다.
-6. 아래 `디자인 PR 병합·배포·정리`를 마친 뒤 Visual Spec 등록 완료를 보고한다. 앱 구현 완료까지 디자인 branch를 보관하지 않는다.
+6. 위 `디자인 PR 병합·배포·정리`를 마친 뒤 Visual Spec 등록 완료를 보고한다. 앱 구현 완료까지 디자인 branch를 보관하지 않는다.
 
 Issue 본문 형식:
 

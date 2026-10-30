@@ -95,6 +95,11 @@
   "review": {
     "repository": "",
     "remote": "",
-    "branch": ""
+    "branch": "",
+    "large_mode": "dual",
+    "blind_reviewer_selection": "required"
+  },
+  "sdd": {
+    "medium_artifacts": "full"
   }
 }

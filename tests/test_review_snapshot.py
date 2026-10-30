@@ -52,6 +52,29 @@ class ReviewSnapshotTests(unittest.TestCase):
         (self.repo / "item.md").write_text("different working tree", encoding="utf-8")
         snapshot.check(self.repo, self.bundle, identity)
 
+    def test_english_tracker_headings_are_recognized_and_records_hidden(self):
+        source = (b"# T-2 Work\n\n## Meta\nstatus: open\n## Goal\nConfirm the cancellation evidence.\n"
+                  b"## Records\nA verdict: PASS\nprior finding A-456\n")
+        (self.repo / "item-en.md").write_bytes(source)
+        self.run_git("add", "--", "item-en.md")
+        self.run_git("-c", "user.name=Snapshot Test", "-c", "user.email=snapshot@example.invalid", "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", "English fixture")
+        commit = self.run_git("rev-parse", "HEAD").decode("ascii").strip()
+        snapshot.create(self.repo, commit, [{"path": "item-en.md", "kind": "tracker-body"}], self.bundle)
+        output = (self.bundle / "files/0001.md").read_bytes()
+        self.assertEqual(output, b"# T-2 Work\n\n## Goal\nConfirm the cancellation evidence.\n")
+        self.assertNotIn(b"A-456", output)
+        self.assertNotIn(b"status: open", output)
+
+    def test_mixed_or_duplicated_edition_headings_are_rejected(self):
+        # Two metadata headings (one per edition) must not let a records section slip through.
+        source = "# T-3\n\n## 메타\nstatus: open\n## Meta\nx\n## 목표\n본문\n## Records\nA verdict: PASS\n".encode("utf-8")
+        (self.repo / "item-mixed.md").write_bytes(source)
+        self.run_git("add", "--", "item-mixed.md")
+        self.run_git("-c", "user.name=Snapshot Test", "-c", "user.email=snapshot@example.invalid", "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", "Mixed fixture")
+        commit = self.run_git("rev-parse", "HEAD").decode("ascii").strip()
+        with self.assertRaises(snapshot.SnapshotError):
+            snapshot.create(self.repo, commit, [{"path": "item-mixed.md", "kind": "tracker-body"}], self.bundle)
+
     def test_tampered_output_and_added_file_are_rejected(self):
         identity = snapshot.create(self.repo, self.commit, self.spec, self.bundle)
         path = self.bundle / "files/0001.md"

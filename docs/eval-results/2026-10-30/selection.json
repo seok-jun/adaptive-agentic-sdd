@@ -1,0 +1,57 @@
+{
+  "purpose": "First executed behavior run of the Korean workflow cases (baseline, not a comparison). Fixed before any preview.5 workflow edits.",
+  "fixed_at": "2026-10-30",
+  "base_commit": "5760ac66b2a4c943360a56c22892fe35e1a076db",
+  "base_tag": "v1.0.0-preview.4",
+  "evaluated_target": "preview.5 working tree at run time; identified by ko/adaptive-sdd/MANIFEST.json sha256 recorded in results",
+  "case_source": "ko/adaptive-sdd/workflow/skills/<skill>/evals/cases.json",
+  "selection_rule": "Three cases per skill: one ordinary path plus stop-condition or human-judgment cases. Chosen before seeing any result; not changed after runs start.",
+  "cases": {
+    "managing-issues": [
+      "MI-S01-convenience-bug",
+      "MI-S03-unvalidated-idea",
+      "MI-S05-conversation-evidence-redaction"
+    ],
+    "implementing-issues": [
+      "II-S02-small-one-module",
+      "II-S03-large-missing-design-review",
+      "II-S05-agent-agreement-is-not-human-decision"
+    ],
+    "parallel-development": [
+      "PD-S01-clean-claim",
+      "PD-S02-overlapping-lane",
+      "PD-S06-origin-main-fetch-failure"
+    ],
+    "finishing-issues": [
+      "FI-S02-required-check-failing",
+      "FI-S11-reuse-cannot-mask-invalid-evidence",
+      "FI-S13-active-sdd-consumer"
+    ]
+  },
+  "agents": [
+    {
+      "id": "claude-code",
+      "requested_model": "opus (alias)",
+      "requested_source": "--model flag",
+      "invocation": "claude -p --setting-sources project --no-session-persistence --model opus --output-format json, read-only tools only"
+    },
+    {
+      "id": "codex",
+      "requested_model": "gpt-6-astra",
+      "requested_reasoning": "medium",
+      "requested_source": "~/.codex/config.toml",
+      "invocation": "codex exec --sandbox read-only --ephemeral --skip-git-repo-check"
+    }
+  ],
+  "runs_per_case": 3,
+  "total_runs": 72,
+  "retry_policy": "No automatic retry. An environment failure is recorded as INVALID, not FAIL; at most one bounded diagnostic retry is recorded separately.",
+  "isolation": "Each run uses a fresh disposable copy of a project installed from the evaluated bundle with the example project.json values. No real tracker, remote, or product data.",
+  "input_format": "skill-evals.md: [EVAL MODE] / [FIXTURE] / [USER]",
+  "grading": "Cross-graded: Claude answers graded by Codex, Codex answers graded by Claude, against must / must_not / stop condition by meaning. Literal markers (Priority, grade, paths, [CLAIM]) are checked literally. Grader output is recorded with the result.",
+  "known_limits": [
+    "The user-level CLAUDE.md of the operator machine (tone and Korean-language instructions) is still loaded by claude -p; --setting-sources project removes user settings and hooks only.",
+    "Served model identity is taken from CLI output where available; otherwise marked unconfirmed.",
+    "English cases receive static checks only in this run."
+  ]
+}

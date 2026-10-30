@@ -1,0 +1,155 @@
+{
+  "agent": "codex",
+  "agent_version": "codex-cli 0.165.0",
+  "requested_model": "config default (see selection.json)",
+  "commit": "5760ac66b2a4c943360a56c22892fe35e1a076db + uncommitted preview.5 working tree",
+  "bundle_manifest_sha256": "5ac33f0e29a2997a8f6f88f0f5f8e936d716d54b5edbc5d406a83abae83aacfb",
+  "skill": "managing-issues",
+  "cases": [
+    {
+      "id": "MI-S01-convenience-bug",
+      "run": 1,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 46,
+      "files_changed_in_disposable_project": [],
+      "notes": ""
+    },
+    {
+      "id": "MI-S01-convenience-bug",
+      "run": 2,
+      "result": "FAIL",
+      "failed_must": [
+        "Priority를 P2로 판정한다",
+        "SDD grade를 Small로 판정한다",
+        "Mermaid와 HTML Visual Spec을 만들지 않는다",
+        "메타의 priority와 grade를 본문 값과 같게 각각 하나씩 적는다"
+      ],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 30,
+      "files_changed_in_disposable_project": [],
+      "notes": ""
+    },
+    {
+      "id": "MI-S01-convenience-bug",
+      "run": 3,
+      "result": "FAIL",
+      "failed_must": null,
+      "violated_must_not": null,
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 31,
+      "files_changed_in_disposable_project": [],
+      "notes": "Regraded once during an interrupted resume (harness error before results were written); the verdict FAIL is taken from that run log, item-level details were lost. Not regraded again.",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "MI-S03-unvalidated-idea",
+      "run": 1,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 48,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "MI-S03-unvalidated-idea",
+      "run": 2,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 45,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "MI-S03-unvalidated-idea",
+      "run": 3,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 44,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "MI-S05-conversation-evidence-redaction",
+      "run": 1,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 55,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "MI-S05-conversation-evidence-redaction",
+      "run": 2,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 59,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "MI-S05-conversation-evidence-redaction",
+      "run": 3,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 33,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+<!-- Generated file. Do not edit directly. For values, edit {{bundle_path}}/project.json and generate again. -->
+# {{project.name}} SDD application declaration
+
+Read directly the pinned W `{{bundle_path}}/workflow/process/sdd/grade.md` for the common classification, `{{bundle_path}}/workflow/process/sdd/entry.md` for implementation entry, and `{{bundle_path}}/workflow/process/sdd/issue.md` for Issues and human judgment. Use the guide in `{{bundle_path}}/workflow/process/sdd-workflow.md` only when you need the paths for the remaining steps. This document owns the project's application profile, actual paths, permissions and required verification values. It does not duplicate common rules or create separate gates.
+
+## Document roles
+
+| Kind | Location | Lifetime | Role |
+| --- | --- | --- | --- |
+| Business documents | `{{docs.business}}` | Persistent | Current behavior maintained after implementation is complete |
+| SDD working documents | `{{docs.sdd}}` | During the work | AS-IS evidence, Human Decision Contract, Agent Execution Spec |
+| Decision records | `{{docs.reviews}}` | Persistent | Basis and alternatives of past decisions |
+| Structure documents | `{{docs.architecture}}` | Persistent | Module responsibilities, dependencies, work boundaries |
+| Document index | `{{docs.index}}` | Persistent | Target of SDD link cleanup |
+
+## SDD grade
+
+W is the source of the four common execution grades (Trivial, Small, Medium, Large) and the general automatic escalation. An Epic is an optional management unit, not an execution grade or a required preceding step. This project adds the concrete mapping below.
+
+### Automatic escalation
+
+Add the following mapping to W's general automatic escalation and apply **the highest applicable execution grade**. The common security, DB and cost criteria also apply as is. Creating a new package or module alone does not force creating or splitting an Epic.
+
+| Change | Minimum grade |
+| --- | --- |
+{{#each grade_mapping}}| {{.change}} | {{.min_grade}} |
+{{else}}| Not set — no project mapping. Apply only the common criteria | — |
+{{/each}}
+
+This mapping does not lower the common risk criteria.
+
+## Implementation start conditions
+
+Apply W's `## Implementation start conditions`. Read Issues, labels, claims and blocked state from the work tracking method declared in `tracker.md`.
+
+## Artifacts and gates by grade
+
+Apply W's artifacts and gates by execution grade. There is no design-phase human approval step for a Large AS-IS or PLAN. Human judgment happens at the points below.
+
+Creating or splitting an Epic requires no independent review or breakdown publication gate. An open question by itself does not block the start of a child Issue's investigation; put a dependency only on the later phase that needs its conclusion. Verify a common change, including the work that uses it and its transition impact, in the execution Issue that owns it, and reuse an upstream analysis after checking its base revision, scope of application and premises. The overall policy follows W's `Epic management unit` and `Reusing existing analysis`.
+
+### Human judgment points
+
+This declaration does not exempt the `Human judgment` requirements in M `core.md` (stop at an unresolved human judgment, name the judgment points, an agent does not create human decisions). This project's judgment points are as follows.
+
+1. **Human Decision blocker**: When a new important product/design Decision, a change in the scope of an existing Decision, or competing options in product meaning, ownership, failure behavior or acceptance interpretation are found, stop the affected work with `[HUMAN DECISION REQUIRED]`. When a human states the decision, the agent reflects it in the Issue body or the relevant SDD and resumes. Agent agreement, a review PASS or a general instruction to proceed does not replace this decision.
+{{#if human_judgment.large_epic_merge}}2. **Large merge**: Merge a Large execution change only when a human merges it directly or explicitly instructs the merge of that change. Do not merge on a review PASS, passing CI or a general instruction to proceed alone. The setting key `human_judgment.large_epic_merge` is kept for compatibility with existing projects. The human decisions and merge authority of existing Epic work are not exempted by the transition alone.
+{{/if}}{{#each human_judgment.points}}- **Additional judgment point**: {{this}}
+{{/each}}
+
+{{#if review_single}}Large design review is one independent review, following `Execution profile` below. Review B and its reviewer selection do not apply.
+{{else}}{{#if blind_selection_optional}}If a human chooses the Review B reviewer, use that choice; if not, the agent chooses one by the automatic selection conditions of W [Design review](../workflow/process/design-review.md#large-design-review-mode). This selection is not an approval step.
+{{else}}A human choosing the model and reasoning of the Review B reviewer is not an approval step but part of W [Design review](../workflow/process/design-review.md#large-design-dual-independent-review), and it stays as is.
+{{/if}}{{/if}}
+
+## Execution profile
+
+These are the `review.large_mode`, `review.blind_reviewer_selection` and `sdd.medium_artifacts` values of `project.json`. The defaults are the same as the earlier behavior. None of these values reduces M's human-judgment requirements, automatic grade escalation, required verification, the CODE Review or the human judgment for a Large merge. A human changes the values in `project.json` and generates again.
+
+| Setting | Current value | Source |
+| --- | --- | --- |
+| Large design review mode (`review.large_mode`) | `{{review.large_mode}}` | W [Design review mode](../workflow/process/design-review.md#large-design-review-mode) |
+| Review B reviewer selection (`review.blind_reviewer_selection`) | `{{review.blind_reviewer_selection}}`{{#if review_single}} — not applicable because single{{/if}} | W [Design review mode](../workflow/process/design-review.md#large-design-review-mode) |
+| Medium SDD layout (`sdd.medium_artifacts`) | `{{sdd.medium_artifacts}}` | W [Medium condensed layout](../workflow/process/sdd-artifacts.md#medium-condensed-layout) |
+
+### Recorded delegations
+
+Only a delegation for which a human wrote down the scope, date and the person who confirmed it counts as a human decision, within that scope. An instruction to proceed without a scope is not a decision. An agent does not create, widen or confirm a delegation. A human writes delegations in `project.json` and generates again.
+
+| Scope | Date | Confirmed by |
+| --- | --- | --- |
+{{#each human_judgment.delegations}}| {{.scope}} | {{.date}} | {{.confirmed_by}} |
+{{else}}| None | — | — |
+{{/each}}
+
+## Verification Strategy
+
+Apply the Verification Strategy, the review gate by grade and the verification sequencing of W [Verification contract](../workflow/process/verification.md) to the current step. The actual minimum commands follow the verification baseline in `build.md`.
+
+## Parallel work
+
+Apply W's parallel-development skill. The actual module/path ownership is `module-boundaries.md`.
+
+- worktree root: `{{#if worktree_root}}{{worktree_root}}{{else}}Not set — a short absolute path must be chosen before parallel lanes are created{{/if}}`
+
+## Stabilization-period token diagnostic
+
+`Token diagnostic mode: {{token_diagnostic}}`
+
+Record the matching START/BLOCKED/RESUME/END of W [token-diagnostic](../workflow/process/token-diagnostic.md) only when it is `ENABLED` and the host has an authoritative goal tracker value. General start, handoff and closing observations follow [observations](../workflow/process/observations.md) and are kept regardless of this mode.
+
+## Boundary between the external procedure and the project
+
+The project hard guard, the concrete module/technology application, the human judgment points above and the required verification are owned by the project. If the pinned information of the W and M copies cannot be confirmed, do not substitute the latest version (`{{bundle_path}}/install.lock.json`).

@@ -1,6 +1,6 @@
-# 설치와 커스터마이징 안내 (1.0 preview.4)
+# 설치와 커스터마이징 안내 (1.0 preview.5)
 
-이 안내는 M·W·P 설치 경로 보정이 포함된 `v1.0.0-preview.4`를 다룬다. 태그의 전체 commit SHA를 확인하고 사본과 안내를 그 commit으로 고정한다. 공개된 preview.3은 [태그의 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.3/ko/docs/customization.md)를 따른다. 공개된 `v1.0.0-preview.2`를 설치하려면 [해당 태그의 한국어 설치 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/ko/docs/customization.md) 또는 [영문 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/docs/customization.md)를 사용한다. 그 태그는 여기서 설명하는 `--harness-root`와 새 운영 설정을 지원하지 않는다.
+이 안내는 실행 프로필(설정 3개)·용어집·영문 전체판이 포함된 `v1.0.0-preview.5`를 다룬다. 태그의 전체 commit SHA를 확인하고 사본과 안내를 그 commit으로 고정한다. 공개된 preview.4는 [태그의 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.4/ko/docs/customization.md), preview.3은 [태그의 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.3/ko/docs/customization.md)를 따른다. 이 preview부터 같은 설치 방식의 영문 번들(`adaptive-sdd/`)과 [영문 안내](../../docs/customization.md)가 있으며 영문이 원본이다. 공개된 `v1.0.0-preview.2`를 설치하려면 [해당 태그의 한국어 설치 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/ko/docs/customization.md) 또는 [영문 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/docs/customization.md)를 사용한다. 그 태그는 여기서 설명하는 `--harness-root`와 새 운영 설정을 지원하지 않는다.
 
 생성된 기본 check/check-evals 명령은 Windows에서는 PowerShell, 그 외에서는 POSIX sh의 경로 리터럴 인용을 사용한다. 표시된 셸에서 실행한다. 사용자 지정 명령의 인용은 프로젝트가 관리한다.
 
@@ -31,10 +31,10 @@
 
 기본은 저장소 안 설치다. 외부 설치를 선택하면 아래 파일 복사의 목적지를 제품 checkout 밖의 전용 설치 경로 아래 `.adaptive-sdd/`로 바꾸고 다음 절의 명시적 root 옵션을 사용한다. OS junction·하드링크는 필요하지 않다.
 
-`git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.4^{}"`로 이 릴리스의 전체 commit SHA를 확인해 고정한다. 이후 `v1-preview` 브랜치가 이동해도 확인한 SHA를 유지한다. 그 commit의 소스 압축 파일을 받아 `ko/adaptive-sdd/`를 프로젝트의 `.adaptive-sdd/`로 **바이트 그대로** 복사한다. 텍스트 편집 도구나 Agent의 파일 쓰기 도구로 다시 쓰지 않는다. Windows PowerShell 예:
+`git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.5^{}"`로 이 릴리스의 전체 commit SHA를 확인해 고정한다. 이후 `v1-preview` 브랜치가 이동해도 확인한 SHA를 유지한다. 그 commit의 소스 압축 파일을 받아 `ko/adaptive-sdd/`를 프로젝트의 `.adaptive-sdd/`로 **바이트 그대로** 복사한다. 텍스트 편집 도구나 Agent의 파일 쓰기 도구로 다시 쓰지 않는다. Windows PowerShell 예:
 
 ```powershell
-$sourceCommit = "<v1.0.0-preview.4에서 확인한 전체 commit SHA>"
+$sourceCommit = "<v1.0.0-preview.5에서 확인한 전체 commit SHA>"
 if ($sourceCommit -notmatch '^[0-9a-f]{40}$') { throw "sourceCommit에 검토한 전체 commit SHA를 입력하세요." }
 $zip = Join-Path $env:TEMP "adaptive-sdd-$sourceCommit.zip"
 Invoke-WebRequest "https://github.com/seok-jun/adaptive-agentic-sdd/archive/$sourceCommit.zip" -OutFile $zip
@@ -58,7 +58,7 @@ M·W·P는 각각 공통 원칙·실행 절차·제품 사실과 설정의 소�
 
 ```text
 python -I -B <외부 설치 경로>/.adaptive-sdd/tools/install.py init --project-root <제품 checkout> --harness-root <외부 설치 경로>
-python -I -B <외부 설치 경로>/.adaptive-sdd/tools/install.py render --project-root <제품 checkout> --harness-root <외부 설치 경로> --source-tag v1.0.0-preview.4 --source-commit <확인한 SHA>
+python -I -B <외부 설치 경로>/.adaptive-sdd/tools/install.py render --project-root <제품 checkout> --harness-root <외부 설치 경로> --source-tag v1.0.0-preview.5 --source-commit <확인한 SHA>
 python -I -B <외부 설치 경로>/.adaptive-sdd/tools/install.py check --project-root <제품 checkout> --harness-root <외부 설치 경로>
 ```
 
@@ -83,6 +83,8 @@ P 소유 설정·적용 문서·lock은 외부 설치 경로에, `.agentics/adap
 | `routing.role_defaults` | `role, model, reasoning` 목록. role은 PLAN/IMPLEMENT/REVIEW/TEST_DOCS/FINISH. 선호이며 qualification이나 B의 사람 선택을 대체하지 않음 |
 | `routing.capabilities` | `host, model, tier, reasoning, source, identity, valid_until` 목록. tier는 cheap/strong/frontier, 기한은 timezone 포함 ISO 시각. 선택 시 실제 원천·freshness·host 지원을 확인 |
 | `routing.qualification_records` | 별도 role qualification 기록 참조. capability와 구분 |
+
+실행 프로필 세 값(`review.large_mode`, `review.blind_reviewer_selection`, `sdd.medium_artifacts`)은 생략하면 기본값(`dual`, `required`, `full`)으로, 이전 preview와 같은 동작이다. 정해진 값 밖이거나 `review`·`sdd`에 모르는 키가 있으면 `render`가 거부한다(오타가 조용히 기본값으로 남지 않게 하기 위해서다). 이 값들은 W를 가볍게 하는 쪽으로만 열려 있으며 M의 사람 판단 요건, 등급 자동 격상, 필수 검증, CODE Review, Large 병합의 사람 판단은 줄이지 않는다. 바꾼 값은 새로 시작하는 검토·SDD부터 적용된다. 규칙의 원본은 W [설계 리뷰 방식](../adaptive-sdd/workflow/process/design-review.md#large-설계-리뷰-방식)과 [Medium 축약 배치](../adaptive-sdd/workflow/process/sdd-artifacts.md#medium-축약-배치)다.
 
 `build.verification`의 기존 명령과 `build.checks`는 함께 적용된다. 수동 결과는 대상·확인자·시점·관찰 증거를 확보해야 하며 필수 미확인은 완료가 아니다. temporary는 테스트/fixture·실행 근거를 보존·재조회한 뒤 제거하며 최종 코드와 입력 대응을 증명한다. none도 완료 기준과 PLAN finding을 증명할 동등 근거가 없으면 차단한다. 새 설정은 과거 지시를 묵시적으로 덮지 않으며 진행 중 적용은 기존 정책 전환 절차를 따른다.
 
@@ -110,6 +112,9 @@ python -I -B .adaptive-sdd/tools/install.py init --project-root .
 | `evidence` | 그대로 적어도 되는 근거와 옮기면 안 되는 것 | 사람 |
 | `visual_spec` | HTML Visual Spec 저장소(없으면 비워 둔다) | 사람 |
 | `token_diagnostic` | `ENABLED` 또는 `DISABLED` | 사람 |
+| `review.large_mode` | Large 설계 리뷰 방식. `dual`(기본, Review A·B 이중) 또는 `single`(독립 리뷰 1회) | **사람만** |
+| `review.blind_reviewer_selection` | `dual`일 때 Review B 모델을 사람이 꼭 고를지. `required`(기본) 또는 `optional`(사람이 안 고르면 Agent가 조건에 맞는 모델을 고름) | **사람만** |
+| `sdd.medium_artifacts` | Medium SDD 배치. `full`(기본, 네 문서) 또는 `condensed`(`README.md` 한 장의 세 절) | **사람만** |
 | `hard_guard_extra` | 프로젝트 고유의 항상 적용 규칙 | 사람 |
 | `skill_eval.cases_dir` | 사건에서 만든 eval 사례를 둘 위치 | 사람 |
 
@@ -153,7 +158,7 @@ python -I -B .adaptive-sdd/tools/install.py init --project-root .
 
 ```text
 방금 정한 대로 .adaptive-sdd/project.json을 쓰고, 아래 명령으로 생성해줘. 고정 사본은 수정하지 마.
-python -I -B .adaptive-sdd/tools/install.py render --project-root . --source-tag v1.0.0-preview.4 --source-commit <확인한 SHA>
+python -I -B .adaptive-sdd/tools/install.py render --project-root . --source-tag v1.0.0-preview.5 --source-commit <확인한 SHA>
 python -I -B .adaptive-sdd/tools/install.py check --project-root .
 로컬 문서 방식이면 tracker.root 아래에 items/와 claims/ 폴더를 만들어줘.
 생성된 AGENTS.md·CLAUDE.md·.gitattributes 구간과 .adaptive-sdd/project/ 문서를 보여줘.
@@ -219,3 +224,5 @@ preview.3의 W 정책은 실행 grade를 Trivial·Small·Medium·Large로 한정
 ## 공통 문제를 알릴 때
 
 `project.json`으로 풀 수 없고 고정 사본을 고쳐야만 풀리는 문제는 공개 저장소(`seok-jun/adaptive-agentic-sdd`)의 이슈로 알린다. 그 전에 회사나 프로젝트의 정보 공개 정책을 확인한다. 회사·제품 이름, 코드, 데이터, 내부 경로는 빼고, 일반화한 문제와 필요한 변경만 적는다.
+
+방법론만 복사하는 방법은 영문 가이드의 [Methodology-only copy](../../docs/customization.md#methodology-only-copy) 절을 본다. preview.4 영문 가이드에서 옮겨 온 내용이며 아직 한국어로 옮기지 않았다.

@@ -1,0 +1,25 @@
+<!-- Generated file. Do not edit directly. For values, edit {{bundle_path}}/project.json and generate again. -->
+# {{project.name}} issue classification application
+
+W `process/issue-priority.md` is the source of the common Priority decisions, the handling of insufficient evidence, and the body/label rules. This document declares only the current stage and the concrete product impact.
+
+## Current stage and implementation queue
+
+- Current stage: {{#if priority.current_stage}}{{priority.current_stage}}{{else}}Not set{{/if}}
+- Implementation queue rule: {{#if priority.queue_rule}}{{priority.queue_rule}}{{else}}Not set — implement only the Issues the user instructed{{/if}}
+
+## Product-specific Priority examples
+
+| Classification input | Examples in this project |
+| --- | --- |
+{{#each priority.product_examples}}| {{.input}} | {{.examples}} |
+{{else}}| Not set | Apply only the common decisions |
+{{/each}}
+
+Common P0 conditions such as security exposure and data loss apply as is. The examples above are not exceptions that lower the common risk conditions.
+
+## Implementation selection rule
+
+- Do not add improvements that are not in the current Issue's acceptance criteria to the same change.
+- An Issue that the `Dependencies / blockers` of a P0/P1 Issue body names as a predecessor is a prerequisite of that work. Do not raise the predecessor Issue's Priority for the dependency alone.
+- Include a separate problem found during Issue work in the same Issue only when it is required for the current acceptance criteria; first update the goal, scope and boundaries in the Issue body, and decide the grade again.

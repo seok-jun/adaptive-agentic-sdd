@@ -1,5 +1,41 @@
 # Changelog
 
+## 1.0.0-preview.5 candidate — unreleased (2026-10-30)
+
+Prepared on a branch from `v1-preview` (= `v1.0.0-preview.4`, `5760ac66b2a4c943360a56c22892fe35e1a076db`). Not committed, tagged or published; earlier tags are unchanged. `methodology/` (English M) is unchanged.
+
+- Independent translation review (2026-10-30): gpt-6-astra (reasoning medium) compared the entire English edition against the Korean edition in five groups. It reported 14 findings (2 P1, 10 P2, 2 P3): 11 accepted, 2 partially accepted and 1 rejected. Partial acceptance: the README upgrade sentence was corrected, but the finding was treated as P2 because the sentence already existed in preview.4; the Methodology-only copy section was retained as existing content carried over from the preview.4 English guide, with its provenance stated and a pointer added in the Korean guide. The proposed `cross-agent` → `cross-tool` change was rejected to follow the source term `Cross-agent behavior eval` and the preview.4 English README. The finishing-issues cleanup exception was clarified in both editions; its ambiguity originated in the Korean plain-language rewording.
+
+Execution profile (meaning change, opt-in; defaults keep preview.4 behavior):
+
+- `review.large_mode: dual | single` — `single` replaces the Large AS-IS/PLAN Review A + Blind Audit B with one independent review in a separate session that also covers Review B's questions, uses the same four severities and keeps the blocker-0 progress condition. Blind isolation, the human's B selection and reconciliation do not apply in `single`.
+- `review.blind_reviewer_selection: required | optional` — with `optional`, when no human has chosen, an agent may choose the Review B reviewer under the automatic-candidate rules (fresh role qualification PASS, `strong + high` floor, separate from the author and Review A, no `frontier` without escalation evidence) and records that it did. A human's choice is still never replaced automatically.
+- `sdd.medium_artifacts: full | condensed` — `condensed` writes a new Medium SDD as one `README.md` with `## AS-IS`, `## PLAN`, `## Implementation specification`; the required content of each part is unchanged, and re-grading to Large splits it into the four documents before the AS-IS review.
+- None of the values reduces M's human-judgment requirements, automatic grade escalation, required verification, the CODE Review or human judgment on Large merges. Changes apply to newly started reviews and SDDs. Owners: `design-review.md` (new section "Large design review mode"), `sdd-artifacts.md` (new section "Medium condensed layout"), `execution-routing.md`; project template `sdd-workflow.md` gains an "Execution profile" table.
+- The installer rejects values outside the choices, non-string values and unknown keys in `review` and `sdd` (a misspelled key would otherwise silently keep the default), before writing anything.
+- `design-review.md` is a hash-pinned guard in the structure tests. The change is additive only; the test now proves that removing exactly the added section, index row and sentence reproduces the earlier pinned bytes, instead of re-pinning the file.
+
+Readability (Korean edition):
+
+- New `workflow/glossary.md` (both editions), linked from the workflow README and each skill. It explains terms and adds no rules.
+- The four `SKILL.md` bodies were reworded in plain Korean. Headings, `description`, literal markers, stop strings, paths and the order and conditions of every step are unchanged; skill headings referenced by other documents keep their anchors.
+- One wording fix in `issue-writing-guide.md` (a pointer said "below" for a section above).
+
+English edition:
+
+- New full bundle `adaptive-sdd/` at the repository root with the same file set as `ko/adaptive-sdd/`; its `methodology/` is byte-identical to the root `methodology/`. Workflow, templates, eval cases and both guides (`docs/customization.md` now covers the full installation, with a methodology-only section; `docs/sdd-reading-audit.md`) are translated. The English text is canonical.
+- The translation was produced by the coordinating agent and translation subagents with a fixed heading map and shared term list, then checked mechanically (no Korean text left, same heading structure, same template-token sequence, same case IDs and item counts, all installed links and anchors resolve). It then had one independent agent translation review (recorded above); it has not had an independent human review.
+- The installer is byte-identical in both bundles. Edition wording (skill entry descriptions, marker note) moved to each bundle's `templates/strings.json`, which the installer validates. Marked blocks written by either edition are recognized, so switching editions re-renders instead of failing; look-alike or duplicated markers are still rejected. Korean generated files are byte-identical to preview.4 except `sdd-workflow.md`.
+- `tools/review_snapshot.py` accepts the English tracker headings `Meta` / `Records` as well as the Korean ones; a document with headings of both editions is rejected.
+
+Evaluation:
+
+- First executed cross-agent behavior run of 12 pre-selected Korean cases × Claude Code and Codex × 3 runs, cross-graded; runner `tests/run_behavior_evals.py`; record in `docs/eval-results/2026-10-30/`. 71 valid runs: Claude Code 21 PASS / 14 FAIL / 1 INVALID, Codex 22 PASS / 14 FAIL. A usage limit invalidated 65 first-attempt runs; each was retried once (31 reruns, 34 regrades of saved answers) as skill-evals.md allows. This is a baseline, not evidence of effect.
+- It found one case defect: `PD-S06` required `BLOCKED: origin/main fetch failed`, while the skill says `BLOCKED: declared base fetch failed`; all six FAILs of that case came from the stale case. The recorded results are unchanged; the case is corrected in both editions.
+- Six execution-profile policy-regression cases (`II-K01`–`K06` and their English counterparts) were added; they are expected-behavior specifications and were not executed.
+
+Validation (2026-10-30, Windows, Python 3.14.7): all 53 executable tests passed, both bundle manifests (66 files each) matched, and both editions passed `init`, `render`, `check` and `check-evals` (76 cases) in disposable projects. Actual POSIX execution, live remote/host integration and an independent review of this change remain undone.
+
 ## 1.0.0-preview.4 — 2026-10-30
 
 Packages the M/W/P correction from `6d37203f23d9fbe640b93c57930e3d3164ebfd76`. Only release documentation changes in this packaging step; the reviewed and tested bundle is unchanged. Earlier preview tags are preserved.

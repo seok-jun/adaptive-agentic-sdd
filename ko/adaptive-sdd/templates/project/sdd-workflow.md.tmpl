@@ -48,7 +48,20 @@ M `core.md`의 `사람 판단` 요건(미해결 사람 판단에서 멈춤, 판�
 {{/if}}{{#each human_judgment.points}}- **추가 판단 지점**: {{this}}
 {{/each}}
 
-Review B reviewer의 model·reasoning을 사람이 고르는 일은 승인 단계가 아니라 W [설계 리뷰](../workflow/process/design-review.md#large-설계-이중-독립-리뷰)의 일부이며 그대로 유지한다.
+{{#if review_single}}Large 설계 리뷰는 아래 `실행 프로필`에 따라 독립 리뷰 1회로 한다. Review B와 그 reviewer 선택은 해당 없다.
+{{else}}{{#if blind_selection_optional}}Review B reviewer는 사람이 고르면 그 선택을 쓰고, 고르지 않았으면 Agent가 W [설계 리뷰](../workflow/process/design-review.md#large-설계-리뷰-방식)의 자동 선택 조건으로 고른다. 이 선택은 승인 단계가 아니다.
+{{else}}Review B reviewer의 model·reasoning을 사람이 고르는 일은 승인 단계가 아니라 W [설계 리뷰](../workflow/process/design-review.md#large-설계-이중-독립-리뷰)의 일부이며 그대로 유지한다.
+{{/if}}{{/if}}
+
+## 실행 프로필
+
+`project.json`의 `review.large_mode`·`review.blind_reviewer_selection`·`sdd.medium_artifacts` 값이다. 기본값은 이전 동작과 같다. 어느 값도 M의 사람 판단 요건, 등급 자동 격상, 필수 검증, CODE Review, Large 병합의 사람 판단을 줄이지 않는다. 값은 사람이 `project.json`에서 바꾸고 다시 생성한다.
+
+| 설정 | 현재 값 | 원본 |
+| --- | --- | --- |
+| Large 설계 리뷰 방식(`review.large_mode`) | `{{review.large_mode}}` | W [설계 리뷰 방식](../workflow/process/design-review.md#large-설계-리뷰-방식) |
+| Review B reviewer 선택(`review.blind_reviewer_selection`) | `{{review.blind_reviewer_selection}}`{{#if review_single}} — single이라 해당 없음{{/if}} | W [설계 리뷰 방식](../workflow/process/design-review.md#large-설계-리뷰-방식) |
+| Medium SDD 배치(`sdd.medium_artifacts`) | `{{sdd.medium_artifacts}}` | W [Medium 축약 배치](../workflow/process/sdd-artifacts.md#medium-축약-배치) |
 
 ### 기록된 위임
 

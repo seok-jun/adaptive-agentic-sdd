@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "language": "en",
+  "marker_note": "generated block; do not edit by hand",
+  "skill_descriptions": {
+    "managing-issues": "Use when creating, classifying, reprioritizing or rewriting {name} work items (Issues) and coordinating the work breakdown and dependencies of an optional Epic. Decides Priority and execution grade, work boundaries, Mermaid and Visual Spec. Not for code implementation.",
+    "implementing-issues": "Implements an approved {name} Issue, given by number or explicit reference, within its declared module boundaries. Use when asked to continue, implement or wrap up an existing Issue; applies the SDD gates, parallel isolation, scope-limited edits and verification. Not for only writing a new Issue.",
+    "parallel-development": "Manages claims, isolation, synchronization, release and integration of parallel agent work in {name}. Use before editing Issue code, when creating a branch or worktree, when checking path conflicts and when handling shared contracts. Not for only drafting an Issue.",
+    "finishing-issues": "Closes finished {name} Issue work. Use for the final diff review, business document synchronization, verification, SDD cleanup, closing records, merge confirmation and lane release. Not before the implementation is ready to close."
+  }
+}

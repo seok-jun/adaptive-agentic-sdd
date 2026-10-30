@@ -1,0 +1,30 @@
+<!-- Generated file. Do not edit directly. For values, edit {{bundle_path}}/project.json and generate again. -->
+# {{project.name}} module boundaries
+
+W `process/module-boundaries.md` is the source of the common boundary application, lifecycle artifacts and the parallel lane contract. This document declares the actual modules, shared contracts and integration-only paths.{{#if modules.architecture_doc}} Read `{{modules.architecture_doc}}` together for the detailed structure.{{/if}}
+
+## Modules
+
+| Path | Role |
+| --- | --- |
+{{#each modules.list}}| `{{.path}}` | {{.role}} |
+{{else}}| Not set | Without a module list, multi-module changes cannot be judged. Fill it in during the observation stage |
+{{/each}}
+
+## Shared contracts (auto-escalate to Medium)
+
+{{#each modules.shared_contracts}}- `{{this}}`
+{{else}}- None
+{{/each}}
+
+## Root and integration-only paths (not edited in an ordinary lane)
+
+{{#each modules.root_integration}}- `{{this}}`
+{{else}}- None
+{{/each}}
+
+## Dependency rules
+
+{{#each modules.dependency_rules}}- {{this}}
+{{else}}- None
+{{/each}}

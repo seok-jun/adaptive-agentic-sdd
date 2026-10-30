@@ -14,7 +14,7 @@ Medium·Large에서 폴더를 처음 구성할 때 읽는다. Trivial·Small 및
 
 ## SDD 작업 문서 구조
 
-Medium 이상에서 다음 구조를 사용한다. 새로 시작하는 SDD 작업부터 적용하며, 이미 진행 중인 작업과 종료된 작업에는 소급 적용하지 않는다. 이 규칙만으로 기존 설계를 재작성하지 않는다.
+Medium 이상에서 다음 구조를 사용한다. 새로 시작하는 SDD 작업부터 적용하며, 이미 진행 중인 작업과 종료된 작업에는 소급 적용하지 않는다. 이 규칙만으로 기존 설계를 재작성하지 않는다. Medium은 P의 `sdd.medium_artifacts`가 `condensed`이면 아래 [Medium 축약 배치](#medium-축약-배치)를 따른다.
 
 ```text
 docs/sdd/{feature}/
@@ -43,6 +43,21 @@ docs/sdd/{feature}/
 - README 최초 작성 때 PLAN 위치 `02-to-be.md`를 예정 경로로 연결한다. 작성 여부·진행 상태는 기존 Issue에서 확인하며 PLAN 작성 뒤 링크를 추가하려고 AS-IS 검토 대상 README를 다시 쓰지 않는다. 변화·결정·완료 기준의 요약은 TO-BE에만 둔다. 실제 AS-IS 사실·위험·전제가 바뀌면 기존 [의미·영향별 재검토](design-review.md#의미영향에-따른-설계-재검토)를 적용한다.
 
 
+
+## Medium 축약 배치
+
+P `W/../project/sdd-workflow.md`의 `실행 프로필`에서 `sdd.medium_artifacts`가 `condensed`일 때 새로 시작하는 Medium SDD에만 적용한다. 값이 없거나 `full`(기본)이면 위 구조를 그대로 쓴다. Large는 항상 위 구조를 쓴다.
+
+```text
+docs/sdd/{feature}/
+  README.md   ← ## AS-IS / ## PLAN / ## 구현 명세
+```
+
+- 파일 하나에 세 절을 둔다. 줄이는 것은 파일 수뿐이다. 각 절의 필수 내용은 그대로다: `## AS-IS`는 [AS-IS](sdd/as-is.md), `## PLAN`은 [TO-BE](sdd/to-be.md), `## 구현 명세`는 [Agent Spec](sdd/agent-spec.md)을 따른다.
+- 다른 W 문서가 `01-as-is.md`·`02-to-be.md`·`change-plans/**`를 가리키면 이 README의 `## AS-IS`·`## PLAN`·`## 구현 명세`로 바꿔 읽는다. 예를 들어 [검증 계약](verification.md)의 "Medium 이상은 `02-to-be.md`에 완료 기준·검증 수단·성공 근거를 대응시킨다"는 `## PLAN`에 대응시킨다는 뜻이다.
+- 사람용 설명(현황·변화·결정)을 각 절의 앞에 두고, Agent 근거와 구현 세부는 그 뒤에 둔다. 위 README 규칙의 근거 연결·복사 금지·정보 한 곳 관리는 그대로다.
+- 작업 중 Large로 다시 판정되면 AS-IS 검토 전에 위 네 문서 구조로 나눈다. 축약 README를 Large 검토 대상으로 쓰지 않는다.
+- 정리 시점과 방법은 [completion](sdd/completion.md#문서-역할)과 finishing의 SDD 정리 절차를 그대로 따른다.
 
 ## 원본과 선택적 소비
 

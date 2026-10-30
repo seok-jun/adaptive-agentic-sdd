@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "project": {
+    "name": "Example project",
+    "artifact_language": "English",
+    "conversation_language": "",
+    "conventions": ""
+  },
+  "tools": [
+    "claude-code",
+    "codex"
+  ],
+  "tracker": {
+    "kind": "local-docs",
+    "root": "",
+    "id_prefix": "T",
+    "merge_method": "",
+    "allowed_authors": [],
+    "id_source": "generated",
+    "id_format": "",
+    "child_id_rule": ""
+  },
+  "docs": {
+    "business": "docs/domains/**",
+    "sdd": "docs/sdd/{feature}/",
+    "reviews": "docs/reviews/**",
+    "architecture": "docs/architecture/**",
+    "index": "docs/README.md"
+  },
+  "grade_mapping": [],
+  "human_judgment": {
+    "large_epic_merge": true,
+    "points": [],
+    "delegations": []
+  },
+  "worktree_root": "",
+  "build": {
+    "tool": "",
+    "jdk_major": "",
+    "jdk_candidates": [],
+    "module_unit": "",
+    "windows_wrapper": "",
+    "unix_wrapper": "",
+    "verification": [],
+    "static_analysis": "",
+    "clean": "",
+    "instrumentation_paths": [],
+    "device_procedure": "",
+    "ci": "",
+    "checks": [],
+    "test_mode": "persistent",
+    "test_format": "",
+    "test_preserve_at": ""
+  },
+  "modules": {
+    "architecture_doc": "",
+    "list": [],
+    "shared_contracts": [],
+    "root_integration": [],
+    "dependency_rules": []
+  },
+  "routing": {
+    "deny_models": [],
+    "impact_tool": "",
+    "role_defaults": [],
+    "capabilities": [],
+    "qualification_records": ""
+  },
+  "priority": {
+    "current_stage": "",
+    "queue_rule": "",
+    "product_examples": []
+  },
+  "evidence": {
+    "allowed": [],
+    "forbidden": []
+  },
+  "visual_spec": {
+    "repository": "",
+    "path": "",
+    "check_command": "",
+    "preview": ""
+  },
+  "token_diagnostic": "DISABLED",
+  "hard_guard_extra": [],
+  "skill_eval": {
+    "cases_dir": "",
+    "command": ""
+  },
+  "git": {
+    "remote": "origin",
+    "base_branch": "main",
+    "merge_branch": "main"
+  },
+  "review": {
+    "repository": "",
+    "remote": "",
+    "branch": "",
+    "large_mode": "dual",
+    "blind_reviewer_selection": "required"
+  },
+  "sdd": {
+    "medium_artifacts": "full"
+  }
+}

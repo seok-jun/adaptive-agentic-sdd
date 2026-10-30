@@ -21,23 +21,16 @@ COPY_DIRNAME = ".adaptive-sdd"
 CONNECTION = ".agentics/adaptive-sdd.json"
 COPY_DIRS = ("methodology", "workflow", "templates", "tools")
 TOOL_DIRS = {"claude-code": ".claude/skills", "codex": ".agents/skills"}
-SKILLS = [
-    ("managing-issues",
-     "{name}의 작업 항목(Issue)을 생성·분류·우선순위 재조정·본문 재작성하고 선택적 Epic의 작업 구성·의존성을 조율할 때 사용한다. Priority/실행 grade 판정, 작업 경계, "
-     "Mermaid·Visual Spec 판단에 쓴다. 코드 구현에는 사용하지 않는다."),
-    ("implementing-issues",
-     "{name}의 승인된 Issue를 번호나 명시한 참조로 받아 명시한 모듈 경계 안에서 구현한다. 기존 Issue의 진행·구현·마무리를 요청할 때 "
-     "사용하며 SDD gate, 병렬 격리, 범위 제한 수정과 검증을 적용한다. 새 Issue만 작성할 때는 사용하지 않는다."),
-    ("parallel-development",
-     "{name}의 병렬 agent 작업의 claim·격리·동기화·해제·통합을 관리한다. Issue 코드 수정 전, branch/worktree 생성, 경로 충돌 확인, "
-     "공유 contract 처리에 사용한다. Issue 초안만 작성할 때는 사용하지 않는다."),
-    ("finishing-issues",
-     "구현을 마친 {name}의 Issue 작업을 종료한다. 최종 diff 검토, business 문서 동기화, 검증, SDD 정리, 종료 기록, 병합 확인, "
-     "lane 해제에 사용한다. 구현이 종료 준비되기 전에는 사용하지 않는다."),
-]
-MARKERS = {
-    "md": ("<!-- adaptive-sdd:begin (생성 구간. 직접 고치지 않는다) -->", "<!-- adaptive-sdd:end -->"),
-    "gitattributes": ("# adaptive-sdd:begin (생성 구간. 직접 고치지 않는다)", "# adaptive-sdd:end"),
+SKILL_NAMES = ("managing-issues", "implementing-issues", "parallel-development", "finishing-issues")
+# Edition-specific wording (skill entry descriptions, marker note) lives in templates/strings.json so
+# that this tool is byte-identical in every language bundle.
+STRINGS_FILE = "strings.json"
+# Begin-marker notes of every published edition. A project that switches editions keeps a block the
+# other edition wrote; only these exact notes are recognized, nothing looser.
+KNOWN_MARKER_NOTES = ("생성 구간. 직접 고치지 않는다", "generated block; do not edit by hand")
+MARKER_FORMS = {
+    "md": ("<!-- adaptive-sdd:begin ({}) -->", "<!-- adaptive-sdd:end -->"),
+    "gitattributes": ("# adaptive-sdd:begin ({})", "# adaptive-sdd:end"),
 }
 
 
@@ -245,7 +238,9 @@ def settings(values):
     result = json.loads(json.dumps(values))
     defaults = {
         "git": {"remote": "origin", "base_branch": "main", "merge_branch": "main"},
-        "review": {"repository": "", "remote": "", "branch": ""},
+        "review": {"repository": "", "remote": "", "branch": "",
+                   "large_mode": "dual", "blind_reviewer_selection": "required"},
+        "sdd": {"medium_artifacts": "full"},
         "tracker": {"id_source": "generated", "id_format": "", "child_id_rule": ""},
         "project": {"conversation_language": "", "conventions": ""},
         "build": {"test_mode": "persistent", "test_format": "", "test_preserve_at": ""},
@@ -260,15 +255,36 @@ def settings(values):
     result["tracker_external_id"] = result["tracker"]["id_source"] == "external"
     result["temporary_tests"] = result["build"]["test_mode"] == "temporary"
     result["no_new_tests"] = result["build"]["test_mode"] == "none"
+    # Execution-profile knobs. Defaults keep the pre-preview.5 behavior.
+    result["review_single"] = result["review"]["large_mode"] == "single"
+    result["blind_selection_optional"] = result["review"]["blind_reviewer_selection"] == "optional"
+    result["medium_condensed"] = result["sdd"]["medium_artifacts"] == "condensed"
     result["review"]["remote"] = result["review"]["remote"] or result["git"]["remote"]
     return result
 
 
+PROFILE_CHOICES = {
+    ("review", "large_mode"): ("dual", "single"),
+    ("review", "blind_reviewer_selection"): ("required", "optional"),
+    ("sdd", "medium_artifacts"): ("full", "condensed"),
+}
+
+
 def validate_settings(values):
-    for section in ("git", "review", "project", "build", "tracker", "routing"):
+    for section in ("git", "review", "sdd", "project", "build", "tracker", "routing"):
         if section in values and not isinstance(values[section], dict):
             raise InstallError(f"project.json: {section} must be an object")
+    # A misspelled profile key would silently keep the default; reject unknown keys instead.
+    for section, known in (("sdd", {"medium_artifacts"}),
+                           ("review", {"repository", "remote", "branch", "large_mode", "blind_reviewer_selection"})):
+        unknown = set(values.get(section) or {}) - known
+        if unknown:
+            raise InstallError(f"project.json: unknown {section} key(s) {sorted(unknown)}")
     cfg = settings(values)
+    for (section, key), choices in PROFILE_CHOICES.items():
+        value = cfg[section][key]
+        if not isinstance(value, str) or value not in choices:
+            raise InstallError(f"project.json: {section}.{key} must be one of {', '.join(choices)}")
     fields = {"git": ("remote", "base_branch", "merge_branch"),
               "review": ("repository", "remote", "branch"),
               "project": ("conversation_language", "conventions"),
@@ -402,8 +418,10 @@ def plan_outputs(project_root, values, product_root=None):
         rel = f"{COPY_DIRNAME}/project/{tmpl.name[:-5]}"
         outs.append((rel, "file", render_template(read_text(tmpl), ctx)))
     entry = read_text(tdir / "entry" / "SKILL.md.tmpl")
+    descriptions = load_strings(project_root)["skill_descriptions"]
     for tool in values["tools"]:
-        for name, desc in SKILLS:
+        for name in SKILL_NAMES:
+            desc = descriptions[name]
             sctx = dict(ctx)
             # JSON string syntax is valid YAML, so a project name containing ": " cannot break the frontmatter
             sctx["skill"] = {"name": name,
@@ -421,36 +439,73 @@ def plan_outputs(project_root, values, product_root=None):
             for rel, kind, content in outs]
 
 
-def _markers(kind):
-    return MARKERS["md"] if kind == "block-md" else MARKERS["gitattributes"]
+def load_strings(project_root):
+    """Edition wording from templates/strings.json; rejected unless complete and recognized."""
+    path = templates_dir(project_root) / STRINGS_FILE
+    if not path.is_file():
+        raise InstallError(f"missing {path}")
+    try:
+        data = json.loads(read_text(path))
+    except ValueError as e:
+        raise InstallError(f"{STRINGS_FILE} is not valid JSON: {e}")
+    if not isinstance(data, dict) or data.get("schema") != 1:
+        raise InstallError(f"{STRINGS_FILE}: schema must be 1")
+    if data.get("marker_note") not in KNOWN_MARKER_NOTES:
+        raise InstallError(f"{STRINGS_FILE}: marker_note must be one of the published notes")
+    descriptions = data.get("skill_descriptions")
+    if not isinstance(descriptions, dict) or set(descriptions) != set(SKILL_NAMES):
+        raise InstallError(f"{STRINGS_FILE}: skill_descriptions must cover exactly {list(SKILL_NAMES)}")
+    for name, text in descriptions.items():
+        if not isinstance(text, str) or not text.strip() or any(c in text for c in "\r\n\x00"):
+            raise InstallError(f"{STRINGS_FILE}: skill_descriptions.{name} must be a single-line string")
+    return data
+
+
+def _forms(kind):
+    return MARKER_FORMS["md"] if kind == "block-md" else MARKER_FORMS["gitattributes"]
+
+
+def _begin_positions(text, kind):
+    """(start, end) of every recognized begin marker, whichever published edition wrote it."""
+    begin_form = _forms(kind)[0]
+    found = []
+    for note in KNOWN_MARKER_NOTES:
+        marker = begin_form.format(note)
+        start = text.find(marker)
+        while start != -1:
+            found.append((start, start + len(marker)))
+            start = text.find(marker, start + 1)
+    return sorted(found)
 
 
 def extract_block(text, kind):
-    begin, end = _markers(kind)
-    if text.count(begin) != 1 or text.count(end) != 1:
+    end = _forms(kind)[1]
+    begins = _begin_positions(text, kind)
+    if len(begins) != 1 or text.count(end) != 1:
         return None
-    s = text.index(begin) + len(begin)
+    s = begins[0][1]
     e = text.index(end)
     if e < s:
         return None
     return text[s:e].strip(NL) + NL
 
 
-def merge_block(existing, block, kind):
-    begin, end = _markers(kind)
-    body = begin + NL + block.rstrip(NL) + NL + end + NL
+def merge_block(existing, block, kind, note):
+    begin_form, end = _forms(kind)
+    body = begin_form.format(note) + NL + block.rstrip(NL) + NL + end + NL
     if existing is None or existing == "":
         return body
-    if existing.count(begin) == 1 and existing.count(end) == 1:
-        if existing.index(end) < existing.index(begin):
+    begins = _begin_positions(existing, kind)
+    if len(begins) == 1 and existing.count(end) == 1:
+        if existing.index(end) < begins[0][0]:
             raise InstallError("marker block is damaged (end before begin); fix the markers by hand")
-        s = existing.index(begin)
+        s = begins[0][0]
         e = existing.index(end) + len(end)
         tail = existing[e:]
         if tail.startswith(NL):
             tail = tail[1:]
         return existing[:s] + body + tail
-    if existing.count(begin) or existing.count(end):
+    if begins or existing.count(end):
         raise InstallError("marker block is damaged; fix the markers by hand")
     sep = "" if existing.endswith(NL) else NL
     return existing + sep + NL + body
@@ -543,6 +598,7 @@ def cmd_render(args):
     outputs = {}
     skipped = []
     writes = []
+    marker_note = load_strings(project_root)["marker_note"]
     for rel, kind, content in plan_outputs(project_root, values, product):
         destination = output_root(project_root, product, rel)
         new_digest = sha(content.encode("utf-8"))
@@ -563,7 +619,7 @@ def cmd_render(args):
             bom = raw.startswith(b"\xef\xbb\xbf")
             crlf = b"\r\n" in raw
             existing = read_text(path) if path.is_file() else None
-            merged = merge_block(existing, content, kind)
+            merged = merge_block(existing, content, kind, marker_note)
             if crlf:
                 merged = merged.replace(NL, "\r\n")
             writes.append((path, (b"\xef\xbb\xbf" if bom else b"") + merged.encode("utf-8")))
@@ -678,7 +734,7 @@ def cmd_check_evals(args):
                     problems += 1
                     print(f"DUP     {f}: {c['id']}")
                 ids.add(c["id"])
-    for name, _ in SKILLS:
+    for name in SKILL_NAMES:
         skill_md = skill_roots[0] / name / "SKILL.md"
         if not skill_md.is_file():
             problems += 1
@@ -698,7 +754,7 @@ def cmd_check_evals(args):
         if not fields.get("description", "").strip():
             problems += 1
             print(f"INVALID {skill_md}: empty description")
-    print(f"{count} case(s), {len(SKILLS)} skill(s), {problems} problem(s)")
+    print(f"{count} case(s), {len(SKILL_NAMES)} skill(s), {problems} problem(s)")
     return 0 if problems == 0 else 1
 
 

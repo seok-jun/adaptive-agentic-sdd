@@ -4,12 +4,43 @@ Large의 AS-IS·PLAN 설계 리뷰 절차 원본이다. 실제 해당 phase의 �
 
 | 현재 작업 | 읽을 절 |
 | --- | --- |
+| 프로젝트가 고른 리뷰 방식 확인 | [리뷰 방식](#large-설계-리뷰-방식) |
 | 최초 AS-IS·PLAN 검토 | [설계 단계](#large-설계-단계), [후보 게시](#원격-검토-후보-게시), [이중 독립 리뷰](#large-설계-이중-독립-리뷰) |
 | 검토 후 candidate 변경 | [의미·영향 판정](#의미영향에-따른-설계-재검토) |
 | 구현 중 PLAN 전제 오류·정책 변경 | [계획 정정과 정책 전환](sdd/plan-change.md#계획-정정과-정책-전환) 뒤 아래 영향 판정 |
 | 같은 의미 충돌이 수정·재확인 후 반복 | [반복 정체 시 전환](#반복-정체-시-전환) |
 
 reviewer의 model·floor·qualification은 [execution-routing](../skills/_shared/execution-routing.md), 전달 필드와 evidence identity는 [execution-packets](../skills/_shared/execution-packets.md)가 원본이다. 이 문서는 리뷰 순서·독립성·진행 조건을 소유한다. 프로젝트의 사람 권한은 `W/../project/sdd-workflow.md`를 적용한다.
+
+## Large 설계 리뷰 방식
+
+프로젝트는 `W/../project/sdd-workflow.md`의 `실행 프로필`에서 두 값을 고른다. 값이 선언되지 않았으면 기본값을 쓴다. 기본값은 이 절이 생기기 전의 동작과 같다.
+
+| 설정 | 값 | 적용 |
+| --- | --- | --- |
+| `review.large_mode` | `dual`(기본) | 아래 [이중 독립 리뷰](#large-설계-이중-독립-리뷰)를 그대로 적용한다 |
+| | `single` | 아래 "single 방식"으로 바꿔 읽는다 |
+| `review.blind_reviewer_selection` | `required`(기본) | Review B reviewer는 사람이 고른다. 고르지 않으면 `BLOCKED: blind-audit reviewer selection required` |
+| | `optional` | 아래 "Review B reviewer 자동 선택"을 허용한다. `single`이면 해당 없다 |
+
+어느 값도 다음을 바꾸지 않는다: M `core.md`의 사람 판단 요건, 등급 판정과 자동 격상, [원격 검토 후보 게시](#원격-검토-후보-게시), reviewer의 `REVIEW` floor와 author와의 분리, blocker 분류와 진행 조건의 blocker 0 요구, 기본 CODE review 1회, Large 병합의 사람 판단. 값의 변경은 새로 시작하는 AS-IS·PLAN 최초 검토부터 적용하며, 이미 최초 검토를 시작한 phase는 그때의 방식으로 끝낸다. 진행 중 phase의 방식을 바꾸려면 사람이 그 phase에 대해 명시적으로 정한다.
+
+**single 방식.** Large의 AS-IS와 PLAN 최초 candidate마다 author와 분리된 별도 agent/session의 독립 리뷰를 한 번 적용한다.
+
+- 이 리뷰는 Review A의 확인 범위에 더해 Review B의 탐색 질문(빠진 현재 상태 사실, 숨은 가정, scope·ownership 경계를 바꾸는 누락, 상위 contract 충돌, 방향을 뒤집을 수 있는 blocking risk)을 함께 다룬다. 해결책 탐색이나 저장소 전체 재설계로 넓히지 않는다.
+- 지적은 아래 Review B의 네 severity와 blocker qualification으로 분류한다.
+- Blind Audit 입력 격리, 사람의 B reviewer 선택, reconciliation은 적용하지 않는다. 같은 reviewer가 이전 지적의 해결을 current target에서 직접 재확인한다.
+- 다음 phase 진행 조건은 다음과 같다.
+
+```text
+Independent review (single): PASS at current target
+unresolved Human Decision blocker: 0
+unresolved Execution-contract blocker: 0
+```
+
+- 이 문서의 나머지 절에서 "A → B", "Review B 재확인"은 이 독립 리뷰의 재확인으로, "새 독립 Blind Audit B"가 필요한 경우는 "author와 분리된 새 session에서 무효화된 phase 전체를 다시 독립 리뷰"로 바꿔 읽는다. [반복 정체 시 전환](#반복-정체-시-전환)은 그대로 적용한다.
+
+**Review B reviewer 자동 선택(`dual` + `optional`).** Review A PASS 뒤 사람이 B reviewer의 model·reasoning을 골랐으면 그 선택을 `required`와 똑같이 쓴다. 고른 reviewer를 쓸 수 없으면 자동으로 다른 reviewer로 바꾸지 않고 `BLOCKED: selected blind-audit reviewer unavailable`이다. 사람이 고르지 않았으면 Agent가 [execution-routing](../skills/_shared/execution-routing.md)의 자동 선택 규칙으로 고를 수 있다. 이때 후보는 independent reviewer 역할의 fresh qualification PASS, `strong + high` 이상의 `REVIEW` floor, author 및 Review A actor/session과 모두 다른 별도 session을 갖춰야 하며 `frontier`는 기존 escalation 근거 없이 고르지 않는다. 조건을 만족하는 후보가 없으면 그 원본의 `BLOCKED` 상태로 멈춘다. 자동 선택한 사실, 선택 근거, 요청한 model·reasoning을 Review Packet에 남긴다. Blind 입력 격리와 reconciliation은 그대로다.
 
 ## Large 설계 단계
 
@@ -57,7 +88,7 @@ Review B가 `Human Decision blocker` 또는 `Execution-contract blocker`를 보�
 
 현재 phase의 판단을 바꾸지 않고 미래 단계에서만 필요한 사람 질문은 현재 phase blocker로 올리지 않고 담당·필요 단계로 연결한다. 반대로 지금 설계/실행 의미를 선택해야 하는 미결을 미래 질문으로 미뤄 통과시키지 않는다.
 
-Review A의 blocking finding은 보정 후 A re-check한다. A가 통과한 뒤 Review B reviewer의 model과 reasoning level을 Human이 선택한다. 선택 전에는 Agent가 임의 배정하지 않고 `BLOCKED: blind-audit reviewer selection required`로 중단한다. 선택된 reviewer는 [routing의 `REVIEW` floor와 role qualification](../skills/_shared/execution-routing.md)을 만족하고 현재 host에서 사용할 수 있어야 한다. 사용할 수 없거나 부적격이면 다른 reviewer로 자동 fallback하지 않고 `BLOCKED: selected blind-audit reviewer unavailable`로 중단해 Human 재선택을 요청한다. Human 선택은 `review-mode = blind-audit`, 별도 agent/session, capability floor를 완화하지 않는다.
+Review A의 blocking finding은 보정 후 A re-check한다. A가 통과한 뒤 Review B reviewer의 model과 reasoning level을 Human이 선택한다. 선택 전에는 Agent가 임의 배정하지 않고 `BLOCKED: blind-audit reviewer selection required`로 중단한다. 단, 프로젝트가 `review.blind_reviewer_selection: optional`을 고른 경우에는 위 [리뷰 방식](#large-설계-리뷰-방식)의 자동 선택 조건을 적용한다. 선택된 reviewer는 [routing의 `REVIEW` floor와 role qualification](../skills/_shared/execution-routing.md)을 만족하고 현재 host에서 사용할 수 있어야 한다. 사용할 수 없거나 부적격이면 다른 reviewer로 자동 fallback하지 않고 `BLOCKED: selected blind-audit reviewer unavailable`로 중단해 Human 재선택을 요청한다. Human 선택은 `review-mode = blind-audit`, 별도 agent/session, capability floor를 완화하지 않는다.
 
 Review B 최초 판정 전에는 Review A의 PASS/BLOCKED verdict, finding 목록, 상세 packet과 이전 Review B finding detail을 제공하지 않는다. Review B 입력은 Issue id/title, `AS-IS | PLAN`, target artifact와 remote-resolvable exact SHA, 상위 목표/직접 소유 경계, 전면 재설계 금지, omission·hidden assumption·boundary-changing blocking risk 탐색 요청으로 제한한다. reviewer는 target artifact에서 직접 인접한 caller/consumer/contract를 확인할 수 있다.
 

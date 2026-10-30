@@ -16,6 +16,23 @@ def historical_paths(text):
     return text.replace("W/../project", "S/.adaptive-sdd/project")
 
 
+PROFILE_ROW = "| 프로젝트가 고른 리뷰 방식 확인 | [리뷰 방식](#large-설계-리뷰-방식) |\n"
+PROFILE_SENTENCE = (" 단, 프로젝트가 `review.blind_reviewer_selection: optional`을 고른 경우에는 "
+                    "위 [리뷰 방식](#large-설계-리뷰-방식)의 자동 선택 조건을 적용한다.")
+
+
+def without_profile_additions(text):
+    """preview.5 only added the review-profile section, one index row and one sentence to
+    design-review.md. Removing exactly those must reproduce the earlier guard bytes, so the
+    existing guard text is proven unchanged rather than re-pinned."""
+    for fragment in (PROFILE_ROW, PROFILE_SENTENCE, "\n\n## Large 설계 리뷰 방식\n"):
+        assert text.count(fragment) == 1, fragment
+    start = text.index("\n\n## Large 설계 리뷰 방식\n")
+    end = text.index("\n\n## Large 설계 단계", start)
+    text = text[:start] + text[end:]
+    return text.replace(PROFILE_ROW, "", 1).replace(PROFILE_SENTENCE, "", 1)
+
+
 def normalize(text):
     text = historical_paths(text)
     # Ignore relocated link destinations, not the contract text.
@@ -53,7 +70,10 @@ class SelectiveReadingTests(unittest.TestCase):
     def test_role_inputs_and_existing_guards(self):
         sample = json.loads((ROOT / 'tests/fixtures/sdd-artifact-sample.json').read_text(encoding='utf-8'))
         for path, digest in sample['unchanged_guards'].items():
-            self.assertEqual(hashlib.sha256(historical_paths((BUNDLE / path).read_text(encoding="utf-8")).encode("utf-8")).hexdigest(), digest)
+            text = (BUNDLE / path).read_text(encoding="utf-8")
+            if path == 'workflow/process/design-review.md':
+                text = without_profile_additions(text)
+            self.assertEqual(hashlib.sha256(historical_paths(text).encode("utf-8")).hexdigest(), digest)
         packet = (BUNDLE / 'workflow/skills/_shared/execution-packets.md').read_text(encoding='utf-8')
         self.assertEqual(hashlib.sha256(packet.split('### Blind Audit Packet', 1)[1].encode()).hexdigest(), sample['blind_packet_sha256'])
         skill = (BUNDLE / 'workflow/skills/implementing-issues/SKILL.md').read_text(encoding='utf-8').split('## Inputs', 1)[1].split('\n## ', 1)[0]

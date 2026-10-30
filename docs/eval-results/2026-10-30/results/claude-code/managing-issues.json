@@ -1,0 +1,147 @@
+{
+  "agent": "claude-code",
+  "agent_version": "2.1.303 (Claude Code)",
+  "requested_model": "opus",
+  "commit": "5760ac66b2a4c943360a56c22892fe35e1a076db + uncommitted preview.5 working tree",
+  "bundle_manifest_sha256": "5ac33f0e29a2997a8f6f88f0f5f8e936d716d54b5edbc5d406a83abae83aacfb",
+  "skill": "managing-issues",
+  "cases": [
+    {
+      "id": "MI-S01-convenience-bug",
+      "run": 1,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 63,
+      "files_changed_in_disposable_project": [],
+      "notes": ""
+    },
+    {
+      "id": "MI-S01-convenience-bug",
+      "run": 2,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 73,
+      "files_changed_in_disposable_project": [],
+      "notes": ""
+    },
+    {
+      "id": "MI-S01-convenience-bug",
+      "run": 3,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 70,
+      "files_changed_in_disposable_project": [],
+      "notes": ""
+    },
+    {
+      "id": "MI-S03-unvalidated-idea",
+      "run": 1,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 42,
+      "files_changed_in_disposable_project": [],
+      "notes": ""
+    },
+    {
+      "id": "MI-S03-unvalidated-idea",
+      "run": 2,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 27,
+      "files_changed_in_disposable_project": [],
+      "notes": ""
+    },
+    {
+      "id": "MI-S03-unvalidated-idea",
+      "run": 3,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 75,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "MI-S05-conversation-evidence-redaction",
+      "run": 1,
+      "result": "FAIL",
+      "failed_must": [
+        "저장소에 commit된 지시문 문자열은 인용할 수 있다고 판정한다",
+        "대화 내용은 재구성할 수 없는 범주명으로만 적는다"
+      ],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 58,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "MI-S05-conversation-evidence-redaction",
+      "run": 2,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 85,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "MI-S05-conversation-evidence-redaction",
+      "run": 3,
+      "result": "PASS",
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 69,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+<!-- Generated file. Do not edit directly. For values, edit {{bundle_path}}/project.json and generate again. -->
+# {{project.name}} execution profile
+
+Apply W `skills/_shared/execution-routing.md` for the common two-axis routing and qualification, and W `skills/_shared/execution-packets.md` for packet fields, validity and impact result consumption. Read only the sections for the point of that selection, handoff or result consumption. This document declares the project's per-role preferences, capability evidence, model restrictions and impact analysis tool.
+
+## Per-role preferences and capability evidence
+
+{{#each routing.role_defaults}}- {{.role}} preference: `{{.model}}` / `{{.reasoning}}`.
+{{else}}- No per-role preferences.
+{{/each}}
+A preference does not replace a qualification PASS for automatic assignment or the actual choice of a Human-selected B. The current/manual decision for a separate session that inherits the same model, and the handling of unconfirmed reasoning, follow W routing.
+
+| Host | Model | tier | Supported reasoning | Evidence source | Immutable identity | Valid until |
+| --- | --- | --- | --- | --- | --- | --- |
+{{#each routing.capabilities}}| {{.host}} | {{.model}} | {{.tier}} | {{.reasoning}} | {{.source}} | {{.identity}} | {{.valid_until}} |
+{{else}}| Not declared | — | — | — | Fresh runtime evidence must be checked | — | — |
+{{/each}}
+This table is an evidence reference, not proof of a self-reported capability. Check the actual host/model, source identity, validity period and supported reasoning at selection time. An expired entry, an unavailable source lookup or a host mismatch cannot be used, and role qualification and deny apply separately.
+{{#if routing.qualification_records}}Role qualification record reference: `{{routing.qualification_records}}`.
+{{/if}}
+
+## Model restrictions
+
+The following safety deny takes precedence over host mappings and claims of qualification PASS. It is `DENIED` for every development role.
+
+{{#each routing.deny_models}}- `{{this}}`
+{{else}}- None
+{{/each}}
+
+### Qualification probe exception
+
+A blocked model is called only in a separate probe task that a human explicitly instructed, with a synthetic/docs-only fixture, where the orchestrator owns the claim, isolation and lifecycle, without direct push to main and without Issue/PR/merge/release permissions, and when failure results are preserved as raw observations. If any one of these is missing, the deny stays.
+
+## Impact analysis
+
+{{#if routing.impact_tool}}Impact analysis tool: `{{routing.impact_tool}}`. Its result is the floor of the verification obligation; if it is stale or incomplete, recompute it or extend to full verification. Do not delete Issue or grade required commands based on the impact set.
+{{else}}No impact analysis tool is declared. Do not apply W's `Common impact result reference and local consumption` section, and follow the verification baseline in `build.md` as is.
+{{/if}}

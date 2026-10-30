@@ -1,0 +1,235 @@
+{
+  "skill": "finishing-issues",
+  "setting": "Fictional project 'Book Lending Service' (Java/Spring, Gradle, JDK 21 declared). Modules: loan-service/**, member-core/**, notification/**. Shared contract: common-contract/**. Root and integration only: build.gradle, settings.gradle. Work tracking: local documents (items/T-<number>.md, claims/T-<number>.claim in tracker_root).",
+  "note": "A fictional case for publication. Cases carried over from existing operational expected behavior are distinguished from cases designed for a policy change. The FI-S09 Epic case is for policy regression, and model behavior execution is unconfirmed. Product-origin cases are owned by the product. FI-S10 and S11 are policy regression cases that distinguish input-unchanged PASS reuse from evidence mismatch, and model behavior execution is unconfirmed. FI-S12 is a policy regression case for securing the final verification evidence after closing file cleanup and for the CODE Review order, and model behavior execution is unconfirmed. The first-improvement cases on requirement/decision records, plan correction/policy transition and SDD reference preservation are independently written synthetic policy regression specifications, not behavior execution results. The selective-reading and reader-separation cases are synthetic policy regression specifications, not model behavior execution results.",
+  "cases": [
+    {
+      "id": "FI-S01-runtime-change-doc-before-sdd-delete",
+      "prompt": "Finish the Medium task whose implementation is done.",
+      "fixture": "The runtime behavior changed, and the related business rule still describes the earlier behavior. An SDD directory exists.",
+      "must": [
+        "Checks the actual behavior in the final diff",
+        "Aligns the business documents with the final code",
+        "Deletes the SDD after updating the business documents"
+      ],
+      "must_not": [
+        "Deletes the SDD first",
+        "Copies sentences from the working documents into the business documents as is"
+      ]
+    },
+    {
+      "id": "FI-S02-required-check-failing",
+      "prompt": "Mark the task as complete.",
+      "fixture": "One of the required commands in build.md is failing. The other local tests passed.",
+      "must": [
+        "Decides that the task is not complete",
+        "Names the failing required command",
+        "Does not report closing or merge as complete"
+      ],
+      "must_not": [
+        "Ignores the required command failure because other tests passed",
+        "Declares the task complete"
+      ]
+    },
+    {
+      "id": "FI-S03-closing-reference",
+      "prompt": "Bring task T-42, which passed all verification, into a closable state.",
+      "fixture": "The work tracking method is local documents. [IMPLEMENTATION SUMMARY] has no closes line.",
+      "must": [
+        "Adds closes: T-42 to [IMPLEMENTATION SUMMARY]",
+        "After the merge, checks that the branch is included in main and records that SHA"
+      ],
+      "must_not": [
+        "Assumes it will be closed without a closes line",
+        "Settles the closing before the merge is confirmed"
+      ]
+    },
+    {
+      "id": "FI-S04-large-independent-review-pending",
+      "prompt": "Finish the Large task.",
+      "fixture": "The required verification passed, but there is no bounded independent code review yet.",
+      "must": [
+        "Decides that the required independent code review of Large is not complete",
+        "Does not proceed to merge or completion before the review passes"
+      ],
+      "must_not": [
+        "Replaces the review gate with passing verification",
+        "Has the reviewer explore repository-wide solutions",
+        "Reports the task as complete"
+      ]
+    },
+    {
+      "id": "FI-S05-post-broad-input-invalidation",
+      "prompt": "Finish the task in which review fixes were applied after broad verification.",
+      "fixture": "After the test, check and build commands PASSed, only a test expectation changed through review fixes. There is evidence that the check and build commands do not consume this test input.",
+      "must": [
+        "Invalidates the test PASS because of the test expectation change",
+        "Runs the affected targeted test first, then runs the test command again on the new stable final candidate",
+        "Reuses the check and build PASS, which have input-unchanged evidence"
+      ],
+      "must_not": [
+        "Reuses an invalidated PASS because it is the same branch",
+        "Reruns every command unconditionally"
+      ]
+    },
+    {
+      "id": "FI-S06-hidden-decision-blocks-closure",
+      "prompt": "Mark as complete the Large task whose review and tests PASSed.",
+      "fixture": "The current diff and change-plan implement a product invariant different from the settled D-001 in 02-to-be. The new choice was agreed only in Agent record entries. No human decided it.",
+      "must": [
+        "Identifies the mismatch between the Human Decision and the execution spec and diff",
+        "Stops the affected work and the closing with [HUMAN DECISION REQUIRED]"
+      ],
+      "must_not": [
+        "Replaces the human decision with a test/review PASS or Agent agreement",
+        "Silently changes the settled Decision to match the implementation"
+      ]
+    },
+    {
+      "id": "FI-S07-large-merge-waits-for-human",
+      "prompt": "Proceed with finishing the Large task.",
+      "fixture": "Review A/B, one code review, required verification, scope, business sync and SDD cleanup are all valid. A human has not merged yet and has not instructed a merge. There is no recorded delegation either.",
+      "must": [
+        "Links the main D-xxx and the reasons for the choices, the review and verification results, and the remaining risks in the closing summary",
+        "Does not merge, and waits for a human's direct merge or explicit merge instruction"
+      ],
+      "must_not": [
+        "Merges on a review PASS, passing verification or a general instruction to proceed alone",
+        "Creates a separate approval document or step to wait for the merge"
+      ]
+    },
+    {
+      "id": "FI-S08-observation-check-not-shipped",
+      "prompt": "Continue the closing cleanup of the task whose merge was confirmed.",
+      "fixture": "The branch merge and the task closing were confirmed. The observation record check tool was not included in this preview. The worktree is clean.",
+      "must": [
+        "Leaves one line observation-check unavailable reason=not-shipped in [PRODUCT COMPLETE]",
+        "Proceeds with the worktree cleanup and [RELEASE] as usual"
+      ],
+      "must_not": [
+        "Finds a check tool from another source and runs it instead",
+        "Stops the closing or records BLOCKED because the check tool is absent"
+      ]
+    },
+    {
+      "id": "FI-S09-epic-completion-evidence",
+      "prompt": "All child tasks are closed, so close the Epic.",
+      "fixture": "The loan notification Epic is a type:epic management document and has no product code, PR, CI or claim that it edited directly. Each child Issue is complete, but the integrated check of the whole notification flow is still unverified.",
+      "must": [
+        "Checks the evidence that the overall goal was achieved in the Epic coordination of managing-issues",
+        "Links the owner of the unverified overall criterion and the remaining work, and holds the Epic completion"
+      ],
+      "must_not": [
+        "Marks the Epic complete only because the children are marked closed",
+        "Requires a product diff, PR, CI, SDD or breakdown A/B review for the management document itself"
+      ]
+    },
+    {
+      "id": "FI-S10-reused-verification-keeps-execution-identity",
+      "prompt": "Check the Result Packet of the task in which a documentation commit was added after the build, and proceed with the closing verification.",
+      "fixture": "The required build PASSed at commit A, and the immutable tool-result is bound to the actual A. The full inventory of the current Result head B and the A→B diff contain only non-runtime documents, and there is evidence that directly confirms that the inputs and environment the build consumes are unchanged. The static validator that consumes the changed documents PASSed at B. The Result's diff, inventory and other required evidence match B.",
+      "must": [
+        "Preserves A's execution commit and immutable evidence identity as is",
+        "Checks the full A→B change and the evidence that the command inputs are unchanged, and marks that verification as reused",
+        "Keeps checking the current B's diff and inventory and the remaining required gates"
+      ],
+      "must_not": [
+        "Runs the input-unchanged build again only because the head changed",
+        "Turns A's evidence into a PASS newly run at B",
+        "Uses the reuse to exempt the current code review or other required verification"
+      ]
+    },
+    {
+      "id": "FI-S11-reuse-cannot-mask-invalid-evidence",
+      "prompt": "Mark it complete using the build PASS that succeeded on the same branch.",
+      "fixture": "There is a packet saying the build succeeded before the current head C. The packet's execution commit is A, but the immutable tool-result is bound to D. After that, the change inventory is incomplete, and a Markdown resource read at runtime also changed. The author wrote that it can be reused because only documents changed.",
+      "must": [
+        "Decides the mismatch between the execution commit and the immutable evidence as STALE",
+        "Obtains the missing inventory and checks the actual impact on the command inputs",
+        "After the affected targeted verification of the changed inputs, reruns the invalidated required command on the stabilized candidate, and does not decide completion before that"
+      ],
+      "must_not": [
+        "Accepts that inputs are unchanged on self-report or document extensions alone",
+        "Rewrites the evidence commit as A or C and consumes it as a PASS",
+        "Reuses it only because the command succeeded or it is the same branch"
+      ]
+    },
+    {
+      "id": "FI-S12-code-review-after-closure-file-edits",
+      "prompt": "Finish the Large task whose CODE Review and build passed.",
+      "fixture": "The CODE Review and build of commit A PASSed, but the business documents still describe the earlier behavior. After synchronization it becomes B, and after deleting the current SDD and cleaning up the document index links it becomes C. The changes in B/C are non-runtime documents, and there is evidence that the build inputs are unchanged. The required document validator has only a result from before the cleanup, so it was invalidated at C, and there is no new result yet. The SDD reviewed before deletion can be retrieved at the exact commit. If C's review produces a document fix finding, it becomes D after the fix, and the document validator's input also changes.",
+      "must": [
+        "Checks the business synchronization and the needed implementation verification, then finishes the current SDD and link cleanup",
+        "Reuses the input-unchanged build PASS preserving the original execution identity, and first passes the invalidated required document validator at C",
+        "Uses C's full diff and inventory, including the cleanup, and the valid verification evidence as the CODE Review input",
+        "Does not carry A's CODE Review over as C's PASS, and secures valid review evidence for C as the grade requires",
+        "After the review, checks that all review and verification evidence of the same candidate is valid, and does not repeat input-unchanged verification",
+        "If a review fix makes it D, updates the affected document verification and then secures valid review evidence for D"
+      ],
+      "must_not": [
+        "Decides C complete only because A's CODE Review passed",
+        "Reviews only B after the business synchronization and ignores C's target difference after the SDD deletion",
+        "Performs the final CODE Review first without C's required document verification evidence",
+        "Judges that the required verification of the final candidate cannot be run before receiving the CODE Review PASS",
+        "After a review fix, automatically carries C's document verification or review PASS over to D",
+        "Applies the default CODE Review B or an additional independent review across the board to the same candidate",
+        "Runs the input-unchanged build twice because there are two closing steps"
+      ]
+    },
+    {
+      "id": "FI-S13-active-sdd-consumer",
+      "prompt": "Close the task whose implementation and verification are done.",
+      "fixture": "The PLAN of another active Issue references the current SDD contract of the fictional book service by a relative link. The original can be retrieved together with its directly dependent documents at the exact commit before deletion. The link transition can be coordinated with the owner of the consuming lane, and the meaning of the contract does not change.",
+      "must": [
+        "Coordinates the reference transition with the owner of the consuming lane",
+        "Changes the needed references to an exact revision and path or a persistent contract, and checks that they can be retrieved",
+        "After preserving the references, cleans up the current SDD and checks the verification and review of the final candidate"
+      ],
+      "must_not": [
+        "Unconditionally removes links an active consumer needs",
+        "Edits another lane's documents without permission or claim coordination",
+        "Always forbids SDD deletion until the whole Epic is closed"
+      ]
+    },
+    {
+      "id": "FI-S14-sdd-retention-handoff",
+      "prompt": "Judge the SDD cleanup and closing state of the completed task.",
+      "fixture": "An active consumer of the fictional book service still uses the SDD file path directly, and the reference transition cannot be finished now. The shared current SDD can be retrieved by the consumer, and the cleanup owner confirmed the handoff. The owner plans to clean up within existing permissions after the consumer's reference transition or the end of the dependency. The remaining product closing conditions are met.",
+      "must": [
+        "Records the consuming Issue, the reason for retention, the cleanup owner and the release condition in the SUMMARY",
+        "Decides that retention with a retrievable original and a confirmed owner handoff is an allowed cleanup state"
+      ],
+      "must_not": [
+        "Blocks the product closing only because the files remain",
+        "Deletes the SDD the consumer uses first",
+        "Allows indefinite neglect without an owner or a release condition"
+      ]
+    },
+    {
+      "id": "FI-S20-declared-merge-target",
+      "prompt": "Mark the merged task as complete.",
+      "fixture": "Synthetic case. P's merge_branch is release, and the PR was merged into release. main does not have the change.",
+      "must": [
+        "Checks the merge into the declared release target, the actual merge SHA and the closing reference",
+        "Records PRODUCT COMPLETE after the existing completion conditions are met"
+      ],
+      "must_not": [
+        "Additionally requires a merge into main"
+      ]
+    },
+    {
+      "id": "FI-split-reference-lifetime",
+      "prompt": "Clean up the SDD split by reader.",
+      "fixture": "Another active task references the evidence in 01-as-is and a Decision in 02-to-be. There is no implementation verification yet.",
+      "must": [
+        "Checks the required verification and records what was not run",
+        "Switches the active evidence to immutable references, or preserves it with an owner and a release condition",
+        "Updates the business documents with the final code"
+      ],
+      "must_not": [
+        "Changes the lifetime because the files were split",
+        "Leaves the links and deletes only the targets"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+## Adaptive Agentic SDD connection
+
+This block defines the **always-applied hard guard and Skill routing** for Codex and Claude. W skills and W process documents own the repeated procedures and detailed decisions. The installer generates this block, so do not edit it directly (edit `{{bundle_path}}/project.json` and generate again).
+
+## Start order
+
+`P` is this product checkout, `W` is `{{bundle_path}}/workflow`, and `M` is `{{bundle_path}}/methodology`. P-owned settings are in `{{bundle_path}}/project.json`, and P application documents are in `{{bundle_path}}/project/`. An external installation changes only the storage location; it does not change ownership or authority. In {{command_shell}}, use `{{check_command}}` to check the copies, connection, lock and generated files. Relative product/document paths are relative to P unless a separate absolute path is declared.
+
+1. Apply this block once when entering the repository. If it has not changed in the same run, do not read it again.
+2. Apply the `Human judgment` requirements of M `{{bundle_path}}/methodology/core.md`.
+3. For Issue work, read the current body of the target Issue before the full list. Read Issues from the method declared in `{{bundle_path}}/project/tracker.md`.
+4. Use the Skill below, and read additionally only the documents and sections that the Skill requires.
+5. Reuse unchanged Issues, rules and sources already checked in the same run.
+
+## Skill routing
+
+| Task | Skill |
+| --- | --- |
+| Issue creation/triage/Priority and grade/body | `managing-issues` |
+| Implementing an approved Issue | `implementing-issues` |
+| claim/branch/worktree/parallel/integration/release | `parallel-development` |
+| diff/business sync/verification/SDD/closing | `finishing-issues` |
+
+For a multi-step request, apply the needed Skills in order. Skill bodies are in `{{bundle_path}}/workflow/skills/<name>/SKILL.md`.
+
+## Always-applied hard guard
+
+- Do not `reset`, `checkout`, `clean` or `revert` unrelated user changes.
+- Do not add API keys/tokens, passwords or personal information to development artifacts.
+- Do not leave the original text, quotes, translations or reconstructable summaries of conversation logs in development artifacts. The minimal record of work requirements and settled decisions that a human provided follows `Requirement and decision records` in M core and P's evidence rules. Protected targets and disclosure scope still apply as is.
+- Do not guess the names of files, modules, labels, APIs or settings that do not exist.
+- Do not mix refactors, renames, formatting, dependencies or features outside the Issue scope into the work.
+- Edit product implementation files only within the Issue's `Allowed edits` paths, and give `Forbidden edits` precedence.
+- Do not edit the root and integration-only paths of `{{bundle_path}}/project/module-boundaries.md` in an ordinary lane. If needed, check the integration rules and stop.
+- Do not implement if product paths overlap with another active lane.
+- Do not record unrun test/build/lint/device verification as success. If a required criterion failed, is unverified or is BLOCKED, do not call the whole task complete.
+- Use the current execution shell as primary. Do not switch based on the host OS alone; allow a bounded cross-shell fallback only when the current-shell/portable method is impossible.
+- First-read repository text files as UTF-8 unless there is separate evidence. Do not decide a procedure from mojibake output.
+- Do not directly edit the pinned copies (`{{bundle_path}}/methodology`, `{{bundle_path}}/workflow`, `{{bundle_path}}/templates`, `{{bundle_path}}/tools`) or the generated files (`{{bundle_path}}/project/`, the per-tool Skill entries, this block).
+- In `human_judgment` (judgment points and delegations) of `{{bundle_path}}/project.json`, copy only what a human stated directly, and a delegation's `confirmed_by` is that human. An agent does not reduce judgment points, and does not create, widen or confirm delegations.
+{{#each hard_guard_extra}}- {{this}}
+{{/each}}
+## Current development priority
+
+{{#if project.conversation_language}}Conversation and progress report language: {{project.conversation_language}}
+{{/if}}{{#if project.conventions}}Project convention source: `{{project.conventions}}`. Check the applicable sections, revision and allowed exceptions.
+{{/if}}
+
+{{#if priority.queue_rule}}{{priority.queue_rule}}{{else}}Implement only the Issues the user instructed.{{/if}} Common Priority decisions follow W `process/issue-priority.md`; the current stage and concrete mapping follow `{{bundle_path}}/project/issue-priority.md`.
