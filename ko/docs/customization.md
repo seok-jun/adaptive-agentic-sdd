@@ -1,6 +1,6 @@
-# 설치와 커스터마이징 안내 (1.0 preview — 미출시)
+# 설치와 커스터마이징 안내 (1.0 preview.3)
 
-이 안내는 미출시 `v1-preview` 브랜치를 다룬다. 사본과 안내를 검토한 전체 commit SHA로 고정한다. 공개된 `v1.0.0-preview.2`를 설치하려면 [해당 태그의 한국어 설치 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/ko/docs/customization.md) 또는 [영문 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/docs/customization.md)를 사용한다. 그 태그는 여기서 설명하는 `--harness-root`와 새 운영 설정을 지원하지 않는다.
+이 안내는 `v1.0.0-preview.3`을 다룬다. 같은 태그의 사본과 안내를 사용하고 태그의 전체 commit SHA를 확인해 고정한다. 공개된 `v1.0.0-preview.2`를 설치하려면 [해당 태그의 한국어 설치 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/ko/docs/customization.md) 또는 [영문 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/docs/customization.md)를 사용한다. 그 태그는 여기서 설명하는 `--harness-root`와 새 운영 설정을 지원하지 않는다.
 
 생성된 기본 check/check-evals 명령은 Windows에서는 PowerShell, 그 외에서는 POSIX sh의 경로 리터럴 인용을 사용한다. 표시된 셸에서 실행한다. 사용자 지정 명령의 인용은 프로젝트가 관리한다.
 
@@ -31,10 +31,10 @@
 
 기본은 저장소 안 설치다. 외부 설치를 선택하면 아래 파일 복사의 목적지를 제품 P가 아닌 전용 설치 root S의 `.adaptive-sdd/`로 바꾸고 다음 절의 명시적 root 옵션을 사용한다. OS junction·하드링크는 필요하지 않다.
 
-`git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd refs/heads/v1-preview`로 현재 후보를 확인하고 설치할 전체 commit SHA를 검토해 정한다. 이후 브랜치가 이동해도 선택한 SHA를 유지한다. 그 commit의 소스 압축 파일을 받아 `ko/adaptive-sdd/`를 프로젝트의 `.adaptive-sdd/`로 **바이트 그대로** 복사한다. 텍스트 편집 도구나 Agent의 파일 쓰기 도구로 다시 쓰지 않는다. Windows PowerShell 예:
+`git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.3^{}"`로 이 릴리스의 전체 commit SHA를 확인한다. 이후 `v1-preview` 브랜치가 이동해도 확인한 SHA를 유지한다. 그 commit의 소스 압축 파일을 받아 `ko/adaptive-sdd/`를 프로젝트의 `.adaptive-sdd/`로 **바이트 그대로** 복사한다. 텍스트 편집 도구나 Agent의 파일 쓰기 도구로 다시 쓰지 않는다. Windows PowerShell 예:
 
 ```powershell
-$sourceCommit = "<검토한 전체 commit SHA>"
+$sourceCommit = "<v1.0.0-preview.3에서 확인한 전체 commit SHA>"
 if ($sourceCommit -notmatch '^[0-9a-f]{40}$') { throw "sourceCommit에 검토한 전체 commit SHA를 입력하세요." }
 $zip = Join-Path $env:TEMP "adaptive-sdd-$sourceCommit.zip"
 Invoke-WebRequest "https://github.com/seok-jun/adaptive-agentic-sdd/archive/$sourceCommit.zip" -OutFile $zip
@@ -153,7 +153,7 @@ python -I -B .adaptive-sdd/tools/install.py init --project-root .
 
 ```text
 방금 정한 대로 .adaptive-sdd/project.json을 쓰고, 아래 명령으로 생성해줘. 고정 사본은 수정하지 마.
-python -I -B .adaptive-sdd/tools/install.py render --project-root . --source-commit <확인한 SHA>
+python -I -B .adaptive-sdd/tools/install.py render --project-root . --source-tag v1.0.0-preview.3 --source-commit <확인한 SHA>
 python -I -B .adaptive-sdd/tools/install.py check --project-root .
 로컬 문서 방식이면 tracker.root 아래에 items/와 claims/ 폴더를 만들어줘.
 생성된 AGENTS.md·CLAUDE.md·.gitattributes 구간과 .adaptive-sdd/project/ 문서를 보여줘.
@@ -210,7 +210,7 @@ $m.files.PSObject.Properties | ForEach-Object { $h = (Get-FileHash ".adaptive-sd
 
 ### Epic 실행 등급에서 관리 단위로 전환
 
-미출시 W 정책은 실행 grade를 Trivial·Small·Medium·Large로 한정한다. Epic 관리·공통 변경 검증·전환의 원본은 W [Epic 관리 단위](../adaptive-sdd/workflow/process/sdd/epic.md#epic-관리-단위)와 [기존 Epic 전환](../adaptive-sdd/workflow/process/sdd/epic.md#기존-epic-전환)이며, 조사 착수와 분석 재사용은 [착수 조건](../adaptive-sdd/workflow/process/sdd/entry.md)과 [기존 분석 재사용](../adaptive-sdd/workflow/process/sdd/entry.md#기존-분석-재사용)을 따른다.
+preview.3의 W 정책은 실행 grade를 Trivial·Small·Medium·Large로 한정한다. Epic 관리·공통 변경 검증·전환의 원본은 W [Epic 관리 단위](../adaptive-sdd/workflow/process/sdd/epic.md#epic-관리-단위)와 [기존 Epic 전환](../adaptive-sdd/workflow/process/sdd/epic.md#기존-epic-전환)이며, 조사 착수와 분석 재사용은 [착수 조건](../adaptive-sdd/workflow/process/sdd/entry.md)과 [기존 분석 재사용](../adaptive-sdd/workflow/process/sdd/entry.md#기존-분석-재사용)을 따른다.
 
 - `grade_mapping`에 `min_grade: Epic`이 있으면 실제 전체 변경의 위험으로 실행 등급을 다시 정해 사람이 프로젝트 값을 갱신한다. 설치 도구는 자동으로 Large로 치환하지 않고 render 전에 오류를 낸다.
 - 기존 `grade:Epic` Issue는 관리 문서(`작업 유형: Epic`, `type:epic`, grade 없음)로 유지하거나 실제 범위에 따라 하나의 실행 Issue로 전환한다. local-docs의 관리 메타는 `type: epic`을 쓴다.

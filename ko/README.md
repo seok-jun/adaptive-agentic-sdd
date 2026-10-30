@@ -1,8 +1,8 @@
-# Adaptive Agentic SDD — 1.0 preview
+# Adaptive Agentic SDD — 1.0 preview.3
 
 [English](../README.md) | **한국어**
 
-> **Preview.** 이 branch(`v1-preview`)에는 차세대 방법론의 1.0 preview가 있습니다. 효과는 측정하지 않았고, 1.0 전에 구조가 바뀔 수 있습니다. v0.2 방법론(영문)은 `main`과 태그 [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0)에 그대로 있습니다. 한국어판 v0.2는 더 이상 제공하지 않습니다.
+> **Preview.** 이 릴리스(`v1.0.0-preview.3`, `v1-preview` branch)에는 차세대 방법론의 1.0 preview가 있습니다. 효과는 측정하지 않았고, 1.0 전에 구조가 바뀔 수 있습니다. v0.2 방법론(영문)은 `main`과 태그 [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0)에 그대로 있습니다. 한국어판 v0.2는 더 이상 제공하지 않습니다.
 
 ## 무엇인가
 
@@ -21,7 +21,7 @@
 
 실행 절차·Skill·eval·설치 도구의 영문판은 아직 없고 다음 preview에서 냅니다. 그때까지 이 부분은 한국어판이 유일한 원본입니다.
 
-미출시 W 정책은 실행 등급을 Trivial·Small·Medium·Large 네 개로 구분합니다. Epic은 개별 추적이 필요한 Issue를 묶는 선택적 관리 단위이며 분해 전용 리뷰 gate를 두지 않습니다. 단일 Large 수행도 허용하고 공통 변경 검증·사람 판단 경계·전체 완료 근거는 유지합니다. 자세한 정책은 [Epic 관리 단위](adaptive-sdd/workflow/process/sdd/epic.md#epic-관리-단위)를 따릅니다. 이 부분의 영문 실행 절차는 아직 미제공입니다.
+preview.3의 W 정책은 실행 등급을 Trivial·Small·Medium·Large 네 개로 구분합니다. Epic은 개별 추적이 필요한 Issue를 묶는 선택적 관리 단위이며 분해 전용 리뷰 gate를 두지 않습니다. 단일 Large 수행도 허용하고 공통 변경 검증·사람 판단 경계·전체 완료 근거는 유지합니다. 자세한 정책은 [Epic 관리 단위](adaptive-sdd/workflow/process/sdd/epic.md#epic-관리-단위)를 따릅니다. 이 부분의 영문 실행 절차는 아직 미제공입니다.
 
 ## 무엇이 아닌가
 
@@ -45,10 +45,11 @@
 3. `install.py render`로 프로젝트 종속 파일을 생성하고 `install.py check`로 확인합니다.
 4. Agent에게 Skill로 일을 시킵니다.
 
-현재 가이드는 미출시 브랜치를 다룹니다. 공개 태그를 설치할 때는 같은 태그의 가이드를 사용하세요. `v1.0.0-preview.2`에는 현재 브랜치에서 설명하는 외부 설치 기능이 없습니다.
+현재 가이드는 `v1.0.0-preview.3`을 다룹니다. 같은 태그의 압축 파일과 가이드를 사용하고, 고정 정보를 기록하기 전에 태그의 전체 commit SHA를 확인하세요. `v1.0.0-preview.2`에는 여기서 설명하는 외부 설치 기능이 없습니다.
 
 ## 버전
 
+- 현재 preview: [`v1.0.0-preview.3`](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.0.0-preview.3).
 - preview 태그: `v1.0.0-preview.N`. 공개한 태그는 옮기지 않습니다. 고칠 것이 있으면 새 태그로 냅니다.
 - 사본은 태그 이름만이 아니라 태그, commit SHA, manifest 해시로 고정합니다.
 - 버전을 올릴 때는 사본만 바꾸고 `project.json`과 작업 기록은 그대로 둔 뒤 다시 생성합니다.

@@ -1,15 +1,17 @@
 # Changelog
 
-## 1.0 preview — unreleased
+## 1.0.0-preview.3 — 2026-10-30
+
+Packages the changes since preview.2 as a new pre-release. The README and both installation guides identify preview.3, resolve the annotated tag to its full commit SHA, and keep the archive, guide and recorded pin aligned. The methodology, workflow, installer and bundle manifest are unchanged from integration commit `01ca9a69bcb6a6267b4b4c703c0562ed878f362f`; earlier validation and independent-review scopes below remain limited to their stated revisions and changes.
 
 Preview synchronization (2026-10-30):
 
-- Integrates the outstanding guide, README, changelog and observation-document corrections with merged public PRs #1–#3. The installation guides now pin the archive and matching guide to the same reviewed commit and distinguish this unreleased branch from the immutable `v1.0.0-preview.2` tag. Fixes both README links to the split Epic contract and the guides' references to relocated Epic, entry and plan-change policies.
-- Clarifies revision-specific validation and moves the third feedback pass and its review history into the unreleased section. Earlier test and review scopes remain historical evidence.
+- Integrates the outstanding guide, README, changelog and observation-document corrections with merged public PRs #1–#3. The installation guides now pin the archive and matching guide to the same reviewed commit and distinguish post-preview.2 changes from the immutable `v1.0.0-preview.2` tag. Fixes both README links to the split Epic contract and the guides' references to relocated Epic, entry and plan-change policies.
+- Clarifies revision-specific validation and moves the third feedback pass and its review history into the current preview section. Earlier test and review scopes remain historical evidence.
 - Korean workflow meaning change: required verification remains mandatory; valid evidence for the same candidate and verification inputs can be reused. Keep detailed evidence at one source and reference its results, gaps and findings from reviews, SUMMARY and Epic records. Add tools or evidence files only when required evidence is missing from existing sources. The bundle manifest is regenerated; this Korean workflow still has no English edition.
 - Validation: all 35 existing executable tests passed on Windows with Python 3.14.7. Both methodology manifests and all 64 bundle files matched. A ZIP of the integration candidate passed init/render/check/check-evals in disposable local-docs and GitHub-adapter installations; 70 cases across four skills passed structure checks. No live tracker operation, actual POSIX execution, model behavior evaluation or efficacy measurement was run.
 - Independent integration review: a separate same-provider subagent requested as `gpt-6.1-sol/high` reviewed the seven-file integration diff against `5a81d647771cb56fcf1f1d84e94d580f2ca2d963`. It independently checked original-change preservation, guide/pin consistency, evidence-reuse semantics, links and exact manifest bytes. One P3 finding about relocated guide references was corrected and narrowly reconfirmed; no unresolved finding remains in that scope. This read-only review does not independently attest the implementing agent's test executions or review the entire cumulative workflow. The served model identity was not independently verified.
-- Published tags remain unchanged. This integration does not publish `v1.0.0-preview.3`.
+- The preview.2 tag remains unchanged. Preview.3 is a separate annotated tag and GitHub pre-release.
 
 Selective reading and artifact layout (Korean workflow only; English workflow remains pending):
 

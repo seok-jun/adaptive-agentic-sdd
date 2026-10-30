@@ -1,12 +1,12 @@
-# Customization guide (1.0 preview — unreleased)
+# Customization guide (1.0 preview.3)
 
-This guide covers the unreleased `v1-preview` branch. Use a reviewed full commit SHA for the copy and the guide. To install the published `v1.0.0-preview.2`, use [its English guide](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/docs/customization.md) or [its Korean installer guide](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/ko/docs/customization.md). That tag does not support `--harness-root` or the new operating settings described here.
+This guide accompanies `v1.0.0-preview.3`. Use the copy and guide from that same tag and verify its full commit SHA. To install the published `v1.0.0-preview.2`, use [its English guide](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/docs/customization.md) or [its Korean installer guide](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/ko/docs/customization.md). That tag does not support `--harness-root` or the new operating settings described here.
 
 Generated default check and check-evals commands use literal path quoting for PowerShell on Windows and POSIX sh elsewhere; use the named shell. Custom commands remain project-owned.
 
 This guide explains how to place a copy of the methodology in a project, adjust it to the project, and give work to an Agent. It is not part of the copy. The Korean edition is `ko/docs/customization.md`. In this preview the Korean edition installs a fuller copy, `ko/adaptive-sdd/` (methodology plus workflow procedures, skills, evals, and an installer), and follows its own guide; the English edition of those parts is pending.
 
-The unreleased Korean workflow separates the optional Epic management type from its four execution grades. Its upgrade guide explains how to migrate former `grade:Epic` issues and `min_grade: Epic` mappings without silently changing human decisions or restarting active work. See [the Korean upgrade guide](../ko/docs/customization.md#버전-올리기); this is not a new grade requirement for the English methodology-only edition.
+The Korean workflow in preview.3 separates the optional Epic management type from its four execution grades. Its upgrade guide explains how to migrate former `grade:Epic` issues and `min_grade: Epic` mappings without silently changing human decisions or restarting active work. See [the Korean upgrade guide](../ko/docs/customization.md#버전-올리기); this is not a new grade requirement for the English methodology-only edition.
 
 The same Korean upgrade guide now covers in-progress policy transitions and installer source identity. A new `--source-commit` without a tag removes the previous tag when the commit changes; a same-commit or source-option-free render preserves it. `--clear-source-tag` repairs an already incorrect tag. A supplied `--source-tag` requires the verified `--source-commit` alongside it; branch names are not tags. The installer does not verify remote tag correspondence. These installer/workflow features still have no English edition.
 
@@ -106,11 +106,11 @@ Starting shape of the adapter:
 
 ## 1. Getting the copy and recording the pin
 
-1. Select and review a full commit SHA from `v1-preview`. `git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd refs/heads/v1-preview` shows the current candidate; keep the selected SHA even if the branch advances later. Download `https://github.com/seok-jun/adaptive-agentic-sdd/archive/<commit-sha>.zip`, replacing `<commit-sha>` with that SHA. The archive contains one top-level folder.
+1. Verify the full commit SHA behind this release with `git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.3^{}"`. Keep that SHA even if `v1-preview` advances later. Download `https://github.com/seok-jun/adaptive-agentic-sdd/archive/<commit-sha>.zip`, replacing `<commit-sha>` with that SHA. The archive contains one top-level folder.
 2. Copy the archive's `methodology/` contents (`core.md`, `adaptation.md`, `supports/`, `manifest.json`) to `.adaptive-sdd/methodology/` and `LICENSE` to `.adaptive-sdd/LICENSE`, **byte for byte**. Keep the LICENSE (MIT) with the copy because it requires the copyright and permission notice to be retained. Do not rewrite the files with a text editor or an Agent's file-writing tool; a BOM or CRLF would change the hashes. Windows PowerShell example:
 
 ```powershell
-$sourceCommit = "<reviewed full commit SHA>"
+$sourceCommit = "<full commit SHA verified for v1.0.0-preview.3>"
 if ($sourceCommit -notmatch '^[0-9a-f]{40}$') { throw "Set sourceCommit to the reviewed full commit SHA." }
 $zip = "adaptive-sdd-$sourceCommit.zip"
 Invoke-WebRequest "https://github.com/seok-jun/adaptive-agentic-sdd/archive/$sourceCommit.zip" -OutFile $zip
@@ -145,7 +145,7 @@ cd .adaptive-sdd/methodology && sha256sum core.md adaptation.md supports/ordered
 
 On macOS, use `shasum -a 256` instead of `sha256sum`.
 
-5. Record the commit SHA and manifest hash in the adapter's "Pin" section. Record a tag only when a published tag has been verified to point to that commit; otherwise record no tag. A tag or branch name alone cannot stand in for the source (`core.md` "Application and improvement observation").
+5. Record the verified `v1.0.0-preview.3` tag, full commit SHA and manifest hash in the adapter's "Pin" section. For a future unreleased commit, record no tag. A tag or branch name alone cannot stand in for the source (`core.md` "Application and improvement observation").
 
 ## 2. Placing it in the project
 
