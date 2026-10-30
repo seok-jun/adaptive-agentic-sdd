@@ -21,22 +21,31 @@
 
 실행 절차·Skill·eval·설치 도구의 영문판은 아직 없고 다음 preview에서 냅니다. 그때까지 이 부분은 한국어판이 유일한 원본입니다.
 
-미출시 W 정책은 실행 등급을 Trivial·Small·Medium·Large 네 개로 구분합니다. Epic은 개별 추적이 필요한 Issue를 묶는 선택적 관리 단위이며 분해 전용 리뷰 gate를 두지 않습니다. 단일 Large 수행도 허용하고 공통 변경 검증·사람 판단 경계·전체 완료 근거는 유지합니다. 자세한 정책은 [Epic 관리 단위](adaptive-sdd/workflow/process/sdd-workflow.md#epic-관리-단위)를 따릅니다. 이 부분의 영문 실행 절차는 아직 미제공입니다.
+미출시 W 정책은 실행 등급을 Trivial·Small·Medium·Large 네 개로 구분합니다. Epic은 개별 추적이 필요한 Issue를 묶는 선택적 관리 단위이며 분해 전용 리뷰 gate를 두지 않습니다. 단일 Large 수행도 허용하고 공통 변경 검증·사람 판단 경계·전체 완료 근거는 유지합니다. 자세한 정책은 [Epic 관리 단위](adaptive-sdd/workflow/process/sdd/epic.md#epic-관리-단위)를 따릅니다. 이 부분의 영문 실행 절차는 아직 미제공입니다.
 
 ## 무엇이 아닌가
 
 - **v0.2의 대체물이 아닙니다.** v0.2의 문서, starter, 템플릿을 옮겨 오지 않았습니다. v0.2는 `main`에 그대로 있습니다.
-- **검증된 결과가 아닙니다.** 결과·재작업·비용에 대한 효과는 측정하지 않았습니다. 절차와 Skill은 한 제품에서 운영됐지만, 다른 프로젝트로 옮긴 형태는 이번이 처음입니다. 이 preview에서 확인한 것은 파일 무결성(manifest 해시), 설치 도구의 단위 테스트, 공개 전에 Windows에서 로컬로 만든 압축 파일로 가상 프로젝트에 한 번 설치해 본 것, 그리고 독립 검토 한 번뿐입니다.
+- **검증된 결과가 아닙니다.** 결과·재작업·비용에 대한 효과는 측정하지 않았습니다. 절차와 Skill을 한 제품에서 운영한 경험이 일반화한 이 preview의 효과를 입증하지는 않습니다. 검사와 검토의 대상 revision은 아래 범위로 한정합니다.
 - **강제 장치가 아닙니다.** Agent와 사람을 위한 안내이며, 보안 경계나 Agent 실행기가 아닙니다.
+
+## 검증 범위
+
+- **공개된 `v1.0.0-preview.2`:** manifest 검사, 설치 도구 단위 테스트, 로컬 압축 파일과 가상 프로젝트를 사용한 Windows 설치 시운전 한 번, 독립 검토 한 번이 해당 릴리스에 기록돼 있습니다. 이후 변경의 검증 근거로 확대하지 않습니다.
+- **미출시 commit `068618bdda2f8d0571da3099f5e132e4ff17ff1e`, 2026-10-27 확인:** Windows·Python 3.14.7에서 실행 테스트 25개가 모두 통과했고, 양쪽 방법론 manifest와 51개 파일의 번들 manifest가 일치했습니다. 해당 commit으로 만든 ZIP을 임시 프로젝트에 설치해 `init`, `render`, `check`, `check-evals`가 통과했습니다. Skill 4개의 사례 60개는 구조 검사를 통과했으며, 모델 행동 평가로 실행한 결과는 아닙니다.
+- **통합 후보, 2026-10-30 확인:** `5a81d647771cb56fcf1f1d84e94d580f2ca2d963`에 이번 변경의 설치 안내·검증 범위·변경 이력·관측 근거·manifest 보정을 합친 범위입니다. Windows·Python 3.14.7에서 실행 테스트 35개가 모두 통과했고, 양쪽 방법론 manifest와 64개 파일의 번들 manifest가 일치했습니다. 후보 ZIP을 임시 local-docs·GitHub adapter 프로젝트에 설치해 `init`, `render`, `check`, `check-evals`가 통과했습니다. Skill 4개의 사례 70개는 구조 검사만 수행했으며, 실제 GitHub tracker 작업과 모델 행동 평가는 실행하지 않았습니다.
+- **리뷰와 남은 한계:** 이전 리뷰의 범위와 시점은 [CHANGELOG.md](../CHANGELOG.md)에 기록돼 있습니다. 위 검사는 새로운 독립 리뷰가 아닙니다. 실제 POSIX 실행, 실제 원격·host 통합, 모델 행동, 결과·재작업·비용에 대한 효과는 아직 검증하지 않았습니다.
 
 ## 시작하기
 
 [docs/customization.md](docs/customization.md)를 읽으세요. 요약하면 다음과 같습니다.
 
-1. 태그 압축 파일을 받아 `ko/adaptive-sdd/`를 프로젝트의 `.adaptive-sdd/`로 바이트 그대로 복사합니다.
+1. 설치 가이드에 따라 검토한 commit SHA의 압축 파일을 받아 `ko/adaptive-sdd/`를 프로젝트의 `.adaptive-sdd/`로 바이트 그대로 복사합니다.
 2. `install.py init`으로 `project.json`을 만들고, Agent가 초안을 쓰면 사람이 정합니다. 사람 판단 지점과 위임은 사람만 정합니다.
 3. `install.py render`로 프로젝트 종속 파일을 생성하고 `install.py check`로 확인합니다.
 4. Agent에게 Skill로 일을 시킵니다.
+
+현재 가이드는 미출시 브랜치를 다룹니다. 공개 태그를 설치할 때는 같은 태그의 가이드를 사용하세요. `v1.0.0-preview.2`에는 현재 브랜치에서 설명하는 외부 설치 기능이 없습니다.
 
 ## 버전
 

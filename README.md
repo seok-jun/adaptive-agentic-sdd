@@ -26,18 +26,27 @@ A common layer that a project copies, pins, and adjusts to itself.
 
 The English edition of these parts is pending and planned for a later preview. Until then, the Korean edition is the only source for them, and English-only projects use the methodology documents above.
 
-The unreleased Korean workflow uses four execution grades (Trivial, Small, Medium, Large). Epic is an optional grouping for independently tracked issues, with no separate decomposition review gate. A single Large issue remains valid; shared-change verification, human-decision boundaries, and evidence for the overall outcome remain required. See the [Korean workflow](ko/adaptive-sdd/workflow/process/sdd-workflow.md#epic-관리-단위) for the policy; its English edition is still pending.
+The unreleased Korean workflow uses four execution grades (Trivial, Small, Medium, Large). Epic is an optional grouping for independently tracked issues, with no separate decomposition review gate. A single Large issue remains valid; shared-change verification, human-decision boundaries, and evidence for the overall outcome remain required. See the [Korean workflow](ko/adaptive-sdd/workflow/process/sdd/epic.md#epic-관리-단위) for the policy; its English edition is still pending.
 
 ## What this is not
 
 - **Not a replacement for v0.2.** It does not carry over v0.2's documents, starter, or templates. v0.2 remains on `main`.
-- **Not a verified result.** No effect on outcomes, rework, or cost has been measured. The procedures and skills were used in one product; their generalized form is published here for the first time. The checks for this preview are file integrity (the manifest hashes), the installer's unit tests, one pre-publication install rehearsal on Windows into a fictional project using a locally built archive, and one independent review.
+- **Not a verified result.** No effect on outcomes, rework, or cost has been measured. The procedures and skills were used in one product; that experience does not establish the effectiveness of this generalized preview. Checks and reviews have the revision-specific scope below.
 - **Not an enforcement mechanism.** It is guidance for agents and people; it is not a security boundary or an agent runner.
+
+## Verification scope
+
+- **Published `v1.0.0-preview.2`:** manifest checks, installer unit tests, one Windows installation rehearsal using a locally built archive and a fictional project, and one independent review were recorded for that release. They do not validate subsequent changes.
+- **Unreleased commit `068618bdda2f8d0571da3099f5e132e4ff17ff1e`, checked on 2026-10-27:** all 25 executable tests passed on Windows with Python 3.14.7; both methodology manifests and the 51-file bundle manifest matched. A ZIP built from that commit passed `init`, `render`, `check`, and `check-evals` in a disposable project. The 60 cases across four skills passed structural checks; they were not executed as model behavior evaluations.
+- **Integration candidate, checked on 2026-10-30:** based on `5a81d647771cb56fcf1f1d84e94d580f2ca2d963` plus the guide, verification-scope, changelog, observation-evidence and manifest corrections in this change. All 35 executable tests passed on Windows with Python 3.14.7. Both methodology manifests and the 64-file bundle manifest matched. A ZIP of the candidate passed `init`, `render`, `check`, and `check-evals` in disposable local-docs and GitHub-adapter projects; 70 cases across four skills passed structural checks. No live GitHub tracker operations or model behavior evaluations were run.
+- **Review and remaining limits:** [CHANGELOG.md](CHANGELOG.md) records the scope and timing of earlier reviews. The checks above are not a new independent review. Actual POSIX execution, live remote/host integration, model behavior, and effects on outcomes, rework, or cost remain unverified.
 
 ## Getting started
 
 - **English (methodology only):** read [docs/customization.md](docs/customization.md). Copy `methodology/` and `LICENSE` byte for byte, check the hashes, pin line endings, add a few lines to the entry file, and let an Agent draft the adapter; a human decides the human-judgment points.
 - **Korean (full copy with installer):** read [ko/docs/customization.md](ko/docs/customization.md). Copy `ko/adaptive-sdd/` to `.adaptive-sdd/`, run `install.py init`, fill `project.json` (an Agent drafts, a human decides), then run `install.py render` and `install.py check`.
+
+These guides cover the unreleased branch and use a reviewed commit SHA. For a published tag, use the guide from that same tag; `v1.0.0-preview.2` does not include the external installer features described on this branch.
 
 ## Versions
 

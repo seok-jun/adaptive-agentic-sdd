@@ -1,4 +1,6 @@
-# Customization guide (1.0 preview)
+# Customization guide (1.0 preview — unreleased)
+
+This guide covers the unreleased `v1-preview` branch. Use a reviewed full commit SHA for the copy and the guide. To install the published `v1.0.0-preview.2`, use [its English guide](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/docs/customization.md) or [its Korean installer guide](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/ko/docs/customization.md). That tag does not support `--harness-root` or the new operating settings described here.
 
 Generated default check and check-evals commands use literal path quoting for PowerShell on Windows and POSIX sh elsewhere; use the named shell. Custom commands remain project-owned.
 
@@ -80,8 +82,9 @@ Starting shape of the adapter:
 # Methodology adapter
 
 ## Pin
-- Source: <repository URL> tag v1.0.0-preview.2
-- Tag commit: <SHA>
+- Source: <repository URL>
+- Commit: <reviewed full commit SHA used for the archive and guide>
+- Tag: <verified published tag, or none for an unreleased commit>
 - Manifest hash: <sha256 of the manifest.json file>
 - Copy location: .adaptive-sdd/methodology/
 
@@ -103,12 +106,14 @@ Starting shape of the adapter:
 
 ## 1. Getting the copy and recording the pin
 
-1. Download the tag's source archive: `https://github.com/seok-jun/adaptive-agentic-sdd/archive/refs/tags/v1.0.0-preview.2.zip`. The archive contains one top-level folder.
+1. Select and review a full commit SHA from `v1-preview`. `git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd refs/heads/v1-preview` shows the current candidate; keep the selected SHA even if the branch advances later. Download `https://github.com/seok-jun/adaptive-agentic-sdd/archive/<commit-sha>.zip`, replacing `<commit-sha>` with that SHA. The archive contains one top-level folder.
 2. Copy the archive's `methodology/` contents (`core.md`, `adaptation.md`, `supports/`, `manifest.json`) to `.adaptive-sdd/methodology/` and `LICENSE` to `.adaptive-sdd/LICENSE`, **byte for byte**. Keep the LICENSE (MIT) with the copy because it requires the copyright and permission notice to be retained. Do not rewrite the files with a text editor or an Agent's file-writing tool; a BOM or CRLF would change the hashes. Windows PowerShell example:
 
 ```powershell
-$zip = "v1.0.0-preview.2.zip"
-Invoke-WebRequest "https://github.com/seok-jun/adaptive-agentic-sdd/archive/refs/tags/v1.0.0-preview.2.zip" -OutFile $zip
+$sourceCommit = "<reviewed full commit SHA>"
+if ($sourceCommit -notmatch '^[0-9a-f]{40}$') { throw "Set sourceCommit to the reviewed full commit SHA." }
+$zip = "adaptive-sdd-$sourceCommit.zip"
+Invoke-WebRequest "https://github.com/seok-jun/adaptive-agentic-sdd/archive/$sourceCommit.zip" -OutFile $zip
 $tmp = Join-Path $env:TEMP "adaptive-sdd-preview"
 Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
 Expand-Archive $zip -DestinationPath $tmp
@@ -118,7 +123,7 @@ Remove-Item .adaptive-sdd/methodology -Recurse -Force -ErrorAction SilentlyConti
 Copy-Item "$src/methodology" .adaptive-sdd/methodology -Recurse
 Copy-Item "$src/LICENSE" .adaptive-sdd/LICENSE
 ```
-3. Find the commit the tag points to: `git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.2^{}"`. Without git, check the commit on the repository's tag page.
+3. Use `docs/customization.md` from the same archive, or its commit-pinned URL in section 3. Keep the archive, guide, and recorded source commit aligned; do not substitute a later branch tip or an older tag's guide.
 4. Compare the hashes. The sha256 of each of the three documents must equal the value in `manifest.json`. The **manifest hash** is the sha256 of the `manifest.json` file itself.
 
 Windows PowerShell:
@@ -140,7 +145,7 @@ cd .adaptive-sdd/methodology && sha256sum core.md adaptation.md supports/ordered
 
 On macOS, use `shasum -a 256` instead of `sha256sum`.
 
-5. Record the tag, commit SHA, and manifest hash in the adapter's "Pin" section. A tag name alone cannot stand in for the source (`core.md` "Application and improvement observation").
+5. Record the commit SHA and manifest hash in the adapter's "Pin" section. Record a tag only when a published tag has been verified to point to that commit; otherwise record no tag. A tag or branch name alone cannot stand in for the source (`core.md` "Application and improvement observation").
 
 ## 2. Placing it in the project
 
@@ -161,7 +166,7 @@ Do not edit `.adaptive-sdd/methodology/`. Put project adjustments only in the ad
 
 ## 3. Order of work for the Agent
 
-The first time, give the Agent the steps below in order. Look at each step's result before moving on. This guide is not in the copy, so give the Agent its address: https://raw.githubusercontent.com/seok-jun/adaptive-agentic-sdd/v1.0.0-preview.2/docs/customization.md
+The first time, give the Agent the steps below in order. Look at each step's result before moving on. This guide is not in the copy, so give the Agent its address: `https://raw.githubusercontent.com/seok-jun/adaptive-agentic-sdd/<commit-sha>/docs/customization.md`. Replace `<commit-sha>` with the exact SHA used for the archive, and substitute that address for `<guide URL>` below. If web access is unavailable, provide the guide from the same archive.
 
 **① Observe.** Collect facts without changing code.
 
@@ -174,7 +179,7 @@ existing rule files, and risky shared paths, and summarize them as facts. List w
 **② Draft the adapter.**
 
 ```text
-For each adapter slot in core.md and the customization guide (https://raw.githubusercontent.com/seok-jun/adaptive-agentic-sdd/v1.0.0-preview.2/docs/customization.md),
+For each adapter slot in core.md and the customization guide (<guide URL>),
 show the proposed value, the evidence (files, commands), and what you could not confirm, separately. Collect what I need to decide in one place.
 ```
 
@@ -184,9 +189,9 @@ show the proposed value, the evidence (files, commands), and what you could not 
 
 ```text
 Write .adaptive-sdd/adapter.md as just decided, and add the lines from the customization guide
-(https://raw.githubusercontent.com/seok-jun/adaptive-agentic-sdd/v1.0.0-preview.2/docs/customization.md) to the entry file and .gitattributes.
+(<guide URL>) to the entry file and .gitattributes.
 Do not modify .adaptive-sdd/methodology/. For the pin, recompute and record the confirmed hashes,
-and take the commit SHA from git ls-remote. Do not overwrite existing entry-file content.
+and record the exact commit SHA selected for the downloaded archive. Do not overwrite existing entry-file content.
 ```
 
 **⑤ Trial run on a small task.**
@@ -205,9 +210,9 @@ Propose only what has evidence, and separate anything that looks like a problem 
 
 ## Upgrading
 
-1. Repeat section 1 with the new tag's archive. Delete the copy folder first and replace it as a whole; leftover old files are not caught by the hash comparison.
+1. Repeat section 1 with the newly reviewed commit's archive and matching guide. For a published release, verify the tag's commit and use its guide. Delete the copy folder first and replace it as a whole; leftover old files are not caught by the hash comparison.
 2. Update the adapter's "Pin" section with the new values and record the date of the change. Do not edit records of earlier intervals.
-3. Do not switch implicitly in the middle of a task in progress. If you switch, record it as an interval starting at that point. Check active owners, running reviews, uncommitted changes, and recent work records to coordinate which tasks and stages adopt the change. The Korean workflow defines plan correction and policy transition in `process/sdd-artifacts.md`; retain valid prior decisions and review evidence rather than automatically restarting them.
+3. Do not switch implicitly in the middle of a task in progress. If you switch, record it as an interval starting at that point. Check active owners, running reviews, uncommitted changes, and recent work records to coordinate which tasks and stages adopt the change. The Korean workflow defines plan correction and policy transition in [process/sdd/plan-change.md](../ko/adaptive-sdd/workflow/process/sdd/plan-change.md#계획-정정과-정책-전환); retain valid prior decisions and review evidence rather than automatically restarting them.
 
 When adopting the requirement/decision recording clarification in `core.md`, check project-owned restrictions as well. Minimal task requirement and decision records are distinct from collecting conversation logs; the clarification does not automatically relax project disclosure or secret-protection rules. In the Korean installer, inspect generated `project/issue-writing-guide.md` differences and any `KEPT` hand-edited outputs before updating them within the permitted scope.
 

@@ -2,6 +2,15 @@
 
 ## 1.0 preview — unreleased
 
+Preview synchronization (2026-10-30):
+
+- Integrates the outstanding guide, README, changelog and observation-document corrections with merged public PRs #1–#3. The installation guides now pin the archive and matching guide to the same reviewed commit and distinguish this unreleased branch from the immutable `v1.0.0-preview.2` tag. Fixes both README links to the split Epic contract and the guides' references to relocated Epic, entry and plan-change policies.
+- Clarifies revision-specific validation and moves the third feedback pass and its review history into the unreleased section. Earlier test and review scopes remain historical evidence.
+- Korean workflow meaning change: required verification remains mandatory; valid evidence for the same candidate and verification inputs can be reused. Keep detailed evidence at one source and reference its results, gaps and findings from reviews, SUMMARY and Epic records. Add tools or evidence files only when required evidence is missing from existing sources. The bundle manifest is regenerated; this Korean workflow still has no English edition.
+- Validation: all 35 existing executable tests passed on Windows with Python 3.14.7. Both methodology manifests and all 64 bundle files matched. A ZIP of the integration candidate passed init/render/check/check-evals in disposable local-docs and GitHub-adapter installations; 70 cases across four skills passed structure checks. No live tracker operation, actual POSIX execution, model behavior evaluation or efficacy measurement was run.
+- Independent integration review: a separate same-provider subagent requested as `gpt-6.1-sol/high` reviewed the seven-file integration diff against `5a81d647771cb56fcf1f1d84e94d580f2ca2d963`. It independently checked original-change preservation, guide/pin consistency, evidence-reuse semantics, links and exact manifest bytes. One P3 finding about relocated guide references was corrected and narrowly reconfirmed; no unresolved finding remains in that scope. This read-only review does not independently attest the implementing agent's test executions or review the entire cumulative workflow. The served model identity was not independently verified.
+- Published tags remain unchanged. This integration does not publish `v1.0.0-preview.3`.
+
 Selective reading and artifact layout (Korean workflow only; English workflow remains pending):
 
 - Splits grade, entry, issue, Epic, completion, AS-IS, TO-BE, execution spec, and plan corrections into directly addressable files. Skills bypass the small index; rule owners, human boundaries, review independence, and verification gates remain intact.
@@ -52,6 +61,27 @@ Second feedback implementation pass (Korean workflow; English workflow edition p
 - Adds the optional standard-library `review_snapshot.py` helper for exact-commit UTF-8 artifacts and local-docs bodies. It exports source/output hashes and line selections, rejects mutable refs and unsafe paths, and checks source correspondence, altered bytes, and unexpected files. It does not prove remote publication, semantic redaction, or host isolation.
 
 Checked after the second pass: all 17 executable tests passed, including seven snapshot tests with Korean CRLF text, fenced heading examples, hidden metadata/records, changed worktree versus exact commit, tampering, and a bare-source CLI run. The sandbox blocked Git's shell during the initial local bare-clone fixture setup; the full suite then passed with approved execution permissions. Installed links/frontmatter, both tracker adapters, the 51-file bundle, both methodology manifests, and structure of 54 cases / four skills were checked. Six new behavior specifications were added; model behavior evaluation and independent review remain unrun. Actual reviewer-account access and end-to-end blind isolation are not claimed from synthetic tool tests. The separate skill-creator validator remains unavailable without PyYAML.
+
+Third feedback implementation pass (meaning changes):
+
+- Adds optional external harness installation with checkout-bound connection, lock, manifest and generated-entry checks. One harness root serves one checkout; migration preserves hand edits and does not remove old copies.
+- Declares code remote/base/merge target separately from review publication repository/remote/branch, and external/child ID rules. Existing installations keep defaults; no service adapter or Git authorization is inferred.
+- Adds manual verification ownership/evidence and persistent/temporary/no-new-test policy, preserving required checks, temporary evidence and current-target correspondence.
+- Adds conversation/convention references, role preferences and capability/qualification references. Inherited current/manual reviewers still need verified identity/reasoning; preferences do not bypass qualification or human Review B selection.
+- Aligns generated AGENTS privacy guidance with the first-pass permission to record minimal requirements and explicit decisions. Normalizes generated marker-block boundaries for repeatable rendering.
+- English/Korean customization guides describe these settings and limitations. Full English workflow/templates/tools remain pending. Synthetic tests and behavioral specifications do not establish live-host or operational efficacy.
+
+Context-inheriting auxiliary review follow-up (not an independent review):
+
+- Resolves three P2 findings: completion uses the declared merge target; explicit required device/runtime checks remain mandatory without adding a universal QA gate; Git and publication names share validation before writes. Adds invalid-name regression inputs and two fictional behavior specifications.
+- A context-inheriting auxiliary reviewer confirmed all three fixes with no new actionable finding in the corrected scope. Installer regressions passed again; live publication and host behavior remain unverified.
+
+Context-isolated Astra high review:
+
+- A fresh gpt-6-astra/high reviewer received no conversation history or previous findings/test results. It inspected the cumulative working-tree changes independently; earlier review statements were excluded as evidence.
+- Fixes two P2 findings: external default check-evals now uses explicit harness/product roots, and generated external commands quote paths literally for the named PowerShell/POSIX shell.
+- Fixes a follow-up P2 regression by keeping in-repository output independent of the generating OS. Adds actual Windows-shell execution tests for special-character paths and a win32-render/linux-check branch test.
+- The reviewer confirmed all findings resolved. Initial full suite: 23 tests passed; final changed installer suite: 18 tests passed. Actual POSIX execution, live remote operations and model behavior evaluations remain unverified.
 
 ## 1.0.0-preview.2
 
@@ -126,24 +156,3 @@ These are methodology/starter changes, not a claim of runtime enforcement or com
 ## 0.1.0
 
 Initial public working methodology: Issue-first execution, information-specific Source of Truth, risk grades, bounded AS-IS analysis, Verification Strategy, Trade-off Capture, grade-based review, conditional Device QA, token/context efficiency, and lifecycle cleanup.
-
-Third feedback implementation pass (meaning changes):
-
-- Adds optional external harness installation with checkout-bound connection, lock, manifest and generated-entry checks. One harness root serves one checkout; migration preserves hand edits and does not remove old copies.
-- Declares code remote/base/merge target separately from review publication repository/remote/branch, and external/child ID rules. Existing installations keep defaults; no service adapter or Git authorization is inferred.
-- Adds manual verification ownership/evidence and persistent/temporary/no-new-test policy, preserving required checks, temporary evidence and current-target correspondence.
-- Adds conversation/convention references, role preferences and capability/qualification references. Inherited current/manual reviewers still need verified identity/reasoning; preferences do not bypass qualification or human Review B selection.
-- Aligns generated AGENTS privacy guidance with the first-pass permission to record minimal requirements and explicit decisions. Normalizes generated marker-block boundaries for repeatable rendering.
-- English/Korean customization guides describe these settings and limitations. Full English workflow/templates/tools remain pending. Synthetic tests and behavioral specifications do not establish live-host or operational efficacy.
-
-Context-inheriting auxiliary review follow-up (not an independent review):
-
-- Resolves three P2 findings: completion uses the declared merge target; explicit required device/runtime checks remain mandatory without adding a universal QA gate; Git and publication names share validation before writes. Adds invalid-name regression inputs and two fictional behavior specifications.
-- A context-inheriting auxiliary reviewer confirmed all three fixes with no new actionable finding in the corrected scope. Installer regressions passed again; live publication and host behavior remain unverified.
-
-Context-isolated Astra high review:
-
-- A fresh gpt-6-astra/high reviewer received no conversation history or previous findings/test results. It inspected the cumulative working-tree changes independently; earlier review statements were excluded as evidence.
-- Fixes two P2 findings: external default check-evals now uses explicit harness/product roots, and generated external commands quote paths literally for the named PowerShell/POSIX shell.
-- Fixes a follow-up P2 regression by keeping in-repository output independent of the generating OS. Adds actual Windows-shell execution tests for special-character paths and a win32-render/linux-check branch test.
-- The reviewer confirmed all findings resolved. Initial full suite: 23 tests passed; final changed installer suite: 18 tests passed. Actual POSIX execution, live remote operations and model behavior evaluations remain unverified.
