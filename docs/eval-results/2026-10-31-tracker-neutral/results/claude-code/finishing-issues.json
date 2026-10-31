@@ -1,0 +1,48 @@
+{
+  "agent": "claude-code",
+  "agent_version": "2.1.302 (Claude Code)",
+  "requested_model": "opus",
+  "commit": "1b99d2187ab4d3650e716f1abf0c498b2c229ca0 + uncommitted preview.5 working tree",
+  "bundle_manifest_sha256": "38c130ee855f91db1af3a4b463de0dfc7aeaee9eb76ebd5159ea009eb044a6a5",
+  "skill": "finishing-issues",
+  "cases": [
+    {
+      "id": "FI-S03-closing-reference",
+      "run": 1,
+      "result": "FAIL",
+      "failed_must": [
+        "병합 뒤 branch가 main에 포함됐는지 확인하고 그 SHA를 기록한다"
+      ],
+      "violated_must_not": [],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 42,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    },
+    {
+      "id": "FI-S20-declared-merge-target",
+      "run": 1,
+      "result": "FAIL",
+      "failed_must": [
+        "선언한 release 대상 병합과 실제 merge SHA 및 closing reference를 확인한다"
+      ],
+      "violated_must_not": [
+        "main 병합을 추가 요구한다"
+      ],
+      "grader": "codex",
+      "provided_models": [
+        "claude-opus-5-5"
+      ],
+      "seconds": 44,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (run failed: usage limit)",
+      "retry_kind": "single bounded rerun"
+    }
+  ]
+}

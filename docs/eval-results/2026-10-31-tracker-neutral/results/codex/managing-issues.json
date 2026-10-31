@@ -1,0 +1,49 @@
+{
+  "agent": "codex",
+  "agent_version": "codex-cli 0.163.0",
+  "requested_model": "config default (see selection.json)",
+  "commit": "1b99d2187ab4d3650e716f1abf0c498b2c229ca0 + uncommitted preview.5 working tree",
+  "bundle_manifest_sha256": "38c130ee855f91db1af3a4b463de0dfc7aeaee9eb76ebd5159ea009eb044a6a5",
+  "skill": "managing-issues",
+  "cases": [
+    {
+      "id": "MI-S01-convenience-bug",
+      "run": 1,
+      "result": "FAIL",
+      "failed_must": [
+        "Priority를 P2로 판정한다",
+        "SDD grade를 Small로 판정한다",
+        "Mermaid와 HTML Visual Spec을 만들지 않는다",
+        "메타의 priority와 grade를 본문 값과 같게 각각 하나씩 적는다"
+      ],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 24,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    },
+    {
+      "id": "MI-S08-optional-epic-unresolved-investigation",
+      "run": 1,
+      "result": "FAIL",
+      "failed_must": [
+        "Epic을 실행 grade와 별개인 관리 단위로 표시하고 하위 책임·전체 완료 기준을 연결한다"
+      ],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 25,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    }
+  ]
+}

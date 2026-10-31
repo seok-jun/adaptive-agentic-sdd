@@ -1,0 +1,28 @@
+{
+  "agent": "codex",
+  "agent_version": "codex-cli 0.163.0",
+  "requested_model": "config default (see selection.json)",
+  "commit": "1b99d2187ab4d3650e716f1abf0c498b2c229ca0 + uncommitted preview.5 working tree",
+  "bundle_manifest_sha256": "38c130ee855f91db1af3a4b463de0dfc7aeaee9eb76ebd5159ea009eb044a6a5",
+  "skill": "parallel-development",
+  "cases": [
+    {
+      "id": "PD-S01-clean-claim",
+      "run": 1,
+      "result": "FAIL",
+      "failed_must": [
+        "정확한 CLAIM 형식으로 agent/branch/allowed/forbidden을 기록한다"
+      ],
+      "violated_must_not": [],
+      "grader": "claude-code",
+      "provided_models": [
+        "unconfirmed"
+      ],
+      "seconds": 17,
+      "files_changed_in_disposable_project": [],
+      "notes": "",
+      "retry_of": "INVALID (grader unavailable: usage limit)",
+      "retry_kind": "regrade of the saved answer"
+    }
+  ]
+}
