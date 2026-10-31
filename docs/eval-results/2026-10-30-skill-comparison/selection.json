@@ -6,11 +6,11 @@
   "edition": "ko",
   "subject": {
     "tool": "claude-code",
-    "requested_model": null,
-    "effort": null,
+    "requested_model": "claude-opus-5-5",
+    "effort": "medium",
     "historical_requested_model": "opus",
     "historical_served_model": "claude-opus-5-5",
-    "note": "Pin one available model and effort before any calls; same for both arms."
+    "note": "Pinned 2026-10-31 before calls. User confirmed sufficient allowance and requested the historical model. Availability and returned identity must be checked; no substitution."
   },
   "grader": {
     "tool": "codex",

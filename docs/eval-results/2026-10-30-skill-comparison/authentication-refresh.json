@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-31",
+  "source": "User completed requested default-home Claude subscription login",
+  "effective_from": "s003",
+  "prior_invalid_samples_preserved": [
+    "s001",
+    "s002"
+  ]
+}

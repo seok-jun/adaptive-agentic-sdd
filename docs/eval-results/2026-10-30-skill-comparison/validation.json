@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-31",
+  "samples": 18,
+  "subject_cli_attempts": 18,
+  "successful_subject_inferences": 16,
+  "grader_calls": 16,
+  "pre_inference_auth_invalid": 2,
+  "project_inventories_unchanged": 18,
+  "subject_model_and_allowed_tool_transcripts_validated": 16,
+  "grader_no_tool_transcripts_and_strict_item_booleans_validated": 16,
+  "runner_and_selection_hashes_unchanged": true,
+  "automatic_retries": 0,
+  "transcript_hash_encoding": "UTF-8 decoded subprocess text, universal newlines (LF); not Windows CRLF file bytes",
+  "grader_model_identity_limit": "gpt-6-astra/medium verified in CLI arguments; exec JSONL does not independently expose provider-side served model identity."
+}
