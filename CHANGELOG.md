@@ -1,12 +1,28 @@
 # Changelog
 
-## Unreleased — skill and evaluation clarity
+## 1.0.0-preview.6 — 2026-10-31
 
-- Validation (2026-10-30, Windows, Python 3.14.7): 36 installer/edition tests and 8 SDD structure tests passed; both 66-file manifests matched; disposable installs of both editions passed init/render/check/check-evals (77 cases). No model behavior run was performed.
+Follows preview.5 (`ee5c60a246a95218e0f429681036fa9bd4bd1e03`). Earlier tags are unchanged.
 
-- II-S02: restate the existing owning-module/test-class-first rule at the implementation step in both editions. The verification policy and required broad checks are unchanged.
-- FI-S02: provide the synthetic failing command and its result in the fixture. Add FI-S02b for missing command/result evidence; do not invent unavailable details. Both editions clarify the existing incomplete-status report at the finishing step.
-- Regenerate both bundle manifests. Historical preview.5 behavior results remain unchanged. These are wording and evaluation-input corrections, not demonstrated behavior improvements; revised-case model runs and comparative validation are not yet performed.
+First experience (no rule change):
+
+- Both READMEs are rewritten around what a visitor needs first: the value, how depth scales by grade, two illustrative transcripts, a paste-in installation prompt, the expected `check`/`check-evals` output, the list of added files, how to undo the installation, the first task and when it counts as done. The verification history moves to this changelog; a short status section keeps the limits and links the evaluation records.
+- Both installation guides target preview.6, and their first paragraph points to the guide inside each earlier tag instead of listing earlier tags.
+
+Tracker-neutral W (meaning unchanged for both existing adapters):
+
+- `workflow/README.md` defines W's terms (Issue, comment, field values in label notation, assignee, PR, closing reference) as tracker-neutral; the declared tracker method decides syntax and API.
+- GitHub-only mechanics move from W to `tracker/github.md`: labels in the creation request, removing and adding a `priority:*` label, Issue-number order, `Closes #N` syntax and the numeric `product-complete:` JSON. `tracker/local-docs.md` gains the matching rows (creation write, meta rewrite, `created:` order). W now says "set both values at creation if the method allows it", "replace the value and re-read", "the Issue created first" and "add the closing reference". Markers, the `Meta`/`Records` headings, the installer's `github | local-docs` choices and Epic's grade exception are unchanged. This does not add support for other trackers.
+- The pinned Korean `completion.md` guard is proven unchanged except for the one closing-reference sentence (the test reverts exactly that sentence and compares the pinned hash). New `tests/test_tracker_neutral.py` keeps GitHub-only phrases out of W outside `tracker/` and checks that both adapters map the moved operations.
+
+Skill and evaluation clarity (carried from the unreleased 721e086 change and corrected):
+
+- II-S02: both editions restate the existing owning-module/test-class-first rule at the implementation step. It now applies to each *verification-affecting* changed file, matching `verification.md`; the 721e086 wording ("changed files") was broader than its source. The English edition also states that the scope follows that source.
+- FI-S02: the fixture supplies the synthetic failing command and its result. New FI-S02b covers a missing command name and log; the agent must not invent them. Both editions clarify the incomplete-status report at the finishing step.
+- A post-hoc paired diagnostic (`docs/eval-results/2026-10-30-skill-comparison/`, Korean, Claude `claude-opus-5-5`/medium as subject, Codex `gpt-6-astra`/medium as grader, 3 cases × 2 arms × 3 runs) graded 16 answers: 11 PASS, 5 FAIL, 2 pre-inference authentication INVALIDs kept without retry. No overall improvement was observed; II-S02 failed in every valid run, and its fixture lacked an Issue identity and full paths, so it does not establish a skill regression either. It evaluated the 721e086 wording, not the final wording or the English edition. Known runner limits: the grader model and effort are fixed in code, and resuming does not re-hash the generated grader model and instruction files; the recorded run used the configured values.
+- Case notes in both editions record that diagnostic instead of saying the revised cases are unrun.
+
+Validation: {{VALIDATION_CHANGELOG}}
 
 ## 1.0.0-preview.5 — 2026-10-30
 

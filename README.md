@@ -1,68 +1,124 @@
-# Adaptive Agentic SDD — 1.0 preview.5
+# Adaptive Agentic SDD
+
+**Short for small changes, deep for risky ones.** Risk-adaptive spec-driven development (SDD) for Claude Code or Codex on existing codebases.
+
+[![Release](https://img.shields.io/github/v/release/seok-jun/adaptive-agentic-sdd?include_prereleases&label=release)](https://github.com/seok-jun/adaptive-agentic-sdd/releases) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 **English** | [한국어](ko/README.md)
 
-> **Preview.** This release is `v1.0.0-preview.5` on the `v1-preview` branch. Use the files and guide from the same release tag. Its effect has not been measured, and its structure may change before 1.0. The English v0.2 methodology remains on `main` and at tag [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0). The Korean v0.2 edition is no longer provided.
+Most SDD tools run the same spec → plan → tasks routine for every change. That is why SDD often feels like waterfall for a one-line fix. Adaptive SDD first decides how risky a change is, then applies only the planning, review and verification that risk needs. A link fix gets a self-check. A database migration gets written analysis, two independent design reviews and a human merge.
 
-Preview.5 adds:
+> **Preview.** This is `v1.0.0-preview.6` on the `v1-preview` branch. Its effect on outcomes, rework or cost has not been measured, and its structure may change before 1.0. See [Status and evidence](#status-and-evidence).
 
-- **Three execution-profile settings** — `review.large_mode` (dual or single Large design review), `review.blind_reviewer_selection` (whether a human must choose the Review B model) and `sdd.medium_artifacts` (four documents or one page for a Medium SDD). The defaults keep the earlier behavior; none of them reduces M's human-judgment requirements, automatic grade escalation, required verification, the CODE Review or human judgment on Large merges.
-- **A glossary** (`adaptive-sdd/workflow/glossary.md`) and **plain-language rewording of the four skills** (Korean edition). The meaning, order and stop conditions of the rules are unchanged.
-- **The full English edition** — `adaptive-sdd/` at the repository root. The installer is byte-identical in both editions; edition wording lives in each bundle's `templates/strings.json`.
-- **A first executed behavior evaluation record** — `docs/eval-results/2026-10-30/`. See the verification scope below.
+## How depth scales
 
-## What this is
+Every work item gets one of four grades. The grade comes from risk, not from file count, and the agent cannot lower an automatic escalation on its own.
 
-A common layer that a project copies, pins, and adjusts to itself.
+| Grade | When | Design documents | Review before code | Review of the change |
+| --- | --- | --- | --- | --- |
+| **Trivial** | No change to runtime behavior, contracts, tests, build or workflow meaning (typos, links, comments) | None | Self-check of the Trivial conditions | Targeted check + self-review |
+| **Small** | Not Trivial, within one module, no escalation condition | None; the work item is the spec | Self-review of boundaries and verifiability | Self-review against the acceptance criteria |
+| **Medium** | Two or more modules, or a shared contract the project designates | SDD: four short documents, or one page if the project chooses `condensed` | Bounded self-review; independent review when marked `REQUIRED` | Independent review if `REQUIRED`, otherwise self-review |
+| **Large** | Security, personal data, DB schema/migration, background retry/schedule, billing or quota | SDD: four documents | AS-IS and PLAN each get Review A plus a blind Review B whose model a human chooses (a project can opt into one review) | One independent code review; a human merges or explicitly orders that merge |
 
-- `adaptive-sdd/` — the full pinned copy (English, canonical):
-  - `methodology/` — `core.md` (a minimal workflow, the human-judgment requirements, and how work records and observations are kept), `adaptation.md` (rules for choosing and re-evaluating supports based on observed evidence rather than model names or confidence), `supports/ordered-changes.md` (the default support), `manifest.json`. Byte-identical to `methodology/` at the root.
-  - `workflow/` — workflow procedures and four skills (organizing and creating work items, isolating work in a worktree, design and implementation, verification and closing), a [glossary](adaptive-sdd/workflow/glossary.md), an eval structure (static checks, behavior cases, cross-agent comparison, grading and result records, fictional seed and policy-regression cases, rules for turning a recorded incident into a diagnostic case) and work-tracking mappings (local documents, GitHub). The new policy cases distinguish expected behavior from execution results. They were extracted from procedures refined over a long period in one product, with product-specific parts moved out.
-  - `templates/` — templates for project-dependent files and the edition wording (`strings.json`); the installer fills them from `project.json`.
-  - `tools/install.py` — the installer (Python 3.8+, standard library only). It generates project documents, skill entry files for Claude Code and Codex, and marked blocks in `AGENTS.md`, `CLAUDE.md` and `.gitattributes`, and checks the copy and generated files against their hashes. It recognizes marked blocks written by the other edition.
-  - `MANIFEST.json` — sha256 of every file in the pinned copy.
-- `methodology/` — the methodology documents alone, for projects that copy only the methodology.
-- `docs/customization.md` — how to place the copy in a project, fill the values, and instruct an Agent.
-- `ko/` — the Korean edition with the same layout. The English text at the root is canonical.
+At every grade, verification starts with the tests of the module that owns the change and widens only on evidence. The full required checks run once on the final candidate. Definitions: [grades](adaptive-sdd/workflow/process/sdd/grade.md), [review gates](adaptive-sdd/workflow/process/verification.md#review-gate-by-grade).
 
-Improvement loop: closing records → re-evaluation under `adaptation.md` → incident cases → a comparison whose scope a human approves → adoption decided and recorded by a human.
+## See it in action
 
-The workflow uses four execution grades (Trivial, Small, Medium, Large). Epic is an optional grouping for independently tracked issues, with no separate decomposition review gate. A single Large issue remains valid; shared-change verification, human-decision boundaries, and evidence for the overall outcome remain required. See [Epic management unit](adaptive-sdd/workflow/process/sdd/epic.md#epic-management-unit).
+Illustrative, shortened transcripts. Real output depends on your project settings.
 
-## What this is not
+```text
+You:   Fix the broken link in docs/setup.md. Use Adaptive SDD.
+Agent: Created T-12. Grade: Trivial — documentation only, no behavior change.
+       Claimed T-12 (allowed: docs/setup.md).
+       Fixed the link and checked that the target resolves.
+       Self-review: the diff matches the requested scope.
+       [IMPLEMENTATION SUMMARY] recorded. Branch ready for merge; claim released after merge.
+```
 
-- **Not a replacement for v0.2.** It does not carry over v0.2's documents, starter, or templates. v0.2 remains on `main`.
-- **Not a verified result.** No effect on outcomes, rework, or cost has been measured. The procedures and skills were used in one product; that experience does not establish the effectiveness of this generalized preview. Checks and reviews have the revision-specific scope below.
-- **Not an enforcement mechanism.** It is guidance for agents and people; it is not a security boundary or an agent runner.
+```text
+You:   Add a column for refund reasons to the payments table. Use Adaptive SDD.
+Agent: Created T-31. Grade: Large — DB schema/migration (automatic escalation).
+       Wrote the AS-IS analysis from the current code and schema.
+       AS-IS Review A: PASS. Review B (blind): waiting for you to choose the reviewer model.
+       ...
+       PLAN reviews passed. Implemented within the allowed paths.
+       Module tests first, then the required checks on the final candidate: PASS.
+       Independent code review: PASS. Large changes need your merge — stopping here.
+```
 
-## Verification scope
+## Quick start
 
-- **Published `v1.0.0-preview.2`:** manifest checks, installer unit tests, one Windows installation rehearsal using a locally built archive and a fictional project, and one independent review were recorded for that release. They do not validate subsequent changes.
-- **Unreleased commit `068618bdda2f8d0571da3099f5e132e4ff17ff1e`, checked on 2026-10-27:** all 25 executable tests passed on Windows with Python 3.14.7; both methodology manifests and the 51-file bundle manifest matched. A ZIP built from that commit passed `init`, `render`, `check`, and `check-evals` in a disposable project. The 60 cases across four skills passed structural checks; they were not executed as model behavior evaluations.
-- **Integration candidate, checked on 2026-10-30:** based on `5a81d647771cb56fcf1f1d84e94d580f2ca2d963` plus the guide, verification-scope, changelog, observation-evidence and manifest corrections in this change. All 35 executable tests passed on Windows with Python 3.14.7. Both methodology manifests and the 64-file bundle manifest matched. A ZIP of the candidate passed `init`, `render`, `check`, and `check-evals` in disposable local-docs and GitHub-adapter projects; 70 cases across four skills passed structural checks. No live GitHub tracker operations or model behavior evaluations were run.
-- **preview.5 release commit (the commit tagged `v1.0.0-preview.5`), checked on 2026-10-30:** all 53 executable tests passed on Windows with Python 3.14.7. Both bundle manifests (66 files each) matched the actual files, and both editions passed `init`, `render`, `check` and `check-evals` (76 cases) in disposable projects. `git diff --check` passed. The initial sandbox run hit Windows temporary-directory locks (WinError 32) and a Git/MSYS access denial; the full suite was rerun outside the sandbox. These release checks do not rerun the earlier translation review or model behavior evaluation; their historical evidence is in the changelog and [evaluation record](docs/eval-results/2026-10-30/README.md).
-- **Known limitations:** Claude missed the first targeted verification in `II-S02` in all three runs, although both editions explicitly require it in `verification.md`. `FI-S02` asks for the failing command name without supplying that name or a failure log; its three misses do not establish a skill defect. Raw answers are unavailable for a grading audit. Skill changes and evaluation-case repair are deferred; recorded results are unchanged, and no behavior improvement is claimed.
-- **Review and remaining limits:** [CHANGELOG.md](CHANGELOG.md) records the scope and timing of earlier reviews. Apart from that translation review, the checks above are not a new independent review. Actual POSIX execution, live remote/host integration, and effects on outcomes, rework, or cost remain unverified.
+You need Python 3.8+, Git, and Claude Code or Codex. Start from a clean working tree (commit or stash your changes first).
 
-## Getting started
+**1. Paste this into your agent** from the root of your repository:
 
-Read [docs/customization.md](docs/customization.md) (Korean: [ko/docs/customization.md](ko/docs/customization.md)).
+```text
+Install Adaptive Agentic SDD v1.0.0-preview.6 in this repository.
+Installation guide: https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.6/docs/customization.md
 
-1. Following the guide, download the archive of a reviewed commit SHA and copy `adaptive-sdd/` (or `ko/adaptive-sdd/`) byte for byte to the project's `.adaptive-sdd/`.
-2. Run `install.py init` to create `project.json`; an Agent drafts it and a human decides. Only a human decides the human-judgment points, delegations and the execution profile.
-3. Run `install.py render` to generate the project-dependent files and `install.py check` to verify them.
-4. Instruct the Agent through the skills.
+1. Resolve the tag to its full commit SHA:
+   git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.6^{}"
+2. Download the archive of that commit and copy its adaptive-sdd/ folder byte for byte to .adaptive-sdd/
+   with a copy command, not a file-writing tool. Do not modify product code.
+3. Run: python -I -B .adaptive-sdd/tools/install.py init --project-root .
+4. Follow section 3 of the guide: observe this repository, then show me a draft of
+   .adaptive-sdd/project.json with the evidence for each value. Leave every value the guide marks
+   "Human" or "Human only" empty and ask me about it. Do not write the file yet.
+5. After I answer, write project.json, run render with --source-tag v1.0.0-preview.6 --source-commit <SHA>,
+   run check, and show me every file that was added or changed.
+```
 
-For a methodology-only copy, see the last section of the guide.
+For the Korean edition, use `ko/adaptive-sdd/` and [`ko/docs/customization.md`](ko/docs/customization.md) instead.
 
-These guides cover `v1.0.0-preview.5`; verify its full commit SHA and use the matching archive and guide. `v1.0.0-preview.2` does not include the external installer features described here.
+**2. Answer the questions.** Only you decide the human-judgment points, delegations, where work items live (`github`, or `local-docs` in a shared folder outside the repository), the worktree folder, the merge method and the review profile. The verification commands per change scope (`build.verification`) matter most: without them, implementation stops as `BLOCKED` because acceptance cannot be proven.
+
+**3. Check the result.**
+
+- `python -I -B .adaptive-sdd/tools/install.py check --project-root .` prints `OK      pinned copy, lock, and generated files match`.
+- `python -I -B .adaptive-sdd/tools/install.py check-evals --project-root .` ends with `0 problem(s)`.
+- `git status` shows only the paths below.
+
+| Added or changed | What it is |
+| --- | --- |
+| `.adaptive-sdd/` | The pinned copy, your `project.json`, generated project documents and the lock file |
+| `.claude/skills/<4 skills>/SKILL.md`, `.agents/skills/<4 skills>/SKILL.md` | Short entry files for Claude Code and Codex (only for the tools you chose) |
+| `AGENTS.md`, `CLAUDE.md`, `.gitattributes` | One marked block from `adaptive-sdd:begin` to `adaptive-sdd:end`; your existing content outside it is kept |
+
+**Undo.** Before you commit: run `git restore` on the files that existed before, and delete `.adaptive-sdd/`, the skill entry folders it created and any of `AGENTS.md`, `CLAUDE.md`, `.gitattributes` the installer created. After you commit: revert the installation commit. Work records under a `local-docs` tracker folder are outside the repository and are not touched.
+
+## Your first task
+
+```text
+Using Adaptive SDD, create a work item for <a small change inside one module>, then implement it and close it.
+```
+
+It is done when the work item has a grade and acceptance criteria, a claim was taken before the first edit, the owning module's tests ran first and the required checks passed on the final candidate, an `[IMPLEMENTATION SUMMARY]` records decisions, verification and remaining risks, and the change request links back to the work item. Who merges follows your settings. After real work, the improvement loop in the [guide](docs/customization.md#3-order-of-work-for-the-agent) uses closing records, not opinions, to decide what to change.
+
+## What you get
+
+- **Four skills:** `managing-issues` (create and grade work items), `parallel-development` (claims and isolated worktrees), `implementing-issues` (design and implementation by grade), `finishing-issues` (verification, closing and cleanup).
+- **Work tracking:** GitHub Issues and PRs, or work documents in a shared folder outside the repository. The procedures use tracker-neutral terms; each [adapter](adaptive-sdd/workflow/tracker/) maps them. Other trackers have no adapter yet.
+- **Human-judgment boundaries:** the agent stops and asks instead of deciding scope reductions, delegations, Large merges or new product decisions ([core.md](adaptive-sdd/methodology/core.md)).
+- **An installer** (Python standard library only) that generates the project-specific files from `project.json` and checks every pinned file against its hash.
+- **An evaluation kit:** behavior cases for each skill, a cross-agent runner and rules for turning a recorded incident into a test case ([skill-evals.md](adaptive-sdd/workflow/process/skill-evals.md)).
+
+Repository layout: `adaptive-sdd/` is the English bundle you install (canonical), `ko/` is the Korean edition with the same layout, `methodology/` is the core methodology alone, and `docs/` holds the installation guide and evaluation records.
+
+## Status and evidence
+
+- **Not measured:** no effect on outcomes, rework or cost has been measured. The procedures were refined in one product; that does not prove they work elsewhere.
+- **Behavior evaluations:** a first cross-agent baseline ran 12 Korean cases × Claude Code and Codex × 3 runs (Claude Code 21 PASS / 14 FAIL / 1 INVALID, Codex 22 PASS / 14 FAIL) — [record](docs/eval-results/2026-10-30/README.md). A post-hoc paired check of two wording fixes found no overall improvement — [record](docs/eval-results/2026-10-30-skill-comparison/paired-summary.md). Failures are published as they were graded.
+- **This release:** {{VALIDATION}}
+- **Not a guarantee:** this is guidance for agents and people, not a security boundary or an agent runner.
+
+The full history of checks and reviews is in [CHANGELOG.md](CHANGELOG.md).
 
 ## Versions
 
-- Latest published preview: [`v1.0.0-preview.5`](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.0.0-preview.5).
-- Preview tags: `v1.0.0-preview.N`. Published tags are never moved; fixes come as new tags.
-- Pin a copy by tag, commit SHA, and manifest hash, not by tag name alone.
-- When upgrading, replace only the pinned copy, keep `project.json`, the adapter and work records, and regenerate the project-dependent files.
+- Preview tags are `v1.0.0-preview.N` on the `v1-preview` branch. Published tags are never moved; fixes come as new tags. Pin a copy by tag, commit SHA and manifest hash.
+- To upgrade, replace only the pinned copy, keep `project.json`, the tracker records and work records, and render again ([guide](docs/customization.md#upgrading)).
+- The earlier v0.2 methodology is on `main` and tag [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0). v1 is not an automatic upgrade from v0.2.
 
 ## License
 

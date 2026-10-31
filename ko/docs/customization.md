@@ -1,6 +1,6 @@
-# 설치와 커스터마이징 안내 (1.0 preview.5)
+# 설치와 커스터마이징 안내 (1.0 preview.6)
 
-이 안내는 실행 프로필(설정 3개)·용어집·영문 전체판이 포함된 `v1.0.0-preview.5`를 다룬다. 태그의 전체 commit SHA를 확인하고 사본과 안내를 그 commit으로 고정한다. 공개된 preview.4는 [태그의 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.4/ko/docs/customization.md), preview.3은 [태그의 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.3/ko/docs/customization.md)를 따른다. 이 preview부터 같은 설치 방식의 영문 번들(`adaptive-sdd/`)과 [영문 안내](../../docs/customization.md)가 있으며 영문이 원본이다. 공개된 `v1.0.0-preview.2`를 설치하려면 [해당 태그의 한국어 설치 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/ko/docs/customization.md) 또는 [영문 안내](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.2/docs/customization.md)를 사용한다. 그 태그는 여기서 설명하는 `--harness-root`와 새 운영 설정을 지원하지 않는다.
+이 안내는 `v1.0.0-preview.6`을 다룬다. 태그의 전체 commit SHA를 확인하고 사본과 안내를 그 commit으로 고정한다. 이전 preview는 그 태그 안의 안내(`https://github.com/seok-jun/adaptive-agentic-sdd/blob/<태그>/ko/docs/customization.md`)를 따른다. 영문 번들(`adaptive-sdd/`)과 [영문 안내](../../docs/customization.md)가 원본이다.
 
 생성된 기본 check/check-evals 명령은 Windows에서는 PowerShell, 그 외에서는 POSIX sh의 경로 리터럴 인용을 사용한다. 표시된 셸에서 실행한다. 사용자 지정 명령의 인용은 프로젝트가 관리한다.
 
@@ -31,10 +31,10 @@
 
 기본은 저장소 안 설치다. 외부 설치를 선택하면 아래 파일 복사의 목적지를 제품 checkout 밖의 전용 설치 경로 아래 `.adaptive-sdd/`로 바꾸고 다음 절의 명시적 root 옵션을 사용한다. OS junction·하드링크는 필요하지 않다.
 
-`git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.5^{}"`로 이 릴리스의 전체 commit SHA를 확인해 고정한다. 이후 `v1-preview` 브랜치가 이동해도 확인한 SHA를 유지한다. 그 commit의 소스 압축 파일을 받아 `ko/adaptive-sdd/`를 프로젝트의 `.adaptive-sdd/`로 **바이트 그대로** 복사한다. 텍스트 편집 도구나 Agent의 파일 쓰기 도구로 다시 쓰지 않는다. Windows PowerShell 예:
+`git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.6^{}"`로 이 릴리스의 전체 commit SHA를 확인해 고정한다. 이후 `v1-preview` 브랜치가 이동해도 확인한 SHA를 유지한다. 그 commit의 소스 압축 파일을 받아 `ko/adaptive-sdd/`를 프로젝트의 `.adaptive-sdd/`로 **바이트 그대로** 복사한다. 텍스트 편집 도구나 Agent의 파일 쓰기 도구로 다시 쓰지 않는다. Windows PowerShell 예:
 
 ```powershell
-$sourceCommit = "<v1.0.0-preview.5에서 확인한 전체 commit SHA>"
+$sourceCommit = "<v1.0.0-preview.6에서 확인한 전체 commit SHA>"
 if ($sourceCommit -notmatch '^[0-9a-f]{40}$') { throw "sourceCommit에 검토한 전체 commit SHA를 입력하세요." }
 $zip = Join-Path $env:TEMP "adaptive-sdd-$sourceCommit.zip"
 Invoke-WebRequest "https://github.com/seok-jun/adaptive-agentic-sdd/archive/$sourceCommit.zip" -OutFile $zip
@@ -58,7 +58,7 @@ M·W·P는 각각 공통 원칙·실행 절차·제품 사실과 설정의 소�
 
 ```text
 python -I -B <외부 설치 경로>/.adaptive-sdd/tools/install.py init --project-root <제품 checkout> --harness-root <외부 설치 경로>
-python -I -B <외부 설치 경로>/.adaptive-sdd/tools/install.py render --project-root <제품 checkout> --harness-root <외부 설치 경로> --source-tag v1.0.0-preview.5 --source-commit <확인한 SHA>
+python -I -B <외부 설치 경로>/.adaptive-sdd/tools/install.py render --project-root <제품 checkout> --harness-root <외부 설치 경로> --source-tag v1.0.0-preview.6 --source-commit <확인한 SHA>
 python -I -B <외부 설치 경로>/.adaptive-sdd/tools/install.py check --project-root <제품 checkout> --harness-root <외부 설치 경로>
 ```
 
@@ -158,7 +158,7 @@ python -I -B .adaptive-sdd/tools/install.py init --project-root .
 
 ```text
 방금 정한 대로 .adaptive-sdd/project.json을 쓰고, 아래 명령으로 생성해줘. 고정 사본은 수정하지 마.
-python -I -B .adaptive-sdd/tools/install.py render --project-root . --source-tag v1.0.0-preview.5 --source-commit <확인한 SHA>
+python -I -B .adaptive-sdd/tools/install.py render --project-root . --source-tag v1.0.0-preview.6 --source-commit <확인한 SHA>
 python -I -B .adaptive-sdd/tools/install.py check --project-root .
 로컬 문서 방식이면 tracker.root 아래에 items/와 claims/ 폴더를 만들어줘.
 생성된 AGENTS.md·CLAUDE.md·.gitattributes 구간과 .adaptive-sdd/project/ 문서를 보여줘.
