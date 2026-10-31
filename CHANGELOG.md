@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- README: landing page now presents the 1.0 preview (v1.0.0-preview.7); v0.2 content moved below.
 - Adds optional review-target identity and completion-evidence walkthroughs, with explicit comparison and retention limits.
 - Adds full/correction review briefings and a draft human-executed verification handoff form.
 - Clarifies TC expectation corrections, approved AC changes, administrative TC closure, and affected reruns without weakening required evidence or authorization.
