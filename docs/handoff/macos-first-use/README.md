@@ -26,10 +26,10 @@ git clone https://github.com/seok-jun/adaptive-agentic-sdd.git ~/aasdd-src
 ```
 
 ```bash
-cd ~/aasdd-src && git checkout 1d91d9448621c29e39c248bf1c1f23a098ecb02d && python3 -I -B -m unittest discover -s tests 2>&1 | tail -15
+cd ~/aasdd-src && git checkout eval/harness-v2 && python3 -I -B -m unittest discover -s tests 2>&1 | tail -15
 ```
 
-Windows에서는 88개가 통과했다. 마지막 15줄을 그대로 남긴다.
+Windows에서는 88개가 통과했다. 마지막 15줄을 그대로 남긴다. 브랜치 끝 커밋은 이 핸즈오프 파일만 더해졌고, 방법론 번들·README·설치 안내는 `1d91d94`와 같다(Agent는 `1d91d94`를 설치한다).
 
 ## 2. 일회용 샘플 저장소 만들기
 
