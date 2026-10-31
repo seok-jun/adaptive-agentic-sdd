@@ -1,6 +1,6 @@
 # Tracker-neutral wording — bounded behavior check (2026-10-31)
 
-Status: **COMPLETE, weak evidence.** 10 graded runs: 4 PASS, 6 FAIL. No failure was traced to the preview.6 wording change. Most failures come from the evaluation environment, described below. This check does not show that the change improves or preserves behavior in general.
+Status: **COMPLETE, weak evidence.** 10 graded runs: 4 PASS, 6 FAIL. No failure was traced to the preview.6 wording change. Most failures come from the evaluation environment, described below. This check does not show that the change improves or preserves behavior in general. The evaluated agents could also read the answer-key files in their projects (see [Limits](#limits)).
 
 ## What ran
 
@@ -31,6 +31,7 @@ These are the author's reading of the private answers, not an independent regrad
 
 ## Limits
 
+- **Validity note (added 2026-10-31):** `tests/run_behavior_evals.py` copied the whole bundle into each subject project, so the answer-key files `workflow/skills/*/evals/cases.json` (fixtures with their `must` / `must_not` items) were readable by the evaluated agent. Access was not blocked or logged; the saved answers do not show whether they were read, and this does not establish that they were. The grades above are kept as recorded, but they are not clean behavior evidence. Later runs use `tests/run_behavior_evals_v2.py`, which removes these files. The paired diagnostic in `../2026-10-30-skill-comparison/` removed them and is not affected.
 - One run per case per agent is a smoke check, not a reliability estimate.
 - After this check, review feedback changed the tie-break wording (back to the Issue-number order in the declared ID order). None of the five cases exercises a tie-break; the evaluated manifest hash above is the earlier bundle.
 - Only the local-docs adapter was exercised. The GitHub adapter rows are covered by static tests (`tests/test_tracker_neutral.py`) only.

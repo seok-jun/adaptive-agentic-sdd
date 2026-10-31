@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Evaluation records: the 2026-10-30 baseline and the 2026-10-31 tracker-neutral check ran with the answer-key files (`workflow/skills/*/evals/cases.json`) readable inside each subject project, because `tests/run_behavior_evals.py` copied the whole bundle. Access was not blocked or logged. Both records and the README status now say so; their grades are unchanged and are no longer presented as clean behavior evidence. The paired diagnostic removed the files and is unaffected.
+
 ## 1.0.0-preview.6 — 2026-10-31
 
 Follows preview.5 (`ee5c60a246a95218e0f429681036fa9bd4bd1e03`). Earlier tags are unchanged.
