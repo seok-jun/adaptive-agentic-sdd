@@ -1,5 +1,7 @@
 # macOS 첫 사용 점검 — 핸즈오프 (2026-10-31)
 
+실행 기록: [macOS 보조 walkthrough 결과](../../eval-results/2026-10-31-macos-first-use/README.md). 설치 → Small 작업 → Undo는 완료했으며, `python` 명령 부재와 우회, 사전 정보 노출 및 실행 환경의 한계를 구분해 기록했다. 독립적인 첫 사용 평가 결과는 아니다.
+
 지금까지 모든 검증은 Windows 한 대에서만 했다. 이 점검은 macOS 노트북에서 두 가지를 확인한다.
 
 1. 저장소 테스트가 macOS(POSIX)에서 통과하는가.

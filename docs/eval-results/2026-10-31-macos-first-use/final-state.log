@@ -1,0 +1,20 @@
+2e8a9b0 Revert "Install Adaptive SDD candidate 1d91d94"
+27e71bd Merge T-1 catalog pagination fix
+23ac44c T-1 Fix catalog pagination exclusive endpoint
+1126347 Install Adaptive SDD candidate 1d91d94
+7f6ccbc initial demo
+2e8a9b084dc715d7d14b1bfa8de8337f22d806dd	HEAD
+23ac44ca912e7d48dbd2cfba27faa239d43242dc	refs/heads/fix/T-1-pagination
+2e8a9b084dc715d7d14b1bfa8de8337f22d806dd	refs/heads/main
+9:    end = start + size
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+OK
+../tracker/claims:
+
+../tracker/items:
+T-1.md
+catalog/search.py
+tests/catalog/test_search.py

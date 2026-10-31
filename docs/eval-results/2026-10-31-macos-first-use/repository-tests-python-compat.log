@@ -1,0 +1,9 @@
+.......{"sample": "s0001-a1", "case_id": "II-S02-small-one-module", "arm": "working-tree", "agent": "claude", "result": "INVALID", "reason": "subject process failed"}
+........ERROR: execute requires matching calibration with 100% item agreement
+.....{"sample": "s0001-a0", "case_id": "II-S02-small-one-module", "arm": "working-tree", "agent": "claude", "result": "INVALID", "reason": "subject modified project"}
+.{"sample": "s0001-a0", "case_id": "II-S02-small-one-module", "arm": "working-tree", "agent": "claude", "result": "INVALID", "reason": "grader output unusable"}
+...................................................................
+----------------------------------------------------------------------
+Ran 88 tests in 16.237s
+
+OK
