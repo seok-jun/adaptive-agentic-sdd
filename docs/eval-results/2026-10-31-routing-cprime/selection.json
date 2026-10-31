@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "edition": "ko",
+  "runs_per_case": 1,
+  "agents": [
+    "claude",
+    "codex"
+  ],
+  "max_retries": 0,
+  "cases": [
+    {
+      "id": "II-S26-small-empty-capability-records"
+    },
+    {
+      "id": "II-S27-small-explicit-qualification-records"
+    },
+    {
+      "id": "II-S28-small-unknown-model-identity"
+    },
+    {
+      "id": "II-S29-small-routine-testing-versus-worker"
+    },
+    {
+      "id": "II-S30-small-stricter-phase-without-evidence"
+    },
+    {
+      "id": "II-S31-medium-scoped-assessment"
+    },
+    {
+      "id": "II-S08-denied-model"
+    },
+    {
+      "id": "II-S21-model-preference-is-not-evidence"
+    }
+  ]
+}

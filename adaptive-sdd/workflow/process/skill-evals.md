@@ -231,7 +231,7 @@ A case that changes a workflow gate includes not only the happy path but also th
 - Whether, when Execution Packet provenance is stale/conflicting or there is only a boolean guard self-report, it does a bounded refresh or a direct hard-guard read, or stops as BLOCKED
 - Whether it does not complete when the head, inventory, diff reference or verification evidence identity of the Result/Review Packet differs from the current head
 - Whether the reviewer independently checks the full inventory of the current head and then reviews only the bounded diff/contracts
-- Whether it does not compare `current` as a capability rank, and judges separately whether the phase floor is met with fresh current capability evidence
+- Whether it does not compare `current` as a capability rank; applies the routine Trivial/Small exception where eligible; and, outside it, judges the phase floor with fresh host evidence or an applicable human-confirmed scoped assessment
 - Whether it stops instead of producing a valid trace when the required reviewer for Medium/Large cannot be provided as a separate agent/session
 - Whether it rejects metric control boolean self-reports and derives whether controls are preserved from the guard/SDD/claim/boundary/verification/review evidence of the actual packet
 - Whether it distinguishes missing or malformed guard application evidence as `INVALID` and an identity/freshness mismatch with the current source as `STALE`, while editing in neither case before a direct hard-guard read or `BLOCKED`
