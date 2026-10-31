@@ -40,7 +40,7 @@ Within the same Priority, choose in the following order.
 1. An Issue that unblocks another P0/P1 Issue
 2. A lower SDD grade
 3. An Issue whose edit paths do not overlap with currently active lanes
-4. If everything above is equal, the Issue created first (in the declared tracker method's creation order; for GitHub, the lower Issue number)
+4. If everything above is equal, the lower Issue number, in the ID order of the declared tracker method
 
 ## Required body of a new Issue
 

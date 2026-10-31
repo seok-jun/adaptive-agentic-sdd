@@ -14,16 +14,16 @@
 
 ## 깊이가 어떻게 달라지나
 
-모든 작업 항목은 네 등급 중 하나를 받습니다. 등급은 파일 수가 아니라 위험으로 정하며, Agent는 자동 격상을 스스로 낮추지 못합니다.
+모든 실행 작업 항목은 네 등급 중 하나를 받습니다(작업 항목을 묶는 선택적 Epic은 등급이 없습니다). 등급은 파일 수가 아니라 위험으로 정하며, Agent는 자동 격상을 스스로 낮추지 못합니다.
 
 | 등급 | 언제 | 설계 문서 | 구현 전 리뷰 | 변경 리뷰 |
 | --- | --- | --- | --- | --- |
 | **Trivial** | 실행 동작·계약·테스트·빌드·작업 흐름의 의미가 바뀌지 않음(오타, 링크, 주석) | 없음 | Trivial 조건 자체 점검 | 대상 검증 + 자체 리뷰 |
 | **Small** | Trivial이 아니고, 한 모듈 안이며, 격상 조건이 없음 | 없음. 작업 항목이 곧 스펙 | 경계·검증 가능성 자체 리뷰 | 완료 기준 대비 자체 리뷰 |
 | **Medium** | 두 개 이상의 모듈, 또는 프로젝트가 지정한 공유 계약 | SDD: 짧은 문서 네 개, 또는 프로젝트가 `condensed`를 고르면 한 장 | 범위를 정한 자체 리뷰. `REQUIRED`면 독립 리뷰 | `REQUIRED`면 독립 리뷰, 아니면 자체 리뷰 |
-| **Large** | 보안, 개인정보, DB 스키마·마이그레이션, 백그라운드 재시도·스케줄, 과금·한도 | SDD: 문서 네 개 | AS-IS와 PLAN마다 Review A + 사람이 모델을 고르는 블라인드 Review B(프로젝트가 리뷰 1회로 바꿀 수 있음) | 독립 코드 리뷰 1회. 사람이 병합하거나 그 병합을 명시적으로 지시 |
+| **Large** | 보안, 개인정보, DB 스키마·마이그레이션, 백그라운드 재시도·스케줄, 과금·한도 | SDD: 문서 네 개 | AS-IS와 PLAN마다 Review A + 기본값으로 사람이 모델을 고르는 블라인드 Review B(프로젝트가 리뷰 1회로 바꾸거나 B 모델을 Agent가 고르게 할 수 있음) | 독립 코드 리뷰 1회. 사람이 병합하거나 그 병합을 명시적으로 지시 |
 
-모든 등급에서 검증은 변경을 소유한 모듈의 테스트부터 시작하고, 근거가 있을 때만 넓힙니다. 필수 전체 검사는 최종 후보에서 실행합니다. 정의: [등급](adaptive-sdd/workflow/process/sdd/grade.md), [리뷰 관문](adaptive-sdd/workflow/process/verification.md).
+검증에 영향을 주는 변경 파일마다 그 파일을 소유한 모듈의 테스트를 먼저 실행하고, 근거가 있을 때만 넓힙니다. 문서만 바뀌는 Trivial은 그 변경에 맞는 대상 검증을 합니다. 필수 검사는 최종 후보에서 실행하며, 입력이 바뀌지 않은 PASS만 다시 씁니다. 정의: [등급](adaptive-sdd/workflow/process/sdd/grade.md), [리뷰 관문](adaptive-sdd/workflow/process/verification.md).
 
 ## 실제 흐름
 
@@ -46,7 +46,7 @@ Agent: T-31을 만들었습니다. 등급: Large — DB 스키마·마이그레�
        ...
        PLAN 리뷰 통과. 허용 경로 안에서 구현했습니다.
        모듈 테스트 먼저, 최종 후보에서 필수 검사: PASS.
-       독립 코드 리뷰: PASS. Large 변경은 병합을 직접 해 주셔야 해서 여기서 멈춥니다.
+       독립 코드 리뷰: PASS. Large 변경은 직접 병합하거나 이 병합을 명시적으로 지시해 주셔야 해서 여기서 멈춥니다.
 ```
 
 ## 빠른 시작
@@ -61,18 +61,21 @@ Python 3.8 이상, Git, 그리고 Claude Code나 Codex가 필요합니다. 깨�
 
 1. 태그의 전체 commit SHA를 확인해:
    git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.6^{}"
+   아무것도 출력되지 않으면 태그가 없는 것이니 멈추고 알려 줘.
 2. 그 commit의 압축 파일을 내려받아 ko/adaptive-sdd/ 폴더를 .adaptive-sdd/에 바이트 그대로 복사해.
    파일 쓰기 도구가 아니라 복사 명령을 써. 제품 코드는 고치지 마.
 3. 실행해: python -I -B .adaptive-sdd/tools/install.py init --project-root .
 4. 안내의 3절대로 이 저장소를 관찰한 뒤, 값마다 근거를 붙인 .adaptive-sdd/project.json 초안을 보여 줘.
-   안내가 "사람" 또는 "사람만"으로 표시한 값은 비워 두고 나에게 물어봐. 아직 파일은 쓰지 마.
+   init은 예시값을 복사한다. 안내가 "사람" 또는 "사람만"으로 표시한 값은 예시값을 그대로 두지 말고 나에게 물어봐.
+   아직 파일은 쓰지 마.
 5. 내가 답하면 project.json을 쓰고, --source-tag v1.0.0-preview.6 --source-commit <SHA>로 render한 뒤
-   check를 실행하고, 추가되거나 바뀐 파일을 모두 보여 줘.
+   check를 실행하고, local-docs를 골랐으면 tracker.root 아래에 items/와 claims/를 만들고,
+   추가되거나 바뀐 파일을 모두 보여 줘.
 ```
 
 영문판은 `adaptive-sdd/`와 [`docs/customization.md`](../docs/customization.md)를 씁니다.
 
-**2. 질문에 답합니다.** 사람 판단 지점, 위임, 작업 항목을 둘 곳(`github`, 또는 저장소 밖 공유 폴더의 `local-docs`), worktree 폴더, 병합 방식, 리뷰 프로필은 사람만 정합니다. 가장 중요한 값은 변경 범위별 검증 명령(`build.verification`)입니다. 이 값이 없으면 완료 기준을 증명할 수 없어 구현이 `BLOCKED`로 멈춥니다.
+**2. 질문에 답합니다.** 사람 판단 지점, 위임, 작업 항목을 둘 곳(`github`, 또는 저장소 밖 공유 폴더의 `local-docs`), worktree 폴더, 병합 방식, 리뷰 프로필은 사람만 정합니다. 가장 중요한 값은 변경 범위별 검증 명령(`build.verification`, 또는 수동 검증 `build.checks`)입니다. 선언된 검증 수단이 없으면 완료 기준을 증명할 수 없어 구현이 `BLOCKED`로 멈춥니다.
 
 **3. 결과를 확인합니다.**
 
@@ -86,7 +89,7 @@ Python 3.8 이상, Git, 그리고 Claude Code나 Codex가 필요합니다. 깨�
 | `.claude/skills/<스킬 4개>/SKILL.md`, `.agents/skills/<스킬 4개>/SKILL.md` | Claude Code·Codex용 짧은 입구 파일(고른 도구만) |
 | `AGENTS.md`, `CLAUDE.md`, `.gitattributes` | `adaptive-sdd:begin`부터 `adaptive-sdd:end`까지의 표시 구간 하나. 구간 밖의 기존 내용은 그대로 |
 
-**되돌리기.** 커밋 전이면, 원래 있던 파일은 `git restore`로 되돌리고 `.adaptive-sdd/`, 설치기가 만든 스킬 입구 폴더, 설치기가 새로 만든 `AGENTS.md`·`CLAUDE.md`·`.gitattributes`를 지웁니다. 커밋 뒤면 설치 커밋을 revert합니다. `local-docs` 작업 폴더의 기록은 저장소 밖에 있어 건드리지 않습니다.
+**되돌리기.** 커밋 전이면, 원래 있던 파일은 `git restore`로 되돌리고 `.adaptive-sdd/`, 설치기가 만든 스킬 입구 폴더, 설치기가 새로 만든 `AGENTS.md`·`CLAUDE.md`·`.gitattributes`를 지웁니다. 커밋 뒤면 설치 커밋을 revert하고, 설치를 push했다면 revert도 push합니다. 설치 뒤에 만든 브랜치에는 병합하거나 지울 때까지 설치가 남아 있습니다. `local-docs` 작업 폴더의 기록은 저장소 밖에 있어 건드리지 않습니다.
 
 ## 첫 작업
 
@@ -94,7 +97,7 @@ Python 3.8 이상, Git, 그리고 Claude Code나 Codex가 필요합니다. 깨�
 Adaptive SDD로 <한 모듈 안의 작은 변경> 작업 항목을 만들고, 구현하고, 종료해 줘.
 ```
 
-작업 항목에 등급과 완료 기준이 있고, 첫 수정 전에 claim을 잡았고, 소유 모듈 테스트를 먼저 실행한 뒤 최종 후보에서 필수 검사가 통과했고, `[IMPLEMENTATION SUMMARY]`에 결정·검증·남은 위험이 남았고, 변경 요청이 작업 항목에 연결되면 끝입니다. 병합은 설정한 사람이 합니다. 실제 작업 뒤에는 [안내](docs/customization.md#3-agent에게-시키는-순서)의 개선 순서가 의견이 아니라 종료 기록으로 무엇을 바꿀지 정합니다.
+작업 항목에 등급과 완료 기준이 있고, 첫 수정 전에 claim을 잡았고, 소유 모듈 테스트를 먼저 실행한 뒤 최종 후보에서 필수 검사가 통과했고, `[IMPLEMENTATION SUMMARY]`에 결정·검증·남은 위험이 남았고, 변경 요청이 작업 항목에 연결되면 병합 준비가 끝납니다. 병합은 설정한 사람이 합니다. Agent가 실제 병합을 확인하고 작업 항목을 닫고 `[PRODUCT COMPLETE]`를 기록하면 완료입니다. 실제 작업 뒤에는 [안내](docs/customization.md#3-agent에게-시키는-순서)의 개선 순서가 의견이 아니라 종료 기록으로 무엇을 바꿀지 정합니다.
 
 ## 들어 있는 것
 

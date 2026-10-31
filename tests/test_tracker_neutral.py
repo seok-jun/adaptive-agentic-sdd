@@ -14,16 +14,58 @@ EDITIONS = {
 }
 # Phrases that describe a GitHub API or label operation rather than a tracker-neutral step.
 GITHUB_ONLY = {
-    'en': ('Issue creation API', 'Remove the existing `priority:*` label', 'is equal, the lower Issue number',
+    'en': ('Issue creation API', 'Remove the existing `priority:*` label',
            'assumes a GitHub feature', 'first refined on this method'),
-    'ko': ('Issue 생성 API', '기존 `priority:*` 라벨 제거', 'Issue 번호가 작은 것\n',
-           'GitHub 기능을 전제', '처음 다듬어졌으므로'),
+    'ko': ('Issue 생성 API', '기존 `priority:*` 라벨 제거', 'GitHub 기능을 전제', '처음 다듬어졌으므로'),
 }
+# (row label, required text in that row) per adapter. The values carry the moved contracts.
 ADAPTER_ROWS = {
-    'en': ('Setting the Priority/grade values at creation', 'Replacing a `priority:*` value',
-           'Creation order of Issues'),
-    'ko': ('생성할 때 Priority·grade 값 지정', '`priority:*` 값 교체', 'Issue 생성 순서'),
+    'en': {
+        'github.md': (
+            ('Setting the Priority/grade values at creation', 'Include both labels in the creation request'),
+            ('Replacing a `priority:*` value', 'Remove the existing `priority:*` label, then add the new one'),
+            ('Order of Issue numbers', 'The GitHub Issue number'),
+            ('PR, `Closes #N`', 'the closing reference `Closes #N` in its body'),
+            ('The `product-complete:` JSON of `[PRODUCT COMPLETE]`', '"issue":N,"pull_request":PR'),
+        ),
+        'local-docs.md': (
+            ('Setting the Priority/grade values at creation', 'in the same write that creates the document'),
+            ('Replacing a `priority:*` value', 'Rewrite the `priority:` line in `## Meta`'),
+            ('Order of Issue numbers', 'the number of a generated `<prefix>-<number>` ID; for external IDs, the order of the declared `id_format`'),
+            ('`Closes #N` in the PR body', 'The `closes: <ID>` line of the `[IMPLEMENTATION SUMMARY]` entry'),
+            ('The `product-complete:` JSON of `[PRODUCT COMPLETE]`', '"issue":"<ID>","pull_request":null'),
+        ),
+    },
+    'ko': {
+        'github.md': (
+            ('생성할 때 Priority·grade 값 지정', '생성 요청에 두 라벨을 포함'),
+            ('`priority:*` 값 교체', '기존 `priority:*` 라벨을 제거한 뒤 새 라벨 추가'),
+            ('Issue 번호 순서', 'GitHub Issue 번호'),
+            ('PR, `Closes #N`', '본문의 closing reference `Closes #N`'),
+            ('`[PRODUCT COMPLETE]`의 `product-complete:` JSON', '"issue":N,"pull_request":PR'),
+        ),
+        'local-docs.md': (
+            ('생성할 때 Priority·grade 값 지정', '문서를 만드는 같은 쓰기에서'),
+            ('`priority:*` 값 교체', '`## 메타`의 `priority:` 줄을 고쳐 쓴다'),
+            ('Issue 번호 순서', 'generated는 `<접두사>-<번호>`의 번호, external은 선언한 `id_format`의 순서'),
+            ('PR body의 `Closes #N`', '`[IMPLEMENTATION SUMMARY]` 항목의 `closes: <ID>` 줄'),
+            ('`[PRODUCT COMPLETE]`의 `product-complete:` JSON', '"issue":"<ID>","pull_request":null'),
+        ),
+    },
 }
+NEUTRAL_STEPS = {
+    'en': {'process/issue-priority.md': ('in the ID order of the declared tracker method',
+                                         'If the declared tracker method can set both values when the Issue is created'),
+           'process/sdd/completion.md': ('add the closing reference to this Issue',)},
+    'ko': {'process/issue-priority.md': ('선언한 작업 관리 방식의 ID 순서로 Issue 번호가 작은 것',
+                                         '선언한 작업 관리 방식이 Issue를 만들 때 두 값을 함께 정할 수 있으면'),
+           'process/sdd/completion.md': ('이 Issue의 closing reference',)},
+}
+
+
+def row(text, label):
+    rows = [line for line in text.splitlines() if line.startswith(f'| {label} |')]
+    return rows[0] if len(rows) == 1 else None
 
 
 class TrackerNeutralTests(unittest.TestCase):
@@ -36,12 +78,21 @@ class TrackerNeutralTests(unittest.TestCase):
                 for phrase in GITHUB_ONLY[edition]:
                     self.assertNotIn(phrase, text, f'{edition}: {path.relative_to(workflow)}')
 
-    def test_both_adapters_map_the_moved_operations(self):
-        for edition, workflow in EDITIONS.items():
-            for adapter in ('github.md', 'local-docs.md'):
-                text = (workflow / 'tracker' / adapter).read_text(encoding='utf-8')
-                for row in ADAPTER_ROWS[edition]:
-                    self.assertIn(f'| {row} |', text, f'{edition}: {adapter}')
+    def test_adapters_map_the_moved_operations_with_their_values(self):
+        for edition, adapters in ADAPTER_ROWS.items():
+            for adapter, rows in adapters.items():
+                text = (EDITIONS[edition] / 'tracker' / adapter).read_text(encoding='utf-8')
+                for label, value in rows:
+                    line = row(text, label)
+                    self.assertIsNotNone(line, f'{edition} {adapter}: exactly one row {label!r}')
+                    self.assertIn(value, line, f'{edition} {adapter}: {label}')
+
+    def test_procedures_state_the_neutral_steps(self):
+        for edition, files in NEUTRAL_STEPS.items():
+            for name, phrases in files.items():
+                text = (EDITIONS[edition] / name).read_text(encoding='utf-8')
+                for phrase in phrases:
+                    self.assertIn(phrase, text, f'{edition}: {name}')
 
     def test_workflow_readme_defines_neutral_terms(self):
         for edition, workflow in EDITIONS.items():

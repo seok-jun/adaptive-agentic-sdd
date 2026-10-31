@@ -8,7 +8,7 @@ This document describes how the Issue, comment, label, assignee, PR and closing 
 | `priority:*`, `grade:*`, `status:*` labels | Issue labels with the same names |
 | Setting the Priority/grade values at creation | Include both labels in the creation request when the API allows it; otherwise add them right after creation |
 | Replacing a `priority:*` value | Remove the existing `priority:*` label, then add the new one |
-| Creation order of Issues | Issue number order (a lower number was created first) |
+| Order of Issue numbers | The GitHub Issue number |
 | Epic management document | The `type:epic` label and `Epic` under `## Work type` in the body. No `grade:*`. Child Issues are linked from the body, and the management Issue is closed after the evidence of overall completion is checked |
 | assignee | Issue assignee |
 | Issue comment, URL, `updated_at` | Issue comment and its URL and `updated_at` |

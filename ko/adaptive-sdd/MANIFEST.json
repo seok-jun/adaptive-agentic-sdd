@@ -30,7 +30,7 @@
     "workflow/glossary.md": "cb3366c3dc7e6012e8a3b72dfe862f0a8ca4703e7e672244ae7fadcfa8de4007",
     "workflow/process/agent-instruction-policy.md": "e67d5ed26936c2a83a22525976b6d73692199099403cbfe710fd2baff693fa83",
     "workflow/process/design-review.md": "1daf3015383e94da534ca92172526dc12973bea854b62f384fe4ce21bace3a32",
-    "workflow/process/issue-priority.md": "e12f436d3ba52001b4c144be96fbaaf58707d07e04b123ef9accce327abb6e47",
+    "workflow/process/issue-priority.md": "662e07442aa66918a78b74c80dd02885d3dc973871145257a4ef8c9bd891f212",
     "workflow/process/issue-writing-guide.md": "b75b45eaa0f161d265a03ec9322ff06b60e087a271dd28825d9a93817a6d622e",
     "workflow/process/module-boundaries.md": "f5ddb9d6c62df7669f0f8d307b111bd8c6c6a6e58d18ab892a1c211b9fb5ada2",
     "workflow/process/observations.md": "da06dfbd12f8d8fb6b44d525a13710649a42bd0c1121acf08675fbe9600aae75",
@@ -64,8 +64,8 @@
     "workflow/skills/managing-issues/evals/cases.json": "4e6fead9feb5dfe784114c6fd9e37586d4ee48a3af855d5f0b84fbb7390cc9ce",
     "workflow/skills/parallel-development/SKILL.md": "20a2d7efbeba060b09ab17f20c3eb19906e7355d106f39c71ec445067f9f8bef",
     "workflow/skills/parallel-development/evals/cases.json": "d5ea668da082c175c791871b4d01e53863707748699c99b3549907731abb8a77",
-    "workflow/tracker/github.md": "683a6d6c1e3b0000d6c2ca4aca96158c18a0303b2d26a088ab30c8fb45427a3b",
-    "workflow/tracker/local-docs.md": "9397838b33088226cc5e63c6cb71662c8ce6b1359edd089f33e62c5d2be9270b"
+    "workflow/tracker/github.md": "35c68fb8bf1b104e745ebc5141b9284033374f7c7065b5d0c3e0fee0fe134247",
+    "workflow/tracker/local-docs.md": "c8c06e3834bc9323c66f8a417a628ab9e8cb1b4d47b4dcd4d1df37a6c86709a5"
   },
   "schema": 1
 }

@@ -27,7 +27,7 @@ Parallel lanes work in different worktrees and branches. If claims and work reco
 | assignee | The `owner:` line in `## Meta` |
 | Setting the Priority/grade values at creation | Write the `priority:` and `grade:` lines in `## Meta` in the same write that creates the document |
 | Replacing a `priority:*` value | Rewrite the `priority:` line in `## Meta` (only the lane or Agent allowed to edit the body and meta) |
-| Creation order of Issues | The `created:` time in `## Meta` |
+| Order of Issue numbers | The order of `<ID>`: the number of a generated `<prefix>-<number>` ID; for external IDs, the order of the declared `id_format` |
 | Issue comment | An entry appended to `## Records`, in the "Record entries" format below |
 | Comment URL / ID | `items/<ID>.md#<entry id>` |
 | Comment `updated_at` | The entry's `written` time. Entries are never edited, so the written time is the update time |

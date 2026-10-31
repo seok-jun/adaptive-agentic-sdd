@@ -40,7 +40,7 @@ flowchart LR
 1. 다른 P0/P1 Issue를 차단 해제하는 Issue
 2. 더 낮은 SDD grade
 3. 현재 활성 lane과 수정 경로가 겹치지 않는 Issue
-4. 위 조건까지 같으면 먼저 만든 Issue(선언한 작업 관리 방식의 생성 순서. GitHub에서는 Issue 번호가 작은 것)
+4. 위 조건까지 같으면 선언한 작업 관리 방식의 ID 순서로 Issue 번호가 작은 것
 
 ## 신규 Issue 필수 본문
 

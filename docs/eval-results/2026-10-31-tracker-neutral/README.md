@@ -7,7 +7,7 @@ Status: **COMPLETE, weak evidence.** 10 graded runs: 4 PASS, 6 FAIL. No failure 
 - Selection: [selection.json](selection.json), frozen before the first run at `1b99d2187ab4d3650e716f1abf0c498b2c229ca0`. Five existing Korean cases whose expected behavior touches a moved operation, one run per case per agent, cross-graded with `tests/run_behavior_evals.py`.
 - Evaluated bundle: `ko/adaptive-sdd`, MANIFEST sha256 `38c130ee855f91db1af3a4b463de0dfc7aeaee9eb76ebd5159ea009eb044a6a5`. The `commit` field in each result file carries the runner's fixed "uncommitted preview.5 working tree" label; the manifest hash is the identity.
 - Claude Code 2.1.302 (`claude-opus-5-5` returned), Codex CLI 0.163.0 (configured default model; served model unconfirmed).
-- First attempt: all 10 runs INVALID. Every Claude call (as subject and as grader) returned HTTP 403 `oauth_not_allowed_for_organization` from the inherited Claude configuration directory, before inference. The runner's `--resume` then did one bounded retry, as `skill-evals.md` allows: the five Claude runs were rerun once and the five saved Codex answers were regraded once, with the Claude CLI using the default home sign-in. No second retry was made.
+- First attempt: all 10 runs INVALID. Every Claude call (as subject and as grader) returned HTTP 403 `oauth_not_allowed_for_organization` from the inherited Claude configuration directory, before inference. The runner's `--resume` then did one bounded retry, as `skill-evals.md` allows: the five Claude runs were rerun once and the five saved Codex answers were regraded once, with the Claude CLI using the default home sign-in. No second retry was made. The `retry_of` field in the result files says `usage limit` because the runner writes that fixed text for every retry; the actual first-attempt cause was the HTTP 403 above.
 
 ## Results
 
@@ -32,6 +32,7 @@ These are the author's reading of the private answers, not an independent regrad
 ## Limits
 
 - One run per case per agent is a smoke check, not a reliability estimate.
+- After this check, review feedback changed the tie-break wording (back to the Issue-number order in the declared ID order). None of the five cases exercises a tie-break; the evaluated manifest hash above is the earlier bundle.
 - Only the local-docs adapter was exercised. The GitHub adapter rows are covered by static tests (`tests/test_tracker_neutral.py`) only.
 - The two environment problems above are runner and fixture issues. They are recorded here and left unchanged in this release; fixing them needs a separately frozen run.
 - The Claude retry used a different sign-in from the first attempt. No observations from the failed sign-in are pooled; all 10 graded results come from the retry or regrade.

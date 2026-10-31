@@ -8,7 +8,7 @@
 | `priority:*`, `grade:*`, `status:*` 라벨 | 같은 이름의 Issue 라벨 |
 | 생성할 때 Priority·grade 값 지정 | API가 허용하면 생성 요청에 두 라벨을 포함하고, 아니면 생성 직후 추가 |
 | `priority:*` 값 교체 | 기존 `priority:*` 라벨을 제거한 뒤 새 라벨 추가 |
-| Issue 생성 순서 | Issue 번호 순서(번호가 작을수록 먼저 생성) |
+| Issue 번호 순서 | GitHub Issue 번호 |
 | Epic 관리 문서 | `type:epic` 라벨과 본문 `## 작업 유형`의 `Epic`. `grade:*` 없음. 하위 Issue는 본문에서 연결하며 전체 완료 근거 확인 뒤 관리 Issue를 닫음 |
 | assignee | Issue assignee |
 | Issue 댓글, URL, `updated_at` | Issue comment와 그 URL·`updated_at` |

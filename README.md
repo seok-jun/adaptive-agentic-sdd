@@ -12,16 +12,16 @@ Most SDD tools run the same spec → plan → tasks routine for every change. Th
 
 ## How depth scales
 
-Every work item gets one of four grades. The grade comes from risk, not from file count, and the agent cannot lower an automatic escalation on its own.
+Every execution work item gets one of four grades (an optional Epic that groups work items has none). The grade comes from risk, not from file count, and the agent cannot lower an automatic escalation on its own.
 
 | Grade | When | Design documents | Review before code | Review of the change |
 | --- | --- | --- | --- | --- |
 | **Trivial** | No change to runtime behavior, contracts, tests, build or workflow meaning (typos, links, comments) | None | Self-check of the Trivial conditions | Targeted check + self-review |
 | **Small** | Not Trivial, within one module, no escalation condition | None; the work item is the spec | Self-review of boundaries and verifiability | Self-review against the acceptance criteria |
 | **Medium** | Two or more modules, or a shared contract the project designates | SDD: four short documents, or one page if the project chooses `condensed` | Bounded self-review; independent review when marked `REQUIRED` | Independent review if `REQUIRED`, otherwise self-review |
-| **Large** | Security, personal data, DB schema/migration, background retry/schedule, billing or quota | SDD: four documents | AS-IS and PLAN each get Review A plus a blind Review B whose model a human chooses (a project can opt into one review) | One independent code review; a human merges or explicitly orders that merge |
+| **Large** | Security, personal data, DB schema/migration, background retry/schedule, billing or quota | SDD: four documents | AS-IS and PLAN each get Review A plus a blind Review B whose model a human chooses by default (a project can opt into one review, or let the agent choose the B model) | One independent code review; a human merges or explicitly orders that merge |
 
-At every grade, verification starts with the tests of the module that owns the change and widens only on evidence. The full required checks run once on the final candidate. Definitions: [grades](adaptive-sdd/workflow/process/sdd/grade.md), [review gates](adaptive-sdd/workflow/process/verification.md#review-gate-by-grade).
+For each changed file that affects verification, the first check is the tests of the module that owns it, and checks widen only on evidence; a documentation-only Trivial change gets a targeted check that fits it. The required checks run on the final candidate, and a PASS is reused only when its inputs did not change. Definitions: [grades](adaptive-sdd/workflow/process/sdd/grade.md), [review gates](adaptive-sdd/workflow/process/verification.md#review-gate-by-grade).
 
 ## See it in action
 
@@ -44,7 +44,7 @@ Agent: Created T-31. Grade: Large — DB schema/migration (automatic escalation)
        ...
        PLAN reviews passed. Implemented within the allowed paths.
        Module tests first, then the required checks on the final candidate: PASS.
-       Independent code review: PASS. Large changes need your merge — stopping here.
+       Independent code review: PASS. Large changes need you to merge or explicitly order this merge — stopping here.
 ```
 
 ## Quick start
@@ -59,19 +59,21 @@ Installation guide: https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0
 
 1. Resolve the tag to its full commit SHA:
    git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.6^{}"
+   If it prints nothing, stop and tell me: the tag does not exist.
 2. Download the archive of that commit and copy its adaptive-sdd/ folder byte for byte to .adaptive-sdd/
    with a copy command, not a file-writing tool. Do not modify product code.
 3. Run: python -I -B .adaptive-sdd/tools/install.py init --project-root .
 4. Follow section 3 of the guide: observe this repository, then show me a draft of
-   .adaptive-sdd/project.json with the evidence for each value. Leave every value the guide marks
-   "Human" or "Human only" empty and ask me about it. Do not write the file yet.
+   .adaptive-sdd/project.json with the evidence for each value. init copies example values; for every value
+   the guide marks "Human" or "Human only", do not keep the example: ask me. Do not write the file yet.
 5. After I answer, write project.json, run render with --source-tag v1.0.0-preview.6 --source-commit <SHA>,
-   run check, and show me every file that was added or changed.
+   run check, create items/ and claims/ under tracker.root if I chose local-docs,
+   and show me every file that was added or changed.
 ```
 
 For the Korean edition, use `ko/adaptive-sdd/` and [`ko/docs/customization.md`](ko/docs/customization.md) instead.
 
-**2. Answer the questions.** Only you decide the human-judgment points, delegations, where work items live (`github`, or `local-docs` in a shared folder outside the repository), the worktree folder, the merge method and the review profile. The verification commands per change scope (`build.verification`) matter most: without them, implementation stops as `BLOCKED` because acceptance cannot be proven.
+**2. Answer the questions.** Only you decide the human-judgment points, delegations, where work items live (`github`, or `local-docs` in a shared folder outside the repository), the worktree folder, the merge method and the review profile. The verification commands per change scope (`build.verification`, or manual checks in `build.checks`) matter most: without a declared way to verify, implementation stops as `BLOCKED` because acceptance cannot be proven.
 
 **3. Check the result.**
 
@@ -85,7 +87,7 @@ For the Korean edition, use `ko/adaptive-sdd/` and [`ko/docs/customization.md`](
 | `.claude/skills/<4 skills>/SKILL.md`, `.agents/skills/<4 skills>/SKILL.md` | Short entry files for Claude Code and Codex (only for the tools you chose) |
 | `AGENTS.md`, `CLAUDE.md`, `.gitattributes` | One marked block from `adaptive-sdd:begin` to `adaptive-sdd:end`; your existing content outside it is kept |
 
-**Undo.** Before you commit: run `git restore` on the files that existed before, and delete `.adaptive-sdd/`, the skill entry folders it created and any of `AGENTS.md`, `CLAUDE.md`, `.gitattributes` the installer created. After you commit: revert the installation commit. Work records under a `local-docs` tracker folder are outside the repository and are not touched.
+**Undo.** Before you commit: run `git restore` on the files that existed before, and delete `.adaptive-sdd/`, the skill entry folders it created and any of `AGENTS.md`, `CLAUDE.md`, `.gitattributes` the installer created. After you commit: revert the installation commit, and push the revert if the installation was pushed; branches created after the installation still contain it until they are merged or deleted. Work records under a `local-docs` tracker folder are outside the repository and are not touched.
 
 ## Your first task
 
@@ -93,7 +95,7 @@ For the Korean edition, use `ko/adaptive-sdd/` and [`ko/docs/customization.md`](
 Using Adaptive SDD, create a work item for <a small change inside one module>, then implement it and close it.
 ```
 
-It is done when the work item has a grade and acceptance criteria, a claim was taken before the first edit, the owning module's tests ran first and the required checks passed on the final candidate, an `[IMPLEMENTATION SUMMARY]` records decisions, verification and remaining risks, and the change request links back to the work item. Who merges follows your settings. After real work, the improvement loop in the [guide](docs/customization.md#3-order-of-work-for-the-agent) uses closing records, not opinions, to decide what to change.
+It is ready to merge when the work item has a grade and acceptance criteria, a claim was taken before the first edit, the owning module's tests ran first and the required checks passed on the final candidate, an `[IMPLEMENTATION SUMMARY]` records decisions, verification and remaining risks, and the change request links back to the work item. Who merges follows your settings. It is done after the agent confirms the actual merge, closes the work item and records `[PRODUCT COMPLETE]`. After real work, the improvement loop in the [guide](docs/customization.md#3-order-of-work-for-the-agent) uses closing records, not opinions, to decide what to change.
 
 ## What you get
 
