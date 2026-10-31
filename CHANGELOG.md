@@ -1,5 +1,35 @@
 # Changelog
 
+## 1.0.0-preview.6 — 2026-10-31
+
+Follows preview.5 (`ee5c60a246a95218e0f429681036fa9bd4bd1e03`). Earlier tags are unchanged.
+
+First experience (no rule change):
+
+- Both READMEs are rewritten around what a visitor needs first: the value, how depth scales by grade, two illustrative transcripts, a paste-in installation prompt, the expected `check`/`check-evals` output, the list of added files, how to undo the installation, the first task and when it counts as done. The verification history moves to this changelog; a short status section keeps the limits and links the evaluation records.
+- Both installation guides target preview.6, and their first paragraph points to the guide inside each earlier tag instead of listing earlier tags.
+
+Tracker-neutral W (meaning unchanged for both existing adapters):
+
+- `workflow/README.md` defines W's terms (Issue, comment, field values in label notation, assignee, PR, closing reference) as tracker-neutral; the declared tracker method decides syntax and API.
+- GitHub-only mechanics move from W to `tracker/github.md`: labels in the creation request, removing and adding a `priority:*` label, the Issue-number order, `Closes #N` syntax and the numeric `product-complete:` JSON. `tracker/local-docs.md` gains the matching rows (creation write, meta rewrite, and the Issue-number order as the existing `<ID>` mapping). W now says "set both values at creation if the method allows it", "replace the value and re-read", "the lower Issue number in the declared method's ID order" and "add the closing reference". Markers, the `Meta`/`Records` headings, the installer's `github | local-docs` choices and Epic's grade exception are unchanged. This does not add support for other trackers.
+- The pinned Korean `completion.md` guard is proven unchanged except for the one closing-reference sentence (the test reverts exactly that sentence and compares the pinned hash). New `tests/test_tracker_neutral.py` keeps GitHub-only phrases out of W outside `tracker/` and checks that both adapters map the moved operations.
+
+Skill and evaluation clarity (carried from the unreleased 721e086 change and corrected):
+
+- II-S02: both editions restate the existing owning-module/test-class-first rule at the implementation step. It now applies to each *verification-affecting* changed file, matching `verification.md`; the 721e086 wording ("changed files") was broader than its source. The English edition also states that the scope follows that source.
+- FI-S02: the fixture supplies the synthetic failing command and its result. New FI-S02b covers a missing command name and log; the agent must not invent them. Both editions clarify the incomplete-status report at the finishing step.
+- A post-hoc paired diagnostic (`docs/eval-results/2026-10-30-skill-comparison/`, Korean, Claude `claude-opus-5-5`/medium as subject, Codex `gpt-6-astra`/medium as grader, 3 cases × 2 arms × 3 runs) graded 16 answers: 11 PASS, 5 FAIL, 2 pre-inference authentication INVALIDs kept without retry. No overall improvement was observed; II-S02 failed in every valid run, and its fixture lacked an Issue identity and full paths, so it does not establish a skill regression either. It evaluated the 721e086 wording, not the final wording or the English edition. Known runner limits: the grader model and effort are fixed in code, and resuming does not re-hash the generated grader model and instruction files; the recorded run used the configured values.
+- Case notes in both editions record that diagnostic instead of saying the revised cases are unrun.
+
+Validation: (2026-10-31, Windows, Python 3.12.2) on the reviewed candidate `277cfc58a5523f4bfe02c06fe67864d852ae897e`: all 65 executable tests passed; both 66-file bundle manifests matched; `git diff --check` passed; a `git archive` of the candidate installed in disposable projects for both editions with `local-docs` and `github` passed `init`, `render --source-commit`, `check` and `check-evals` (77 cases); relative links and anchors in both READMEs and guides resolved. The release commit after it changes only these validation lines in the READMEs and this changelog.
+
+- Independent review: a fresh Codex session (`gpt-6-astra`, reasoning high, read-only, no conversation history) reviewed `ee5c60a..0327cb5`: no P1, five P2, two P3. All were fixed in `249176c`; a narrow reconfirmation found one partial fix and two new wording issues, fixed in `277cfc5` and reconfirmed with no remaining finding. The reviewer did not run the write-heavy installer tests; the served model identity was not independently verified.
+- First-use runs from the README at `d7a2b27` with prepared human answers, in disposable repositories with a local bare remote: a fresh Claude Code agent installed the English edition, completed a Small task (claim, module tests first, full suite, merge, `[PRODUCT COMPLETE]`, release) and reverted the installation. A Codex run installed the Korean edition (`check` OK, 77 cases) but its sandbox denied writes to `.git`, so it stopped before the task. Their README findings (empty `ls-remote`, example values versus human decisions, local-docs folders, undo after push) are fixed in this release.
+- Bounded behavior check: [record](docs/eval-results/2026-10-31-tracker-neutral/README.md), 4 PASS / 6 FAIL, no failure traced to the wording change, weak evidence.
+- Open points from the first-use run, not changed in this release: no record tag for the observation start record in local-docs, module ownership of a top-level `tests/` folder, whether `merge` allows a fast-forward, when acceptance-criteria checkboxes are ticked, what counts as fresh capability evidence for the current model, and CRLF product files in lanes under `core.autocrlf=true`. The behavior runner's "shell commands cannot be run" text makes Codex skip reading files, and its example project conflicts with FI-S03/FI-S20.
+- Not run: POSIX execution, live GitHub tracker operations, effect on outcomes, rework or cost.
+
 ## 1.0.0-preview.5 — 2026-10-30
 
 Packages the candidate from `110d943c6db638d72bbafbbdc2bad4037e66b45c` on `v1-preview`, following preview.4 (`5760ac66b2a4c943360a56c22892fe35e1a076db`). This packaging step changes release documentation and records the evaluation limitations; both bundles and earlier tags are unchanged. `methodology/` (English M) is unchanged.

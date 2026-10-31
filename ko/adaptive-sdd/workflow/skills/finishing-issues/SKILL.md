@@ -57,7 +57,7 @@ Epic 관리 문서의 종료는 `managing-issues`의 `Epic 조율`에서 전체 
 1. 선언된 영향 분석 결과를 쓰면 `execution-packets.md`의 `공통 영향 결과 참조와 로컬 소비`로 최신성·완전성을 확인한다. 낡은 결과로 필수 검증을 줄이거나 이전 SHA의 리뷰 PASS를 물려받지 않는다.
 2. SDD를 지우기 전에 구현의 필수 검증 근거를 확인하고, 빠지거나 무효가 된 검증을 실행한다. 입력이 바뀐 뒤의 좁은(targeted) 재실행, 필수 넓은(broad) 재실행, 입력이 그대로일 때의 PASS 재사용은 `verification.md`를 따른다. 이 시점의 확인으로 정리 후 최종 후보의 CODE Review·완료 판정을 대신하지 않는다. business 동기화 전에 CODE Review가 있었다면 과거 근거로 보존하고, 새 후보의 CODE Review는 5단계에서 판정한다.
 3. 빌드·테스트 명령 전에 `build-preflight.md`와 `verification.md`의 `검증 환경`을 적용한다. 환경 실패를 제품 회귀로 단정하지 않으며, 선언된 실제 빌드 JVM 확인과 허용된 이번 프로세스 한정 교정 결과만 정식 근거로 쓴다. 실행하지 않았거나 환경 때문에 막힌 것을 PASS로 기록하지 않는다.
-4. 명령·결과와 필요한 CI를 확인한다. 필수 검증의 실패·미실행은 미완료다. Trivial 등 그 등급에 필요 없는 빌드나 선택 사항인 Device QA/Runtime QA·보고서가 없다는 것을 새 관문으로 만들지 않는다.
+4. 명령·결과와 필요한 CI를 확인한다. 필수 검증의 실패·미실행은 미완료다. 실패·미실행한 필수 명령과 확인한 결과를 완료 보고에 명시한다. 명령명이나 결과 근거가 없으면 그 정보가 없음을 밝히고 필요한 근거를 확인하기 전까지 미완료로 둔다. 명령명이나 결과를 추측하지 않는다. Trivial 등 그 등급에 필요 없는 빌드나 선택 사항인 Device QA/Runtime QA·보고서가 없다는 것을 새 관문으로 만들지 않는다.
 5. 전체 변경 경로가 Issue의 수정 허용/금지 경로와 맞는지 다시 확인한다. Result Packet이 있으면 `execution-packets.md`의 현재 head 기준 검증 근거와 PLAN Implementation finding 해결 조건을 충족해야 한다. "명령이 성공했다"는 자기 보고만으로 PASS를 증명하지 않는다.
 6. 외부 차단 요인은 상태와 재개 조건을 기록하고 `observations.md`와, 켜져 있으면 `token-diagnostic.md`의 BLOCKED/RESUME을 적용한다. 해소 근거 없이 재개하거나 자동으로 다시 확인하거나 기록을 반복하지 않는다.
 
@@ -84,7 +84,7 @@ business 동기화, 현재 SDD 삭제 또는 위 조건에 따른 보존, 링크
 
 아래 PR·SUMMARY 기록은 위 후보의 유효한 리뷰·검증 근거에 연결한다. PR 메타데이터만 바뀌고 저장소 후보가 그대로면 같은 CODE Review를 다시 하지 않는다.
 
-1. PR 범위를 Issue 경계·완료 기준과 대조하고 본문에 `Closes #{issue-number}`를 넣는다.
+1. PR 범위를 Issue 경계·완료 기준과 대조하고 이 Issue의 closing reference(`Closes #{issue-number}`, 선언한 작업 관리 방식의 표기)를 넣는다.
 2. 기존 `[IMPLEMENTATION SUMMARY]` 하나에 결정 준수·실행 이탈·사람에게 올린 판단·검증·남은 위험을 정리한다. 이미 있으면 갱신하며 새 문서나 사람 승인 관문을 더하지 않는다.
 3. 같은 SUMMARY에 `observations.md`의 종료·작성 모델·발견 사건 규칙을 적용한다. 최초 문제·담당·조치와 결과·원본 참조를 보존하고 PR 이후 CI·리뷰 사건도 모은다. 사건이 없으면 빈 사건 목록을 만들지 않는다.
 4. 관측 시작 기록, 실제 지원과 사용, 공백, 비용 출처, 작성 모델, 다음 판단을 해당 원본 형식으로 연결한다. 모델 미확인이나 관측 미수집을 제품 종료 관문으로 만들지 않으며, 합성 평가 PASS나 자기 보고를 효과의 증거로 기록하지 않는다.
@@ -96,7 +96,7 @@ business 동기화, 현재 SDD 삭제 또는 위 조건에 따른 보존, 링크
 1. 병합 직전과 병합 뒤 종료 확인 시점에 필요한 메타데이터를 새로 읽고, 실제로 PR이 병합되고 Issue가 닫혔는지 확인한다.
 2. 정리 전에 관측 시작 기록·SUMMARY·필요한 원본을 오래 보존되는 위치에서 다시 조회한다. 결과와 조회 공백은 `observations.md`의 제품 완료 관측으로 SUMMARY에 남긴다. 로컬 worktree를 이후 관측의 유일한 원본으로 남기지 않는다.
 3. `observations.md`의 `종료 관측 점검`을 적용한다. 이 preview의 `observation-check unavailable reason=not-shipped` 결과와 필요한 최초 출력·재실행 이유를 준비하되, 종료·해제의 새 차단 조건으로 삼지 않는다.
-4. 위 점검 결과와, P가 선언한 병합 대상 branch에 실제로 병합된 PR의 종료 구문·병합 SHA로 `[PRODUCT COMPLETE]`를 한 번 기록한다. 첫 줄 태그 다음에 `product-complete: {"schema_version":1,"issue":N,"pull_request":PR,"merge_commit":"40자리 SHA"}`를 둔다. 제품 완료와 로컬 정리·담당 해제는 별개이며, 같은 수명 주기의 완료 기록을 중복으로 만들지 않는다.
+4. 위 점검 결과와, P가 선언한 병합 대상 branch에 실제로 병합된 PR의 종료 구문·병합 SHA로 `[PRODUCT COMPLETE]`를 한 번 기록한다. 첫 줄 태그 다음에 선언한 작업 관리 방식 형식의 `product-complete:` JSON을 둔다(GitHub은 `{"schema_version":1,"issue":N,"pull_request":PR,"merge_commit":"40자리 SHA"}`). 제품 완료와 로컬 정리·담당 해제는 별개이며, 같은 수명 주기의 완료 기록을 중복으로 만들지 않는다.
 5. `parallel-development`의 Release·Merged local worktree cleanup을 실행한다. 등록 제거 전에는 이번 실행이 만든 것인지, 생성 파일인지 어느 쪽으로도 증명되지 않은 미추적 진단·정체불명 파일이 없는지 확인한다. 그런 파일은 사용자 상태로 보존하고 등록 제거·RELEASE를 멈춰 lane 해제 미완료로 보고한다.
 6. "산출물 없음" 예외, 빌드 정리, 등록·실제 폴더 각각의 부재 확인, 허용된 잔여 정리와 담당 해제 순서는 그 원본을 따른다. 현재 claim·환경 근거를 다시 쓰고, 강제 정리나 대량 파일의 개별 삭제 반복문으로 보호 정책을 우회하지 않는다.
 7. 정리·해제가 pending이면 정확한 경로·상태·재개 조건을 보고하되 제품 완료를 취소하지 않는다. 정리만의 후속 갱신은 `[LOCAL CLEANUP]`에 남기고 제품 완료 기록을 다시 쓰지 않는다.

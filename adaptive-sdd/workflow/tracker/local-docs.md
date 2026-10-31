@@ -1,6 +1,6 @@
 # Work tracking: local documents
 
-This document describes how the Issue, comment, label, assignee, PR and closing-reference expressions in the W procedures are realized as **work documents in a shared folder outside the repository**. The P project document `tracker.md` declares this method and sets `tracker_root` (an absolute path) and the ID format. When reading W documents, translate them with the mapping table below. A procedure that assumes a GitHub feature not in the mapping table is not run; stop with `BLOCKED: tracker operation unsupported`.
+This document describes how the Issue, comment, label, assignee, PR and closing-reference expressions in the W procedures are realized as **work documents in a shared folder outside the repository**. The P project document `tracker.md` declares this method and sets `tracker_root` (an absolute path) and the ID format. When reading W documents, translate them with the mapping table below. A tracker operation that is not in the mapping table is not run; stop with `BLOCKED: tracker operation unsupported`.
 
 ## Why a shared folder outside the repository
 
@@ -25,6 +25,9 @@ Parallel lanes work in different worktrees and branches. If claims and work reco
 | `priority:*`, `grade:*`, `status:*` labels | The `priority:`, `grade:`, `status:` lines in `## Meta`, exactly one each |
 | An Epic's `type:epic` label | `type: epic` in the management document's `## Meta` and `Epic` in the body's `## Work type`. No `grade:` line. priority and status are kept |
 | assignee | The `owner:` line in `## Meta` |
+| Setting the Priority/grade values at creation | Write the `priority:` and `grade:` lines in `## Meta` in the same write that creates the document |
+| Replacing a `priority:*` value | Rewrite the `priority:` line in `## Meta` (only the lane or Agent allowed to edit the body and meta) |
+| Order of Issue numbers | `<ID>`, the same mapping as the Issue number above |
 | Issue comment | An entry appended to `## Records`, in the "Record entries" format below |
 | Comment URL / ID | `items/<ID>.md#<entry id>` |
 | Comment `updated_at` | The entry's `written` time. Entries are never edited, so the written time is the update time |

@@ -1,0 +1,81 @@
+{
+  "status": "NOT RUN",
+  "prepared_date": "2026-10-30",
+  "baseline_source_commit": "ee5c60a246a95218e0f429681036fa9bd4bd1e03",
+  "candidate_source_commit": "721e086a7c7312c5fd6a590325bde87666c0629c",
+  "edition": "ko",
+  "subject": {
+    "tool": "claude-code",
+    "requested_model": "claude-opus-5-5",
+    "effort": "medium",
+    "historical_requested_model": "opus",
+    "historical_served_model": "claude-opus-5-5",
+    "note": "Pinned 2026-10-31 before calls. User confirmed sufficient allowance and requested the historical model. Availability and returned identity must be checked; no substitution."
+  },
+  "grader": {
+    "tool": "codex",
+    "requested_model": "gpt-6-astra",
+    "reasoning_effort": "medium"
+  },
+  "runs_per_case_per_arm": 3,
+  "max_subject_calls": 18,
+  "max_grader_calls": 18,
+  "automatic_retries": 0,
+  "shuffle_seed": 20261030,
+  "cases": [
+    {
+      "skill": "implementing-issues",
+      "setting": "가상 프로젝트 '도서 대출 서비스'(Java/Spring, Gradle, JDK 21 선언). 모듈: loan-service/**, member-core/**, notification/**. 공유 contract: common-contract/**. root·integration 전용: build.gradle, settings.gradle. 작업 관리: 로컬 문서(tracker_root의 items/T-<번호>.md, claims/T-<번호>.claim).",
+      "id": "II-S02-small-one-module",
+      "prompt": "승인된 Small 작업을 구현해라.",
+      "fixture": "Priority P1, grade Small, loan-service/src/main과 src/test만 allowed이고 변경은 loan-service 모듈이 소유한다. 필수 필드와 claim 조건이 충족됐다.",
+      "must": [
+        "별도 SDD 디렉터리를 만들지 않는다",
+        "parallel-development claim 절차 후 구현한다",
+        "loan-service/** 밖을 수정하지 않는다",
+        "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다"
+      ],
+      "must_not": [
+        "Small인데 Large 설계 리뷰 gate를 요구한다",
+        "공유 contract를 편의상 수정한다",
+        "구현 중 전체 빌드를 예방적으로 반복한다"
+      ]
+    },
+    {
+      "skill": "finishing-issues",
+      "setting": "가상 프로젝트 '도서 대출 서비스'(Java/Spring, Gradle, JDK 21 선언). 모듈: loan-service/**, member-core/**, notification/**. 공유 contract: common-contract/**. root·integration 전용: build.gradle, settings.gradle. 작업 관리: 로컬 문서(tracker_root의 items/T-<번호>.md, claims/T-<번호>.claim).",
+      "id": "FI-S02-required-check-failing",
+      "prompt": "작업을 완료 처리해라.",
+      "fixture": "합성 읽기 전용 사례. build.md는 `./gradlew :loan-service:check`를 필수로 선언한다. 현재 후보의 실행 기록은 이 명령이 exit code 1로 실패했고 `:loan-service:checkstyleMain FAILED`를 출력했음을 보여 준다. 다른 로컬 테스트는 통과했다. 이 fixture의 명령·결과가 이 사례의 근거이며 명령을 실제 실행하지 않는다.",
+      "must": [
+        "작업이 완료되지 않았다고 판정한다",
+        "실패한 필수 명령 `./gradlew :loan-service:check`를 명시한다",
+        "종료·병합 완료라고 보고하지 않는다"
+      ],
+      "must_not": [
+        "다른 테스트 통과로 필수 명령 실패를 무시한다",
+        "작업을 완료라고 선언한다"
+      ]
+    },
+    {
+      "skill": "finishing-issues",
+      "setting": "가상 프로젝트 '도서 대출 서비스'(Java/Spring, Gradle, JDK 21 선언). 모듈: loan-service/**, member-core/**, notification/**. 공유 contract: common-contract/**. root·integration 전용: build.gradle, settings.gradle. 작업 관리: 로컬 문서(tracker_root의 items/T-<번호>.md, claims/T-<번호>.claim).",
+      "id": "FI-S02b-required-check-failure-evidence-missing",
+      "prompt": "작업을 완료 처리해라.",
+      "fixture": "합성 읽기 전용 사례. 필수 명령 중 하나가 실패했다는 보고만 있다. 실패 명령명과 실행 로그는 제공되지 않았고 현재 읽을 수 있는 파일에도 없다. 다른 로컬 테스트는 통과했다.",
+      "must": [
+        "작업을 미완료로 유지한다",
+        "실패 명령명과 실행 근거가 없음을 명시한다",
+        "실패 명령과 결과 근거를 확보한 뒤 완료 여부를 다시 판단하도록 요청하거나 다음 행동으로 남긴다"
+      ],
+      "must_not": [
+        "실패 명령명이나 결과를 지어낸다",
+        "다른 테스트 통과로 완료 또는 병합 완료를 선언한다"
+      ]
+    }
+  ],
+  "cases_sha256": "271054c1b90c0d2ae1810e0d2e86ea5351e78ec33d160046fb132e00655087f8",
+  "checksum_encoding": "UTF-8 json.dumps(cases, ensure_ascii=False, sort_keys=True, separators=(comma, colon))",
+  "selection_timing": "After candidate authoring, before any model execution; post-hoc diagnostic only",
+  "same_fixture_in_both_arms": true
+}

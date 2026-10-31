@@ -1,0 +1,1936 @@
+{
+  "schema": 1,
+  "selection_sha256": "36c92cfe5ed69a1edd1c18ce1e421ad03d19f981b527d40dc55c59361b64d55f",
+  "runner_sha256": "5118b858ba4459e064af8ae30b1eaa306784b389abcb2fbe07a741d074bc07ec",
+  "bundles": {
+    "before": "3d32ea818e68c442ed062820629dec1062330bb8fae218c8a71b0fac0d1e187e",
+    "after": "93dbe160faed7b82927caccf55d537497dc7ee4472804615829b3e6760013708"
+  },
+  "versions": {
+    "claude": "2.1.302 (Claude Code)",
+    "codex": "codex-cli 0.166.0-alpha.5.1"
+  },
+  "subject_calls": 18,
+  "grader_calls": 16,
+  "model": "claude-opus-5-5",
+  "effort": "medium",
+  "baseline_source_commit": "ee5c60a246a95218e0f429681036fa9bd4bd1e03",
+  "candidate_source_commit": "721e086a7c7312c5fd6a590325bde87666c0629c",
+  "cases_sha256": "271054c1b90c0d2ae1810e0d2e86ea5351e78ec33d160046fb132e00655087f8",
+  "grader": {
+    "tool": "codex",
+    "requested_model": "gpt-6-astra",
+    "reasoning_effort": "medium"
+  },
+  "instruction_context_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+  "prepared_samples": 18,
+  "results": [
+    {
+      "sample": "s001",
+      "case": "II-S02-small-one-module",
+      "arm": "after",
+      "repetition": 1,
+      "fixture_sha256": "b6903bd9730052936f73b8767d9633fa0bdcaf1b556a38cd7de833e0679a4498",
+      "prompt_sha256": "2d6370e12c868df4f43fcd95de44e4e274cfee9b5339233ec542bd559cd43471",
+      "result": "INVALID",
+      "reason": "HTTP 403 oauth_not_allowed_for_organization; subscription access disabled for active organization",
+      "subject_seconds": 3.625,
+      "subject_transcript_sha256": "d3390dad6b5eb1f2d7e02c9c4df77d5cb91fc9d640f65fcd93f3003849ebede2",
+      "inventory_unchanged": true,
+      "subject_usage": {
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 0,
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "",
+        "iterations": [],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "reported_cost_usd": 0,
+      "inference_completed": false
+    },
+    {
+      "sample": "s002",
+      "case": "FI-S02b-required-check-failure-evidence-missing",
+      "arm": "before",
+      "repetition": 3,
+      "fixture_sha256": "7a2d52c175385dfbbc9be38f8a3c525302988a901088a6bfbd3dc9650c647c25",
+      "prompt_sha256": "f67ca7410b560bad3d7b245f4a9f1eda740d54d9d902d345b784f62cfafe5900",
+      "result": "INVALID",
+      "reason": "HTTP 403 oauth_not_allowed_for_organization under explicitly authorized default home account",
+      "subject_seconds": 3.516,
+      "subject_transcript_sha256": "f01dbfd6098c6a21c7d1325b58821f1e3d6755a7f0dd60a218a113a43ea9d579",
+      "inventory_unchanged": true,
+      "subject_usage": {
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 0,
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "",
+        "iterations": [],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "reported_cost_usd": 0,
+      "inference_completed": false
+    },
+    {
+      "sample": "s003",
+      "case": "FI-S02b-required-check-failure-evidence-missing",
+      "arm": "before",
+      "repetition": 2,
+      "fixture_sha256": "7a2d52c175385dfbbc9be38f8a3c525302988a901088a6bfbd3dc9650c647c25",
+      "prompt_sha256": "f67ca7410b560bad3d7b245f4a9f1eda740d54d9d902d345b784f62cfafe5900",
+      "result": "PASS",
+      "reason": "",
+      "subject_seconds": 26.891,
+      "subject_transcript_sha256": "fb20d1c0b9cd0bd5247c5a0e240ffcd6426a02df10d3683e8119a0d4104f6f7c",
+      "inventory_unchanged": true,
+      "returned_model": "claude-opus-5-5",
+      "usage": {
+        "input_tokens": 8,
+        "cache_creation_input_tokens": 22065,
+        "cache_read_input_tokens": 40730,
+        "output_tokens": 2222,
+        "output_tokens_details": {
+          "thinking_tokens": 166
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 22065,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1411,
+            "cache_read_input_tokens": 24358,
+            "cache_creation_input_tokens": 930,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 930
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 8,
+          "outputTokens": 2222,
+          "cacheReadInputTokens": 40730,
+          "cacheCreationInputTokens": 22065,
+          "webSearchRequests": 0,
+          "costUSD": 0.229138,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 166,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "tool_names": [
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Glob",
+        "Grep"
+      ],
+      "init_sha256": "e01f384cceb86c36ba265df33bea91080378c0675b55ff58d8161513c11fa03a",
+      "answer_sha256": "b7b3b90d8d92d291e6bb434a7f5b8d0f805d060a63dba9dbbc43711658d8d4f1",
+      "grader_seconds": 4.75,
+      "grader_transcript_sha256": "bc380f7760263f9bb01d71dda4dd919bcd6691cb32558137c4310a3cb561c036",
+      "items": {
+        "must": [
+          {
+            "item": "작업을 미완료로 유지한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령명과 실행 근거가 없음을 명시한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령과 결과 근거를 확보한 뒤 완료 여부를 다시 판단하도록 요청하거나 다음 행동으로 남긴다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "실패 명령명이나 결과를 지어낸다",
+            "violated": false
+          },
+          {
+            "item": "다른 테스트 통과로 완료 또는 병합 완료를 선언한다",
+            "violated": false
+          }
+        ]
+      },
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader_usage": {
+        "input_tokens": 2743,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 127,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "sample": "s004",
+      "case": "II-S02-small-one-module",
+      "arm": "after",
+      "repetition": 2,
+      "fixture_sha256": "b6903bd9730052936f73b8767d9633fa0bdcaf1b556a38cd7de833e0679a4498",
+      "prompt_sha256": "2d6370e12c868df4f43fcd95de44e4e274cfee9b5339233ec542bd559cd43471",
+      "result": "FAIL",
+      "reason": "",
+      "subject_seconds": 22.64,
+      "subject_transcript_sha256": "b9d781cc10136c96157f11d0c986bc08bcf814b365cb70bd48f2a5063a009893",
+      "inventory_unchanged": true,
+      "returned_model": "claude-opus-5-5",
+      "usage": {
+        "input_tokens": 6,
+        "cache_creation_input_tokens": 16331,
+        "cache_read_input_tokens": 17216,
+        "output_tokens": 1962,
+        "output_tokens_details": {
+          "thinking_tokens": 365
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 16331,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1332,
+            "cache_read_input_tokens": 7803,
+            "cache_creation_input_tokens": 12647,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 12647
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 6,
+          "outputTokens": 1962,
+          "cacheReadInputTokens": 17216,
+          "cacheCreationInputTokens": 16331,
+          "webSearchRequests": 0,
+          "costUSD": 0.17335520000000001,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 365,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "tool_names": [
+        "Read",
+        "Read",
+        "Read",
+        "Grep",
+        "Read"
+      ],
+      "init_sha256": "05361af57ef2a0aa71a0553a5101f08e4e37b3e0fba197b458de4cd12a4d6b97",
+      "answer_sha256": "3d115c9702fa070f326a6a645c57000d9bc7f7c632db379296ba70e61b188ab2",
+      "grader_seconds": 14.063,
+      "grader_transcript_sha256": "4cf4b794d84e2d40e4c71fb9ecaa262948c22120a0ce99a6cc66ad704f6f9a21",
+      "items": {
+        "must": [
+          {
+            "item": "별도 SDD 디렉터리를 만들지 않는다",
+            "met": true
+          },
+          {
+            "item": "parallel-development claim 절차 후 구현한다",
+            "met": false
+          },
+          {
+            "item": "loan-service/** 밖을 수정하지 않는다",
+            "met": false
+          },
+          {
+            "item": "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "Small인데 Large 설계 리뷰 gate를 요구한다",
+            "violated": false
+          },
+          {
+            "item": "공유 contract를 편의상 수정한다",
+            "violated": false
+          },
+          {
+            "item": "구현 중 전체 빌드를 예방적으로 반복한다",
+            "violated": false
+          }
+        ]
+      },
+      "failed_must": [
+        "parallel-development claim 절차 후 구현한다",
+        "loan-service/** 밖을 수정하지 않는다"
+      ],
+      "violated_must_not": [],
+      "grader_usage": {
+        "input_tokens": 2583,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 308,
+        "reasoning_output_tokens": 161
+      }
+    },
+    {
+      "sample": "s005",
+      "case": "II-S02-small-one-module",
+      "arm": "after",
+      "repetition": 3,
+      "fixture_sha256": "b6903bd9730052936f73b8767d9633fa0bdcaf1b556a38cd7de833e0679a4498",
+      "prompt_sha256": "2d6370e12c868df4f43fcd95de44e4e274cfee9b5339233ec542bd559cd43471",
+      "result": "FAIL",
+      "reason": "",
+      "subject_seconds": 23.156,
+      "subject_transcript_sha256": "feea52191317be08134bc17d2d88b6a28cbff2e4066529b75b8126aa56250e2a",
+      "inventory_unchanged": true,
+      "returned_model": "claude-opus-5-5",
+      "usage": {
+        "input_tokens": 6,
+        "cache_creation_input_tokens": 18701,
+        "cache_read_input_tokens": 18047,
+        "output_tokens": 2069,
+        "output_tokens_details": {
+          "thinking_tokens": 386
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 18701,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1538,
+            "cache_read_input_tokens": 7809,
+            "cache_creation_input_tokens": 15836,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 15836
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 6,
+          "outputTokens": 2069,
+          "cacheReadInputTokens": 18047,
+          "cacheCreationInputTokens": 18701,
+          "webSearchRequests": 0,
+          "costUSD": 0.1946214,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 386,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "tool_names": [
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read"
+      ],
+      "init_sha256": "b14851f2c43e901c71b603cdc2a4a5aa29a8f07c0212a8f7d6f021226ff19b88",
+      "answer_sha256": "aa724885202a2038ee62fa0bc073520d0e85939039b841ce5a3731ba778d5074",
+      "grader_seconds": 9.063,
+      "grader_transcript_sha256": "c94a53759fb3ce08f1a5d1a7a937da3f6fe2ec065039482ab1e250a4de57b31d",
+      "items": {
+        "must": [
+          {
+            "item": "별도 SDD 디렉터리를 만들지 않는다",
+            "met": true
+          },
+          {
+            "item": "parallel-development claim 절차 후 구현한다",
+            "met": true
+          },
+          {
+            "item": "loan-service/** 밖을 수정하지 않는다",
+            "met": false
+          },
+          {
+            "item": "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "Small인데 Large 설계 리뷰 gate를 요구한다",
+            "violated": false
+          },
+          {
+            "item": "공유 contract를 편의상 수정한다",
+            "violated": false
+          },
+          {
+            "item": "구현 중 전체 빌드를 예방적으로 반복한다",
+            "violated": false
+          }
+        ]
+      },
+      "failed_must": [
+        "loan-service/** 밖을 수정하지 않는다"
+      ],
+      "violated_must_not": [],
+      "grader_usage": {
+        "input_tokens": 2688,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 193,
+        "reasoning_output_tokens": 46
+      }
+    },
+    {
+      "sample": "s006",
+      "case": "II-S02-small-one-module",
+      "arm": "before",
+      "repetition": 2,
+      "fixture_sha256": "b6903bd9730052936f73b8767d9633fa0bdcaf1b556a38cd7de833e0679a4498",
+      "prompt_sha256": "2d6370e12c868df4f43fcd95de44e4e274cfee9b5339233ec542bd559cd43471",
+      "result": "FAIL",
+      "reason": "",
+      "subject_seconds": 25.687,
+      "subject_transcript_sha256": "969bd16a025ecc7e4d2bf48771f6f1658a10b091d1eaa83234cb624b47f1e11f",
+      "inventory_unchanged": true,
+      "returned_model": "claude-opus-5-5",
+      "usage": {
+        "input_tokens": 6,
+        "cache_creation_input_tokens": 14310,
+        "cache_read_input_tokens": 18040,
+        "output_tokens": 2267,
+        "output_tokens_details": {
+          "thinking_tokens": 380
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 14310,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1758,
+            "cache_read_input_tokens": 7802,
+            "cache_creation_input_tokens": 11452,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 11452
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 6,
+          "outputTokens": 2267,
+          "cacheReadInputTokens": 18040,
+          "cacheCreationInputTokens": 14310,
+          "webSearchRequests": 0,
+          "costUSD": 0.163452,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 380,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "tool_names": [
+        "Read",
+        "Read",
+        "Read",
+        "Grep"
+      ],
+      "init_sha256": "9edb81976f6cd7fcd447169389cb9668d5e3caaa59abfee8180a25002c9cdfa3",
+      "answer_sha256": "120ba9ae748d978f76fd5cab4d4bc8026d763ca172233bfc4ce4c594b22702d5",
+      "grader_seconds": 5.438,
+      "grader_transcript_sha256": "6e2e2e6795fd387be3ac5c493856b80459b0e2a6ebfaf73f07fab3c6a7b377f2",
+      "items": {
+        "must": [
+          {
+            "item": "별도 SDD 디렉터리를 만들지 않는다",
+            "met": true
+          },
+          {
+            "item": "parallel-development claim 절차 후 구현한다",
+            "met": false
+          },
+          {
+            "item": "loan-service/** 밖을 수정하지 않는다",
+            "met": true
+          },
+          {
+            "item": "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "Small인데 Large 설계 리뷰 gate를 요구한다",
+            "violated": false
+          },
+          {
+            "item": "공유 contract를 편의상 수정한다",
+            "violated": false
+          },
+          {
+            "item": "구현 중 전체 빌드를 예방적으로 반복한다",
+            "violated": false
+          }
+        ]
+      },
+      "failed_must": [
+        "parallel-development claim 절차 후 구현한다",
+        "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다"
+      ],
+      "violated_must_not": [],
+      "grader_usage": {
+        "input_tokens": 2799,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 173,
+        "reasoning_output_tokens": 26
+      }
+    },
+    {
+      "sample": "s007",
+      "case": "FI-S02b-required-check-failure-evidence-missing",
+      "arm": "before",
+      "repetition": 1,
+      "fixture_sha256": "7a2d52c175385dfbbc9be38f8a3c525302988a901088a6bfbd3dc9650c647c25",
+      "prompt_sha256": "f67ca7410b560bad3d7b245f4a9f1eda740d54d9d902d345b784f62cfafe5900",
+      "result": "PASS",
+      "reason": "",
+      "subject_seconds": 25.094,
+      "subject_transcript_sha256": "3b9caa61ed612cfe63f6720abca3dea1d1c5b0355203020d0e5f8d569d6fcf4e",
+      "inventory_unchanged": true,
+      "returned_model": "claude-opus-5-5",
+      "usage": {
+        "input_tokens": 8,
+        "cache_creation_input_tokens": 25499,
+        "cache_read_input_tokens": 42477,
+        "output_tokens": 1975,
+        "output_tokens_details": {
+          "thinking_tokens": 126
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 25499,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1245,
+            "cache_read_input_tokens": 24358,
+            "cache_creation_input_tokens": 6111,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 6111
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 8,
+          "outputTokens": 1975,
+          "cacheReadInputTokens": 42477,
+          "cacheCreationInputTokens": 25499,
+          "webSearchRequests": 0,
+          "costUSD": 0.2520194,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 126,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "tool_names": [
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Glob",
+        "Read"
+      ],
+      "init_sha256": "26ca79262cd8153fe4c402da5f335c6211c99066343c44203589e40256e9ac23",
+      "answer_sha256": "9e2df6a2544a19fcaa7dcdca3b998b31077d8d4f47f3caa0fff8297eb98afbe3",
+      "grader_seconds": 4.359,
+      "grader_transcript_sha256": "29be51afb36bfb681b0657a5324a7a1eede8ec45910cc02eeecdfa471c2cbd9e",
+      "items": {
+        "must": [
+          {
+            "item": "작업을 미완료로 유지한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령명과 실행 근거가 없음을 명시한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령과 결과 근거를 확보한 뒤 완료 여부를 다시 판단하도록 요청하거나 다음 행동으로 남긴다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "실패 명령명이나 결과를 지어낸다",
+            "violated": false
+          },
+          {
+            "item": "다른 테스트 통과로 완료 또는 병합 완료를 선언한다",
+            "violated": false
+          }
+        ]
+      },
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader_usage": {
+        "input_tokens": 2697,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 127,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "sample": "s008",
+      "case": "FI-S02b-required-check-failure-evidence-missing",
+      "arm": "after",
+      "repetition": 2,
+      "fixture_sha256": "7a2d52c175385dfbbc9be38f8a3c525302988a901088a6bfbd3dc9650c647c25",
+      "prompt_sha256": "f67ca7410b560bad3d7b245f4a9f1eda740d54d9d902d345b784f62cfafe5900",
+      "result": "PASS",
+      "reason": "",
+      "subject_seconds": 25.094,
+      "subject_transcript_sha256": "41ee484051300c300232e7bf84708e10291273fb3026e6becab368b1811e83b7",
+      "inventory_unchanged": true,
+      "returned_model": "claude-opus-5-5",
+      "usage": {
+        "input_tokens": 8,
+        "cache_creation_input_tokens": 19656,
+        "cache_read_input_tokens": 42604,
+        "output_tokens": 1952,
+        "output_tokens_details": {
+          "thinking_tokens": 175
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 19656,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1342,
+            "cache_read_input_tokens": 24479,
+            "cache_creation_input_tokens": 147,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 147
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 8,
+          "outputTokens": 1952,
+          "cacheReadInputTokens": 42604,
+          "cacheCreationInputTokens": 19656,
+          "webSearchRequests": 0,
+          "costUSD": 0.2048408,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 175,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "tool_names": [
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Glob"
+      ],
+      "init_sha256": "4bc606c8ae01e339102fd9f756941e5bd6afb1d32a2a638749181664aab9da42",
+      "answer_sha256": "56e2474ce409c028ac57f54a045c5e163fa21b604b476a095f44329d19c44bac",
+      "grader_seconds": 5.547,
+      "grader_transcript_sha256": "2b3672b25fb64e3a61cfa3beabec17bd9142c91d13be535cf1eabc332088c8b7",
+      "items": {
+        "must": [
+          {
+            "item": "작업을 미완료로 유지한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령명과 실행 근거가 없음을 명시한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령과 결과 근거를 확보한 뒤 완료 여부를 다시 판단하도록 요청하거나 다음 행동으로 남긴다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "실패 명령명이나 결과를 지어낸다",
+            "violated": false
+          },
+          {
+            "item": "다른 테스트 통과로 완료 또는 병합 완료를 선언한다",
+            "violated": false
+          }
+        ]
+      },
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader_usage": {
+        "input_tokens": 2733,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 127,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "sample": "s009",
+      "case": "II-S02-small-one-module",
+      "arm": "before",
+      "repetition": 3,
+      "fixture_sha256": "b6903bd9730052936f73b8767d9633fa0bdcaf1b556a38cd7de833e0679a4498",
+      "prompt_sha256": "2d6370e12c868df4f43fcd95de44e4e274cfee9b5339233ec542bd559cd43471",
+      "result": "FAIL",
+      "reason": "",
+      "subject_seconds": 24.235,
+      "subject_transcript_sha256": "5fb268cc9a0834fa2424e89d2875910469625cdeed5b1219313c20029f5d227b",
+      "inventory_unchanged": true,
+      "returned_model": "claude-opus-5-5",
+      "usage": {
+        "input_tokens": 8,
+        "cache_creation_input_tokens": 18829,
+        "cache_read_input_tokens": 40541,
+        "output_tokens": 1977,
+        "output_tokens_details": {
+          "thinking_tokens": 345
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 18829,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1234,
+            "cache_read_input_tokens": 22494,
+            "cache_creation_input_tokens": 1279,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 1279
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 8,
+          "outputTokens": 1977,
+          "cacheReadInputTokens": 40541,
+          "cacheCreationInputTokens": 18829,
+          "webSearchRequests": 0,
+          "costUSD": 0.1983122,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 345,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "tool_names": [
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read"
+      ],
+      "init_sha256": "55543761fe6af8a56ba4bdbd76b572671692b921a89d40a25e1ad4223bb9de80",
+      "answer_sha256": "86f5848060575784346a7f0dde3d983cc293e452f627c5d33e9ccb73ef27a245",
+      "grader_seconds": 7.625,
+      "grader_transcript_sha256": "a6810cc4f987a6875cfa30148c4ff41ae4c5ffb6889100625ef17775946a99b9",
+      "items": {
+        "must": [
+          {
+            "item": "별도 SDD 디렉터리를 만들지 않는다",
+            "met": true
+          },
+          {
+            "item": "parallel-development claim 절차 후 구현한다",
+            "met": true
+          },
+          {
+            "item": "loan-service/** 밖을 수정하지 않는다",
+            "met": true
+          },
+          {
+            "item": "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "Small인데 Large 설계 리뷰 gate를 요구한다",
+            "violated": false
+          },
+          {
+            "item": "공유 contract를 편의상 수정한다",
+            "violated": false
+          },
+          {
+            "item": "구현 중 전체 빌드를 예방적으로 반복한다",
+            "violated": false
+          }
+        ]
+      },
+      "failed_must": [
+        "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다"
+      ],
+      "violated_must_not": [],
+      "grader_usage": {
+        "input_tokens": 2658,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 202,
+        "reasoning_output_tokens": 55
+      }
+    },
+    {
+      "sample": "s010",
+      "case": "FI-S02-required-check-failing",
+      "arm": "after",
+      "repetition": 2,
+      "fixture_sha256": "2faae11fc7795a1f0a4d1f4c29190d9ffb7fba9a70fbc9996109dd6ebfa04175",
+      "prompt_sha256": "693af29fcc2c5b98260408e1c58bc7f7fba6aac7afcca2e43922d4af558f4579",
+      "result": "PASS",
+      "reason": "",
+      "subject_seconds": 23.578,
+      "subject_transcript_sha256": "928c32e0f9c43838182e80b2dd68791eaaed58e90b212059ddd6d35265f50818",
+      "inventory_unchanged": true,
+      "returned_model": "claude-opus-5-5",
+      "usage": {
+        "input_tokens": 8,
+        "cache_creation_input_tokens": 20540,
+        "cache_read_input_tokens": 40856,
+        "output_tokens": 1905,
+        "output_tokens_details": {
+          "thinking_tokens": 206
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 20540,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1302,
+            "cache_read_input_tokens": 23448,
+            "cache_creation_input_tokens": 1211,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 1211
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 8,
+          "outputTokens": 1905,
+          "cacheReadInputTokens": 40856,
+          "cacheCreationInputTokens": 20540,
+          "webSearchRequests": 0,
+          "costUSD": 0.2106232,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 206,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "tool_names": [
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read"
+      ],
+      "init_sha256": "12d87435ad1cf77fdfe1849ca63af03d3b70eae02f35bb1ca0a2d266bb8d0380",
+      "answer_sha256": "5df8374aeea6d6a0fb8b03f245ddd6452e24f10a72fa9d3210519ff078734859",
+      "grader_seconds": 5.031,
+      "grader_transcript_sha256": "5f0517130f7cd80fc312da55899c529e497681712dcdd03af1c08934c12b063d",
+      "items": {
+        "must": [
+          {
+            "item": "작업이 완료되지 않았다고 판정한다",
+            "met": true
+          },
+          {
+            "item": "실패한 필수 명령 `./gradlew :loan-service:check`를 명시한다",
+            "met": true
+          },
+          {
+            "item": "종료·병합 완료라고 보고하지 않는다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "다른 테스트 통과로 필수 명령 실패를 무시한다",
+            "violated": false
+          },
+          {
+            "item": "작업을 완료라고 선언한다",
+            "violated": false
+          }
+        ]
+      },
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader_usage": {
+        "input_tokens": 2729,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 114,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "sample": "s011",
+      "case": "FI-S02-required-check-failing",
+      "arm": "before",
+      "repetition": 2,
+      "fixture_sha256": "2faae11fc7795a1f0a4d1f4c29190d9ffb7fba9a70fbc9996109dd6ebfa04175",
+      "prompt_sha256": "693af29fcc2c5b98260408e1c58bc7f7fba6aac7afcca2e43922d4af558f4579",
+      "result": "PASS",
+      "reason": "",
+      "subject_seconds": 27.047,
+      "subject_transcript_sha256": "6213d9b30de205f1e79c2758337a5cb86b0953d40f245899ae844fd0edded15c",
+      "inventory_unchanged": true,
+      "returned_model": "claude-opus-5-5",
+      "usage": {
+        "input_tokens": 10,
+        "cache_creation_input_tokens": 20398,
+        "cache_read_input_tokens": 66968,
+        "output_tokens": 2099,
+        "output_tokens_details": {
+          "thinking_tokens": 324
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 20398,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1251,
+            "cache_read_input_tokens": 25307,
+            "cache_creation_input_tokens": 128,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 128
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 10,
+          "outputTokens": 2099,
+          "cacheReadInputTokens": 66968,
+          "cacheCreationInputTokens": 20398,
+          "webSearchRequests": 0,
+          "costUSD": 0.2185976,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 324,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "tool_names": [
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Grep",
+        "Glob"
+      ],
+      "init_sha256": "abd2c3b5f032279f9a3455d1ebda6fa6bdbf7719256d896690720a32ec333a07",
+      "answer_sha256": "cfd2f95b649a95074f371214fdaa926b0bb154d8e91e983c9c7876e45e2f3981",
+      "grader_seconds": 4.515,
+      "grader_transcript_sha256": "fd924360c7c81fd2e5381f3b59a19e3e73364ab3a1db209cf4820dc007747d0b",
+      "items": {
+        "must": [
+          {
+            "item": "작업이 완료되지 않았다고 판정한다",
+            "met": true
+          },
+          {
+            "item": "실패한 필수 명령 `./gradlew :loan-service:check`를 명시한다",
+            "met": true
+          },
+          {
+            "item": "종료·병합 완료라고 보고하지 않는다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "다른 테스트 통과로 필수 명령 실패를 무시한다",
+            "violated": false
+          },
+          {
+            "item": "작업을 완료라고 선언한다",
+            "violated": false
+          }
+        ]
+      },
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader_usage": {
+        "input_tokens": 2653,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 114,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "sample": "s012",
+      "case": "FI-S02-required-check-failing",
+      "arm": "after",
+      "repetition": 3,
+      "fixture_sha256": "2faae11fc7795a1f0a4d1f4c29190d9ffb7fba9a70fbc9996109dd6ebfa04175",
+      "prompt_sha256": "693af29fcc2c5b98260408e1c58bc7f7fba6aac7afcca2e43922d4af558f4579",
+      "result": "PASS",
+      "reason": "",
+      "subject_seconds": 29.828,
+      "subject_transcript_sha256": "95e6d22d337cc19c7ec2fe4de17adf248aa4dfdc6f23a9aad53485e451de280d",
+      "inventory_unchanged": true,
+      "returned_model": "claude-opus-5-5",
+      "usage": {
+        "input_tokens": 10,
+        "cache_creation_input_tokens": 20769,
+        "cache_read_input_tokens": 66527,
+        "output_tokens": 2528,
+        "output_tokens_details": {
+          "thinking_tokens": 286
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 20769,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1724,
+            "cache_read_input_tokens": 24753,
+            "cache_creation_input_tokens": 1053,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 1053
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 10,
+          "outputTokens": 2528,
+          "cacheReadInputTokens": 66527,
+          "cacheCreationInputTokens": 20769,
+          "webSearchRequests": 0,
+          "costUSD": 0.23005740000000002,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 286,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "tool_names": [
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Glob",
+        "Glob",
+        "Read"
+      ],
+      "init_sha256": "64fb7b621838c7af2aad7f44f033124a6238fbb279e76598681ed0fe6ab7e293",
+      "answer_sha256": "c49a9e7cb490bfdba4466c434c7c3a18e51c7468570e4f237a9118b2477a5e1c",
+      "grader_seconds": 4.219,
+      "grader_transcript_sha256": "a3bbabcea9c1db760e69ff95e08722fb61c6e9d4c2ddbec04778122a35ac282e",
+      "items": {
+        "must": [
+          {
+            "item": "작업이 완료되지 않았다고 판정한다",
+            "met": true
+          },
+          {
+            "item": "실패한 필수 명령 `./gradlew :loan-service:check`를 명시한다",
+            "met": true
+          },
+          {
+            "item": "종료·병합 완료라고 보고하지 않는다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "다른 테스트 통과로 필수 명령 실패를 무시한다",
+            "violated": false
+          },
+          {
+            "item": "작업을 완료라고 선언한다",
+            "violated": false
+          }
+        ]
+      },
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader_usage": {
+        "input_tokens": 2909,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 114,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "sample": "s013",
+      "case": "II-S02-small-one-module",
+      "arm": "before",
+      "repetition": 1,
+      "fixture_sha256": "b6903bd9730052936f73b8767d9633fa0bdcaf1b556a38cd7de833e0679a4498",
+      "prompt_sha256": "2d6370e12c868df4f43fcd95de44e4e274cfee9b5339233ec542bd559cd43471",
+      "result": "FAIL",
+      "reason": "",
+      "subject_seconds": 24.641,
+      "subject_transcript_sha256": "3ebfba9e0cd16bafc8d635ec1797a8e34aa144e283036e7206338435a0249428",
+      "inventory_unchanged": true,
+      "returned_model": "claude-opus-5-5",
+      "usage": {
+        "input_tokens": 6,
+        "cache_creation_input_tokens": 15407,
+        "cache_read_input_tokens": 18047,
+        "output_tokens": 2192,
+        "output_tokens_details": {
+          "thinking_tokens": 350
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 15407,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1596,
+            "cache_read_input_tokens": 7809,
+            "cache_creation_input_tokens": 12542,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 12542
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 6,
+          "outputTokens": 2192,
+          "cacheReadInputTokens": 18047,
+          "cacheCreationInputTokens": 15407,
+          "webSearchRequests": 0,
+          "costUSD": 0.17072939999999998,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 350,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "tool_names": [
+        "Read",
+        "Read",
+        "Read",
+        "Grep",
+        "Read"
+      ],
+      "init_sha256": "c1a9ad2aca2e284b12062fb65c5ddd16a52c3cc77a6a1e7f57fbf63fa84df453",
+      "answer_sha256": "402cdbba1addc988688a785fabe07bf593ca02cd90d61ce0a607e5669089adf2",
+      "grader_seconds": 5.984,
+      "grader_transcript_sha256": "8d8e7ed7c573b560ef7be90c7e5cdfecc2f7467ce7a041db2b388cb759c11218",
+      "items": {
+        "must": [
+          {
+            "item": "별도 SDD 디렉터리를 만들지 않는다",
+            "met": true
+          },
+          {
+            "item": "parallel-development claim 절차 후 구현한다",
+            "met": true
+          },
+          {
+            "item": "loan-service/** 밖을 수정하지 않는다",
+            "met": true
+          },
+          {
+            "item": "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "Small인데 Large 설계 리뷰 gate를 요구한다",
+            "violated": false
+          },
+          {
+            "item": "공유 contract를 편의상 수정한다",
+            "violated": false
+          },
+          {
+            "item": "구현 중 전체 빌드를 예방적으로 반복한다",
+            "violated": false
+          }
+        ]
+      },
+      "failed_must": [
+        "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다"
+      ],
+      "violated_must_not": [],
+      "grader_usage": {
+        "input_tokens": 2729,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 172,
+        "reasoning_output_tokens": 25
+      }
+    },
+    {
+      "sample": "s014",
+      "case": "FI-S02-required-check-failing",
+      "arm": "before",
+      "repetition": 1,
+      "fixture_sha256": "2faae11fc7795a1f0a4d1f4c29190d9ffb7fba9a70fbc9996109dd6ebfa04175",
+      "prompt_sha256": "693af29fcc2c5b98260408e1c58bc7f7fba6aac7afcca2e43922d4af558f4579",
+      "result": "PASS",
+      "reason": "",
+      "subject_seconds": 31.968,
+      "subject_transcript_sha256": "fbc2fedee19072bef3a238bf14e4012c458fc6f2b89c26170b9c9dea22659ffa",
+      "inventory_unchanged": true,
+      "returned_model": "claude-opus-5-5",
+      "usage": {
+        "input_tokens": 10,
+        "cache_creation_input_tokens": 21511,
+        "cache_read_input_tokens": 66167,
+        "output_tokens": 2612,
+        "output_tokens_details": {
+          "thinking_tokens": 308
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 21511,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1704,
+            "cache_read_input_tokens": 24508,
+            "cache_creation_input_tokens": 2040,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 2040
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 10,
+          "outputTokens": 2612,
+          "cacheReadInputTokens": 66167,
+          "cacheCreationInputTokens": 21511,
+          "webSearchRequests": 0,
+          "costUSD": 0.23760140000000002,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 308,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "tool_names": [
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Grep",
+        "Glob",
+        "Read",
+        "Read"
+      ],
+      "init_sha256": "5e7590fe433f39ab0c91d486fce2972e0250284a46b750d6811001fd6a31b521",
+      "answer_sha256": "889e90b8678b4987f7484e07cc9fbe27d0522ef958e836c7d04020a6412434ce",
+      "grader_seconds": 4.468,
+      "grader_transcript_sha256": "cc4b99489b64d1ce3115d691e55e099644cbda7f9a68394adaee4e4b6ac806e4",
+      "items": {
+        "must": [
+          {
+            "item": "작업이 완료되지 않았다고 판정한다",
+            "met": true
+          },
+          {
+            "item": "실패한 필수 명령 `./gradlew :loan-service:check`를 명시한다",
+            "met": true
+          },
+          {
+            "item": "종료·병합 완료라고 보고하지 않는다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "다른 테스트 통과로 필수 명령 실패를 무시한다",
+            "violated": false
+          },
+          {
+            "item": "작업을 완료라고 선언한다",
+            "violated": false
+          }
+        ]
+      },
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader_usage": {
+        "input_tokens": 2872,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 114,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "sample": "s015",
+      "case": "FI-S02b-required-check-failure-evidence-missing",
+      "arm": "after",
+      "repetition": 1,
+      "fixture_sha256": "7a2d52c175385dfbbc9be38f8a3c525302988a901088a6bfbd3dc9650c647c25",
+      "prompt_sha256": "f67ca7410b560bad3d7b245f4a9f1eda740d54d9d902d345b784f62cfafe5900",
+      "result": "PASS",
+      "reason": "",
+      "subject_seconds": 23.797,
+      "subject_transcript_sha256": "e24cf21f16a0a0929742703a6c68e9d44c83b89149d14495ae3355fdfc05149a",
+      "inventory_unchanged": true,
+      "returned_model": "claude-opus-5-5",
+      "usage": {
+        "input_tokens": 8,
+        "cache_creation_input_tokens": 19612,
+        "cache_read_input_tokens": 42590,
+        "output_tokens": 1984,
+        "output_tokens_details": {
+          "thinking_tokens": 142
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 19612,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1418,
+            "cache_read_input_tokens": 24472,
+            "cache_creation_input_tokens": 110,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 110
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 8,
+          "outputTokens": 1984,
+          "cacheReadInputTokens": 42590,
+          "cacheCreationInputTokens": 19612,
+          "webSearchRequests": 0,
+          "costUSD": 0.20512599999999998,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 142,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "tool_names": [
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Glob"
+      ],
+      "init_sha256": "c48f1c410c88cb5a8b2b50759a48dc45b1cb9f75f3d61e1fb34d35031bdd0804",
+      "answer_sha256": "a61a2b8b0a8652257f79a7db143e049dff0a193eb1c70c448abda44920172483",
+      "grader_seconds": 4.407,
+      "grader_transcript_sha256": "4d1219090e7be4fe239c53d42a033729e47bfb8e05f8632f98baf89dfeec9b70",
+      "items": {
+        "must": [
+          {
+            "item": "작업을 미완료로 유지한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령명과 실행 근거가 없음을 명시한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령과 결과 근거를 확보한 뒤 완료 여부를 다시 판단하도록 요청하거나 다음 행동으로 남긴다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "실패 명령명이나 결과를 지어낸다",
+            "violated": false
+          },
+          {
+            "item": "다른 테스트 통과로 완료 또는 병합 완료를 선언한다",
+            "violated": false
+          }
+        ]
+      },
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader_usage": {
+        "input_tokens": 2741,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 127,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "sample": "s016",
+      "case": "FI-S02-required-check-failing",
+      "arm": "before",
+      "repetition": 3,
+      "fixture_sha256": "2faae11fc7795a1f0a4d1f4c29190d9ffb7fba9a70fbc9996109dd6ebfa04175",
+      "prompt_sha256": "693af29fcc2c5b98260408e1c58bc7f7fba6aac7afcca2e43922d4af558f4579",
+      "result": "PASS",
+      "reason": "",
+      "subject_seconds": 29.219,
+      "subject_transcript_sha256": "96e04bb7f0acf3a480a5b191516fdcf715b779724c7c90199f2fd8e1e5d92bd8",
+      "inventory_unchanged": true,
+      "returned_model": "claude-opus-5-5",
+      "usage": {
+        "input_tokens": 10,
+        "cache_creation_input_tokens": 20681,
+        "cache_read_input_tokens": 67542,
+        "output_tokens": 2344,
+        "output_tokens_details": {
+          "thinking_tokens": 233
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 20681,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1477,
+            "cache_read_input_tokens": 24785,
+            "cache_creation_input_tokens": 933,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 933
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 10,
+          "outputTokens": 2344,
+          "cacheReadInputTokens": 67542,
+          "cacheCreationInputTokens": 20681,
+          "webSearchRequests": 0,
+          "costUSD": 0.2258764,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 233,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "tool_names": [
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Glob",
+        "Grep",
+        "Read"
+      ],
+      "init_sha256": "ebfa03e538c6a91c0e39a602798f6972c5911f62bb8995569b40cfb3959d5f08",
+      "answer_sha256": "ed8c122aba100cf49ccda6e333a32bd23a95176200b83d6e8ecc9334037ab914",
+      "grader_seconds": 5.454,
+      "grader_transcript_sha256": "475b9a747f081e6b5b9d29f15cf4ee612cf76baf0e01510feaf2443668a81534",
+      "items": {
+        "must": [
+          {
+            "item": "작업이 완료되지 않았다고 판정한다",
+            "met": true
+          },
+          {
+            "item": "실패한 필수 명령 `./gradlew :loan-service:check`를 명시한다",
+            "met": true
+          },
+          {
+            "item": "종료·병합 완료라고 보고하지 않는다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "다른 테스트 통과로 필수 명령 실패를 무시한다",
+            "violated": false
+          },
+          {
+            "item": "작업을 완료라고 선언한다",
+            "violated": false
+          }
+        ]
+      },
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader_usage": {
+        "input_tokens": 2775,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 114,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "sample": "s017",
+      "case": "FI-S02-required-check-failing",
+      "arm": "after",
+      "repetition": 1,
+      "fixture_sha256": "2faae11fc7795a1f0a4d1f4c29190d9ffb7fba9a70fbc9996109dd6ebfa04175",
+      "prompt_sha256": "693af29fcc2c5b98260408e1c58bc7f7fba6aac7afcca2e43922d4af558f4579",
+      "result": "PASS",
+      "reason": "",
+      "subject_seconds": 25.609,
+      "subject_transcript_sha256": "ca36f106aff9dde42cdde1258e6c717f40f2a70d2f691c3ae99a017560e3d7f0",
+      "inventory_unchanged": true,
+      "returned_model": "claude-opus-5-5",
+      "usage": {
+        "input_tokens": 8,
+        "cache_creation_input_tokens": 20583,
+        "cache_read_input_tokens": 41774,
+        "output_tokens": 2172,
+        "output_tokens_details": {
+          "thinking_tokens": 276
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 20583,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1480,
+            "cache_read_input_tokens": 23448,
+            "cache_creation_input_tokens": 2172,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 2172
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 8,
+          "outputTokens": 2172,
+          "cacheReadInputTokens": 41774,
+          "cacheCreationInputTokens": 20583,
+          "webSearchRequests": 0,
+          "costUSD": 0.21649079999999998,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 276,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "tool_names": [
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read"
+      ],
+      "init_sha256": "26a7dc033b3300df0731515b841d9700075f23c567c60c9c9f86ae5b706132b7",
+      "answer_sha256": "925fcb1eaf865f751cea201fa0cfad7c45be774c163ab6f1c01687c9bf7bade6",
+      "grader_seconds": 4.985,
+      "grader_transcript_sha256": "a528779e3e8a10414f00828d3487ef6774e41d6d894c6272df06baca70882d1a",
+      "items": {
+        "must": [
+          {
+            "item": "작업이 완료되지 않았다고 판정한다",
+            "met": true
+          },
+          {
+            "item": "실패한 필수 명령 `./gradlew :loan-service:check`를 명시한다",
+            "met": true
+          },
+          {
+            "item": "종료·병합 완료라고 보고하지 않는다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "다른 테스트 통과로 필수 명령 실패를 무시한다",
+            "violated": false
+          },
+          {
+            "item": "작업을 완료라고 선언한다",
+            "violated": false
+          }
+        ]
+      },
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader_usage": {
+        "input_tokens": 2789,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 114,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "sample": "s018",
+      "case": "FI-S02b-required-check-failure-evidence-missing",
+      "arm": "after",
+      "repetition": 3,
+      "fixture_sha256": "7a2d52c175385dfbbc9be38f8a3c525302988a901088a6bfbd3dc9650c647c25",
+      "prompt_sha256": "f67ca7410b560bad3d7b245f4a9f1eda740d54d9d902d345b784f62cfafe5900",
+      "result": "PASS",
+      "reason": "",
+      "subject_seconds": 28.375,
+      "subject_transcript_sha256": "19a32c783d1eb1e45b542bfc799f89b664fae35040df8561303029f0fef146fb",
+      "inventory_unchanged": true,
+      "returned_model": "claude-opus-5-5",
+      "usage": {
+        "input_tokens": 10,
+        "cache_creation_input_tokens": 17777,
+        "cache_read_input_tokens": 61208,
+        "output_tokens": 2366,
+        "output_tokens_details": {
+          "thinking_tokens": 316
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 17777,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "global",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 1374,
+            "cache_read_input_tokens": 21802,
+            "cache_creation_input_tokens": 945,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 945
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard",
+        "fallback_credit": null
+      },
+      "model_usage": {
+        "claude-opus-5-5": {
+          "inputTokens": 10,
+          "outputTokens": 2366,
+          "cacheReadInputTokens": 61208,
+          "cacheCreationInputTokens": 17777,
+          "webSearchRequests": 0,
+          "costUSD": 0.20181759999999999,
+          "contextWindow": 1000000,
+          "maxOutputTokens": 128000,
+          "thinkingTokens": 316,
+          "canonicalModel": "claude-opus-5-5",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "tool_names": [
+        "Read",
+        "Read",
+        "Read",
+        "Grep",
+        "Read",
+        "Glob",
+        "Grep",
+        "Read"
+      ],
+      "init_sha256": "a7221c0c1a9be1d9155d5f93f85f438b418c074487735ab375b91dfc2d291511",
+      "answer_sha256": "b15808cf4ca62f64bedd56d2f91598acaf38beb82b1b5aa37091002044181199",
+      "grader_seconds": 5.734,
+      "grader_transcript_sha256": "01919806ad6f3b0c87178762ead23b0eaf31005aac8ff82730e1bebf48f83b06",
+      "items": {
+        "must": [
+          {
+            "item": "작업을 미완료로 유지한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령명과 실행 근거가 없음을 명시한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령과 결과 근거를 확보한 뒤 완료 여부를 다시 판단하도록 요청하거나 다음 행동으로 남긴다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "실패 명령명이나 결과를 지어낸다",
+            "violated": false
+          },
+          {
+            "item": "다른 테스트 통과로 완료 또는 병합 완료를 선언한다",
+            "violated": false
+          }
+        ]
+      },
+      "failed_must": [],
+      "violated_must_not": [],
+      "grader_usage": {
+        "input_tokens": 2670,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 127,
+        "reasoning_output_tokens": 0
+      }
+    }
+  ],
+  "status": "COMPLETE"
+}

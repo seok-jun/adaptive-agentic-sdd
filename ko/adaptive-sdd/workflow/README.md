@@ -18,7 +18,7 @@ W 문서의 `P/AGENTS.md`의 `## 항상 적용 hard guard`는 설치 도구가 `
 
 ## 작업 관리 방식
 
-W 문서의 Issue·댓글·라벨·assignee·PR·closing reference 표현은 P 적용 문서 `tracker.md`가 선언한 방식으로 바꿔 읽는다.
+W 문서는 특정 작업 관리 도구에 묶이지 않는 용어를 쓴다. **Issue**는 작업 항목, **댓글**은 그 작업 기록의 항목, `priority:*`·`grade:*`·`status:*`·`type:epic`은 라벨 표기로 쓴 작업 항목의 **필드 값**, **assignee**는 담당자, **PR**은 선언한 병합 대상에 대한 변경 요청, **closing reference**는 그 변경과 완료되는 Issue의 연결이다(`Closes #N`은 그 W 표기다). 각 표현을 어떻게 저장하고 쓰는지는 문법·API를 포함해 P 적용 문서 `tracker.md`가 선언한 방식이 정한다. W는 GitHub 기능을 요구하지 않는다. 각 표현은 선언한 방식으로 바꿔 읽고, 그 방식이 대응하지 않는 작업은 멈춘다.
 
 - [로컬 문서](tracker/local-docs.md): 저장소 밖 공유 폴더의 작업 문서와 claim 파일
 - [GitHub](tracker/github.md): GitHub Issue와 PR

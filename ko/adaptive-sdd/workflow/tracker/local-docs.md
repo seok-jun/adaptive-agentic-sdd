@@ -1,6 +1,6 @@
 # 작업 관리 방식: 로컬 문서
 
-이 문서는 W 절차의 Issue·댓글·라벨·assignee·PR·closing reference 표현을 **저장소 밖 공유 폴더의 작업 문서**로 실현하는 방법이다. P 적용 문서 `tracker.md`가 이 방식을 선언하고 `tracker_root`(절대 경로)와 ID 형식을 정한다. W 문서를 읽을 때 아래 대응표로 바꿔 읽는다. 대응표에 없는 GitHub 기능을 전제하는 절차는 실행하지 않고 `BLOCKED: tracker operation unsupported`로 멈춘다.
+이 문서는 W 절차의 Issue·댓글·라벨·assignee·PR·closing reference 표현을 **저장소 밖 공유 폴더의 작업 문서**로 실현하는 방법이다. P 적용 문서 `tracker.md`가 이 방식을 선언하고 `tracker_root`(절대 경로)와 ID 형식을 정한다. W 문서를 읽을 때 아래 대응표로 바꿔 읽는다. 대응표에 없는 작업 관리 작업은 실행하지 않고 `BLOCKED: tracker operation unsupported`로 멈춘다.
 
 ## 왜 저장소 밖 공유 폴더인가
 
@@ -25,6 +25,9 @@
 | `priority:*`, `grade:*`, `status:*` 라벨 | `## 메타`의 `priority:`, `grade:`, `status:` 줄. 각각 정확히 하나 |
 | Epic의 `type:epic` 라벨 | 관리 문서 `## 메타`의 `type: epic`과 본문 `## 작업 유형`의 `Epic`. `grade:` 줄은 두지 않는다. priority·status는 유지한다 |
 | assignee | `## 메타`의 `담당:` 줄 |
+| 생성할 때 Priority·grade 값 지정 | 문서를 만드는 같은 쓰기에서 `## 메타`의 `priority:`·`grade:` 줄을 쓴다 |
+| `priority:*` 값 교체 | `## 메타`의 `priority:` 줄을 고쳐 쓴다(본문·메타를 고칠 수 있는 lane·Agent만) |
+| Issue 번호 순서 | `<ID>`. 위 Issue 번호와 같은 대응 |
 | Issue 댓글 | `## 기록`에 덧붙이는 항목. 아래 "기록 항목" 형식 |
 | 댓글 URL / ID | `items/<ID>.md#<항목 id>` |
 | 댓글 `updated_at` | 항목의 `작성` 시각. 항목은 수정하지 않으므로 작성 시각이 곧 갱신 시각이다 |

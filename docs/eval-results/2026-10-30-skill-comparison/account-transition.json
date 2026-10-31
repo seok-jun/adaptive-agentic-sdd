@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-31",
+  "authorization": "User explicitly authorized default home account for remaining 17 samples; retain s001 INVALID, no retry.",
+  "effective_from": "s002",
+  "previous_sample": "s001 INVALID before inference",
+  "old_instruction_context_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+  "new_instruction_context_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+  "comparison_limit": "17 remaining samples use the default home account; no valid observations from the previous account are pooled."
+}

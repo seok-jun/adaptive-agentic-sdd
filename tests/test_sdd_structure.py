@@ -33,6 +33,18 @@ def without_profile_additions(text):
     return text.replace(PROFILE_ROW, "", 1).replace(PROFILE_SENTENCE, "", 1)
 
 
+# preview.6 restated the closing step tracker-neutrally; the GitHub syntax moved to the adapter.
+CLOSING_REFERENCE = ("PR에 이 Issue의 closing reference(`Closes #{issue-number}`, 선언한 작업 관리 방식의 표기)를 넣는다.",
+                     "PR 본문에 `Closes #{issue-number}`를 넣는다.")
+
+
+def without_closing_reference_wording(text):
+    """Reverting exactly the preview.6 closing-reference sentence must reproduce the pinned guard."""
+    new, old = CLOSING_REFERENCE
+    assert text.count(new) == 1, new
+    return text.replace(new, old, 1)
+
+
 def normalize(text):
     text = historical_paths(text)
     # Ignore relocated link destinations, not the contract text.
@@ -41,6 +53,7 @@ def normalize(text):
         '위 `### 일반 자동 격상`': '일반 자동 격상',
         '위 `기존 Epic 전환`': '기존 Epic 전환',
         '`README.md`·`01-as-is.md` → AS-IS required review': '`01-as-is.md` → AS-IS required review',
+        CLOSING_REFERENCE[0]: CLOSING_REFERENCE[1],
     }.items():
         text = text.replace(before, after)
     return ' '.join(text.split())
@@ -73,6 +86,8 @@ class SelectiveReadingTests(unittest.TestCase):
             text = (BUNDLE / path).read_text(encoding="utf-8")
             if path == 'workflow/process/design-review.md':
                 text = without_profile_additions(text)
+            if path == 'workflow/process/sdd/completion.md':
+                text = without_closing_reference_wording(text)
             self.assertEqual(hashlib.sha256(historical_paths(text).encode("utf-8")).hexdigest(), digest)
         packet = (BUNDLE / 'workflow/skills/_shared/execution-packets.md').read_text(encoding='utf-8')
         self.assertEqual(hashlib.sha256(packet.split('### Blind Audit Packet', 1)[1].encode()).hexdigest(), sample['blind_packet_sha256'])
