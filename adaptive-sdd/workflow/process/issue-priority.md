@@ -40,7 +40,7 @@ Within the same Priority, choose in the following order.
 1. An Issue that unblocks another P0/P1 Issue
 2. A lower SDD grade
 3. An Issue whose edit paths do not overlap with currently active lanes
-4. If everything above is equal, the lower Issue number
+4. If everything above is equal, the Issue created first (in the declared tracker method's creation order; for GitHub, the lower Issue number)
 
 ## Required body of a new Issue
 
@@ -89,7 +89,7 @@ Right after creation, a new Issue must have **exactly one each** of the followin
 - Priority: `priority:P0`, `priority:P1`, `priority:P2`, `priority:P3`
 - SDD grade: `grade:Trivial`, `grade:Small`, `grade:Medium`, `grade:Large`
 
-If the agent can specify both labels in the Issue creation API, include them in the creation request. If an API restriction prevents applying them at once, correct it right after creation, and do not report completion until a re-query confirms both labels.
+If the declared tracker method can set both values when the Issue is created, set them in the creation. Otherwise set them right after creation, and do not report completion until a re-read confirms both values.
 
 If the body value and the label differ, do not arbitrarily give the label priority. Re-check the decision evidence, then **correct the body and the label to the same value.**
 
@@ -103,8 +103,8 @@ When changing the Priority, update all of the following in one cleanup.
 
 1. `Priority` in the Issue body
 2. `User impact`
-3. Remove the existing `priority:*` label
-4. Add the new `priority:*` label
+3. Replace the `priority:*` value with the new value, as the declared tracker method writes it
+4. Re-read the Issue and confirm that exactly one `priority:*` value remains
 
 Changing the Priority alone does not change the SDD grade. Only when the implementation scope has changed, re-decide the grade with this methodology's common grades in `process/sdd/grade.md` and the project-specific application conditions.
 

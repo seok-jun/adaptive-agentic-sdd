@@ -18,7 +18,7 @@ The `## Always-applied hard guard` of `P/AGENTS.md` in W documents is the sectio
 
 ## Work tracking
 
-Read the Issue, comment, label, assignee, PR and closing reference expressions in W documents as translated into the method declared by the P project document `tracker.md`.
+W documents use tracker-neutral terms. An **Issue** is a work item; a **comment** is an entry in its work record; `priority:*`, `grade:*`, `status:*` and `type:epic` are **field values** of the work item, written in label notation; the **assignee** is its owner; a **PR** is a change request to the declared merge target; and the **closing reference** links that change to the Issue it completes (`Closes #N` is W's notation for it). The method declared by the P project document `tracker.md` decides how each of these is stored and written, including any syntax or API. W does not require a GitHub feature: read each expression through the declared method, and stop an operation that method does not map.
 
 - [Local documents](tracker/local-docs.md): work documents and claim files in a shared folder outside the repository
 - [GitHub](tracker/github.md): GitHub Issues and PRs

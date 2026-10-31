@@ -36,7 +36,7 @@ After implementation, do not change the order below.
 5. Remove only the unnecessary SDD links from P's document index and other documents, and keep or convert the references active consumers need.
 6. If related review documents have a current-status field, update it to match the actual status. Do not rewrite the content of past decisions themselves.
 7. Fix the candidate after all planned repository file changes are finished, secure the final required verification evidence, and then perform the CODE Review/self-review for the grade. At closing, confirm the validity of both kinds of evidence together; earlier verification is reused only when there is evidence that its inputs did not change. The detailed order and reconfirmation after changes follow [finishing-issues' final candidate check](../../skills/finishing-issues/SKILL.md#5-prepareverify-pr-closure).
-8. Leave one `[IMPLEMENTATION SUMMARY]` comment and put `Closes #{issue-number}` in the PR body. Do not use the summary as substitute evidence for verification or for passing the required review.
+8. Leave one `[IMPLEMENTATION SUMMARY]` comment and add the closing reference to this Issue (`Closes #{issue-number}`, written as the declared tracker method defines) to the PR. Do not use the summary as substitute evidence for verification or for passing the required review.
 9. After the PR is merged, confirm that the Issue was closed.
 
 Do not delete SDD documents before updating the business documents.

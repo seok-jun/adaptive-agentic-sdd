@@ -36,7 +36,7 @@ business 문서는 구현 완료 후 **현재 코드가 실제로 하는 동작*
 5. P 문서 목차와 다른 문서의 SDD 링크는 불필요한 것만 제거하고 활성 소비자의 필요한 참조는 유지·전환한다.
 6. 관련 review 문서에 현재 상태 필드가 있으면 실제 상태와 일치하도록 갱신한다. 과거 결정 내용 자체는 다시 쓰지 않는다.
 7. 예정된 저장소 파일 변경을 모두 마친 후보를 고정하고 최종 필수 검증 근거를 확보한 뒤 grade별 CODE Review/self-review를 수행한다. 종료 시 두 근거의 유효성을 함께 확인하며, 앞선 검증은 입력 불변 근거가 있을 때만 재사용한다. 상세 순서와 변경 후 재확인은 [finishing-issues의 최종 후보 확인](../../skills/finishing-issues/SKILL.md#5-prepareverify-pr-closure)을 따른다.
-8. `[IMPLEMENTATION SUMMARY]` 댓글 하나를 남기고 PR 본문에 `Closes #{issue-number}`를 넣는다. 요약을 검증·required review 통과의 대체 근거로 쓰지 않는다.
+8. `[IMPLEMENTATION SUMMARY]` 댓글 하나를 남기고 PR에 이 Issue의 closing reference(`Closes #{issue-number}`, 선언한 작업 관리 방식의 표기)를 넣는다. 요약을 검증·required review 통과의 대체 근거로 쓰지 않는다.
 9. PR merge 후 Issue가 닫혔는지 확인한다.
 
 business 문서를 갱신하기 전에 SDD 문서를 삭제하지 않는다.

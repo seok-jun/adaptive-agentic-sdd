@@ -40,7 +40,7 @@ flowchart LR
 1. 다른 P0/P1 Issue를 차단 해제하는 Issue
 2. 더 낮은 SDD grade
 3. 현재 활성 lane과 수정 경로가 겹치지 않는 Issue
-4. 위 조건까지 같으면 Issue 번호가 작은 것
+4. 위 조건까지 같으면 먼저 만든 Issue(선언한 작업 관리 방식의 생성 순서. GitHub에서는 Issue 번호가 작은 것)
 
 ## 신규 Issue 필수 본문
 
@@ -89,7 +89,7 @@ Medium
 - Priority: `priority:P0`, `priority:P1`, `priority:P2`, `priority:P3`
 - SDD grade: `grade:Trivial`, `grade:Small`, `grade:Medium`, `grade:Large`
 
-agent가 Issue 생성 API에서 두 라벨을 함께 지정할 수 있으면 생성 요청에 포함한다. API 제약으로 한 번에 적용되지 않으면 생성 직후 보정하고, 다시 조회해 두 라벨이 확인되기 전에는 완료로 보고하지 않는다.
+선언한 작업 관리 방식이 Issue를 만들 때 두 값을 함께 정할 수 있으면 생성할 때 함께 정한다. 그렇지 않으면 생성 직후 정하고, 다시 읽어 두 값이 확인되기 전에는 완료로 보고하지 않는다.
 
 본문 값과 라벨이 다르면 임의로 라벨을 우선하지 않는다. 판정 근거를 다시 확인한 뒤 **본문과 라벨을 같은 값으로 수정한다.**
 
@@ -103,8 +103,8 @@ Priority를 변경할 때는 한 번의 정리 작업에서 다음을 모두 갱
 
 1. Issue 본문의 `Priority`
 2. `사용자 영향`
-3. 기존 `priority:*` 라벨 제거
-4. 새 `priority:*` 라벨 추가
+3. `priority:*` 값을 선언한 작업 관리 방식으로 새 값으로 바꾼다
+4. Issue를 다시 읽어 `priority:*` 값이 정확히 하나인지 확인한다
 
 Priority 변경만으로 SDD grade를 바꾸지 않는다. 구현 범위가 달라졌을 때만 이 방법론의 `process/sdd/grade.md` 공통 등급과 프로젝트별 적용 조건로 grade를 다시 판정한다.
 
