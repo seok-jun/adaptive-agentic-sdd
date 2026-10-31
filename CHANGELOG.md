@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Behavior runner v2 (`tests/run_behavior_evals_v2.py`, 23 new tests, implemented by Codex `gpt-6-astra`/high): clean subject bundles without answer keys, read-only runs with full file inventories, per-case project overrides, pinned models, strict grader output, real provenance, and a calibration gate. Grader calibration on 11 synthetic answers agreed on 132 of 132 items for both graders ([record](docs/eval-results/2026-10-31-grader-calibration/README.md)). No subject run yet. The old runners are unchanged.
 - Evaluation records: the 2026-10-30 baseline and the 2026-10-31 tracker-neutral check ran with the answer-key files (`workflow/skills/*/evals/cases.json`) readable inside each subject project, because `tests/run_behavior_evals.py` copied the whole bundle. Access was not blocked or logged. Both records and the README status now say so; their grades are unchanged and are no longer presented as clean behavior evidence. The paired diagnostic removed the files and is unaffected.
 
 ## 1.0.0-preview.6 — 2026-10-31
