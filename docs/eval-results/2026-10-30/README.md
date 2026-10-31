@@ -2,6 +2,8 @@
 
 This is the first time the workflow's behavior cases were executed by real agents instead of only being checked for structure. It is a **baseline**, not a comparison: nothing was changed or adopted on the basis of these results, and they do not establish any effect on outcomes, rework or cost.
 
+> **Validity:** the evaluated agents could read the answer-key files in their projects. See the first item under [Limits](#limits).
+
 ## What was run
 
 | Item | Value |
@@ -66,6 +68,7 @@ This is a static comparison of the source, fixture and saved grading items, not 
 
 ## Limits
 
+- **Validity note (added 2026-10-31):** `tests/run_behavior_evals.py` copied the whole bundle into each subject project, so the answer-key files `workflow/skills/*/evals/cases.json` (fixtures with their `must` / `must_not` items) were readable by the evaluated agent. Access was not blocked or logged; the saved answers do not show whether they were read, and this does not establish that they were. The grades below are kept as recorded, but they are not clean behavior evidence. Later runs use `tests/run_behavior_evals_v2.py`, which removes these files. The paired diagnostic in `../2026-10-30-skill-comparison/` removed them and is not affected.
 - 12 of 76 cases, Korean edition only. The English edition's cases received static checks only.
 - Graders are models; grading was not independently audited. One grader item list per answer.
 - The operator machine's user-level `CLAUDE.md` (tone and Korean-language instructions) was loaded by `claude -p`; `--setting-sources project` removed user settings and hooks only. It affects wording; grading is by meaning.

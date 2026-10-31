@@ -49,7 +49,9 @@ Agent: Created T-31. Grade: Large — DB schema/migration (automatic escalation)
 
 ## Quick start
 
-You need Python 3.8+, Git, and Claude Code or Codex. Start from a clean working tree (commit or stash your changes first).
+You need Python 3.8+ (`python3` on macOS/Linux; on Windows, use `python` or `py -3` with the same arguments in the commands below), Git, and Claude Code or Codex. Start from a clean working tree (commit or stash your changes first).
+
+If the agent runs in a sandbox, it must be able to write `.agents/` and `.claude/` and to commit. In Codex's `workspace-write` sandbox, `.agents/` and `.git` are read-only: start Codex with `--add-dir <repository>/.agents`, and make the installation commit yourself if Git writes are refused.
 
 **1. Paste this into your agent** from the root of your repository:
 
@@ -62,7 +64,7 @@ Installation guide: https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0
    If it prints nothing, stop and tell me: the tag's commit could not be resolved.
 2. Download the archive of that commit and copy its adaptive-sdd/ folder byte for byte to .adaptive-sdd/
    with a copy command, not a file-writing tool. Do not modify product code.
-3. Run: python -I -B .adaptive-sdd/tools/install.py init --project-root .
+3. Run: python3 -I -B .adaptive-sdd/tools/install.py init --project-root .
 4. Follow section 3 of the guide: observe this repository, then show me a draft of
    .adaptive-sdd/project.json with the evidence for each value. init copies example values; for every value
    the guide marks "Human" or "Human only", do not keep the example: ask me. Do not write the file yet.
@@ -77,8 +79,8 @@ For the Korean edition, use `ko/adaptive-sdd/` and [`ko/docs/customization.md`](
 
 **3. Check the result.**
 
-- `python -I -B .adaptive-sdd/tools/install.py check --project-root .` prints `OK      pinned copy, lock, and generated files match`.
-- `python -I -B .adaptive-sdd/tools/install.py check-evals --project-root .` ends with `0 problem(s)`.
+- `python3 -I -B .adaptive-sdd/tools/install.py check --project-root .` prints `OK      pinned copy, lock, and generated files match`.
+- `python3 -I -B .adaptive-sdd/tools/install.py check-evals --project-root .` ends with `0 problem(s)`.
 - `git status` shows only the paths below.
 
 | Added or changed | What it is |
@@ -110,8 +112,10 @@ Repository layout: `adaptive-sdd/` is the English bundle you install (canonical)
 ## Status and evidence
 
 - **Not measured:** no effect on outcomes, rework or cost has been measured. The procedures were refined in one product; that does not prove they work elsewhere.
-- **Behavior evaluations:** a first cross-agent baseline ran 12 Korean cases × Claude Code and Codex × 3 runs (Claude Code 21 PASS / 14 FAIL / 1 INVALID, Codex 22 PASS / 14 FAIL) — [record](docs/eval-results/2026-10-30/README.md). A post-hoc paired check of two wording fixes found no overall improvement — [record](docs/eval-results/2026-10-30-skill-comparison/paired-summary.md). Failures are published as they were graded.
+- **Behavior evaluations:** a first cross-agent baseline ran 12 Korean cases × Claude Code and Codex × 3 runs (Claude Code 21 PASS / 14 FAIL / 1 INVALID, Codex 22 PASS / 14 FAIL) — [record](docs/eval-results/2026-10-30/README.md). A post-hoc paired check of two wording fixes found no overall improvement — [record](docs/eval-results/2026-10-30-skill-comparison/paired-summary.md). Failures are published as they were graded. In the baseline and in the preview.6 tracker check, the answer-key files were readable inside the evaluated projects, so those two runs are not clean evidence; the paired check removed them.
 - **This release:** all 65 executable tests passed on Windows with Python 3.12.2, both 66-file bundle manifests matched, and an archive of the reviewed candidate (`277cfc5`) passed `init`, `render`, `check` and `check-evals` (77 cases) for both editions with both trackers. An independent read-only review (Codex `gpt-6-astra`, high) found no blocker; its findings were fixed and reconfirmed. In two first-use runs from this README, a Claude Code agent installed the methodology, finished a Small task and undid the installation; a Codex run installed it, but its sandbox blocked Git writes, so it did not reach the task. A bounded behavior check of the changed wording is [recorded](docs/eval-results/2026-10-31-tracker-neutral/README.md) as weak evidence. POSIX execution and live GitHub tracker operations were not run.
+- **macOS follow-up (unreleased candidate):** an assisted walkthrough completed installation, a Small task and Undo using `python3`. The 88-test suite had two subtest failures because generated commands require `python`; all 88 passed with a process-local compatibility alias. This is not blind first-use evidence ([record](docs/eval-results/2026-10-31-macos-first-use/README.md)).
+- **Model routing:** routine Trivial/Small tasks run on the current model unless denied, subject to [routing eligibility](adaptive-sdd/workflow/skills/_shared/execution-routing.md#two-axis-routing). Medium and above, independent reviews and delegation need observed evidence for the model; a name or declaration alone is not enough ([first-use record](docs/eval-results/2026-10-31-first-use/README.md)).
 - **Not a guarantee:** this is guidance for agents and people, not a security boundary or an agent runner.
 
 The full history of checks and reviews is in [CHANGELOG.md](CHANGELOG.md).

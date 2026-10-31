@@ -23,7 +23,7 @@ The grade sets only the orchestration shape.
 
 | grade | orchestration |
 | --- | --- |
-| Trivial / Small | One current agent completes it without model switch or delegation; if the current concrete model is role DENIED, replace it with one qualified replacement |
+| Trivial / Small | One current/manual agent performs the routine lifecycle without automatic model selection or delegation, subject to the routine-route eligibility rules below. A DENIED model is not used; an Agent-selected replacement requires fresh role qualification PASS. |
 | Medium | A single agent is the default; only an actual unresolved PLAN decision or a required independent review phase gets bounded delegation |
 | Large | The root/orchestrator owns the design and boundaries that passed review, and may delegate only the coarse-grained `PLAN / IMPLEMENT / REVIEW` phases |
 
@@ -34,10 +34,12 @@ Phase risk and decision complexity set the abstract tier.
 - model tier: `current | cheap | strong | frontier`
 - reasoning tier: `current | medium | high | extra-high`
 - Do not store vendor/model names in canonical documents as tier mappings or price information. However, a canonical safety deny that blocks use before qualification may state a stable normalized model identifier.
-- `current` is not a capability rank; it means the currently running model/reasoning. For capability comparison, use only the rank `cheap < strong < frontier`. A `current` choice is judged separately by whether fresh current-model capability evidence meets that phase's floor.
+- `current` means retaining the running model/reasoning, not a capability rank. Apply the routine Trivial/Small exception where eligible. Otherwise require fresh, phase-scoped evidence under the scoped-assessment contract; do not compare `current` with itself. Explicit reasoning floors remain applicable.
 
 | phase/risk | minimum model tier | reasoning tier |
 | --- | --- | --- |
+| Routine Trivial/Small lifecycle: work-item management, claim, implementation, in-lifecycle testing, self-review and closing | current | current |
+| Ordinary Medium IMPLEMENT within settled scope | current | current |
 | approved mechanical IMPLEMENT | cheap | medium |
 | TEST_DOCS | cheap | medium |
 | ordinary Large IMPLEMENT | current | high |
@@ -46,13 +48,19 @@ Phase risk and decision complexity set the abstract tier.
 | destructive/shared-contract/migration/security/authority/recovery/atomicity PLAN | strong | extra-high |
 | A high-risk phase above that is still unresolved at strong | frontier candidate | extra-high |
 
+For the routine Trivial/Small current/manual route, positive capability evidence is not required. Apply canonical and P denies, explicit DENIED records, and the existing rules for incomplete or stale explicit qualification records. Do not ignore an applicable record.
+
+This row governs routine in-lifecycle testing and mechanical edits; it does not exempt a separately assigned IMPLEMENT/TEST_DOCS worker, a required independent reviewer, an explicit P capability requirement, or a higher-risk phase. Apply the existing re-grading and phase-risk rules before using it.
+
+Eligibility here proves neither a capability tier nor role qualification, and cannot authorize an automatic switch, delegation or fallback. An automatically selected actor cannot acquire this exception merely by becoming the currently running model.
+
 `frontier` is forbidden by default. It becomes a bounded candidate only when there is both stated high-risk escalation evidence and evidence that the strong tier did not resolve it, and it is never chosen automatically. A compile failure, a command typo or a fixture correction is not risk escalation evidence.
 
 Fallback does not change the order below. Distinguish the qualification rules for **a current/manual model that is already running or that the user explicitly chose for the current phase** from those for **a candidate the Agent switches to or delegates to automatically**.
 
 1. Fix the orchestration shape by grade.
 2. Fix the minimum capability floor by phase risk.
-3. For a current/manual concrete model, first decide the canonical safety deny and the actual explicit record with the current/manual rules of [Model Role Qualification](#model-role-qualification) below. If those conditions and fresh Host Capability evidence meet the phase floor, keep the current/manual route.
+3. For a current/manual concrete model, apply the routine Trivial/Small exception first when eligible, including the denies and explicit-record checks in [Model Role Qualification](#model-role-qualification) below. For other current/manual routes, require fresh host evidence or an applicable human-confirmed scoped assessment meeting the phase floor. Automatic selection still requires the existing eligible host mapping and fresh role qualification PASS.
 4. If an explicit model/tier in the Execution Profile requires a switch from the current model, or the Agent automatically chooses a worker/reviewer/fallback concrete model, a **fresh qualification PASS** for that development role is needed.
 5. If an automatic candidate's tier is at or above the floor and it has a fresh role qualification PASS, use it.
 6. If there is no explicit fallback or it is not eligible, search deterministically the remaining fresh host mappings at or above the floor, starting from the lowest eligible tier, and require a fresh role qualification PASS for each automatic candidate. `frontier` is not included in this fallback without the existing escalation evidence.
@@ -60,9 +68,19 @@ Fallback does not change the order below. Distinguish the qualification rules fo
 
 A profile and fallback cannot downgrade below the floor. Do not guess a concrete model/tier that does not exist or whose support is not confirmed. **Do not require in advance, as a precondition, the concrete model qualification of a future phase not yet entered.** Validate it just in time with the rules above, right before checking the actual current/manual model in that phase or choosing a switch/delegation candidate.
 
+Re-evaluate eligibility when grade, phase, role, model or reasoning changes. The routine exception does not carry into Medium/Large or a stricter phase. If required capability evidence is unavailable, stop with `BLOCKED: routing capability unavailable`; do not start the stricter work first.
+
 ## Host Capability Map
 
-P's `routing.role_defaults` are preferred candidates, and `routing.capabilities` is the evidence reference for the host mapping. The fact that a human wrote it in a settings file alone does not prove capability, availability or role qualification. When choosing, check the host, concrete model, supported reasoning, source identity and validity period. For role qualification, use P's `qualification_records` reference or actual runtime evidence separately.
+P's `routing.role_defaults` are preferred candidates, and `routing.capabilities` is the evidence reference for the host mapping. The fact that a human wrote it in a settings file alone does not prove capability, availability or role qualification. This still applies outside the routine Trivial/Small exception. When choosing, check the host, concrete model, supported reasoning, source identity and validity period. For role qualification, use P's `qualification_records` reference or actual runtime evidence separately.
+
+Outside the routine Trivial/Small exception, for current/manual use only, a human-confirmed scoped assessment may supply capability evidence. It must cite retrievable observed results and identify the concrete model, reasoning setting, assessed phase/risk scope, criteria, assessor, assessment time and validity. Model identity, a preference or a dated declaration alone is insufficient.
+
+A ranked floor requires evidence supporting that rank under stated criteria. A current-floor assessment supports only its recorded scope. Neither is an automatic-routing qualification PASS. Record or reference the assessment in existing permitted work records; no new document is required.
+
+If no applicable evidence is available, stop the dependent assignment with `BLOCKED: routing capability unavailable`. Do not create evidence by declaring a tier or calling the blocked product task a qualification probe.
+
+Record requested and provided model/reasoning values separately under [core.md](../../../methodology/core.md). Recording an identity is not capability evidence. If available identity information is insufficient to apply an applicable deny or explicit record, stop the dependent assignment; do not treat unknown identity as clearance.
 
 When the current or human-chosen model is not changed but inherited as is by a separate reviewer session, judge it as the current/manual path if the host confirms that the actual concrete model and reasoning are identical. Do not classify it as automatic model selection only because it is a separate session. If the Agent newly chooses the model or reasoning, apply the existing automatic selection qualification rules. If the host cannot confirm the reasoning, distinguish the confirmed requested value from the unconfirmed provided value. If floor compliance cannot be confirmed by fresh host evidence that the supported setting was actually applied, do not presume compliance; block that reviewer assignment. The separate actor/session and Human-selected B selection conditions are kept.
 
@@ -78,7 +96,7 @@ The runtime or host adapter owns the concrete mapping, and the canonical Skill c
 - whether a separate reviewer/session is supported
 - mapping source and version/immutable identity, freshness
 
-Even without a mapping, if fresh evidence proves that the current model meets the phase floor, you may continue under the current/manual eligibility rules. If there is no native delegation but the current model meets the floor, the current agent performs IMPLEMENT directly, and this reason alone does not block the whole Large. A required independent REVIEW is performed in an agent/session separate from the implementer, regardless of whether IMPLEMENT delegation is supported. If the capability provenance is stale, do not use the concrete mapping; check fresh current capability evidence or block.
+Even without a mapping, apply the routine Trivial/Small exception first when eligible. For other current/manual routes, require fresh host evidence or an applicable human-confirmed scoped assessment meeting the phase floor. Automatic selection still requires the existing eligible host mapping and fresh role qualification PASS. If there is no native delegation but the current model meets the floor, the current agent performs IMPLEMENT directly, and this reason alone does not block the whole Large. A required independent REVIEW is performed in an agent/session separate from the implementer, regardless of whether IMPLEMENT delegation is supported. If the capability provenance is stale, do not use the concrete mapping; outside the routine exception, check applicable fresh evidence under the contract above or block.
 
 Host capability does not replace the role qualification of an automatic route and does not override a canonical safety deny. A current/manual route is not blocked by the mere absence of a positive qualification record, according to the bootstrap rules above.
 
@@ -101,7 +119,7 @@ Model Role Qualification is **not a universal positive allowlist in which every 
 
 - If an explicit qualification record is `DENIED`, the model cannot be used in an ordinary development role anywhere: current/manual, profile or fallback.
 - If an explicit positive record exists but is missing, incomplete or stale, do not presume PASS, and do not bypass it by ignoring that record.
-- A current/manual model without an explicit qualification record is not blocked by the mere absence of a positive registry if it is not canonical DENIED and fresh Host Capability evidence meets the current phase floor.
+- For a current/manual model without an explicit qualification record, apply the routine Trivial/Small exception first when eligible. For other current/manual routes, require fresh host evidence or an applicable human-confirmed scoped assessment meeting the current phase floor; the mere absence of a positive registry does not block them. Canonical and P denies still apply. Automatic selection still requires the existing eligible host mapping and fresh role qualification PASS.
 - The Agent does not choose an automatically selected switch/delegated worker/reviewer/fallback model without a fresh qualification PASS for that role.
 - Validate the qualification of a future phase right before choosing the actual actor. Do not block the current phase by requiring, at PLAN start, a PASS link for a reviewer model not yet chosen.
 

@@ -408,9 +408,11 @@ def plan_outputs(project_root, values, product_root=None):
         if external:
             argv = [f"{project_root.as_posix()}/.adaptive-sdd/tools/install.py", action,
                     "--project-root", product_root.as_posix(), "--harness-root", project_root.as_posix()]
-            ctx[key] = "python -I -B " + " ".join(shell_literal(arg) for arg in argv)
+            interpreter = "python" if sys.platform == "win32" else "python3"
+            ctx[key] = interpreter + " -I -B " + " ".join(shell_literal(arg) for arg in argv)
         else:
-            ctx[key] = f"python -I -B .adaptive-sdd/tools/install.py {action} --project-root ."
+            # Committed output must be identical whichever OS renders it.
+            ctx[key] = f"python3 -I -B .adaptive-sdd/tools/install.py {action} --project-root ."
     ctx["tool_dirs"] = [TOOL_DIRS[t] for t in values["tools"]]
     ctx["tracker_is_local"] = values["tracker"]["kind"] == "local-docs"
     outs = []

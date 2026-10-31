@@ -363,6 +363,19 @@ class InstallerPolicyTests(unittest.TestCase):
             code, output = self.command("check")
             self.assertEqual(code, 0, output)
 
+    def test_in_repo_python3_commands_are_identical_across_shell_hosts(self):
+        outputs = []
+        for platform in ("win32", "linux"):
+            with mock.patch.object(installer.sys, "platform", platform):
+                outputs.append(installer.plan_outputs(self.project, self.values))
+        self.assertEqual(outputs[0], outputs[1])
+        rendered = {rel: content for rel, _, content in outputs[0]}
+        check = "python3 -I -B .adaptive-sdd/tools/install.py check --project-root ."
+        check_evals = "python3 -I -B .adaptive-sdd/tools/install.py check-evals --project-root ."
+        for rel in ("AGENTS.md", ".agents/skills/implementing-issues/SKILL.md"):
+            self.assertIn("`" + check + "`", rendered[rel])
+        self.assertIn("`" + check_evals + "`", rendered[".adaptive-sdd/project/skill-evals.md"])
+
     def test_generated_external_commands_execute_with_literal_paths(self):
         product = self.project / "product $literal 'space;"
         source = self.project / "harness $literal 'space;"
@@ -375,8 +388,8 @@ class InstallerPolicyTests(unittest.TestCase):
         entry = (product / ".agents/skills/implementing-issues/SKILL.md").read_text(encoding="utf-8")
         eval_doc = (source / ".adaptive-sdd/project/skill-evals.md").read_text(encoding="utf-8")
         commands = [
-            re.search(r"`(python -I -B [^\n]+?)`", entry).group(1),
-            re.search(r"`(python -I -B [^\n]+?)`", eval_doc).group(1),
+            re.search(r"`([^`\n]+? -I -B [^\n]+?)`", entry).group(1),
+            re.search(r"`([^`\n]+? -I -B [^\n]+?)`", eval_doc).group(1),
         ]
         if sys.platform == "win32":
             shell = shutil.which("pwsh") or shutil.which("powershell")
@@ -386,6 +399,8 @@ class InstallerPolicyTests(unittest.TestCase):
             prefix = ["/bin/sh", "-c"]
         for command in commands:
             with self.subTest(command=command):
+                interpreter = "python" if sys.platform == "win32" else "python3"
+                self.assertTrue(command.startswith(interpreter + " -I -B "), command)
                 result = subprocess.run(prefix + [command], cwd=product, capture_output=True,
                                         text=True, encoding="utf-8", errors="replace", timeout=30)
                 self.assertEqual(result.returncode, 0, result.stdout + result.stderr)

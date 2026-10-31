@@ -1,0 +1,29 @@
+.......{"sample": "s0001-a1", "case_id": "II-S02-small-one-module", "arm": "working-tree", "agent": "claude", "result": "INVALID", "reason": "subject process failed"}
+........ERROR: execute requires matching calibration with 100% item agreement
+.....{"sample": "s0001-a0", "case_id": "II-S02-small-one-module", "arm": "working-tree", "agent": "claude", "result": "INVALID", "reason": "subject modified project"}
+.{"sample": "s0001-a0", "case_id": "II-S02-small-one-module", "arm": "working-tree", "agent": "claude", "result": "INVALID", "reason": "grader output unusable"}
+...................FF...............................................
+======================================================================
+FAIL: test_generated_external_commands_execute_with_literal_paths (test_installer.InstallerPolicyTests.test_generated_external_commands_execute_with_literal_paths) (command='python -I -B \'<source-root>/sdd-policy-test-y1cm4jgk/harness $literal \'"\'"\'space;/.adaptive-sdd/tools/install.py\' check --project-root \'<source-root>/sdd-policy-test-y1cm4jgk/product $literal \'"\'"\'space;\' --harness-root \'<source-root>/sdd-policy-test-y1cm4jgk/harness $literal \'"\'"\'space;\'')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<source-root>/tests/test_installer.py", line 391, in test_generated_external_commands_execute_with_literal_paths
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 127 != 0 : /bin/sh: python: command not found
+
+
+======================================================================
+FAIL: test_generated_external_commands_execute_with_literal_paths (test_installer.InstallerPolicyTests.test_generated_external_commands_execute_with_literal_paths) (command='python -I -B \'<source-root>/sdd-policy-test-y1cm4jgk/harness $literal \'"\'"\'space;/.adaptive-sdd/tools/install.py\' check-evals --project-root \'<source-root>/sdd-policy-test-y1cm4jgk/product $literal \'"\'"\'space;\' --harness-root \'<source-root>/sdd-policy-test-y1cm4jgk/harness $literal \'"\'"\'space;\'')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<source-root>/tests/test_installer.py", line 391, in test_generated_external_commands_execute_with_literal_paths
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 127 != 0 : /bin/sh: python: command not found
+
+
+----------------------------------------------------------------------
+Ran 88 tests in 16.158s
+
+FAILED (failures=2)

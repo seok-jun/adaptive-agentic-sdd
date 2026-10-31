@@ -4,7 +4,7 @@
 
 ## 시작 순서
 
-`P`는 이 제품 checkout, `W`는 `{{bundle_path}}/workflow`, `M`은 `{{bundle_path}}/methodology`다. P 소유 설정은 `{{bundle_path}}/project.json`, P 적용 문서는 `{{bundle_path}}/project/`에 있다. 외부 설치는 저장 위치만 바꾸며 소유·권한은 바꾸지 않는다. {{command_shell}}에서 `{{check_command}}`로 사본·연결·lock·생성물을 대조한다. 상대 제품/문서 경로는 별도 절대 경로 선언이 없으면 P 기준이다.
+`P`는 이 제품 checkout, `W`는 `{{bundle_path}}/workflow`, `M`은 `{{bundle_path}}/methodology`다. P 소유 설정은 `{{bundle_path}}/project.json`, P 적용 문서는 `{{bundle_path}}/project/`에 있다. 외부 설치는 저장 위치만 바꾸며 소유·권한은 바꾸지 않는다. {{command_shell}}에서 `{{check_command}}`로 사본·연결·lock·생성물을 대조한다. `python3`가 없으면(Windows에서 흔함) 같은 인자를 `python` 또는 `py -3`(Python 3.8 이상)로 다시 실행하며, 인터프리터 이름을 찾지 못한 것은 검사 실패가 아니므로 중단 전에 대체 명령을 시도한다. 상대 제품/문서 경로는 별도 절대 경로 선언이 없으면 P 기준이다.
 
 1. 이 구간은 repository 진입 시 한 번 적용한다. 같은 run에서 변경되지 않았다면 재독하지 않는다.
 2. M `{{bundle_path}}/methodology/core.md`의 `사람 판단` 요건을 적용한다.

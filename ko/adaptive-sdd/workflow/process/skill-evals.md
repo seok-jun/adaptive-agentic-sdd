@@ -64,8 +64,10 @@
 다음 명령은 LLM을 실행하지 않는다.
 
 ```bash
-python -I -B .adaptive-sdd/tools/install.py check-evals --project-root .
+python3 -I -B .adaptive-sdd/tools/install.py check-evals --project-root .
 ```
+
+`python3`가 없으면(Windows에서 흔함) 같은 인자를 `python` 또는 `py -3`(Python 3.8 이상)로 다시 실행하며, 인터프리터 이름을 찾지 못한 것은 검사 실패가 아니므로 중단 전에 대체 명령을 시도한다.
 
 검사 항목: W 사례 파일의 형식(`id`·`prompt` 필수)과 case ID 중복. 이 검사는 사례 구조가 깨지는 것을 막을 뿐이며 **모델 행동 품질 통과를 의미하지 않는다.**
 
@@ -231,7 +233,7 @@ workflow gate를 변경한 case는 happy path뿐 아니라 해당 stop condition
 - Execution Packet provenance가 stale/충돌하거나 boolean guard self-report뿐일 때 bounded refresh, direct hard-guard read 또는 BLOCKED로 중단하는지
 - Result/Review Packet의 head, inventory, diff reference, verification evidence identity가 current head와 다르면 완료하지 않는지
 - reviewer가 current head의 전체 inventory를 독립 확인한 뒤 bounded diff/contracts만 검토하는지
-- `current`를 capability rank로 비교하지 않고 fresh current capability evidence로 phase floor 충족을 별도 판정하는지
+- `current`를 capability rank로 비교하지 않고, 적격한 경우 일반 Trivial/Small 예외를 적용하며, 그 밖에서는 최신 host 근거나 사람이 확인한 적용 가능한 범위 평가로 phase floor 충족을 판정하는지
 - Medium/Large의 required reviewer를 별도 agent/session으로 제공할 수 없으면 valid trace 대신 중단하는지
 - metric control boolean self-report를 거부하고 actual packet의 guard/SDD/claim/boundary/verification/review evidence로 보존 여부를 derive하는지
 - guard application evidence 누락·형식 오류는 `INVALID`, current source와의 identity/freshness mismatch는 `STALE`로 구분하되 둘 다 direct hard-guard read 또는 `BLOCKED` 전에는 편집하지 않는지

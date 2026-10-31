@@ -1,0 +1,15 @@
+
+======================================================================
+FAIL: test_generated_external_commands_execute_with_literal_paths (test_installer.InstallerPolicyTests.test_generated_external_commands_execute_with_literal_paths) (command='python -I -B \'<source-root>/sdd-policy-test-y1cm4jgk/harness $literal \'"\'"\'space;/.adaptive-sdd/tools/install.py\' check-evals --project-root \'<source-root>/sdd-policy-test-y1cm4jgk/product $literal \'"\'"\'space;\' --harness-root \'<source-root>/sdd-policy-test-y1cm4jgk/harness $literal \'"\'"\'space;\'')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<source-root>/tests/test_installer.py", line 391, in test_generated_external_commands_execute_with_literal_paths
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 127 != 0 : /bin/sh: python: command not found
+
+
+----------------------------------------------------------------------
+Ran 88 tests in 16.158s
+
+FAILED (failures=2)

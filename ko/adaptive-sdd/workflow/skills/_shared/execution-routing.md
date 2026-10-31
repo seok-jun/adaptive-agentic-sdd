@@ -23,7 +23,7 @@ grade는 orchestration shape만 정한다.
 
 | grade | orchestration |
 | --- | --- |
-| Trivial / Small | current agent 한 명이 model switch와 delegation 없이 완료; current concrete model이 role DENIED이면 한 명의 qualified replacement로 교체 |
+| Trivial / Small | current/manual agent 한 명이 아래 일반 경로 적격 규칙에 따라 자동 모델 선택이나 위임 없이 일반 lifecycle을 수행한다. DENIED 모델은 쓰지 않으며, Agent가 고른 대체 모델에는 fresh role qualification PASS가 필요하다. |
 | Medium | 단일 agent가 기본이며 실제 unresolved PLAN decision 또는 required independent review phase만 bounded delegation |
 | Large | root/orchestrator가 검토를 통과한 설계와 경계를 소유하고 `PLAN / IMPLEMENT / REVIEW` coarse-grained phase만 위임 가능 |
 
@@ -34,10 +34,12 @@ phase risk와 decision complexity가 abstract tier를 정한다.
 - model tier: `current | cheap | strong | frontier`
 - reasoning tier: `current | medium | high | extra-high`
 - canonical 문서에 vendor/model 이름을 tier mapping이나 가격 정보로 저장하지 않는다. 단, qualification 전 사용을 막는 canonical safety deny는 stable normalized model identifier를 명시할 수 있다.
-- `current`는 capability rank가 아니라 현재 실행 model/reasoning을 뜻한다. capability 비교 rank는 `cheap < strong < frontier`만 사용하고, `current` 선택은 fresh current-model capability evidence가 해당 phase floor를 충족하는지 별도로 판정한다.
+- `current`는 실행 중인 model/reasoning을 유지한다는 뜻이며 능력 등급이 아니다. 적격한 경우 일반 Trivial/Small 예외를 적용한다. 그 밖에는 범위를 정한 평가 계약에 따라 해당 phase의 최신 근거를 요구하며, `current`를 자기 자신과 비교하지 않는다. 명시된 reasoning floor는 계속 적용한다.
 
 | phase/risk | minimum model tier | reasoning tier |
 | --- | --- | --- |
+| 일반 Trivial/Small lifecycle: 작업 관리, claim, 구현, lifecycle 내 테스트, 자체 검토와 종료 | current | current |
+| 범위가 확정된 일반 Medium IMPLEMENT | current | current |
 | approved mechanical IMPLEMENT | cheap | medium |
 | TEST_DOCS | cheap | medium |
 | ordinary Large IMPLEMENT | current | high |
@@ -46,13 +48,19 @@ phase risk와 decision complexity가 abstract tier를 정한다.
 | destructive/shared-contract/migration/security/authority/recovery/atomicity PLAN | strong | extra-high |
 | 위 고위험 phase가 strong에서도 unresolved | frontier candidate | extra-high |
 
+일반 Trivial/Small current/manual 경로에는 능력을 입증하는 근거가 필요하지 않다. canonical과 P의 deny, 명시적 DENIED 기록, 불완전하거나 오래된 명시적 qualification 기록에 관한 기존 규칙은 적용한다. 적용 대상 기록을 무시하지 않는다.
+
+이 행은 일반 lifecycle 내 테스트와 기계적 수정을 다룬다. 별도로 배정한 IMPLEMENT/TEST_DOCS worker, 필수 독립 reviewer, P가 명시한 능력 요건이나 더 위험한 phase에는 예외를 주지 않는다. 이 행을 쓰기 전에 기존 재등급·phase 위험 규칙을 적용한다.
+
+이 경로의 적격성은 능력 등급이나 역할 자격을 입증하지 않으며, 자동 전환·위임·fallback을 허용하지 않는다. 자동 선택된 actor가 현재 실행 모델이 되었다는 이유만으로 이 예외를 얻을 수는 없다.
+
 `frontier`는 기본 금지다. 명시된 고위험 escalation evidence와 strong tier에서 해결되지 않았다는 evidence가 모두 있을 때만 bounded candidate가 되며 자동 선택하지 않는다. compile failure, command typo, fixture correction은 risk 승격 evidence가 아니다.
 
 fallback은 다음 순서를 바꾸지 않는다. **이미 실행 중이거나 사용자가 현재 phase에 명시적으로 선택한 current/manual model**과 **Agent가 자동으로 switch/delegate하는 후보**의 qualification 규칙은 구분한다.
 
 1. grade로 orchestration shape를 고정한다.
 2. phase risk로 minimum capability floor를 고정한다.
-3. current/manual concrete model이면 아래 [Model Role Qualification](#model-role-qualification)의 current/manual 규칙으로 canonical safety deny와 실제 explicit record를 먼저 판정한다. 그 조건과 fresh Host Capability evidence가 phase floor를 충족하면 current/manual route를 유지한다.
+3. current/manual concrete model이면 적격한 경우 일반 Trivial/Small 예외를 먼저 적용하되, 아래 [Model Role Qualification](#model-role-qualification)의 deny와 명시 기록 확인도 포함한다. 그 밖의 current/manual 경로에는 phase floor를 충족하는 최신 host 근거나 사람이 확인한 적용 가능한 범위 평가가 필요하다. 자동 선택에는 계속 기존의 적격 host mapping과 fresh role qualification PASS가 필요하다.
 4. Execution Profile의 explicit model/tier가 현재 model에서 switch를 요구하거나 Agent가 worker/reviewer/fallback concrete model을 자동 선택하면 해당 development role의 **fresh qualification PASS**가 필요하다.
 5. 자동 후보의 tier가 floor 이상이고 fresh role qualification PASS이면 사용한다.
 6. explicit fallback이 없거나 부적격이면 floor 이상인 나머지 fresh host mapping을 낮은 적격 tier부터 결정적으로 탐색하되, 각 자동 후보에 fresh role qualification PASS를 요구한다. `frontier`는 기존 escalation evidence 없이 이 fallback에 포함하지 않는다.
@@ -60,9 +68,19 @@ fallback은 다음 순서를 바꾸지 않는다. **이미 실행 중이거나 �
 
 Profile과 fallback은 floor 아래로 downgrade할 수 없다. 존재하지 않거나 지원 여부가 확인되지 않은 concrete model/tier를 추정하지 않는다. **아직 진입하지 않은 future phase의 concrete model qualification은 선결 조건으로 미리 요구하지 않는다.** 해당 phase에서 실제 current/manual model을 확인하거나 switch/delegation 후보를 선택하기 직전에 위 규칙으로 just-in-time 검증한다.
 
+grade, phase, role, model 또는 reasoning이 바뀌면 적격성을 다시 판단한다. 일반 경로 예외는 Medium/Large나 더 엄격한 phase로 이어지지 않는다. 필요한 능력 근거가 없으면 `BLOCKED: routing capability unavailable`로 멈춘다. 더 엄격한 작업부터 시작하지 않는다.
+
 ## Host Capability Map
 
-P의 `routing.role_defaults`는 선호 후보이고 `routing.capabilities`는 host mapping의 근거 참조다. 사람이 설정 파일에 적었다는 사실만으로 능력·가용성·role qualification이 증명되지는 않는다. 선택 시 host·concrete model·supported reasoning·원천 identity·유효 기한을 확인한다. role qualification은 P의 `qualification_records` 참조나 실제 runtime evidence를 별도로 사용한다.
+P의 `routing.role_defaults`는 선호 후보이고 `routing.capabilities`는 host mapping의 근거 참조다. 사람이 설정 파일에 적었다는 사실만으로 능력·가용성·role qualification이 증명되지는 않는다. 일반 Trivial/Small 예외 밖에서는 이 규칙을 계속 적용한다. 선택 시 host·concrete model·supported reasoning·원천 identity·유효 기한을 확인한다. role qualification은 P의 `qualification_records` 참조나 실제 runtime evidence를 별도로 사용한다.
+
+일반 Trivial/Small 예외 밖에서 current/manual 사용에 한해, 사람이 확인한 범위 평가로 능력 근거를 제공할 수 있다. 다시 조회할 수 있는 관찰 결과를 인용하고 구체적 모델, reasoning 설정, 평가한 phase·위험 범위, 기준, 평가자, 평가 시각과 유효성을 밝혀야 한다. 모델 식별 정보, 선호나 날짜가 적힌 선언만으로는 부족하다.
+
+등급으로 정한 floor에는 명시된 기준 아래 그 등급을 뒷받침하는 근거가 필요하다. current floor 평가는 기록된 범위만 뒷받침한다. 어느 쪽도 자동 routing의 qualification PASS는 아니다. 기존에 허용된 작업 기록에 평가를 남기거나 참조하며, 새 문서를 요구하지 않는다.
+
+적용 가능한 근거가 없으면 의존하는 배정을 `BLOCKED: routing capability unavailable`로 중단한다. tier를 선언하거나 막힌 제품 작업을 qualification probe라고 불러 근거를 만들어 내지 않는다.
+
+[core.md](../../../methodology/core.md)에 따라 요청한 model/reasoning과 실제 제공된 값을 따로 기록한다. 식별 정보 기록은 능력 근거가 아니다. 확인 가능한 식별 정보가 적용 대상 deny나 명시 기록을 판단하기에 부족하면 의존하는 배정을 중단한다. 식별 불명을 사용 허가로 보지 않는다.
 
 현재/사람이 선택한 모델을 바꾸지 않고 별도 reviewer session에 그대로 상속하는 경우, 실제 concrete model과 reasoning의 동일성을 host가 확인하면 current/manual 경로로 판정한다. 별도 session이라는 이유만으로 자동 모델 선택으로 분류하지 않는다. 모델이나 reasoning을 Agent가 새로 고르면 기존 자동 선택 qualification 규칙을 적용한다. reasoning을 host에서 확인할 수 없으면 확인된 요청값과 제공값 미확인을 구별한다. 지원 설정을 실제 적용했다는 fresh host 근거로 floor 충족을 확인할 수 없으면 충족을 추정하지 않고 해당 reviewer 배정을 차단한다. 별도 actor/session·Human-selected B 선택 조건은 유지한다.
 
@@ -78,7 +96,7 @@ concrete mapping은 runtime 또는 host adapter가 소유하고 canonical Skill�
 - separate reviewer/session 지원 여부
 - mapping source와 version/immutable identity, freshness
 
-mapping이 없더라도 fresh evidence가 current model의 phase floor 충족을 증명하면 current/manual eligibility 규칙에 따라 계속할 수 있다. native delegation이 없지만 current model이 floor를 충족하면 current agent가 IMPLEMENT를 직접 수행하며, 이 사유만으로 Large 전체를 차단하지 않는다. required independent REVIEW는 IMPLEMENT delegation 지원 여부와 무관하게 구현 주체와 분리된 agent/session에서 수행한다. capability provenance가 stale이면 concrete mapping을 사용하지 않고 fresh current capability evidence를 확인하거나 차단한다.
+mapping이 없어도 적격한 경우 일반 Trivial/Small 예외를 먼저 적용한다. 그 밖의 current/manual 경로에는 phase floor를 충족하는 최신 host 근거나 사람이 확인한 적용 가능한 범위 평가가 필요하다. 자동 선택에는 계속 기존의 적격 host mapping과 fresh role qualification PASS가 필요하다. native delegation이 없지만 current model이 floor를 충족하면 current agent가 IMPLEMENT를 직접 수행하며, 이 사유만으로 Large 전체를 차단하지 않는다. required independent REVIEW는 IMPLEMENT delegation 지원 여부와 무관하게 구현 주체와 분리된 agent/session에서 수행한다. capability provenance가 stale이면 concrete mapping을 쓰지 않는다. 일반 경로 예외 밖에서는 위 계약에 맞는 최신 근거를 확인하거나 차단한다.
 
 Host capability는 automatic route의 role qualification을 대신하지 않으며 canonical safety deny를 덮어쓰지 않는다. current/manual route는 위 bootstrap 규칙에 따라 positive qualification record 부재만으로 차단하지 않는다.
 
@@ -101,7 +119,7 @@ Model Role Qualification은 **모든 운영 모델을 사전에 등록해야 하
 
 - explicit qualification record가 `DENIED`면 current/manual/profile/fallback 어디에서도 일반 development role로 사용할 수 없다.
 - explicit positive record가 존재하지만 누락·불완전·stale이면 PASS로 추정하거나 그 record를 무시해 우회하지 않는다.
-- explicit qualification record가 없는 current/manual model은 canonical DENIED가 아니고 fresh Host Capability evidence가 현재 phase floor를 충족하면 positive registry 부재만으로 차단하지 않는다.
+- explicit qualification record가 없는 current/manual model은 적격한 경우 일반 Trivial/Small 예외를 먼저 적용한다. 그 밖의 current/manual 경로에는 현재 phase floor를 충족하는 최신 host 근거나 사람이 확인한 적용 가능한 범위 평가가 필요하며, positive registry 부재만으로 차단하지 않는다. canonical과 P의 deny는 계속 적용한다. 자동 선택에는 계속 기존의 적격 host mapping과 fresh role qualification PASS가 필요하다.
 - Agent가 자동으로 선택하는 switch/delegated worker/reviewer/fallback model은 해당 role의 fresh qualification PASS가 없으면 선택하지 않는다.
 - future phase의 qualification은 실제 actor 선택 직전에 검증한다. PLAN 시작 시점에 아직 선택하지 않은 reviewer model의 PASS 링크를 요구해 현재 phase를 차단하지 않는다.
 

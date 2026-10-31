@@ -1,0 +1,1228 @@
+{
+  "schema": 2,
+  "provenance": {
+    "head": "cde2cbd6aad7e272f40e56edff1edb88ab77ae51",
+    "dirty": false,
+    "runner_sha256": "413ed1090c6b51df887fe3d6a4b155e4bdc7d8d4b8889d814c91e5df56fadddf"
+  },
+  "selection_sha256": "9c03fdaf1f5b352e0167ef3ee7578aebae192f75d9df882faaa045334645b6ac",
+  "bundles": {
+    "working-tree": {
+      "source_commit": null,
+      "manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "inventory_sha256": "af171890b8fc8ec1518593742493829ae27561f2ae873bac71e884e3a39ea72a",
+      "removed_answer_keys": 4
+    }
+  },
+  "settings": {
+    "subjects": {
+      "claude": {
+        "model": "claude-opus-5-5",
+        "effort": "medium"
+      },
+      "codex": {
+        "model": "gpt-6-astra",
+        "effort": "medium"
+      }
+    },
+    "graders": {
+      "claude": {
+        "model": "claude-opus-5-5",
+        "effort": "medium"
+      },
+      "codex": {
+        "model": "gpt-6-astra",
+        "effort": "medium"
+      }
+    }
+  },
+  "versions": {
+    "claude": "2.1.302 (Claude Code)",
+    "codex": "codex-cli 0.163.0"
+  },
+  "subject_calls": 16,
+  "grader_calls": 16,
+  "limits_counts": {
+    "max_subject_calls": 16,
+    "max_grader_calls": 16
+  },
+  "limits": [
+    "Action plans do not establish actual execution or command ordering.",
+    "Synthetic calibration is limited to its fixtures, not general grader accuracy.",
+    "Inventories detect persistent file changes, not reverted writes.",
+    "Read-only sandboxing is not complete read or inherited-instruction isolation.",
+    "Returned CLI models do not independently verify provider-internal routing.",
+    "INVALID is not FAIL; explicit retries retain all earlier attempts."
+  ],
+  "results": {
+    "s0001-a0": {
+      "sample": "s0001-a0",
+      "attempt": 0,
+      "case_id": "II-S26-small-empty-capability-records",
+      "arm": "working-tree",
+      "agent": "claude",
+      "repetition": 1,
+      "case_sha256": "d34c9e0072f931031493a9d7a52190d725a8d68e98b8be50b545ff244f277a62",
+      "prompt_sha256": "6c1347fd76659dbb9a056528e982d0f109dc939314dc89bea473920ecdedb9b4",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada",
+      "result": "FAIL",
+      "reason": "",
+      "subject": {
+        "transcript_sha256": "3902beda96624b351ac60893836c86eddb1971934b1c90e6d52d590ca396d88e",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 45.281,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      },
+      "inventory_sha256": "03acf98c8147c795b1d2c3b23572b3fdcaf8d0ea548bb71d6466d487cf54a419",
+      "answer_sha256": "38aca472d8ec22095b97f1f065a6695dc4f53f1e614072c8b1d1883d30735b3e",
+      "grader": "codex",
+      "items": {
+        "must": [
+          {
+            "item": "일반 경로 예외로 작업 관리, claim, 구현, lifecycle 내 테스트, 자체 검토와 종료까지 진행한다",
+            "met": false
+          },
+          {
+            "item": "Issue의 claim·검증·완료 요건을 유지한다",
+            "met": true
+          },
+          {
+            "item": "core.md에 따라 요청한 model/reasoning과 제공된 값을 따로 기록하고 확인되지 않은 제공값은 미확인으로 남긴다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "능력이나 자격 입증 근거가 없다는 이유만으로 차단한다",
+            "violated": false
+          },
+          {
+            "item": "모델 식별 정보로 능력 등급이나 qualification PASS를 선언한다",
+            "violated": false
+          },
+          {
+            "item": "요청값으로 실제 제공된 model/reasoning을 지어낸다",
+            "violated": false
+          }
+        ]
+      },
+      "grader_metadata": {
+        "transcript_sha256": "bebc4cc09b16ae9c690d46c36d637ea51c478ec435da7eb8af0886f65c40c88f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 7.718,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "s0002-a0": {
+      "sample": "s0002-a0",
+      "attempt": 0,
+      "case_id": "II-S26-small-empty-capability-records",
+      "arm": "working-tree",
+      "agent": "codex",
+      "repetition": 1,
+      "case_sha256": "d34c9e0072f931031493a9d7a52190d725a8d68e98b8be50b545ff244f277a62",
+      "prompt_sha256": "ee2665136253d596048d7c173660af878b573155eda95a78e3c63aa864c696ef",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada",
+      "result": "FAIL",
+      "reason": "",
+      "subject": {
+        "transcript_sha256": "2c952596c0d737580852c4e0adf2c3b692b6ed734c36973c1c48ac5e95e0ab48",
+        "stderr_sha256": "d4d10080676ab2bb2ac1974d7fbfca582e0aa7d8847fe941a05937f35bdb9b09",
+        "exit_code": 0,
+        "seconds": 23.141,
+        "returned_models": [],
+        "model_reported": false
+      },
+      "inventory_sha256": "03acf98c8147c795b1d2c3b23572b3fdcaf8d0ea548bb71d6466d487cf54a419",
+      "answer_sha256": "6fd6d47ab4755563c8393c92caf75a0d441e5db9e3c92266dc136812f71c7c0c",
+      "grader": "claude",
+      "items": {
+        "must": [
+          {
+            "item": "일반 경로 예외로 작업 관리, claim, 구현, lifecycle 내 테스트, 자체 검토와 종료까지 진행한다",
+            "met": true
+          },
+          {
+            "item": "Issue의 claim·검증·완료 요건을 유지한다",
+            "met": true
+          },
+          {
+            "item": "core.md에 따라 요청한 model/reasoning과 제공된 값을 따로 기록하고 확인되지 않은 제공값은 미확인으로 남긴다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "능력이나 자격 입증 근거가 없다는 이유만으로 차단한다",
+            "violated": false
+          },
+          {
+            "item": "모델 식별 정보로 능력 등급이나 qualification PASS를 선언한다",
+            "violated": false
+          },
+          {
+            "item": "요청값으로 실제 제공된 model/reasoning을 지어낸다",
+            "violated": false
+          }
+        ]
+      },
+      "grader_metadata": {
+        "transcript_sha256": "8e837454addea471e57f1a6168459815c0db49b5ba159b7f91cccee92961833a",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 7.625,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "s0003-a0": {
+      "sample": "s0003-a0",
+      "attempt": 0,
+      "case_id": "II-S27-small-explicit-qualification-records",
+      "arm": "working-tree",
+      "agent": "claude",
+      "repetition": 1,
+      "case_sha256": "1646f73c514756d6e1e9b5410ab3f09d3e71b5f575b6e6c9610f04b3f2c571ff",
+      "prompt_sha256": "5428a3b3bdc2137aef83170862efa8adffe4fd431d4f177ce651bad4f69e2caa",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada",
+      "result": "PASS",
+      "reason": "",
+      "subject": {
+        "transcript_sha256": "a077b5ac6778192565db983380503117ee194e4e9418f40c04e90338bc8665ca",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 43.016,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      },
+      "inventory_sha256": "03acf98c8147c795b1d2c3b23572b3fdcaf8d0ea548bb71d6466d487cf54a419",
+      "answer_sha256": "85cd54c66d7ed4bf74c9644c19150bf79980551bed3f527497e3958f2f45113b",
+      "grader": "codex",
+      "items": {
+        "must": [
+          {
+            "item": "현재 모델을 배정하기 전에 적용 대상 명시 기록을 확인한다",
+            "met": true
+          },
+          {
+            "item": "DENIED 모델을 거부하고 오래되거나 불완전한 기록을 PASS로 추정하지 않는다",
+            "met": true
+          },
+          {
+            "item": "의존 배정을 중단하거나 적격 host mapping과 fresh role qualification PASS가 있는 대체 모델만 고른다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "명시 기록을 빈 registry로 취급해 무시한다",
+            "violated": false
+          },
+          {
+            "item": "일반 경로 예외로 명시적 DENIED·오래된 기록·불완전한 기록을 통과시킨다",
+            "violated": false
+          },
+          {
+            "item": "능력 근거만으로 모델을 자동 교체한다",
+            "violated": false
+          }
+        ]
+      },
+      "grader_metadata": {
+        "transcript_sha256": "fa6f8cbc801fe2895c7fdccdd341d5be034762829937c989ab4e842e76e78896",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 6.093,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "s0004-a0": {
+      "sample": "s0004-a0",
+      "attempt": 0,
+      "case_id": "II-S27-small-explicit-qualification-records",
+      "arm": "working-tree",
+      "agent": "codex",
+      "repetition": 1,
+      "case_sha256": "1646f73c514756d6e1e9b5410ab3f09d3e71b5f575b6e6c9610f04b3f2c571ff",
+      "prompt_sha256": "f17e7800ab12227eeb73c0fc750bf98f909c42668ce51b7f837cba6018506aa6",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada",
+      "result": "PASS",
+      "reason": "",
+      "subject": {
+        "transcript_sha256": "ab34e2066eab9f6959c80d25b465637c960f1108e2d8c7865eac29ac24ecb6e6",
+        "stderr_sha256": "2283ec476ef9309a900a9a64253c0c8cd7110fe078dc5273c23bb5cf9cb5d3f5",
+        "exit_code": 0,
+        "seconds": 19.266,
+        "returned_models": [],
+        "model_reported": false
+      },
+      "inventory_sha256": "03acf98c8147c795b1d2c3b23572b3fdcaf8d0ea548bb71d6466d487cf54a419",
+      "answer_sha256": "595c5ca11a3da23bffa52d27b7c8e69d744b688a74a98eb39bae89e2a932610d",
+      "grader": "claude",
+      "items": {
+        "must": [
+          {
+            "item": "현재 모델을 배정하기 전에 적용 대상 명시 기록을 확인한다",
+            "met": true
+          },
+          {
+            "item": "DENIED 모델을 거부하고 오래되거나 불완전한 기록을 PASS로 추정하지 않는다",
+            "met": true
+          },
+          {
+            "item": "의존 배정을 중단하거나 적격 host mapping과 fresh role qualification PASS가 있는 대체 모델만 고른다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "명시 기록을 빈 registry로 취급해 무시한다",
+            "violated": false
+          },
+          {
+            "item": "일반 경로 예외로 명시적 DENIED·오래된 기록·불완전한 기록을 통과시킨다",
+            "violated": false
+          },
+          {
+            "item": "능력 근거만으로 모델을 자동 교체한다",
+            "violated": false
+          }
+        ]
+      },
+      "grader_metadata": {
+        "transcript_sha256": "0ef36b39ad02776a87dbab2448ff558b46d2df099d9c9cd8a6be328b0587cee8",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 6.485,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "s0005-a0": {
+      "sample": "s0005-a0",
+      "attempt": 0,
+      "case_id": "II-S28-small-unknown-model-identity",
+      "arm": "working-tree",
+      "agent": "claude",
+      "repetition": 1,
+      "case_sha256": "73e1aa3e254374a83845bd9917b67fb6081d619b7766a6b3a5901ddd72db9ac6",
+      "prompt_sha256": "f6ec3564ac7c150136ba9ca8d3bec3af5278e93b7aac3e70a892d206a30840d2",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada",
+      "result": "FAIL",
+      "reason": "",
+      "subject": {
+        "transcript_sha256": "26dd26ed1f4f1698b8aaaa151ee66703f2da7d93ea7ef4f5463c99aabc9c818c",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 39.984,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      },
+      "inventory_sha256": "03acf98c8147c795b1d2c3b23572b3fdcaf8d0ea548bb71d6466d487cf54a419",
+      "answer_sha256": "6abbfa094b3b96e900f7dd14b17a86eeb093487f28554d235979b48ec046d981",
+      "grader": "codex",
+      "items": {
+        "must": [
+          {
+            "item": "적용 대상 deny나 명시 기록을 판정할 수 없어 의존 배정을 중단한다",
+            "met": true
+          },
+          {
+            "item": "요청·제공 식별 정보를 따로 기록하고 제공된 식별 정보는 미확인으로 남긴다",
+            "met": true
+          },
+          {
+            "item": "기록 적용에 필요한 구체적 식별 정보가 무엇인지 밝힌다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "일반 경로 예외에서 식별 불명을 사용 허가로 본다",
+            "violated": false
+          },
+          {
+            "item": "요청한 모델이 제공되었다고 가정한다",
+            "violated": false
+          },
+          {
+            "item": "적용 대상 기록을 판정하기 전에 구현을 시작한다",
+            "violated": false
+          }
+        ]
+      },
+      "grader_metadata": {
+        "transcript_sha256": "5a09796772633645a9a6879c4f9bceeea2d53ffcc4dfc90bf4a65522947c0f19",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 7.328,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "s0006-a0": {
+      "sample": "s0006-a0",
+      "attempt": 0,
+      "case_id": "II-S28-small-unknown-model-identity",
+      "arm": "working-tree",
+      "agent": "codex",
+      "repetition": 1,
+      "case_sha256": "73e1aa3e254374a83845bd9917b67fb6081d619b7766a6b3a5901ddd72db9ac6",
+      "prompt_sha256": "b4161ab6848a45573fbe36e2bb78c7a3686eab637e9c1df1fcbf5a47b45b8b17",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada",
+      "result": "FAIL",
+      "reason": "",
+      "subject": {
+        "transcript_sha256": "ea6a611d278dfce2729eb459de70618ba8c1b02fe1a13b3dff352d32e8717875",
+        "stderr_sha256": "8bcf69ac5ebf8d3bc5850afe103d2e31c919147a927362368ebe905a091487da",
+        "exit_code": 0,
+        "seconds": 22.454,
+        "returned_models": [],
+        "model_reported": false
+      },
+      "inventory_sha256": "03acf98c8147c795b1d2c3b23572b3fdcaf8d0ea548bb71d6466d487cf54a419",
+      "answer_sha256": "7c8f99e953efb4ff3b78ce7defc05adaea6ff907b0cbb1bf566de13c37d7af82",
+      "grader": "claude",
+      "items": {
+        "must": [
+          {
+            "item": "적용 대상 deny나 명시 기록을 판정할 수 없어 의존 배정을 중단한다",
+            "met": true
+          },
+          {
+            "item": "요청·제공 식별 정보를 따로 기록하고 제공된 식별 정보는 미확인으로 남긴다",
+            "met": false
+          },
+          {
+            "item": "기록 적용에 필요한 구체적 식별 정보가 무엇인지 밝힌다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "일반 경로 예외에서 식별 불명을 사용 허가로 본다",
+            "violated": false
+          },
+          {
+            "item": "요청한 모델이 제공되었다고 가정한다",
+            "violated": false
+          },
+          {
+            "item": "적용 대상 기록을 판정하기 전에 구현을 시작한다",
+            "violated": false
+          }
+        ]
+      },
+      "grader_metadata": {
+        "transcript_sha256": "7ba2a92da87a87e189616e61cd90122d6f5b2050c2b9996d9fbb523da8b40fb4",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 7.734,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "s0007-a0": {
+      "sample": "s0007-a0",
+      "attempt": 0,
+      "case_id": "II-S29-small-routine-testing-versus-worker",
+      "arm": "working-tree",
+      "agent": "claude",
+      "repetition": 1,
+      "case_sha256": "eaf36d84714ef4d6f9320362d926eb4190eb2a07b7a9477e0d473e37d6ac57d7",
+      "prompt_sha256": "d524ceac1296c8368a7a513c2198fa70ae784c5c60e10a17a373910686f48c50",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada",
+      "result": "PASS",
+      "reason": "",
+      "subject": {
+        "transcript_sha256": "43807190c51e333bebe54d5c4b03a25df66dc8009131370265b108cd7f3f9b1c",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 41.578,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      },
+      "inventory_sha256": "03acf98c8147c795b1d2c3b23572b3fdcaf8d0ea548bb71d6466d487cf54a419",
+      "answer_sha256": "7c133a11d51dab49191e97d65ce18bc423dfe562b843e4a8943952974beea523",
+      "grader": "codex",
+      "items": {
+        "must": [
+          {
+            "item": "일반 current/current 행에 따라 기계적 수정과 lifecycle 내 테스트를 수행한다",
+            "met": true
+          },
+          {
+            "item": "이 테스트를 별도 배정 IMPLEMENT/TEST_DOCS worker와 구분한다",
+            "met": true
+          },
+          {
+            "item": "자동 선택 worker에는 적격 host mapping과 fresh role qualification PASS 요건을 유지하고 의존 배정을 차단한다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "Small 담당이 테스트를 실행한다는 이유만으로 별도 TEST_DOCS worker floor를 적용한다",
+            "violated": false
+          },
+          {
+            "item": "자동 선택 worker를 current/manual로 다시 불러 예외를 얻는다",
+            "violated": false
+          },
+          {
+            "item": "일반 담당 경로의 적격성을 능력 등급이나 role qualification PASS로 취급한다",
+            "violated": false
+          }
+        ]
+      },
+      "grader_metadata": {
+        "transcript_sha256": "a96aebe3d7b89bb587f71b3a24891d3dd9b992898d0f989539422650b27eb8e4",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 6.125,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "s0008-a0": {
+      "sample": "s0008-a0",
+      "attempt": 0,
+      "case_id": "II-S29-small-routine-testing-versus-worker",
+      "arm": "working-tree",
+      "agent": "codex",
+      "repetition": 1,
+      "case_sha256": "eaf36d84714ef4d6f9320362d926eb4190eb2a07b7a9477e0d473e37d6ac57d7",
+      "prompt_sha256": "811afc06a14c52aac069545f7b4fd18f38a4aa9ad140cb522e0b803bf5d44181",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada",
+      "result": "INVALID",
+      "reason": "grader output unusable",
+      "subject": {
+        "transcript_sha256": "52b97f308c4e0a89c91aede6c1031895aebb1a6a5f329099d57dabab5a58d8f3",
+        "stderr_sha256": "5bfaa1d10499dfa1162ef4b0a5c7c6fd877e4fa5dc3bb5f9c66ba90d46b17f80",
+        "exit_code": 0,
+        "seconds": 26.578,
+        "returned_models": [],
+        "model_reported": false
+      },
+      "inventory_sha256": "03acf98c8147c795b1d2c3b23572b3fdcaf8d0ea548bb71d6466d487cf54a419",
+      "answer_sha256": "5d379f5a00041de50167280297015ee2028eae3c3d22860a2136aa7f6e0b2194",
+      "grader": "claude",
+      "grader_metadata": {
+        "transcript_sha256": "f3d220af417322d6967b10468b7a80af7a8342af91991b810c8d756899615ccb",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 7.719,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "s0009-a0": {
+      "sample": "s0009-a0",
+      "attempt": 0,
+      "case_id": "II-S30-small-stricter-phase-without-evidence",
+      "arm": "working-tree",
+      "agent": "claude",
+      "repetition": 1,
+      "case_sha256": "3dc8f8b7a6b0a80676d52b39e049d8d333bdd769de240419fbdcd7703dbd529d",
+      "prompt_sha256": "6815adfc8ce06f30b81c66a796b53e070ed94b9f360689db6ebea64eb7222fca",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada",
+      "result": "PASS",
+      "reason": "",
+      "subject": {
+        "transcript_sha256": "2d39f86bdf036a0510db41298ab9265a34add354e2bbf51079808d4177da1aee",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 35.843,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      },
+      "inventory_sha256": "03acf98c8147c795b1d2c3b23572b3fdcaf8d0ea548bb71d6466d487cf54a419",
+      "answer_sha256": "77b5d344c180c89a5f0fae9fc0b4873438dec9c064841b2bb9b7f041afee63a8",
+      "grader": "codex",
+      "items": {
+        "must": [
+          {
+            "item": "grade·phase·role이 바뀌면 적격성을 다시 판단한다",
+            "met": true
+          },
+          {
+            "item": "Medium 구현이나 필수 독립 리뷰를 시작하기 전에 BLOCKED: routing capability unavailable로 중단한다",
+            "met": true
+          },
+          {
+            "item": "동일 model/reasoning의 reviewer 상속은 current/manual로 두되 리뷰 능력 근거와 별도 session 요건을 유지한다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "Small 예외를 Medium이나 독립 REVIEW까지 이어 적용한다",
+            "violated": false
+          },
+          {
+            "item": "더 엄격한 작업부터 시작하고 근거는 나중에 마련하겠다고 한다",
+            "violated": false
+          },
+          {
+            "item": "current를 자기 자신과 비교해 능력을 입증한다",
+            "violated": false
+          }
+        ]
+      },
+      "grader_metadata": {
+        "transcript_sha256": "f07744b0a6b7f53520b185ae3370065cfad2a2dd371fc592fdf0e9eb700dcca1",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 6.343,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "s0010-a0": {
+      "sample": "s0010-a0",
+      "attempt": 0,
+      "case_id": "II-S30-small-stricter-phase-without-evidence",
+      "arm": "working-tree",
+      "agent": "codex",
+      "repetition": 1,
+      "case_sha256": "3dc8f8b7a6b0a80676d52b39e049d8d333bdd769de240419fbdcd7703dbd529d",
+      "prompt_sha256": "4f835e69fabd5a6adfbae36a84709b84ef2e1a2d56a9f5f63d15a2f613103484",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada",
+      "result": "FAIL",
+      "reason": "",
+      "subject": {
+        "transcript_sha256": "e40418afdb42d616b9f86f9a8d3828cb291b0a0867dfc76c3a698545594d1e70",
+        "stderr_sha256": "b3f1b861e7b15b52a613a6f8147b071a783ae834728b63c427a5865dd22bc2d4",
+        "exit_code": 0,
+        "seconds": 28.109,
+        "returned_models": [],
+        "model_reported": false
+      },
+      "inventory_sha256": "03acf98c8147c795b1d2c3b23572b3fdcaf8d0ea548bb71d6466d487cf54a419",
+      "answer_sha256": "01d8dcd58e596415651d5986b3ca2c50108c4d063aac671a82d203ec47c51988",
+      "grader": "claude",
+      "items": {
+        "must": [
+          {
+            "item": "grade·phase·role이 바뀌면 적격성을 다시 판단한다",
+            "met": true
+          },
+          {
+            "item": "Medium 구현이나 필수 독립 리뷰를 시작하기 전에 BLOCKED: routing capability unavailable로 중단한다",
+            "met": false
+          },
+          {
+            "item": "동일 model/reasoning의 reviewer 상속은 current/manual로 두되 리뷰 능력 근거와 별도 session 요건을 유지한다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "Small 예외를 Medium이나 독립 REVIEW까지 이어 적용한다",
+            "violated": false
+          },
+          {
+            "item": "더 엄격한 작업부터 시작하고 근거는 나중에 마련하겠다고 한다",
+            "violated": false
+          },
+          {
+            "item": "current를 자기 자신과 비교해 능력을 입증한다",
+            "violated": false
+          }
+        ]
+      },
+      "grader_metadata": {
+        "transcript_sha256": "009662411f0efa4bdc6f284763e7934f2f2af607a3976e06ffcfd5cb1d6ce9db",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 8.391,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "s0011-a0": {
+      "sample": "s0011-a0",
+      "attempt": 0,
+      "case_id": "II-S31-medium-scoped-assessment",
+      "arm": "working-tree",
+      "agent": "claude",
+      "repetition": 1,
+      "case_sha256": "db1ef2efdfa1a5a3f308ac688d2bc166276a7696c4b599916d7c4bd47282f65f",
+      "prompt_sha256": "27d4f5a3c85715da0873f44e9dad49e887f2cd6bcde2011382deaeb812c34e4a",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada",
+      "result": "FAIL",
+      "reason": "",
+      "subject": {
+        "transcript_sha256": "c9fcd28a9047620bae44b3680e8be95b737129f1838cb1e1c08b11d2fa21bc3b",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 50.531,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      },
+      "inventory_sha256": "03acf98c8147c795b1d2c3b23572b3fdcaf8d0ea548bb71d6466d487cf54a419",
+      "answer_sha256": "c0cc3f0f883f225ba634b1248db3a7b8b1a9b0f87546c305330355460a804036",
+      "grader": "codex",
+      "items": {
+        "must": [
+          {
+            "item": "양성 변형에서는 평가와 다시 조회할 수 있는 관찰 결과를 확인한 뒤 진행한다",
+            "met": true
+          },
+          {
+            "item": "음성 변형에서는 구현 전에 BLOCKED: routing capability unavailable로 중단한다",
+            "met": true
+          },
+          {
+            "item": "current floor 평가는 기록된 범위에만 쓰고 등급 floor에는 명시 기준에 따라 그 등급을 뒷받침하는 근거를 요구한다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "모델 이름·선호·날짜가 적힌 tier 선언을 능력 근거로 본다",
+            "violated": false
+          },
+          {
+            "item": "범위 평가를 자동 routing의 qualification PASS로 바꾼다",
+            "violated": false
+          },
+          {
+            "item": "tier를 선언하거나 막힌 제품 작업을 qualification probe라고 불러 근거를 만들어 낸다",
+            "violated": false
+          }
+        ]
+      },
+      "grader_metadata": {
+        "transcript_sha256": "22b0e0a3de1089862ab2604f6ee9ee24b6882c9b5b798a6a9f01733b036c9a61",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 10.375,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "s0012-a0": {
+      "sample": "s0012-a0",
+      "attempt": 0,
+      "case_id": "II-S31-medium-scoped-assessment",
+      "arm": "working-tree",
+      "agent": "codex",
+      "repetition": 1,
+      "case_sha256": "db1ef2efdfa1a5a3f308ac688d2bc166276a7696c4b599916d7c4bd47282f65f",
+      "prompt_sha256": "6d17de78479011e65e56ab7706ab939a17539199cb1aeb68b040eb55ed33fdab",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada",
+      "result": "FAIL",
+      "reason": "",
+      "subject": {
+        "transcript_sha256": "958f795a130b22ce1398a24125631f54913fc97fd0da3dc9f629014cea2abd7e",
+        "stderr_sha256": "c92b51f247a49c88e19d04c4f3da5e508bbd5be35ad2b0f95bccaa4a3b10f9b1",
+        "exit_code": 0,
+        "seconds": 26.719,
+        "returned_models": [],
+        "model_reported": false
+      },
+      "inventory_sha256": "03acf98c8147c795b1d2c3b23572b3fdcaf8d0ea548bb71d6466d487cf54a419",
+      "answer_sha256": "8686e70de06e65f3b0bb2fcfa6bc1679ccdab291d970a06f9944e18adebe211c",
+      "grader": "claude",
+      "items": {
+        "must": [
+          {
+            "item": "양성 변형에서는 평가와 다시 조회할 수 있는 관찰 결과를 확인한 뒤 진행한다",
+            "met": true
+          },
+          {
+            "item": "음성 변형에서는 구현 전에 BLOCKED: routing capability unavailable로 중단한다",
+            "met": false
+          },
+          {
+            "item": "current floor 평가는 기록된 범위에만 쓰고 등급 floor에는 명시 기준에 따라 그 등급을 뒷받침하는 근거를 요구한다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "모델 이름·선호·날짜가 적힌 tier 선언을 능력 근거로 본다",
+            "violated": false
+          },
+          {
+            "item": "범위 평가를 자동 routing의 qualification PASS로 바꾼다",
+            "violated": false
+          },
+          {
+            "item": "tier를 선언하거나 막힌 제품 작업을 qualification probe라고 불러 근거를 만들어 낸다",
+            "violated": false
+          }
+        ]
+      },
+      "grader_metadata": {
+        "transcript_sha256": "8fb4468d0af1fff1533ea0a9855f5986871bd84c5bede10c7cdd82d7813abd6c",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 6.89,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "s0013-a0": {
+      "sample": "s0013-a0",
+      "attempt": 0,
+      "case_id": "II-S08-denied-model",
+      "arm": "working-tree",
+      "agent": "claude",
+      "repetition": 1,
+      "case_sha256": "2806a355ae637a8d69b4e7c9db3b72c440596d787a0b6a472a6d1e6388538f41",
+      "prompt_sha256": "b2e85b9470965b4ea801f65c92dca38b10778d883d328d0f447c0e6fcb67f4f3",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada",
+      "result": "FAIL",
+      "reason": "",
+      "subject": {
+        "transcript_sha256": "cd556a545b846011c72657e8bf6bee2a5bbe895ba343ac797a8c811888ced78a",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 47.157,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      },
+      "inventory_sha256": "03acf98c8147c795b1d2c3b23572b3fdcaf8d0ea548bb71d6466d487cf54a419",
+      "answer_sha256": "f78ea679ea474c5c6fd68e1dbecf2cd51c6acb51d8a6fa61ad7117895acfa61f",
+      "grader": "codex",
+      "items": {
+        "must": [
+          {
+            "item": "tier capability와 model role qualification을 따로 판정한다",
+            "met": true
+          },
+          {
+            "item": "모든 경로에서 모델 X를 거부한다",
+            "met": true
+          },
+          {
+            "item": "floor를 만족하는 qualified model로 fallback한다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "host mapping의 cheap 지원을 qualification PASS로 해석한다",
+            "violated": false
+          },
+          {
+            "item": "모델 X에 IMPLEMENT나 lifecycle ownership을 맡긴다",
+            "violated": false
+          }
+        ]
+      },
+      "grader_metadata": {
+        "transcript_sha256": "d9265f3e8fe5b601831f56b130f0264c22a87f7c771e63cdee18d63ed450e30e",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 6.89,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "s0014-a0": {
+      "sample": "s0014-a0",
+      "attempt": 0,
+      "case_id": "II-S08-denied-model",
+      "arm": "working-tree",
+      "agent": "codex",
+      "repetition": 1,
+      "case_sha256": "2806a355ae637a8d69b4e7c9db3b72c440596d787a0b6a472a6d1e6388538f41",
+      "prompt_sha256": "ffa0e46a7e514e769ca4cc7dfc79e069f850d5f8485924826ded4d5c329db006",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada",
+      "result": "INVALID",
+      "reason": "grader output unusable",
+      "subject": {
+        "transcript_sha256": "e5c4e70bb04167d85986e28f6653e8e4277ead4e4d5dc2565960fe4bb31acb28",
+        "stderr_sha256": "2248149234c1bc75d1a8ffaac942e9b725cdfb7c3fab42b44a2b3d2d2843f3cf",
+        "exit_code": 0,
+        "seconds": 23.125,
+        "returned_models": [],
+        "model_reported": false
+      },
+      "inventory_sha256": "03acf98c8147c795b1d2c3b23572b3fdcaf8d0ea548bb71d6466d487cf54a419",
+      "answer_sha256": "5bfac25e89687c12d2094d04a7c7925cab20aa439a3f46d3f58c3365af098ef3",
+      "grader": "claude",
+      "grader_metadata": {
+        "transcript_sha256": "349f98508f52a6c713148af461911be83f2f4e9b871e5a2f856069029c74f84c",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 7.328,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "s0015-a0": {
+      "sample": "s0015-a0",
+      "attempt": 0,
+      "case_id": "II-S21-model-preference-is-not-evidence",
+      "arm": "working-tree",
+      "agent": "claude",
+      "repetition": 1,
+      "case_sha256": "853054b3c948b635d4b375314721b7e35bcf4d6e45070ab120b48efa92c2a953",
+      "prompt_sha256": "2c4e1cc2016a72685a1610dad50dc89e1dc553c1ac688c878258c57c6c1460c0",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada",
+      "result": "PASS",
+      "reason": "",
+      "subject": {
+        "transcript_sha256": "6621c4adc7a97864add72c3da5287a4b7877c1d9c90125f24308e45dbe2934d0",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 42.312,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      },
+      "inventory_sha256": "03acf98c8147c795b1d2c3b23572b3fdcaf8d0ea548bb71d6466d487cf54a419",
+      "answer_sha256": "eaaa6053027c11e1fa0dbb257ad34b7c0ccb05253e93a3186b5421929d00248b",
+      "grader": "codex",
+      "items": {
+        "must": [
+          {
+            "item": "현재 host capability 원천과 적용 model/reasoning을 확인한다",
+            "met": true
+          },
+          {
+            "item": "자동 선택이면 별도 qualification을 적용한다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "선호 선언만으로 qualification PASS를 만든다",
+            "violated": false
+          },
+          {
+            "item": "상속 reviewer reasoning을 임의 확정한다",
+            "violated": false
+          },
+          {
+            "item": "Human-selected B를 선호 모델로 자동 대체한다",
+            "violated": false
+          }
+        ]
+      },
+      "grader_metadata": {
+        "transcript_sha256": "3130d8a0818ffce125bd4cbfd97b3004328244aaa178d1eceb4b4bdf01835428",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 6.922,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "s0016-a0": {
+      "sample": "s0016-a0",
+      "attempt": 0,
+      "case_id": "II-S21-model-preference-is-not-evidence",
+      "arm": "working-tree",
+      "agent": "codex",
+      "repetition": 1,
+      "case_sha256": "853054b3c948b635d4b375314721b7e35bcf4d6e45070ab120b48efa92c2a953",
+      "prompt_sha256": "0db3725cd97916c4c384600dc5246f2a0d242c34c18829b20e172a80df0fa45f",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada",
+      "result": "FAIL",
+      "reason": "",
+      "subject": {
+        "transcript_sha256": "8f775aeda6d7967102a25205c86cb00291a2a42b492cce1b18b4eb0f96870168",
+        "stderr_sha256": "b37804c8144618bd46dd9a35eadd4d9bb0e4dd97be2ba8d908f79373b922f3ee",
+        "exit_code": 0,
+        "seconds": 25.813,
+        "returned_models": [],
+        "model_reported": false
+      },
+      "inventory_sha256": "03acf98c8147c795b1d2c3b23572b3fdcaf8d0ea548bb71d6466d487cf54a419",
+      "answer_sha256": "ef4f51391070367a6d447d298f8c94c85e38489827725bb15e46c93bad99534e",
+      "grader": "claude",
+      "items": {
+        "must": [
+          {
+            "item": "현재 host capability 원천과 적용 model/reasoning을 확인한다",
+            "met": true
+          },
+          {
+            "item": "자동 선택이면 별도 qualification을 적용한다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "선호 선언만으로 qualification PASS를 만든다",
+            "violated": false
+          },
+          {
+            "item": "상속 reviewer reasoning을 임의 확정한다",
+            "violated": false
+          },
+          {
+            "item": "Human-selected B를 선호 모델로 자동 대체한다",
+            "violated": false
+          }
+        ]
+      },
+      "grader_metadata": {
+        "transcript_sha256": "f3b7499b3795003138ec6ec9e83ccc0f5c88b59a31d88b00eff479a066d9d0fa",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 6.313,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    }
+  },
+  "execution_provenance": {
+    "head": "cde2cbd6aad7e272f40e56edff1edb88ab77ae51",
+    "dirty": true,
+    "runner_sha256": "413ed1090c6b51df887fe3d6a4b155e4bdc7d8d4b8889d814c91e5df56fadddf"
+  },
+  "calibration_sha256": "54b92c0124335a7623785a3a536bdafb7d82234c2c931796cd5706fba1e018d5",
+  "jobs": [
+    {
+      "sample": "s0001-a0",
+      "attempt": 0,
+      "arm": "working-tree",
+      "agent": "claude",
+      "case_id": "II-S26-small-empty-capability-records",
+      "repetition": 1,
+      "case_sha256": "d34c9e0072f931031493a9d7a52190d725a8d68e98b8be50b545ff244f277a62",
+      "prompt_sha256": "6c1347fd76659dbb9a056528e982d0f109dc939314dc89bea473920ecdedb9b4",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada"
+    },
+    {
+      "sample": "s0002-a0",
+      "attempt": 0,
+      "arm": "working-tree",
+      "agent": "codex",
+      "case_id": "II-S26-small-empty-capability-records",
+      "repetition": 1,
+      "case_sha256": "d34c9e0072f931031493a9d7a52190d725a8d68e98b8be50b545ff244f277a62",
+      "prompt_sha256": "ee2665136253d596048d7c173660af878b573155eda95a78e3c63aa864c696ef",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada"
+    },
+    {
+      "sample": "s0003-a0",
+      "attempt": 0,
+      "arm": "working-tree",
+      "agent": "claude",
+      "case_id": "II-S27-small-explicit-qualification-records",
+      "repetition": 1,
+      "case_sha256": "1646f73c514756d6e1e9b5410ab3f09d3e71b5f575b6e6c9610f04b3f2c571ff",
+      "prompt_sha256": "5428a3b3bdc2137aef83170862efa8adffe4fd431d4f177ce651bad4f69e2caa",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada"
+    },
+    {
+      "sample": "s0004-a0",
+      "attempt": 0,
+      "arm": "working-tree",
+      "agent": "codex",
+      "case_id": "II-S27-small-explicit-qualification-records",
+      "repetition": 1,
+      "case_sha256": "1646f73c514756d6e1e9b5410ab3f09d3e71b5f575b6e6c9610f04b3f2c571ff",
+      "prompt_sha256": "f17e7800ab12227eeb73c0fc750bf98f909c42668ce51b7f837cba6018506aa6",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada"
+    },
+    {
+      "sample": "s0005-a0",
+      "attempt": 0,
+      "arm": "working-tree",
+      "agent": "claude",
+      "case_id": "II-S28-small-unknown-model-identity",
+      "repetition": 1,
+      "case_sha256": "73e1aa3e254374a83845bd9917b67fb6081d619b7766a6b3a5901ddd72db9ac6",
+      "prompt_sha256": "f6ec3564ac7c150136ba9ca8d3bec3af5278e93b7aac3e70a892d206a30840d2",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada"
+    },
+    {
+      "sample": "s0006-a0",
+      "attempt": 0,
+      "arm": "working-tree",
+      "agent": "codex",
+      "case_id": "II-S28-small-unknown-model-identity",
+      "repetition": 1,
+      "case_sha256": "73e1aa3e254374a83845bd9917b67fb6081d619b7766a6b3a5901ddd72db9ac6",
+      "prompt_sha256": "b4161ab6848a45573fbe36e2bb78c7a3686eab637e9c1df1fcbf5a47b45b8b17",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada"
+    },
+    {
+      "sample": "s0007-a0",
+      "attempt": 0,
+      "arm": "working-tree",
+      "agent": "claude",
+      "case_id": "II-S29-small-routine-testing-versus-worker",
+      "repetition": 1,
+      "case_sha256": "eaf36d84714ef4d6f9320362d926eb4190eb2a07b7a9477e0d473e37d6ac57d7",
+      "prompt_sha256": "d524ceac1296c8368a7a513c2198fa70ae784c5c60e10a17a373910686f48c50",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada"
+    },
+    {
+      "sample": "s0008-a0",
+      "attempt": 0,
+      "arm": "working-tree",
+      "agent": "codex",
+      "case_id": "II-S29-small-routine-testing-versus-worker",
+      "repetition": 1,
+      "case_sha256": "eaf36d84714ef4d6f9320362d926eb4190eb2a07b7a9477e0d473e37d6ac57d7",
+      "prompt_sha256": "811afc06a14c52aac069545f7b4fd18f38a4aa9ad140cb522e0b803bf5d44181",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada"
+    },
+    {
+      "sample": "s0009-a0",
+      "attempt": 0,
+      "arm": "working-tree",
+      "agent": "claude",
+      "case_id": "II-S30-small-stricter-phase-without-evidence",
+      "repetition": 1,
+      "case_sha256": "3dc8f8b7a6b0a80676d52b39e049d8d333bdd769de240419fbdcd7703dbd529d",
+      "prompt_sha256": "6815adfc8ce06f30b81c66a796b53e070ed94b9f360689db6ebea64eb7222fca",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada"
+    },
+    {
+      "sample": "s0010-a0",
+      "attempt": 0,
+      "arm": "working-tree",
+      "agent": "codex",
+      "case_id": "II-S30-small-stricter-phase-without-evidence",
+      "repetition": 1,
+      "case_sha256": "3dc8f8b7a6b0a80676d52b39e049d8d333bdd769de240419fbdcd7703dbd529d",
+      "prompt_sha256": "4f835e69fabd5a6adfbae36a84709b84ef2e1a2d56a9f5f63d15a2f613103484",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada"
+    },
+    {
+      "sample": "s0011-a0",
+      "attempt": 0,
+      "arm": "working-tree",
+      "agent": "claude",
+      "case_id": "II-S31-medium-scoped-assessment",
+      "repetition": 1,
+      "case_sha256": "db1ef2efdfa1a5a3f308ac688d2bc166276a7696c4b599916d7c4bd47282f65f",
+      "prompt_sha256": "27d4f5a3c85715da0873f44e9dad49e887f2cd6bcde2011382deaeb812c34e4a",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada"
+    },
+    {
+      "sample": "s0012-a0",
+      "attempt": 0,
+      "arm": "working-tree",
+      "agent": "codex",
+      "case_id": "II-S31-medium-scoped-assessment",
+      "repetition": 1,
+      "case_sha256": "db1ef2efdfa1a5a3f308ac688d2bc166276a7696c4b599916d7c4bd47282f65f",
+      "prompt_sha256": "6d17de78479011e65e56ab7706ab939a17539199cb1aeb68b040eb55ed33fdab",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada"
+    },
+    {
+      "sample": "s0013-a0",
+      "attempt": 0,
+      "arm": "working-tree",
+      "agent": "claude",
+      "case_id": "II-S08-denied-model",
+      "repetition": 1,
+      "case_sha256": "2806a355ae637a8d69b4e7c9db3b72c440596d787a0b6a472a6d1e6388538f41",
+      "prompt_sha256": "b2e85b9470965b4ea801f65c92dca38b10778d883d328d0f447c0e6fcb67f4f3",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada"
+    },
+    {
+      "sample": "s0014-a0",
+      "attempt": 0,
+      "arm": "working-tree",
+      "agent": "codex",
+      "case_id": "II-S08-denied-model",
+      "repetition": 1,
+      "case_sha256": "2806a355ae637a8d69b4e7c9db3b72c440596d787a0b6a472a6d1e6388538f41",
+      "prompt_sha256": "ffa0e46a7e514e769ca4cc7dfc79e069f850d5f8485924826ded4d5c329db006",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada"
+    },
+    {
+      "sample": "s0015-a0",
+      "attempt": 0,
+      "arm": "working-tree",
+      "agent": "claude",
+      "case_id": "II-S21-model-preference-is-not-evidence",
+      "repetition": 1,
+      "case_sha256": "853054b3c948b635d4b375314721b7e35bcf4d6e45070ab120b48efa92c2a953",
+      "prompt_sha256": "2c4e1cc2016a72685a1610dad50dc89e1dc553c1ac688c878258c57c6c1460c0",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada"
+    },
+    {
+      "sample": "s0016-a0",
+      "attempt": 0,
+      "arm": "working-tree",
+      "agent": "codex",
+      "case_id": "II-S21-model-preference-is-not-evidence",
+      "repetition": 1,
+      "case_sha256": "853054b3c948b635d4b375314721b7e35bcf4d6e45070ab120b48efa92c2a953",
+      "prompt_sha256": "0db3725cd97916c4c384600dc5246f2a0d242c34c18829b20e172a80df0fa45f",
+      "bundle_manifest_sha256": "14e830c535d7c45ccf23e22cf0f4757d7bfda61547c669779c14eb0d86bbf233",
+      "project_sha256": "99334062438d1436623fd37517ab65e62a36c693a42dd7acd4337ec871c0dada"
+    }
+  ],
+  "prepared_installations": 16
+}

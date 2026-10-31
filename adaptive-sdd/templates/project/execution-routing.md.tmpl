@@ -13,7 +13,7 @@ A preference does not replace a qualification PASS for automatic assignment or t
 | Host | Model | tier | Supported reasoning | Evidence source | Immutable identity | Valid until |
 | --- | --- | --- | --- | --- | --- | --- |
 {{#each routing.capabilities}}| {{.host}} | {{.model}} | {{.tier}} | {{.reasoning}} | {{.source}} | {{.identity}} | {{.valid_until}} |
-{{else}}| Not declared | — | — | — | Fresh runtime evidence must be checked | — | — |
+{{else}}| Not declared | — | — | — | Routine Trivial/Small needs no entry; other current/manual routes need host evidence or a scoped assessment under W routing | — | — |
 {{/each}}
 This table is an evidence reference, not proof of a self-reported capability. Check the actual host/model, source identity, validity period and supported reasoning at selection time. An expired entry, an unavailable source lookup or a host mismatch cannot be used, and role qualification and deny apply separately.
 {{#if routing.qualification_records}}Role qualification record reference: `{{routing.qualification_records}}`.
