@@ -19,7 +19,7 @@ PR #6 브랜치(`eval/harness-v2`)의 `1d91d9448621c29e39c248bf1c1f23a098ecb02d`
 python3 --version; git --version; claude --version
 ```
 
-Python 3.8 이상, Git 2.38 이상(`git merge-tree --write-tree` 사용). Codex로도 할 거면 `codex --version`.
+Python 3.8 이상, Git은 `git merge-tree --write-tree` 사용을 위해 2.38 이상을 권장한다. 이전 Git에서는 local-docs adapter의 일회용 worktree 병합 fallback을 사용한다(Git 2.37.1에서 관찰됨). Codex로도 할 거면 `codex --version`.
 
 ## 1. 저장소 테스트
 

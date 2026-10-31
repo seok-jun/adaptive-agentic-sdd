@@ -4,6 +4,8 @@
 
 생성된 기본 check/check-evals 명령은 Windows에서는 PowerShell, 그 외에서는 POSIX sh의 경로 리터럴 인용을 사용한다. 표시된 셸에서 실행한다. 사용자 지정 명령의 인용은 프로젝트가 관리한다.
 
+`python3`가 없으면(Windows에서 흔함) 같은 인자를 `python` 또는 `py -3`(Python 3.8 이상)로 다시 실행하며, 인터프리터 이름을 찾지 못한 것은 검사 실패가 아니므로 중단 전에 대체 명령을 시도한다.
+
 이 문서는 방법론 사본을 프로젝트에 두고, 프로젝트 값으로 프로젝트 종속 파일을 생성하고, Agent에게 일을 시키는 방법을 설명한다. 사본에는 넣지 않는다.
 
 ## 이 preview는 무엇인가
@@ -48,6 +50,30 @@ Copy-Item "$src/ko/adaptive-sdd/*" .adaptive-sdd -Recurse -Force
 Remove-Item $tmp -Recurse -Force; Remove-Item $zip -Force
 ```
 
+POSIX sh 예(bash/zsh):
+
+```sh
+(
+set -eu
+sourceCommit='<v1.0.0-preview.6에서 확인한 전체 commit SHA>'
+if ! printf '%s\n' "$sourceCommit" | LC_ALL=C grep -Eq '^[0-9a-f]{40}$'; then
+  printf '%s\n' 'sourceCommit에 검토한 전체 commit SHA를 입력하세요.' >&2
+  exit 1
+fi
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' 0
+trap 'exit 1' HUP INT TERM
+curl -fL "https://github.com/seok-jun/adaptive-agentic-sdd/archive/$sourceCommit.zip" -o "$tmp/source.zip"
+unzip -q "$tmp/source.zip" -d "$tmp"
+src="$tmp/adaptive-agentic-sdd-$sourceCommit"
+for p in methodology workflow templates tools LICENSE MANIFEST.json; do
+  rm -rf ".adaptive-sdd/$p"
+done
+mkdir -p .adaptive-sdd
+cp -R "$src/ko/adaptive-sdd/." .adaptive-sdd/
+)
+```
+
 같은 압축 파일의 `ko/docs/customization.md` 또는 3절의 commit 고정 주소를 사용한다. 아래 `<확인한 SHA>`에는 압축 파일을 받을 때 선택한 SHA를 그대로 넣는다. 미출시 commit에는 `--source-tag`를 지정하지 않는다. 공개 태그를 사용할 때만 그 태그와 commit의 대응을 확인해 함께 기록한다.
 
 ## 2. 프로젝트 값 만들기
@@ -57,9 +83,9 @@ Remove-Item $tmp -Recurse -Force; Remove-Item $zip -Force
 M·W·P는 각각 공통 원칙·실행 절차·제품 사실과 설정의 소유 구분이다. 외부 설치 경로는 저장 위치 옵션이며 S라는 별도 계층이나 실행 입력을 추가하지 않는다. 제품 checkout과 서로 포함하지 않는 전용 폴더를 선택하고 그 아래 `.adaptive-sdd/`에 사본을 둔다. 다음 명령은 경로 예시이며 실제 허용된 위치로 바꾼다. Windows JSON 경로에는 `/`를 쓰면 역슬래시 이스케이프 혼동을 줄일 수 있다.
 
 ```text
-python -I -B <외부 설치 경로>/.adaptive-sdd/tools/install.py init --project-root <제품 checkout> --harness-root <외부 설치 경로>
-python -I -B <외부 설치 경로>/.adaptive-sdd/tools/install.py render --project-root <제품 checkout> --harness-root <외부 설치 경로> --source-tag v1.0.0-preview.6 --source-commit <확인한 SHA>
-python -I -B <외부 설치 경로>/.adaptive-sdd/tools/install.py check --project-root <제품 checkout> --harness-root <외부 설치 경로>
+python3 -I -B <외부 설치 경로>/.adaptive-sdd/tools/install.py init --project-root <제품 checkout> --harness-root <외부 설치 경로>
+python3 -I -B <외부 설치 경로>/.adaptive-sdd/tools/install.py render --project-root <제품 checkout> --harness-root <외부 설치 경로> --source-tag v1.0.0-preview.6 --source-commit <확인한 SHA>
+python3 -I -B <외부 설치 경로>/.adaptive-sdd/tools/install.py check --project-root <제품 checkout> --harness-root <외부 설치 경로>
 ```
 
 P 소유 설정·적용 문서·lock은 외부 설치 경로에, `.agentics/adaptive-sdd.json`·도구별 Skill 입구·AGENTS/CLAUDE 표시 구간은 P에 생성한다. 외부 설치 경로에는 중복 Skill 입구를 만들지 않는다. 연결의 manifest hash, 외부 설치 경로의 lock source, 사본 byte, 제품·설치 경로의 생성물을 함께 검사한다. 연결이 없거나 접근/고정 정보가 틀리면 다른 사본으로 fallback하지 않는다. 사본 업그레이드 후에는 검토한 외부 설치 경로를 `--harness-root`로 명시해 render하고 연결을 갱신한다. 도구가 원격 source commit의 진위를 검증하는 것은 아니다.
@@ -93,7 +119,7 @@ P 소유 설정·적용 문서·lock은 외부 설치 경로에, `.agentics/adap
 ### 저장소 안 기본 설치
 
 ```bash
-python -I -B .adaptive-sdd/tools/install.py init --project-root .
+python3 -I -B .adaptive-sdd/tools/install.py init --project-root .
 ```
 
 `.adaptive-sdd/project.json`이 없을 때만 예제를 복사한다. 이미 있으면 건드리지 않는다. 값은 아래 3절의 순서로 Agent가 초안을 만들고 사람이 정한다.
@@ -160,8 +186,8 @@ python -I -B .adaptive-sdd/tools/install.py init --project-root .
 
 ```text
 방금 정한 대로 .adaptive-sdd/project.json을 쓰고, 아래 명령으로 생성해줘. 고정 사본은 수정하지 마.
-python -I -B .adaptive-sdd/tools/install.py render --project-root . --source-tag v1.0.0-preview.6 --source-commit <확인한 SHA>
-python -I -B .adaptive-sdd/tools/install.py check --project-root .
+python3 -I -B .adaptive-sdd/tools/install.py render --project-root . --source-tag v1.0.0-preview.6 --source-commit <확인한 SHA>
+python3 -I -B .adaptive-sdd/tools/install.py check --project-root .
 로컬 문서 방식이면 tracker.root 아래에 items/와 claims/ 폴더를 만들어줘.
 생성된 AGENTS.md·CLAUDE.md·.gitattributes 구간과 .adaptive-sdd/project/ 문서를 보여줘.
 ```
@@ -192,8 +218,8 @@ python -I -B .adaptive-sdd/tools/install.py check --project-root .
 ## 4. 확인과 검사
 
 ```bash
-python -I -B .adaptive-sdd/tools/install.py check --project-root .
-python -I -B .adaptive-sdd/tools/install.py check-evals --project-root .
+python3 -I -B .adaptive-sdd/tools/install.py check --project-root .
+python3 -I -B .adaptive-sdd/tools/install.py check-evals --project-root .
 ```
 
 `check`는 아무것도 바꾸지 않는다. 고정 사본·lock·생성물을 다시 계산해 비교하고, 다르면 무엇이 다른지만 알린다. 고정 사본에 manifest에 없는 파일이 있거나(`EXTRA`), 더 이상 생성하지 않는 파일이 남아 있으면(`STALE`, 예: `tools`에서 codex를 뺀 뒤의 `.agents/skills`) 함께 알린다. 도구별 Skill 입구도 같은 run에서 한 번 이 검사를 실행하게 되어 있다.

@@ -4,7 +4,7 @@ This block defines the **always-applied hard guard and Skill routing** for Codex
 
 ## Start order
 
-`P` is this product checkout, `W` is `{{bundle_path}}/workflow`, and `M` is `{{bundle_path}}/methodology`. P-owned settings are in `{{bundle_path}}/project.json`, and P application documents are in `{{bundle_path}}/project/`. An external installation changes only the storage location; it does not change ownership or authority. In {{command_shell}}, use `{{check_command}}` to check the copies, connection, lock and generated files. Relative product/document paths are relative to P unless a separate absolute path is declared.
+`P` is this product checkout, `W` is `{{bundle_path}}/workflow`, and `M` is `{{bundle_path}}/methodology`. P-owned settings are in `{{bundle_path}}/project.json`, and P application documents are in `{{bundle_path}}/project/`. An external installation changes only the storage location; it does not change ownership or authority. In {{command_shell}}, use `{{check_command}}` to check the copies, connection, lock and generated files. If `python3` is unavailable (common on Windows), retry the same arguments with `python` or `py -3` (Python 3.8+); a missing interpreter name is not a failed check, so try the alternative before stopping. Relative product/document paths are relative to P unless a separate absolute path is declared.
 
 1. Apply this block once when entering the repository. If it has not changed in the same run, do not read it again.
 2. Apply the `Human judgment` requirements of M `{{bundle_path}}/methodology/core.md`.

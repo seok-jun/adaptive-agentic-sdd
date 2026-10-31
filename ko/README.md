@@ -51,7 +51,7 @@ Agent: T-31을 만들었습니다. 등급: Large — DB 스키마·마이그레�
 
 ## 빠른 시작
 
-Python 3.8 이상, Git, 그리고 Claude Code나 Codex가 필요합니다. 깨끗한 작업 트리에서 시작하세요(변경은 먼저 커밋하거나 stash).
+Python 3.8 이상(macOS/Linux는 `python3`; Windows는 아래 명령의 같은 인자를 `python` 또는 `py -3`로 실행), Git, 그리고 Claude Code나 Codex가 필요합니다. 깨끗한 작업 트리에서 시작하세요(변경은 먼저 커밋하거나 stash).
 
 Agent가 샌드박스 안에서 돌면 `.agents/`·`.claude/`에 쓰고 커밋할 수 있어야 합니다. Codex `workspace-write` 샌드박스에서는 `.agents/`와 `.git`이 읽기 전용이니, Codex를 `--add-dir <저장소>/.agents`로 시작하고 Git 쓰기가 거부되면 설치 커밋은 직접 하세요.
 
@@ -66,7 +66,7 @@ Agent가 샌드박스 안에서 돌면 `.agents/`·`.claude/`에 쓰고 커밋�
    아무것도 출력되지 않으면 태그의 commit을 확인하지 못한 것이니 멈추고 알려 줘.
 2. 그 commit의 압축 파일을 내려받아 ko/adaptive-sdd/ 폴더를 .adaptive-sdd/에 바이트 그대로 복사해.
    파일 쓰기 도구가 아니라 복사 명령을 써. 제품 코드는 고치지 마.
-3. 실행해: python -I -B .adaptive-sdd/tools/install.py init --project-root .
+3. 실행해: python3 -I -B .adaptive-sdd/tools/install.py init --project-root .
 4. 안내의 3절대로 이 저장소를 관찰한 뒤, 값마다 근거를 붙인 .adaptive-sdd/project.json 초안을 보여 줘.
    init은 예시값을 복사한다. 안내가 "사람" 또는 "사람만"으로 표시한 값은 예시값을 그대로 두지 말고 나에게 물어봐.
    아직 파일은 쓰지 마.
@@ -81,8 +81,8 @@ Agent가 샌드박스 안에서 돌면 `.agents/`·`.claude/`에 쓰고 커밋�
 
 **3. 결과를 확인합니다.**
 
-- `python -I -B .adaptive-sdd/tools/install.py check --project-root .`가 `OK      pinned copy, lock, and generated files match`를 출력합니다.
-- `python -I -B .adaptive-sdd/tools/install.py check-evals --project-root .`가 `0 problem(s)`로 끝납니다.
+- `python3 -I -B .adaptive-sdd/tools/install.py check --project-root .`가 `OK      pinned copy, lock, and generated files match`를 출력합니다.
+- `python3 -I -B .adaptive-sdd/tools/install.py check-evals --project-root .`가 `0 problem(s)`로 끝납니다.
 - `git status`에 아래 경로만 나옵니다.
 
 | 추가·변경 | 내용 |

@@ -4,6 +4,8 @@ This guide covers `v1.0.0-preview.6`. Verify the tag's full commit SHA and pin t
 
 The generated default check/check-evals commands use literal path quoting for PowerShell on Windows and for POSIX sh elsewhere. Run them in the named shell. The project manages the quoting of custom commands.
 
+If `python3` is unavailable (common on Windows), retry the same arguments with `python` or `py -3` (Python 3.8+); a missing interpreter name is not a failed check, so try the alternative before stopping.
+
 This document explains how to place a copy of the methodology in a project, generate the project-dependent files from project values, and give work to an Agent. It is not part of the copy.
 
 ## What this preview is
@@ -48,6 +50,30 @@ Copy-Item "$src/adaptive-sdd/*" .adaptive-sdd -Recurse -Force
 Remove-Item $tmp -Recurse -Force; Remove-Item $zip -Force
 ```
 
+POSIX sh example (bash/zsh):
+
+```sh
+(
+set -eu
+sourceCommit='<full commit SHA verified for v1.0.0-preview.6>'
+if ! printf '%s\n' "$sourceCommit" | LC_ALL=C grep -Eq '^[0-9a-f]{40}$'; then
+  printf '%s\n' 'Set sourceCommit to the reviewed full commit SHA.' >&2
+  exit 1
+fi
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' 0
+trap 'exit 1' HUP INT TERM
+curl -fL "https://github.com/seok-jun/adaptive-agentic-sdd/archive/$sourceCommit.zip" -o "$tmp/source.zip"
+unzip -q "$tmp/source.zip" -d "$tmp"
+src="$tmp/adaptive-agentic-sdd-$sourceCommit"
+for p in methodology workflow templates tools LICENSE MANIFEST.json; do
+  rm -rf ".adaptive-sdd/$p"
+done
+mkdir -p .adaptive-sdd
+cp -R "$src/adaptive-sdd/." .adaptive-sdd/
+)
+```
+
 Use `docs/customization.md` from the same archive, or the commit-pinned address in section 3. In `<verified SHA>` below, put exactly the SHA you selected when downloading the archive. Do not specify `--source-tag` for an unreleased commit. Only when you use a published tag, verify the correspondence between that tag and the commit and record them together.
 
 ## 2. Creating project values
@@ -57,9 +83,9 @@ Use `docs/customization.md` from the same archive, or the commit-pinned address 
 M, W and P are the ownership divisions for common principles, execution procedure, and product facts and settings, respectively. The external installation path is a storage location option; it does not add a separate layer called S or an execution input. Choose a dedicated folder such that it and the product checkout do not contain each other, and place the copy in `.adaptive-sdd/` under it. The following commands are path examples; replace them with locations that are actually allowed. In Windows JSON paths, using `/` reduces confusion over backslash escapes.
 
 ```text
-python -I -B <external-install-path>/.adaptive-sdd/tools/install.py init --project-root <product-checkout> --harness-root <external-install-path>
-python -I -B <external-install-path>/.adaptive-sdd/tools/install.py render --project-root <product-checkout> --harness-root <external-install-path> --source-tag v1.0.0-preview.6 --source-commit <verified SHA>
-python -I -B <external-install-path>/.adaptive-sdd/tools/install.py check --project-root <product-checkout> --harness-root <external-install-path>
+python3 -I -B <external-install-path>/.adaptive-sdd/tools/install.py init --project-root <product-checkout> --harness-root <external-install-path>
+python3 -I -B <external-install-path>/.adaptive-sdd/tools/install.py render --project-root <product-checkout> --harness-root <external-install-path> --source-tag v1.0.0-preview.6 --source-commit <verified SHA>
+python3 -I -B <external-install-path>/.adaptive-sdd/tools/install.py check --project-root <product-checkout> --harness-root <external-install-path>
 ```
 
 P-owned settings, application documents and the lock are generated at the external installation path; `.agentics/adaptive-sdd.json`, the per-tool Skill entries and the AGENTS/CLAUDE marked blocks are generated in P. No duplicate Skill entries are created at the external installation path. The connection's manifest hash, the lock source at the external installation path, the copy's bytes, and the generated outputs in the product and the installation path are checked together. If the connection is missing or its access/pin information is wrong, there is no fallback to another copy. After upgrading the copy, render with the reviewed external installation path given explicitly as `--harness-root`, and update the connection. The tool does not verify the authenticity of the remote source commit.
@@ -93,7 +119,7 @@ The existing commands in `build.verification` and `build.checks` apply together.
 ### Default in-repository installation
 
 ```bash
-python -I -B .adaptive-sdd/tools/install.py init --project-root .
+python3 -I -B .adaptive-sdd/tools/install.py init --project-root .
 ```
 
 Copies the example only when `.adaptive-sdd/project.json` does not exist. If it exists, it is left untouched. The Agent drafts the values in the order of section 3 below, and a human decides them.
@@ -160,8 +186,8 @@ Do not write to the file yet.
 
 ```text
 Write .adaptive-sdd/project.json as just decided, and generate with the commands below. Do not modify the pinned copy.
-python -I -B .adaptive-sdd/tools/install.py render --project-root . --source-tag v1.0.0-preview.6 --source-commit <verified SHA>
-python -I -B .adaptive-sdd/tools/install.py check --project-root .
+python3 -I -B .adaptive-sdd/tools/install.py render --project-root . --source-tag v1.0.0-preview.6 --source-commit <verified SHA>
+python3 -I -B .adaptive-sdd/tools/install.py check --project-root .
 If using the local-docs method, create the items/ and claims/ folders under tracker.root.
 Show me the generated AGENTS.md, CLAUDE.md and .gitattributes blocks and the .adaptive-sdd/project/ documents.
 ```
@@ -192,8 +218,8 @@ Actually running the cases to compare supports costs model calls and money. Do i
 ## 4. Verification and checks
 
 ```bash
-python -I -B .adaptive-sdd/tools/install.py check --project-root .
-python -I -B .adaptive-sdd/tools/install.py check-evals --project-root .
+python3 -I -B .adaptive-sdd/tools/install.py check --project-root .
+python3 -I -B .adaptive-sdd/tools/install.py check-evals --project-root .
 ```
 
 `check` changes nothing. It recomputes and compares the pinned copy, the lock and the generated outputs, and if they differ, it only reports what differs. It also reports files in the pinned copy that are not in the manifest (`EXTRA`) and leftover files that are no longer generated (`STALE`, for example `.agents/skills` after removing codex from `tools`). The per-tool Skill entries are also set to run this check once in the same run.

@@ -49,7 +49,7 @@ Agent: Created T-31. Grade: Large — DB schema/migration (automatic escalation)
 
 ## Quick start
 
-You need Python 3.8+, Git, and Claude Code or Codex. Start from a clean working tree (commit or stash your changes first).
+You need Python 3.8+ (`python3` on macOS/Linux; on Windows, use `python` or `py -3` with the same arguments in the commands below), Git, and Claude Code or Codex. Start from a clean working tree (commit or stash your changes first).
 
 If the agent runs in a sandbox, it must be able to write `.agents/` and `.claude/` and to commit. In Codex's `workspace-write` sandbox, `.agents/` and `.git` are read-only: start Codex with `--add-dir <repository>/.agents`, and make the installation commit yourself if Git writes are refused.
 
@@ -64,7 +64,7 @@ Installation guide: https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0
    If it prints nothing, stop and tell me: the tag's commit could not be resolved.
 2. Download the archive of that commit and copy its adaptive-sdd/ folder byte for byte to .adaptive-sdd/
    with a copy command, not a file-writing tool. Do not modify product code.
-3. Run: python -I -B .adaptive-sdd/tools/install.py init --project-root .
+3. Run: python3 -I -B .adaptive-sdd/tools/install.py init --project-root .
 4. Follow section 3 of the guide: observe this repository, then show me a draft of
    .adaptive-sdd/project.json with the evidence for each value. init copies example values; for every value
    the guide marks "Human" or "Human only", do not keep the example: ask me. Do not write the file yet.
@@ -79,8 +79,8 @@ For the Korean edition, use `ko/adaptive-sdd/` and [`ko/docs/customization.md`](
 
 **3. Check the result.**
 
-- `python -I -B .adaptive-sdd/tools/install.py check --project-root .` prints `OK      pinned copy, lock, and generated files match`.
-- `python -I -B .adaptive-sdd/tools/install.py check-evals --project-root .` ends with `0 problem(s)`.
+- `python3 -I -B .adaptive-sdd/tools/install.py check --project-root .` prints `OK      pinned copy, lock, and generated files match`.
+- `python3 -I -B .adaptive-sdd/tools/install.py check-evals --project-root .` ends with `0 problem(s)`.
 - `git status` shows only the paths below.
 
 | Added or changed | What it is |

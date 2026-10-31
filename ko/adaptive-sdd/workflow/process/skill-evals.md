@@ -64,8 +64,10 @@
 다음 명령은 LLM을 실행하지 않는다.
 
 ```bash
-python -I -B .adaptive-sdd/tools/install.py check-evals --project-root .
+python3 -I -B .adaptive-sdd/tools/install.py check-evals --project-root .
 ```
+
+`python3`가 없으면(Windows에서 흔함) 같은 인자를 `python` 또는 `py -3`(Python 3.8 이상)로 다시 실행하며, 인터프리터 이름을 찾지 못한 것은 검사 실패가 아니므로 중단 전에 대체 명령을 시도한다.
 
 검사 항목: W 사례 파일의 형식(`id`·`prompt` 필수)과 case ID 중복. 이 검사는 사례 구조가 깨지는 것을 막을 뿐이며 **모델 행동 품질 통과를 의미하지 않는다.**
 

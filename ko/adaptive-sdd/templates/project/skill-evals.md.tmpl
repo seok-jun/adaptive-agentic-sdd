@@ -4,6 +4,6 @@
 eval 종류·채점·결과 기록·변경 시 갱신 규칙은 W `process/skill-evals.md`가 원본이다. 이 문서는 프로젝트가 소유한 사례 위치와 실행 명령만 선언한다.
 
 - 프로젝트 사례 위치: {{#if skill_eval.cases_dir}}`{{skill_eval.cases_dir}}`{{else}}미정 — 실제 작업에서 나온 사건 사례를 둘 위치를 정해야 사건 사례를 만들 수 있다{{/if}}
-- 정적 검사 명령: {{#if skill_eval.command}}`{{skill_eval.command}}`{{else}}`{{check_evals_command}}` ({{command_shell}}){{/if}}
+- 정적 검사 명령: {{#if skill_eval.command}}`{{skill_eval.command}}`{{else}}`{{check_evals_command}}` ({{command_shell}}) `python3`가 없으면(Windows에서 흔함) 같은 인자를 `python` 또는 `py -3`(Python 3.8 이상)로 다시 실행하며, 인터프리터 이름을 찾지 못한 것은 검사 실패가 아니므로 중단 전에 대체 명령을 시도한다.{{/if}}
 
 W 사례(`{{bundle_path}}/workflow/skills/*/evals/cases.json`)는 고정 사본이며 프로젝트가 고치지 않는다. 실제 작업에서 나온 사건 사례는 위 프로젝트 사례 위치에 두고, 원 사건 기록을 가리킨다. 사건 사례는 진단용이며 W 사례의 기대값을 바꾸지 않는다.

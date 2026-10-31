@@ -64,8 +64,10 @@ Decision record format:
 The following command does not run an LLM.
 
 ```bash
-python -I -B .adaptive-sdd/tools/install.py check-evals --project-root .
+python3 -I -B .adaptive-sdd/tools/install.py check-evals --project-root .
 ```
+
+If `python3` is unavailable (common on Windows), retry the same arguments with `python` or `py -3` (Python 3.8+); a missing interpreter name is not a failed check, so try the alternative before stopping.
 
 Checked items: the format of W case files (`id` and `prompt` required) and duplicate case IDs. This check only prevents the case structure from breaking and **does not mean the model behavior quality passed.**
 

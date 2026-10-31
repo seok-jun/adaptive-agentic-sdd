@@ -2,6 +2,7 @@
 # Creates a disposable demo repository, a local bare origin, tracker and worktree folders,
 # and the agent prompt for the macOS first-use check. Safe to rerun: it replaces $ROOT.
 set -euo pipefail
+export PYTHONDONTWRITEBYTECODE=1
 
 ROOT="${1:-$HOME/adaptive-sdd-mac-test}"
 SHA="${2:-1d91d9448621c29e39c248bf1c1f23a098ecb02d}"
@@ -63,6 +64,8 @@ EOF
 
 printf '# Library demo\n\nModules: `catalog/` (search), `members/` (registry).\n\nTests: `python3 -m unittest discover -s tests -t .`\n' > README.md
 printf '# Agent notes\n\nKeep changes small and add a regression test for every bug fix.\n' > AGENTS.md
+
+printf '__pycache__/\n' > .gitignore
 
 git init -q -b main
 git add -A

@@ -4,6 +4,6 @@
 W `process/skill-evals.md` is the source of the eval types, grading, result records and the update rules on change. This document declares only the location of project-owned cases and the execution command.
 
 - Project case location: {{#if skill_eval.cases_dir}}`{{skill_eval.cases_dir}}`{{else}}Not set — incident cases can be made only after deciding where to keep incident cases from real work{{/if}}
-- Static check command: {{#if skill_eval.command}}`{{skill_eval.command}}`{{else}}`{{check_evals_command}}` ({{command_shell}}){{/if}}
+- Static check command: {{#if skill_eval.command}}`{{skill_eval.command}}`{{else}}`{{check_evals_command}}` ({{command_shell}}) If `python3` is unavailable (common on Windows), retry the same arguments with `python` or `py -3` (Python 3.8+); a missing interpreter name is not a failed check, so try the alternative before stopping.{{/if}}
 
 The W cases (`{{bundle_path}}/workflow/skills/*/evals/cases.json`) are a pinned copy, and the project does not edit them. Keep incident cases from real work in the project case location above, pointing to the original incident record. Incident cases are diagnostic and do not change the expected values of the W cases.
