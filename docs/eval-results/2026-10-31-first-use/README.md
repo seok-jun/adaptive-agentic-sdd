@@ -1,12 +1,13 @@
 # First-use runs from the README (2026-10-31)
 
-Three runs in which a fresh agent session read only the README and the installation guide and tried, in a disposable repository with a local bare `origin`: **A** install and commit, **B** "Your first task" (fix an off-by-one in `catalog.search.page` inside `catalog/` and add a regression test), **C** undo the installation. The human answers were written into the prompt in advance, including a one-task instruction to merge. Raw transcripts and the agents' own reports stay outside the repository; the results below were checked against the disposable repositories.
+Four runs in which a fresh agent session read only the README and the installation guide and tried, in a disposable repository with a local bare `origin`: **A** install and commit, **B** "Your first task" (fix an off-by-one in `catalog.search.page` inside `catalog/` and add a regression test), **C** undo the installation. The human answers were written into the prompt in advance, including a one-task instruction to merge. Raw transcripts and the agents' own reports stay outside the repository; the results below were checked against the disposable repositories.
 
 | Run | Source | A install | B first task | C undo |
 | --- | --- | --- | --- | --- |
 | 1. Claude Code agent (`claude-opus-5-5`), English | candidate `d7a2b27` | done | done: Small, claim before first edit, module tests first, full suite, merge, `[PRODUCT COMPLETE]`, release | done (revert; not pushed) |
 | 2. Codex CLI 0.163.0 (`gpt-6-astra`, medium), Korean | candidate `d7a2b27` | installed and checked; **commit blocked**: the `workspace-write` sandbox makes `.git` read-only | not started | blocked |
 | 3. Codex, same settings, Korean | published tag `v1.0.0-preview.6` | first attempt: **render blocked**, `.agents/` is read-only in the sandbox. Second attempt with `--add-dir <repo>/.agents` and the Git data folder outside `.git`: done, committed and pushed | **BLOCKED** at implementation entry: no fresh evidence that the current model meets the phase floor | done (revert pushed; checkout equals the initial commit) |
+| 4. Codex, same settings, Korean | candidate `cde2cbd` with policy c′ | done (`.agents/` writable, Git data outside `.git`) | **done**: Small, claim before first edit, failing regression test first, module tests, full suite, merge, `[PRODUCT COMPLETE]`, release; model recorded as unconfirmed, no deny applied | done (revert pushed to both branches; product fix kept) |
 
 ## Findings
 
@@ -17,4 +18,4 @@ Three runs in which a fresh agent session read only the README and the installat
 
 ## Limits
 
-Three runs on one Windows machine, with human answers supplied in advance. Run 1 was a Claude agent inside a Claude Code session, not a separate CLI process. These runs show where a first-time user can get stuck; they do not measure how often, or any effect on outcomes, rework or cost.
+Four runs on one Windows machine, with human answers supplied in advance. Run 1 was a Claude agent inside a Claude Code session, not a separate CLI process. These runs show where a first-time user can get stuck; they do not measure how often, or any effect on outcomes, rework or cost.
