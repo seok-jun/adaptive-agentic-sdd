@@ -59,7 +59,7 @@ Installation guide: https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0
 
 1. Resolve the tag to its full commit SHA:
    git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.6^{}"
-   If it prints nothing, stop and tell me: the tag does not exist.
+   If it prints nothing, stop and tell me: the tag's commit could not be resolved.
 2. Download the archive of that commit and copy its adaptive-sdd/ folder byte for byte to .adaptive-sdd/
    with a copy command, not a file-writing tool. Do not modify product code.
 3. Run: python -I -B .adaptive-sdd/tools/install.py init --project-root .
@@ -87,7 +87,7 @@ For the Korean edition, use `ko/adaptive-sdd/` and [`ko/docs/customization.md`](
 | `.claude/skills/<4 skills>/SKILL.md`, `.agents/skills/<4 skills>/SKILL.md` | Short entry files for Claude Code and Codex (only for the tools you chose) |
 | `AGENTS.md`, `CLAUDE.md`, `.gitattributes` | One marked block from `adaptive-sdd:begin` to `adaptive-sdd:end`; your existing content outside it is kept |
 
-**Undo.** Before you commit: run `git restore` on the files that existed before, and delete `.adaptive-sdd/`, the skill entry folders it created and any of `AGENTS.md`, `CLAUDE.md`, `.gitattributes` the installer created. After you commit: revert the installation commit, and push the revert if the installation was pushed; branches created after the installation still contain it until they are merged or deleted. Work records under a `local-docs` tracker folder are outside the repository and are not touched.
+**Undo.** Before you commit: run `git restore` on the files that existed before, and delete `.adaptive-sdd/`, the skill entry folders it created and any of `AGENTS.md`, `CLAUDE.md`, `.gitattributes` the installer created. After you commit: revert the installation commit, and push the revert if the installation was pushed; a branch created after the installation keeps it until you revert it on that branch or merge a branch that contains the revert into it. Work records under a `local-docs` tracker folder are outside the repository and are not touched.
 
 ## Your first task
 

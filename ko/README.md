@@ -61,7 +61,7 @@ Python 3.8 이상, Git, 그리고 Claude Code나 Codex가 필요합니다. 깨�
 
 1. 태그의 전체 commit SHA를 확인해:
    git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.6^{}"
-   아무것도 출력되지 않으면 태그가 없는 것이니 멈추고 알려 줘.
+   아무것도 출력되지 않으면 태그의 commit을 확인하지 못한 것이니 멈추고 알려 줘.
 2. 그 commit의 압축 파일을 내려받아 ko/adaptive-sdd/ 폴더를 .adaptive-sdd/에 바이트 그대로 복사해.
    파일 쓰기 도구가 아니라 복사 명령을 써. 제품 코드는 고치지 마.
 3. 실행해: python -I -B .adaptive-sdd/tools/install.py init --project-root .
@@ -89,7 +89,7 @@ Python 3.8 이상, Git, 그리고 Claude Code나 Codex가 필요합니다. 깨�
 | `.claude/skills/<스킬 4개>/SKILL.md`, `.agents/skills/<스킬 4개>/SKILL.md` | Claude Code·Codex용 짧은 입구 파일(고른 도구만) |
 | `AGENTS.md`, `CLAUDE.md`, `.gitattributes` | `adaptive-sdd:begin`부터 `adaptive-sdd:end`까지의 표시 구간 하나. 구간 밖의 기존 내용은 그대로 |
 
-**되돌리기.** 커밋 전이면, 원래 있던 파일은 `git restore`로 되돌리고 `.adaptive-sdd/`, 설치기가 만든 스킬 입구 폴더, 설치기가 새로 만든 `AGENTS.md`·`CLAUDE.md`·`.gitattributes`를 지웁니다. 커밋 뒤면 설치 커밋을 revert하고, 설치를 push했다면 revert도 push합니다. 설치 뒤에 만든 브랜치에는 병합하거나 지울 때까지 설치가 남아 있습니다. `local-docs` 작업 폴더의 기록은 저장소 밖에 있어 건드리지 않습니다.
+**되돌리기.** 커밋 전이면, 원래 있던 파일은 `git restore`로 되돌리고 `.adaptive-sdd/`, 설치기가 만든 스킬 입구 폴더, 설치기가 새로 만든 `AGENTS.md`·`CLAUDE.md`·`.gitattributes`를 지웁니다. 커밋 뒤면 설치 커밋을 revert하고, 설치를 push했다면 revert도 push합니다. 설치 뒤에 만든 브랜치에는 그 브랜치에서 revert하거나 revert가 들어간 브랜치를 그 브랜치에 병합할 때까지 설치가 남습니다. `local-docs` 작업 폴더의 기록은 저장소 밖에 있어 건드리지 않습니다.
 
 ## 첫 작업
 

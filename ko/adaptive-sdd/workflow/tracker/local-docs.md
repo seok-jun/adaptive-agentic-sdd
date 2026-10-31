@@ -27,7 +27,7 @@
 | assignee | `## 메타`의 `담당:` 줄 |
 | 생성할 때 Priority·grade 값 지정 | 문서를 만드는 같은 쓰기에서 `## 메타`의 `priority:`·`grade:` 줄을 쓴다 |
 | `priority:*` 값 교체 | `## 메타`의 `priority:` 줄을 고쳐 쓴다(본문·메타를 고칠 수 있는 lane·Agent만) |
-| Issue 번호 순서 | `<ID>`의 순서. generated는 `<접두사>-<번호>`의 번호, external은 선언한 `id_format`의 순서 |
+| Issue 번호 순서 | `<ID>`. 위 Issue 번호와 같은 대응 |
 | Issue 댓글 | `## 기록`에 덧붙이는 항목. 아래 "기록 항목" 형식 |
 | 댓글 URL / ID | `items/<ID>.md#<항목 id>` |
 | 댓글 `updated_at` | 항목의 `작성` 시각. 항목은 수정하지 않으므로 작성 시각이 곧 갱신 시각이다 |

@@ -31,7 +31,7 @@ ADAPTER_ROWS = {
         'local-docs.md': (
             ('Setting the Priority/grade values at creation', 'in the same write that creates the document'),
             ('Replacing a `priority:*` value', 'Rewrite the `priority:` line in `## Meta`'),
-            ('Order of Issue numbers', 'the number of a generated `<prefix>-<number>` ID; for external IDs, the order of the declared `id_format`'),
+            ('Order of Issue numbers', '`<ID>`, the same mapping as the Issue number above'),
             ('`Closes #N` in the PR body', 'The `closes: <ID>` line of the `[IMPLEMENTATION SUMMARY]` entry'),
             ('The `product-complete:` JSON of `[PRODUCT COMPLETE]`', '"issue":"<ID>","pull_request":null'),
         ),
@@ -47,7 +47,7 @@ ADAPTER_ROWS = {
         'local-docs.md': (
             ('생성할 때 Priority·grade 값 지정', '문서를 만드는 같은 쓰기에서'),
             ('`priority:*` 값 교체', '`## 메타`의 `priority:` 줄을 고쳐 쓴다'),
-            ('Issue 번호 순서', 'generated는 `<접두사>-<번호>`의 번호, external은 선언한 `id_format`의 순서'),
+            ('Issue 번호 순서', '`<ID>`. 위 Issue 번호와 같은 대응'),
             ('PR body의 `Closes #N`', '`[IMPLEMENTATION SUMMARY]` 항목의 `closes: <ID>` 줄'),
             ('`[PRODUCT COMPLETE]`의 `product-complete:` JSON', '"issue":"<ID>","pull_request":null'),
         ),
