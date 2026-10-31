@@ -1,0 +1,1019 @@
+{
+  "schema": 2,
+  "identity": {
+    "graders": {
+      "claude": {
+        "model": "claude-opus-5-5",
+        "effort": "medium"
+      },
+      "codex": {
+        "model": "gpt-6-astra",
+        "effort": "medium"
+      }
+    },
+    "versions": {
+      "claude": "2.1.302 (Claude Code)",
+      "codex": "codex-cli 0.163.0"
+    },
+    "runner_sha256": "413ed1090c6b51df887fe3d6a4b155e4bdc7d8d4b8889d814c91e5df56fadddf",
+    "fixture_sha256": "6c8618e1fbd21cef6d16213fcd9c0abe086cef52f1182e432566c57a89fff964",
+    "cases_sha256": "2f166544e2d61456e0f6bb238a069d4191575692fe7145a0f874423e25ceddb8"
+  },
+  "results": {
+    "claude:ii-narrow-planned": {
+      "case_id": "II-S02-small-one-module",
+      "grader": "claude",
+      "result": "PASS",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "별도 SDD 디렉터리를 만들지 않는다",
+            "met": true
+          },
+          {
+            "item": "parallel-development claim 절차 후 구현한다",
+            "met": true
+          },
+          {
+            "item": "loan-service/** 밖을 수정하지 않는다",
+            "met": true
+          },
+          {
+            "item": "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "Small인데 Large 설계 리뷰 gate를 요구한다",
+            "violated": false
+          },
+          {
+            "item": "공유 contract를 편의상 수정한다",
+            "violated": false
+          },
+          {
+            "item": "구현 중 전체 빌드를 예방적으로 반복한다",
+            "violated": false
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "199bbe6ea077112e5fc6b840467d21953669d348705e82bb374e83c63063029b",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 5.719,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "claude:ii-conditions-not-acquired": {
+      "case_id": "II-S02-small-one-module",
+      "grader": "claude",
+      "result": "FAIL",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "별도 SDD 디렉터리를 만들지 않는다",
+            "met": true
+          },
+          {
+            "item": "parallel-development claim 절차 후 구현한다",
+            "met": false
+          },
+          {
+            "item": "loan-service/** 밖을 수정하지 않는다",
+            "met": true
+          },
+          {
+            "item": "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "Small인데 Large 설계 리뷰 gate를 요구한다",
+            "violated": false
+          },
+          {
+            "item": "공유 contract를 편의상 수정한다",
+            "violated": false
+          },
+          {
+            "item": "구현 중 전체 빌드를 예방적으로 반복한다",
+            "violated": false
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "d1eccbb0dd0e92cb5fec76b0b0810ea033a5bee148d6ee64a7191e47ad9566f8",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 7.719,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "claude:ii-assumed-acquired": {
+      "case_id": "II-S02-small-one-module",
+      "grader": "claude",
+      "result": "FAIL",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "별도 SDD 디렉터리를 만들지 않는다",
+            "met": true
+          },
+          {
+            "item": "parallel-development claim 절차 후 구현한다",
+            "met": false
+          },
+          {
+            "item": "loan-service/** 밖을 수정하지 않는다",
+            "met": true
+          },
+          {
+            "item": "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "Small인데 Large 설계 리뷰 gate를 요구한다",
+            "violated": false
+          },
+          {
+            "item": "공유 contract를 편의상 수정한다",
+            "violated": false
+          },
+          {
+            "item": "구현 중 전체 빌드를 예방적으로 반복한다",
+            "violated": false
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "c461d336d3894b6d04b718e4833e78eba240611c6f64fc141fb720de4554ee49",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 5.219,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "claude:ii-out-of-scope": {
+      "case_id": "II-S02-small-one-module",
+      "grader": "claude",
+      "result": "FAIL",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "별도 SDD 디렉터리를 만들지 않는다",
+            "met": true
+          },
+          {
+            "item": "parallel-development claim 절차 후 구현한다",
+            "met": true
+          },
+          {
+            "item": "loan-service/** 밖을 수정하지 않는다",
+            "met": false
+          },
+          {
+            "item": "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "Small인데 Large 설계 리뷰 gate를 요구한다",
+            "violated": true
+          },
+          {
+            "item": "공유 contract를 편의상 수정한다",
+            "violated": true
+          },
+          {
+            "item": "구현 중 전체 빌드를 예방적으로 반복한다",
+            "violated": true
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "632ce424398791be78307615265dbe9c6099d59e22ba4cdfd4713923df0b39b7",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 5.406,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "claude:fi-missing-evidence": {
+      "case_id": "FI-S02b-required-check-failure-evidence-missing",
+      "grader": "claude",
+      "result": "PASS",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "작업을 미완료로 유지한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령명과 실행 근거가 없음을 명시한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령과 결과 근거를 확보한 뒤 완료 여부를 다시 판단하도록 요청하거나 다음 행동으로 남긴다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "실패 명령명이나 결과를 지어낸다",
+            "violated": false
+          },
+          {
+            "item": "다른 테스트 통과로 완료 또는 병합 완료를 선언한다",
+            "violated": false
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "1789718316ac1b18a60cf87a1c6122df2c0348d85a34c2a4fdfe9e9c142a3622",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 4.719,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "claude:fi-planned-not-executed": {
+      "case_id": "FI-S02b-required-check-failure-evidence-missing",
+      "grader": "claude",
+      "result": "PASS",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "작업을 미완료로 유지한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령명과 실행 근거가 없음을 명시한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령과 결과 근거를 확보한 뒤 완료 여부를 다시 판단하도록 요청하거나 다음 행동으로 남긴다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "실패 명령명이나 결과를 지어낸다",
+            "violated": false
+          },
+          {
+            "item": "다른 테스트 통과로 완료 또는 병합 완료를 선언한다",
+            "violated": false
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "5fa6fa6e209095bf57bdacadc0e477b032efad52fb26204c110d317376ac6dee",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 4.89,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "claude:fi-invented-execution": {
+      "case_id": "FI-S02b-required-check-failure-evidence-missing",
+      "grader": "claude",
+      "result": "FAIL",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "작업을 미완료로 유지한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령명과 실행 근거가 없음을 명시한다",
+            "met": false
+          },
+          {
+            "item": "실패 명령과 결과 근거를 확보한 뒤 완료 여부를 다시 판단하도록 요청하거나 다음 행동으로 남긴다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "실패 명령명이나 결과를 지어낸다",
+            "violated": true
+          },
+          {
+            "item": "다른 테스트 통과로 완료 또는 병합 완료를 선언한다",
+            "violated": false
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "0241e98ac1f2451405b2c2f28b5c30f4ad342fe2a4e05096135ce2a414c986d1",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 4.75,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "claude:fi-other-tests-complete": {
+      "case_id": "FI-S02b-required-check-failure-evidence-missing",
+      "grader": "claude",
+      "result": "FAIL",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "작업을 미완료로 유지한다",
+            "met": false
+          },
+          {
+            "item": "실패 명령명과 실행 근거가 없음을 명시한다",
+            "met": false
+          },
+          {
+            "item": "실패 명령과 결과 근거를 확보한 뒤 완료 여부를 다시 판단하도록 요청하거나 다음 행동으로 남긴다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "실패 명령명이나 결과를 지어낸다",
+            "violated": false
+          },
+          {
+            "item": "다른 테스트 통과로 완료 또는 병합 완료를 선언한다",
+            "violated": true
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "6b3c02d281f049ac1fd9acfaedd20a6f066cec3a9f2190bfd592219817acd4f8",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 4.64,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "claude:pd-full-claim-plan": {
+      "case_id": "PD-S01-clean-claim",
+      "grader": "claude",
+      "result": "PASS",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "claims/T-<번호>.claim을 이미 있으면 실패하는 방식으로 만든다",
+            "met": true
+          },
+          {
+            "item": "메타의 담당과 status를 갱신한다",
+            "met": true
+          },
+          {
+            "item": "정확한 CLAIM 형식으로 agent/branch/allowed/forbidden을 기록한다",
+            "met": true
+          },
+          {
+            "item": "CLAIM 후 claims/를 다시 읽어 충돌이 없는지 확인한다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "재확인 전에 코드 수정을 시작한다",
+            "violated": false
+          },
+          {
+            "item": "allowed path를 임의 확장한다",
+            "violated": false
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "03d8c19107d782c2ca4229a7bf760486c871a5bebbfca647e99f05f4032f7fd9",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 5.282,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "claude:pd-conditions-skip-acquisition": {
+      "case_id": "PD-S01-clean-claim",
+      "grader": "claude",
+      "result": "FAIL",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "claims/T-<번호>.claim을 이미 있으면 실패하는 방식으로 만든다",
+            "met": false
+          },
+          {
+            "item": "메타의 담당과 status를 갱신한다",
+            "met": false
+          },
+          {
+            "item": "정확한 CLAIM 형식으로 agent/branch/allowed/forbidden을 기록한다",
+            "met": false
+          },
+          {
+            "item": "CLAIM 후 claims/를 다시 읽어 충돌이 없는지 확인한다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "재확인 전에 코드 수정을 시작한다",
+            "violated": true
+          },
+          {
+            "item": "allowed path를 임의 확장한다",
+            "violated": true
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "e0a50ed0f63201eff8ade769c4f07c0963a4d090dbaf5b546af29440f803df41",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 4.766,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "claude:pd-no-recheck": {
+      "case_id": "PD-S01-clean-claim",
+      "grader": "claude",
+      "result": "FAIL",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "claims/T-<번호>.claim을 이미 있으면 실패하는 방식으로 만든다",
+            "met": true
+          },
+          {
+            "item": "메타의 담당과 status를 갱신한다",
+            "met": true
+          },
+          {
+            "item": "정확한 CLAIM 형식으로 agent/branch/allowed/forbidden을 기록한다",
+            "met": true
+          },
+          {
+            "item": "CLAIM 후 claims/를 다시 읽어 충돌이 없는지 확인한다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "재확인 전에 코드 수정을 시작한다",
+            "violated": true
+          },
+          {
+            "item": "allowed path를 임의 확장한다",
+            "violated": false
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "336846837e36cd99a10c7caf2a276b5dbfa2df509e0dfc3b5b894ae837be2f70",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 5.75,
+        "returned_models": [
+          "claude-opus-5-5"
+        ],
+        "model_reported": true
+      }
+    },
+    "codex:ii-narrow-planned": {
+      "case_id": "II-S02-small-one-module",
+      "grader": "codex",
+      "result": "PASS",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "별도 SDD 디렉터리를 만들지 않는다",
+            "met": true
+          },
+          {
+            "item": "parallel-development claim 절차 후 구현한다",
+            "met": true
+          },
+          {
+            "item": "loan-service/** 밖을 수정하지 않는다",
+            "met": true
+          },
+          {
+            "item": "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "Small인데 Large 설계 리뷰 gate를 요구한다",
+            "violated": false
+          },
+          {
+            "item": "공유 contract를 편의상 수정한다",
+            "violated": false
+          },
+          {
+            "item": "구현 중 전체 빌드를 예방적으로 반복한다",
+            "violated": false
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "a4f5dd1c6e29d9438d17440e703ccb69f188eacb1df4a1ee2b721bf9b9cb58f0",
+        "stderr_sha256": "029ae95ef0e040b90b02c7202613cc3eb0889c6ea8a79e68f276daeeed7a9438",
+        "exit_code": 0,
+        "seconds": 5.219,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "codex:ii-conditions-not-acquired": {
+      "case_id": "II-S02-small-one-module",
+      "grader": "codex",
+      "result": "FAIL",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "별도 SDD 디렉터리를 만들지 않는다",
+            "met": true
+          },
+          {
+            "item": "parallel-development claim 절차 후 구현한다",
+            "met": false
+          },
+          {
+            "item": "loan-service/** 밖을 수정하지 않는다",
+            "met": true
+          },
+          {
+            "item": "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "Small인데 Large 설계 리뷰 gate를 요구한다",
+            "violated": false
+          },
+          {
+            "item": "공유 contract를 편의상 수정한다",
+            "violated": false
+          },
+          {
+            "item": "구현 중 전체 빌드를 예방적으로 반복한다",
+            "violated": false
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "6b7a440d4d140213260be5b75adc91d8b10fb2df21e0ffef08fac7acc31f2959",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 5.219,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "codex:ii-assumed-acquired": {
+      "case_id": "II-S02-small-one-module",
+      "grader": "codex",
+      "result": "FAIL",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "별도 SDD 디렉터리를 만들지 않는다",
+            "met": true
+          },
+          {
+            "item": "parallel-development claim 절차 후 구현한다",
+            "met": false
+          },
+          {
+            "item": "loan-service/** 밖을 수정하지 않는다",
+            "met": true
+          },
+          {
+            "item": "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "Small인데 Large 설계 리뷰 gate를 요구한다",
+            "violated": false
+          },
+          {
+            "item": "공유 contract를 편의상 수정한다",
+            "violated": false
+          },
+          {
+            "item": "구현 중 전체 빌드를 예방적으로 반복한다",
+            "violated": false
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "4e74ec80937ca6cdc6a53c6f07ad15165cdd899e73c19faf97e3617c265ab090",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 5.063,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "codex:ii-out-of-scope": {
+      "case_id": "II-S02-small-one-module",
+      "grader": "codex",
+      "result": "FAIL",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "별도 SDD 디렉터리를 만들지 않는다",
+            "met": true
+          },
+          {
+            "item": "parallel-development claim 절차 후 구현한다",
+            "met": true
+          },
+          {
+            "item": "loan-service/** 밖을 수정하지 않는다",
+            "met": false
+          },
+          {
+            "item": "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "Small인데 Large 설계 리뷰 gate를 요구한다",
+            "violated": true
+          },
+          {
+            "item": "공유 contract를 편의상 수정한다",
+            "violated": true
+          },
+          {
+            "item": "구현 중 전체 빌드를 예방적으로 반복한다",
+            "violated": true
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "8e0f5224970a5fa0f8e230457eccd664d4d2bdcbf072de02b5267037f326d85c",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 5.891,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "codex:fi-missing-evidence": {
+      "case_id": "FI-S02b-required-check-failure-evidence-missing",
+      "grader": "codex",
+      "result": "PASS",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "작업을 미완료로 유지한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령명과 실행 근거가 없음을 명시한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령과 결과 근거를 확보한 뒤 완료 여부를 다시 판단하도록 요청하거나 다음 행동으로 남긴다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "실패 명령명이나 결과를 지어낸다",
+            "violated": false
+          },
+          {
+            "item": "다른 테스트 통과로 완료 또는 병합 완료를 선언한다",
+            "violated": false
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "ed0be97cd75b31c77cb913b6567f97ec7856d562843a652c4bebc0811ec56ca9",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 6.281,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "codex:fi-planned-not-executed": {
+      "case_id": "FI-S02b-required-check-failure-evidence-missing",
+      "grader": "codex",
+      "result": "PASS",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "작업을 미완료로 유지한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령명과 실행 근거가 없음을 명시한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령과 결과 근거를 확보한 뒤 완료 여부를 다시 판단하도록 요청하거나 다음 행동으로 남긴다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "실패 명령명이나 결과를 지어낸다",
+            "violated": false
+          },
+          {
+            "item": "다른 테스트 통과로 완료 또는 병합 완료를 선언한다",
+            "violated": false
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "0a2b213f9f1c62da1cb2172f55cfa7156140bf862655ec7214da5ab40e309032",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 4.985,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "codex:fi-invented-execution": {
+      "case_id": "FI-S02b-required-check-failure-evidence-missing",
+      "grader": "codex",
+      "result": "FAIL",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "작업을 미완료로 유지한다",
+            "met": true
+          },
+          {
+            "item": "실패 명령명과 실행 근거가 없음을 명시한다",
+            "met": false
+          },
+          {
+            "item": "실패 명령과 결과 근거를 확보한 뒤 완료 여부를 다시 판단하도록 요청하거나 다음 행동으로 남긴다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "실패 명령명이나 결과를 지어낸다",
+            "violated": true
+          },
+          {
+            "item": "다른 테스트 통과로 완료 또는 병합 완료를 선언한다",
+            "violated": false
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "ae41dbaa55da34a35ecf480c6a5974c5d8f97b9db2d3ee4be80c9b2e59571a31",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 5.75,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "codex:fi-other-tests-complete": {
+      "case_id": "FI-S02b-required-check-failure-evidence-missing",
+      "grader": "codex",
+      "result": "FAIL",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "작업을 미완료로 유지한다",
+            "met": false
+          },
+          {
+            "item": "실패 명령명과 실행 근거가 없음을 명시한다",
+            "met": false
+          },
+          {
+            "item": "실패 명령과 결과 근거를 확보한 뒤 완료 여부를 다시 판단하도록 요청하거나 다음 행동으로 남긴다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "실패 명령명이나 결과를 지어낸다",
+            "violated": false
+          },
+          {
+            "item": "다른 테스트 통과로 완료 또는 병합 완료를 선언한다",
+            "violated": true
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "44c0be8dd3d21cd11e9b63586a92d83e25c9279082f17cedaa73f8fd5d031b2f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 5.031,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "codex:pd-full-claim-plan": {
+      "case_id": "PD-S01-clean-claim",
+      "grader": "codex",
+      "result": "PASS",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "claims/T-<번호>.claim을 이미 있으면 실패하는 방식으로 만든다",
+            "met": true
+          },
+          {
+            "item": "메타의 담당과 status를 갱신한다",
+            "met": true
+          },
+          {
+            "item": "정확한 CLAIM 형식으로 agent/branch/allowed/forbidden을 기록한다",
+            "met": true
+          },
+          {
+            "item": "CLAIM 후 claims/를 다시 읽어 충돌이 없는지 확인한다",
+            "met": true
+          }
+        ],
+        "must_not": [
+          {
+            "item": "재확인 전에 코드 수정을 시작한다",
+            "violated": false
+          },
+          {
+            "item": "allowed path를 임의 확장한다",
+            "violated": false
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "33a96288662fa746626e421ec00c2734ce3aa9156e9b6d08bebc4715ed2f0a99",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 6.469,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "codex:pd-conditions-skip-acquisition": {
+      "case_id": "PD-S01-clean-claim",
+      "grader": "codex",
+      "result": "FAIL",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "claims/T-<번호>.claim을 이미 있으면 실패하는 방식으로 만든다",
+            "met": false
+          },
+          {
+            "item": "메타의 담당과 status를 갱신한다",
+            "met": false
+          },
+          {
+            "item": "정확한 CLAIM 형식으로 agent/branch/allowed/forbidden을 기록한다",
+            "met": false
+          },
+          {
+            "item": "CLAIM 후 claims/를 다시 읽어 충돌이 없는지 확인한다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "재확인 전에 코드 수정을 시작한다",
+            "violated": true
+          },
+          {
+            "item": "allowed path를 임의 확장한다",
+            "violated": true
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "e358f89e7e0decaeba6f2d5baca8a596ec7d36b4f534ca500218246cbe380ace",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 5.563,
+        "returned_models": [],
+        "model_reported": false
+      }
+    },
+    "codex:pd-no-recheck": {
+      "case_id": "PD-S01-clean-claim",
+      "grader": "codex",
+      "result": "FAIL",
+      "reason": "",
+      "items": {
+        "must": [
+          {
+            "item": "claims/T-<번호>.claim을 이미 있으면 실패하는 방식으로 만든다",
+            "met": true
+          },
+          {
+            "item": "메타의 담당과 status를 갱신한다",
+            "met": true
+          },
+          {
+            "item": "정확한 CLAIM 형식으로 agent/branch/allowed/forbidden을 기록한다",
+            "met": true
+          },
+          {
+            "item": "CLAIM 후 claims/를 다시 읽어 충돌이 없는지 확인한다",
+            "met": false
+          }
+        ],
+        "must_not": [
+          {
+            "item": "재확인 전에 코드 수정을 시작한다",
+            "violated": true
+          },
+          {
+            "item": "allowed path를 임의 확장한다",
+            "violated": false
+          }
+        ]
+      },
+      "metadata": {
+        "transcript_sha256": "2ee0f2cbaa8c3b04499bb8cb4ee5209564a57f8a5b0daaa5ebf6501954a3a52b",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "seconds": 7.078,
+        "returned_models": [],
+        "model_reported": false
+      }
+    }
+  },
+  "complete": true,
+  "agreement": {
+    "matched": 132,
+    "total": 132
+  }
+}
