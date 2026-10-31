@@ -53,7 +53,7 @@ Agent: T-31을 만들었습니다. 등급: Large — DB 스키마·마이그레�
 
 Python 3.8 이상(macOS/Linux는 `python3`; Windows는 아래 명령의 같은 인자를 `python` 또는 `py -3`로 실행), Git, 그리고 Claude Code나 Codex가 필요합니다. 깨끗한 작업 트리에서 시작하세요(변경은 먼저 커밋하거나 stash).
 
-Agent가 샌드박스 안에서 돌면 `.agents/`·`.claude/`에 쓰고 커밋할 수 있어야 합니다. Codex `workspace-write` 샌드박스에서는 `.agents/`와 `.git`이 읽기 전용이니, Codex를 `--add-dir <저장소>/.agents`로 시작하고 Git 쓰기가 거부되면 설치 커밋은 직접 하세요.
+Agent가 샌드박스 안에서 돌면 `.agents/`·`.claude/`에 쓰고 커밋할 수 있어야 합니다. Codex `workspace-write` 샌드박스에서는 `.agents/`와 `.git`이 읽기 전용이니, Codex를 `--add-dir <저장소>/.agents`로 시작하고 Git 쓰기가 거부되면 설치 커밋은 직접 하세요. 이후에도 같습니다. 첫 작업에서 worktree를 만들고 커밋·병합하므로, 거부된 Git 명령은 직접 실행하거나 `.git` 쓰기를 허용하는 Codex 설정을 쓰세요.
 
 **1. 저장소 최상위에서 Agent에게 붙여 넣습니다.**
 
@@ -113,7 +113,7 @@ Adaptive SDD로 <한 모듈 안의 작은 변경> 작업 항목을 만들고, �
 
 - **측정하지 않음:** 결과·재작업·비용에 대한 효과는 측정하지 않았습니다. 절차는 한 제품에서 다듬었고, 그것이 다른 곳에서의 효과를 증명하지는 않습니다.
 - **행동 평가:** 첫 도구 간 기준선으로 한국어 사례 12개 × Claude Code·Codex × 3회를 실행했습니다(Claude Code PASS 21 / FAIL 14 / INVALID 1, Codex PASS 22 / FAIL 14) — [기록](../docs/eval-results/2026-10-30/README.md). 문구 수정 두 개를 사후 짝 비교한 결과 전체 개선은 관찰되지 않았습니다 — [기록](../docs/eval-results/2026-10-30-skill-comparison/paired-summary.md). 실패도 채점된 그대로 공개합니다. 기준선과 preview.6 작업 관리 확인에서는 평가 대상 프로젝트 안에서 정답 사례 파일을 읽을 수 있었으므로 깨끗한 근거가 아닙니다. 짝 비교에서는 그 파일을 제거했습니다.
-- **This release:** VALIDATION_PLACEHOLDER
+- **이번 릴리스:** Windows·Python 3.12.2에서 실행 테스트 89개가 모두 통과했고, 두 번들 manifest(각 66개 파일)가 일치했으며, 리뷰한 후보(`0a65db9`)의 압축본이 두 판 × 두 작업 관리 방식 모두에서 `init`, `render`, `check`, `check-evals`(사례 83개)를 통과했습니다. 읽기 전용 독립 리뷰(Codex `gpt-6-astra`, high)는 출시 차단 문제 없이 P2 1건을 지적했고 README 샌드박스 안내에서 고쳤습니다. 선택 사항인 P3 문구 제안 2건은 반영하지 않았습니다.
 - **macOS 호환성:** 이번 릴리스는 생성되는 POSIX 검사 명령이 `python3`를 쓰도록 고쳤습니다. 같은 Mac에서 `python` 명령 없이 수정 커밋 `4986f1e`를 다시 실행해 테스트 89개가 모두 통과했습니다([보고](https://github.com/seok-jun/adaptive-agentic-sdd/pull/6#issuecomment-6541138071)). 앞선 보조 walkthrough에서는 설치, Small 작업, Undo를 완료했으며, 최초 실패와 호환 alias를 사용한 진단은 [기록](../docs/eval-results/2026-10-31-macos-first-use/README.md)에 있습니다. 사전 정보 없는 독립 첫 사용 평가는 아닙니다. 실제 GitHub tracker 작업은 실행하지 않았습니다.
 - **모델 routing(c′ 정책 완화):** 저장소 소유자가 승인한 변경으로, [routing 적격 규칙](adaptive-sdd/workflow/skills/_shared/execution-routing.md#두-축-routing)을 따르는 일반 Trivial/Small 작업의 현재 모델·수동 선택 경로에서는 역량을 입증하는 근거를 요구하지 않습니다. 그 밖의 현재 모델·수동 선택 경로에는 최신 호스트 근거나 관찰 결과를 인용해 사람이 확인한 범위 한정 평가가 필요합니다. 자동 전환·위임·대체 경로에는 여전히 PASS가 필요합니다. 역량 표가 비어 있는 Codex 첫 사용 실행에서 Small 작업을 처음부터 끝까지 완료했습니다([기록](../docs/eval-results/2026-10-31-first-use/README.md)). 이것이 결과·재작업·비용에 대한 효과를 입증하지는 않습니다.
 - **Runner v2:** 평가 대상 번들에서 정답 파일을 제외합니다. 합성 답변 11개로 한 채점기 보정에서는 두 채점기를 합쳐 132/132개 항목이 일치했습니다([기록](../docs/eval-results/2026-10-31-grader-calibration/README.md)). c′ 행동 확인 결과는 PASS 5 / FAIL 9 / INVALID 2였고, 채점된 14회에서 `must_not` 위반은 없었습니다. 모든 Codex 평가 실행에서 파일을 읽지 못했고 정상 진행 사례에 Issue ID가 없어 약한 근거입니다. 이번 릴리스에서는 runner를 고치지 않았고 조건을 새로 고정한 실행도 하지 않았습니다([기록](../docs/eval-results/2026-10-31-routing-cprime/README.md)).

@@ -28,7 +28,10 @@ Release documentation (no rule meaning change):
 
 - Both READMEs and installation guides target preview.7. The README openings describe risk-adaptive planning, review and verification without unsupported comparisons to other tools; both status sections distinguish the release's changes from historical checks and their limits. This packaging step changes documentation only, with no additional M/W rule change.
 
-Validation: VALIDATION_PLACEHOLDER
+Validation (2026-10-31, Windows, Python 3.12.2) on the reviewed candidate `0a65db904cfe71f2e8f96a0b1b3fa7f7d181bb61`: all 89 executable tests passed; both 66-file bundle manifests matched; `git diff --check` passed; a `git archive` of the candidate installed in disposable projects for both editions with `local-docs` and `github` passed `init`, `render --source-commit`, `check` and `check-evals` (83 cases); relative links and anchors in both READMEs, both guides and the CHANGELOG resolved. The release commit adds only README and CHANGELOG text after that candidate, and the same checks were repeated on it.
+
+- Independent review: a fresh Codex session (`gpt-6-astra`, reasoning high, read-only, no conversation history) reviewed `9e69616..0a65db9`: no P1, one P2, two P3. The P2 (the Codex sandbox note covered only the installation commit, not the first task's worktree, commit and merge) was fixed in both READMEs. The P3s (fallback wording that names `python3` while external Windows commands start with `python`; naming the installed files in the opening) were not applied.
+- Not run: live GitHub tracker operations, a blind first-use run on POSIX, effect on outcomes, rework or cost.
 
 ## 1.0.0-preview.6 — 2026-10-31
 
