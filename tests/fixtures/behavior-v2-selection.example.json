@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "edition": "ko",
+  "runs_per_case": 1,
+  "agents": ["claude", "codex"],
+  "max_retries": 0,
+  "cases": [
+    {
+      "id": "II-S02-small-one-module",
+      "project_overrides": {
+        "build": {
+          "tool": "Gradle",
+          "jdk_major": "21",
+          "unix_wrapper": "./gradlew",
+          "windows_wrapper": ".\\gradlew.bat",
+          "module_unit": "loan-service"
+        },
+        "review": {
+          "large_mode": "single",
+          "blind_reviewer_selection": "optional"
+        }
+      }
+    },
+    {"id": "FI-S02b-required-check-failure-evidence-missing"}
+  ]
+}
