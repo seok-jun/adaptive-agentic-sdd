@@ -84,6 +84,8 @@ P 소유 설정·적용 문서·lock은 외부 설치 경로에, `.agentics/adap
 | `routing.capabilities` | `host, model, tier, reasoning, source, identity, valid_until` 목록. tier는 cheap/strong/frontier, 기한은 timezone 포함 ISO 시각. 선택 시 실제 원천·freshness·host 지원을 확인 |
 | `routing.qualification_records` | 별도 role qualification 기록 참조. capability와 구분 |
 
+일반 Trivial/Small current/manual 경로는 [W routing](../adaptive-sdd/workflow/skills/_shared/execution-routing.md#두-축-routing)의 적격·deny 규칙에 따라 능력 입증 근거나 표 항목 없이 진행한다. 그 밖의 current/manual 경로에는 해당 계약에 따른 최신 host 근거나 관찰 결과를 인용한 사람 확인 범위 평가가 필요하며, 모델 이름이나 선언만으로는 부족하고 자동 선택에는 계속 적격 host mapping과 fresh role qualification PASS가 필요하다.
+
 실행 프로필 세 값(`review.large_mode`, `review.blind_reviewer_selection`, `sdd.medium_artifacts`)은 생략하면 기본값(`dual`, `required`, `full`)으로, 이전 preview와 같은 동작이다. 정해진 값 밖이거나 `review`·`sdd`에 모르는 키가 있으면 `render`가 거부한다(오타가 조용히 기본값으로 남지 않게 하기 위해서다). 이 값들은 W를 가볍게 하는 쪽으로만 열려 있으며 M의 사람 판단 요건, 등급 자동 격상, 필수 검증, CODE Review, Large 병합의 사람 판단은 줄이지 않는다. 바꾼 값은 새로 시작하는 검토·SDD부터 적용된다. 규칙의 원본은 W [설계 리뷰 방식](../adaptive-sdd/workflow/process/design-review.md#large-설계-리뷰-방식)과 [Medium 축약 배치](../adaptive-sdd/workflow/process/sdd-artifacts.md#medium-축약-배치)다.
 
 `build.verification`의 기존 명령과 `build.checks`는 함께 적용된다. 수동 결과는 대상·확인자·시점·관찰 증거를 확보해야 하며 필수 미확인은 완료가 아니다. temporary는 테스트/fixture·실행 근거를 보존·재조회한 뒤 제거하며 최종 코드와 입력 대응을 증명한다. none도 완료 기준과 PLAN finding을 증명할 동등 근거가 없으면 차단한다. 새 설정은 과거 지시를 묵시적으로 덮지 않으며 진행 중 적용은 기존 정책 전환 절차를 따른다.

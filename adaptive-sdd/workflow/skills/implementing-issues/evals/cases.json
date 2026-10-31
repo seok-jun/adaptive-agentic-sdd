@@ -1,7 +1,7 @@
 {
   "skill": "implementing-issues",
   "setting": "Fictional project 'Book Lending Service' (Java/Spring, Gradle, JDK 21 declared). Modules: loan-service/**, member-core/**, notification/**. Shared contract: common-contract/**. Root and integration only: build.gradle, settings.gradle. Work tracking: local documents (items/T-<number>.md, claims/T-<number>.claim in tracker_root).",
-  "note": "A fictional case for publication. Cases carried over from existing operational expected behavior are distinguished from cases designed for a policy change. The Epic cases from II-S11 onward are for policy regression, and model behavior execution is unconfirmed. Product-origin cases are owned by the product. II-S14 is a policy regression case that distinguishes read-only investigation from the claim boundary of the first SDD write; model behavior execution is unconfirmed. The first-improvement cases on requirement/decision records, plan correction/policy transition and SDD reference preservation are independently written synthetic policy regression specifications, not behavior execution results. The six second-pass cases on AS-IS judgment evidence, phase-specific open items, conventions and blind input are also new synthetic expected-behavior specifications, not model execution results. The selective reading and reader separation cases are synthetic policy regression specifications, not model behavior execution results. II-K01 to K06 are synthetic policy regression specifications for the preview.5 execution profile (review.large_mode, review.blind_reviewer_selection, sdd.medium_artifacts), not model behavior execution results.",
+  "note": "A fictional case for publication. Cases carried over from existing operational expected behavior are distinguished from cases designed for a policy change. The Epic cases from II-S11 onward are for policy regression, and model behavior execution is unconfirmed. Product-origin cases are owned by the product. II-S14 is a policy regression case that distinguishes read-only investigation from the claim boundary of the first SDD write; model behavior execution is unconfirmed. The first-improvement cases on requirement/decision records, plan correction/policy transition and SDD reference preservation are independently written synthetic policy regression specifications, not behavior execution results. The six second-pass cases on AS-IS judgment evidence, phase-specific open items, conventions and blind input are also new synthetic expected-behavior specifications, not model execution results. The selective reading and reader separation cases are synthetic policy regression specifications, not model behavior execution results. II-K01 to K06 are synthetic policy regression specifications for the preview.5 execution profile (review.large_mode, review.blind_reviewer_selection, sdd.medium_artifacts), not model behavior execution results. II-S26 to II-S31 are six policy-regression specifications for the repository owner’s c′ decision approved on 2026-10-31, not executed results. Existing II-S08-denied-model, II-S21-model-preference-is-not-evidence, II-K03 and II-K04 are reused for their existing guards rather than duplicated.",
   "cases": [
     {
       "id": "II-S01-legacy-missing-boundary",
@@ -585,6 +585,96 @@
       "must_not": [
         "Uses the condensed README as the Large review target",
         "Implements the schema change while keeping it Medium"
+      ]
+    },
+    {
+      "id": "II-S26-small-empty-capability-records",
+      "prompt": "Complete this approved Small Issue.",
+      "fixture": "Synthetic c′ case. A complete Small Issue has settled scope, acceptance criteria, allowed/forbidden paths and claim conditions. The current/manual model and reasoning are identifiable, with no applicable deny, explicit qualification record, P capability requirement or higher-risk phase. Capability and qualification records are empty; no automatic actor selection occurs.",
+      "must": [
+        "Proceeds through work-item management, claim, implementation, in-lifecycle testing, self-review and closing under the routine exception",
+        "Preserves the claim, verification and completion requirements for the Issue",
+        "Records requested and provided model/reasoning values separately under core.md, marking any unconfirmed provided value as unconfirmed"
+      ],
+      "must_not": [
+        "Blocks merely because positive capability or qualification evidence is absent",
+        "Declares a capability tier or qualification PASS from the model identity",
+        "Invents the provided model/reasoning from the requested values"
+      ]
+    },
+    {
+      "id": "II-S27-small-explicit-qualification-records",
+      "prompt": "Continue the routine Small lifecycle with the current model.",
+      "fixture": "Synthetic c′ case. The Small scope is otherwise eligible. Exercise three explicit-record variants for the current model: DENIED, stale positive qualification, and incomplete positive qualification. There is no usable fresh qualification for that model. A replacement may be used only if an eligible host mapping and fresh PASS for the assigned role exist. P safety-deny fallback remains covered by II-S08-denied-model.",
+      "must": [
+        "Consults the applicable explicit record before assigning the current model",
+        "Refuses the DENIED model and does not presume PASS from a stale or incomplete record",
+        "Stops the dependent assignment or selects a replacement only with an eligible host mapping and fresh role qualification PASS"
+      ],
+      "must_not": [
+        "Ignores the explicit record by treating it as an empty registry",
+        "Uses the routine exception to clear an explicit DENIED, stale or incomplete record",
+        "Automatically replaces the model on capability evidence alone"
+      ]
+    },
+    {
+      "id": "II-S28-small-unknown-model-identity",
+      "prompt": "Proceed with the Small Issue using the running model.",
+      "fixture": "Synthetic c′ case. A model-specific deny or explicit qualification record applies to this Small assignment, but available host identity cannot establish whether the running model matches it. The requested model name is known; the provided concrete identity is unavailable.",
+      "must": [
+        "Stops the dependent assignment because the applicable deny or explicit record cannot be evaluated",
+        "Records requested and provided identity separately and marks the provided identity as unavailable",
+        "Identifies the missing concrete identity needed to apply the record"
+      ],
+      "must_not": [
+        "Treats unknown identity as clearance under the routine exception",
+        "Assumes the requested identity was provided",
+        "Starts implementation before resolving the applicable record"
+      ]
+    },
+    {
+      "id": "II-S29-small-routine-testing-versus-worker",
+      "prompt": "Implement and test the Small change; assess the proposed worker separately.",
+      "fixture": "Synthetic c′ case. The eligible current/manual Small owner has no positive capability records and performs routine mechanical edits and tests within the same lifecycle. Contrast a separately assigned IMPLEMENT/TEST_DOCS worker automatically chosen by the Agent: that worker is now running, but has no eligible host mapping or fresh role qualification PASS.",
+      "must": [
+        "Performs routine mechanical edits and in-lifecycle tests under the routine current/current row",
+        "Distinguishes those tests from a separately assigned IMPLEMENT/TEST_DOCS worker",
+        "Keeps the automatically selected worker subject to eligible host mapping and fresh role qualification PASS and blocks its dependent assignment"
+      ],
+      "must_not": [
+        "Applies the separate TEST_DOCS worker floor merely because the Small owner runs tests",
+        "Relabels the automatically selected worker as current/manual to acquire the exception",
+        "Treats the routine owner eligibility as a capability tier or role qualification PASS"
+      ]
+    },
+    {
+      "id": "II-S30-small-stricter-phase-without-evidence",
+      "prompt": "Continue after the Small task reaches a stricter assignment.",
+      "fixture": "Synthetic c′ case. A Small task began under the routine exception with no capability evidence. Exercise two transitions: re-grading to ordinary Medium IMPLEMENT within settled scope, and entering a required independent REVIEW. No applicable fresh host evidence or human-confirmed scoped assessment exists. A separate reviewer session is available with host-confirmed identical model/reasoning, so reviewer separation and identity are not the blocker.",
+      "must": [
+        "Re-evaluates eligibility when the grade, phase or role changes",
+        "Stops with BLOCKED: routing capability unavailable before starting Medium implementation or required independent review",
+        "Keeps identical-model/reasoning reviewer inheritance current/manual while still requiring review capability evidence and a separate session"
+      ],
+      "must_not": [
+        "Carries the Small exception into Medium or independent REVIEW",
+        "Starts stricter work and promises to supply evidence later",
+        "Compares current with itself as proof of capability"
+      ]
+    },
+    {
+      "id": "II-S31-medium-scoped-assessment",
+      "prompt": "Perform ordinary Medium IMPLEMENT within the settled scope using the current/manual model.",
+      "fixture": "Synthetic c′ case. Other Medium gates are met; no deny or explicit qualification record applies and no automatic selection occurs. Positive variant: a human-confirmed assessment in an existing permitted work record cites retrievable observed results and matches the concrete model, reasoning and current phase/risk scope, with criteria, assessor, assessment time and validity. Negative variants: only a model name; a dated tier declaration without observed results; an assessment whose model, reasoning, scope or validity does not match. Preference-only independent review and optional Review B selection remain covered by II-S21-model-preference-is-not-evidence, II-K03 and II-K04.",
+      "must": [
+        "Proceeds in the positive variant after checking the assessment and retrievable observed results",
+        "Stops negative variants with BLOCKED: routing capability unavailable before implementation",
+        "Uses a current-floor assessment only for its recorded scope; requires rank-supporting evidence under stated criteria for any ranked floor"
+      ],
+      "must_not": [
+        "Treats a model name, preference or dated tier declaration as capability evidence",
+        "Turns the scoped assessment into an automatic-routing qualification PASS",
+        "Declares a tier or calls the blocked product task a qualification probe to manufacture evidence"
       ]
     }
   ]
