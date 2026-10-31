@@ -6,9 +6,9 @@
 
 **English** | [한국어](ko/README.md)
 
-Most SDD tools run the same spec → plan → tasks routine for every change. That is why SDD often feels like waterfall for a one-line fix. Adaptive SDD first decides how risky a change is, then applies only the planning, review and verification that risk needs. A link fix gets a self-check. A database migration gets written analysis, two independent design reviews and a human merge.
+Adaptive SDD scales planning, review and verification to a change's risk, so small fixes need less process and risky changes get deeper checks. A link fix gets a self-check. A database migration gets written analysis, two independent design reviews and a human merge.
 
-> **Preview.** This is `v1.0.0-preview.6` on the `v1-preview` branch. Its effect on outcomes, rework or cost has not been measured, and its structure may change before 1.0. See [Status and evidence](#status-and-evidence).
+> **Preview.** This is `v1.0.0-preview.7` on the `v1-preview` branch. Its effect on outcomes, rework or cost has not been measured, and its structure may change before 1.0. See [Status and evidence](#status-and-evidence).
 
 ## How depth scales
 
@@ -56,11 +56,11 @@ If the agent runs in a sandbox, it must be able to write `.agents/` and `.claude
 **1. Paste this into your agent** from the root of your repository:
 
 ```text
-Install Adaptive Agentic SDD v1.0.0-preview.6 in this repository.
-Installation guide: https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.6/docs/customization.md
+Install Adaptive Agentic SDD v1.0.0-preview.7 in this repository.
+Installation guide: https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.7/docs/customization.md
 
 1. Resolve the tag to its full commit SHA:
-   git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.6^{}"
+   git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.7^{}"
    If it prints nothing, stop and tell me: the tag's commit could not be resolved.
 2. Download the archive of that commit and copy its adaptive-sdd/ folder byte for byte to .adaptive-sdd/
    with a copy command, not a file-writing tool. Do not modify product code.
@@ -68,7 +68,7 @@ Installation guide: https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0
 4. Follow section 3 of the guide: observe this repository, then show me a draft of
    .adaptive-sdd/project.json with the evidence for each value. init copies example values; for every value
    the guide marks "Human" or "Human only", do not keep the example: ask me. Do not write the file yet.
-5. After I answer, write project.json, run render with --source-tag v1.0.0-preview.6 --source-commit <SHA>,
+5. After I answer, write project.json, run render with --source-tag v1.0.0-preview.7 --source-commit <SHA>,
    run check, create items/ and claims/ under tracker.root if I chose local-docs,
    and show me every file that was added or changed.
 ```
@@ -113,9 +113,10 @@ Repository layout: `adaptive-sdd/` is the English bundle you install (canonical)
 
 - **Not measured:** no effect on outcomes, rework or cost has been measured. The procedures were refined in one product; that does not prove they work elsewhere.
 - **Behavior evaluations:** a first cross-agent baseline ran 12 Korean cases × Claude Code and Codex × 3 runs (Claude Code 21 PASS / 14 FAIL / 1 INVALID, Codex 22 PASS / 14 FAIL) — [record](docs/eval-results/2026-10-30/README.md). A post-hoc paired check of two wording fixes found no overall improvement — [record](docs/eval-results/2026-10-30-skill-comparison/paired-summary.md). Failures are published as they were graded. In the baseline and in the preview.6 tracker check, the answer-key files were readable inside the evaluated projects, so those two runs are not clean evidence; the paired check removed them.
-- **This release:** all 65 executable tests passed on Windows with Python 3.12.2, both 66-file bundle manifests matched, and an archive of the reviewed candidate (`277cfc5`) passed `init`, `render`, `check` and `check-evals` (77 cases) for both editions with both trackers. An independent read-only review (Codex `gpt-6-astra`, high) found no blocker; its findings were fixed and reconfirmed. In two first-use runs from this README, a Claude Code agent installed the methodology, finished a Small task and undid the installation; a Codex run installed it, but its sandbox blocked Git writes, so it did not reach the task. A bounded behavior check of the changed wording is [recorded](docs/eval-results/2026-10-31-tracker-neutral/README.md) as weak evidence. POSIX execution and live GitHub tracker operations were not run.
-- **macOS follow-up (unreleased candidate):** an assisted walkthrough completed installation, a Small task and Undo using `python3`. The 88-test suite had two subtest failures because generated commands require `python`; all 88 passed with a process-local compatibility alias. This is not blind first-use evidence ([record](docs/eval-results/2026-10-31-macos-first-use/README.md)).
-- **Model routing:** routine Trivial/Small tasks run on the current model unless denied, subject to [routing eligibility](adaptive-sdd/workflow/skills/_shared/execution-routing.md#two-axis-routing). Medium and above, independent reviews and delegation need observed evidence for the model; a name or declaration alone is not enough ([first-use record](docs/eval-results/2026-10-31-first-use/README.md)).
+- **This release:** VALIDATION_PLACEHOLDER
+- **macOS portability:** this release fixes generated POSIX checks to use `python3`. A rerun of the fixed commit `4986f1e` on the same Mac, without a `python` command, passed all 89 tests ([report](https://github.com/seok-jun/adaptive-agentic-sdd/pull/6#issuecomment-6541138071)). The earlier assisted walkthrough completed installation, a Small task and Undo; its initial failures and compatibility-alias diagnostic are in the [record](docs/eval-results/2026-10-31-macos-first-use/README.md). This is not blind first-use evidence. Live GitHub tracker operations have not been run.
+- **Model routing (c′ policy relaxation):** the owner-approved change removes the positive capability-evidence requirement for the routine Trivial/Small current/manual lifecycle, subject to [routing eligibility](adaptive-sdd/workflow/skills/_shared/execution-routing.md#two-axis-routing). Other current/manual routes require fresh host evidence or a human-confirmed scoped assessment citing observed results; automatic switching, delegation and fallback still require PASS. A Codex first-use run with an empty capability table completed a Small task end to end ([record](docs/eval-results/2026-10-31-first-use/README.md)); this does not establish an effect on outcomes, rework or cost.
+- **Runner v2:** subject bundles exclude answer keys; grader calibration on 11 synthetic answers agreed on 132/132 items across both graders ([record](docs/eval-results/2026-10-31-grader-calibration/README.md)). The c′ behavior check scored 5 PASS / 9 FAIL / 2 INVALID, with no `must_not` violation in the 14 graded runs. All Codex subjects failed to read files, and the positive-path fixture lacked an Issue ID, so the check is weak evidence; the runner was not fixed and no new frozen run was made for this release ([record](docs/eval-results/2026-10-31-routing-cprime/README.md)).
 - **Not a guarantee:** this is guidance for agents and people, not a security boundary or an agent runner.
 
 The full history of checks and reviews is in [CHANGELOG.md](CHANGELOG.md).
