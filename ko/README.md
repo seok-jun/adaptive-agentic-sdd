@@ -6,9 +6,9 @@
 
 [English](../README.md) | **한국어**
 
-대부분의 SDD 도구는 모든 변경에 같은 스펙 → 계획 → 작업 절차를 돌립니다. 그래서 한 줄짜리 수정에도 SDD가 워터폴처럼 느껴집니다. Adaptive SDD는 먼저 변경이 얼마나 위험한지 정하고, 그 위험에 필요한 계획·리뷰·검증만 적용합니다. 링크 수정은 자체 점검으로 끝나고, DB 마이그레이션은 분석 문서, 독립 설계 리뷰 두 번, 사람의 병합을 거칩니다.
+Adaptive SDD는 변경의 위험도에 맞춰 계획·리뷰·검증의 깊이를 조절합니다. 작은 수정은 절차 부담을 줄이고, 위험한 변경은 더 깊이 점검합니다. 링크 수정은 자체 점검으로 끝나고, DB 마이그레이션은 분석 문서, 독립 설계 리뷰 두 번, 사람의 병합을 거칩니다.
 
-> **Preview.** 이 릴리스는 `v1-preview` 브랜치의 `v1.0.0-preview.6`입니다. 결과·재작업·비용에 대한 효과는 측정하지 않았고, 1.0 전에 구조가 바뀔 수 있습니다. [상태와 근거](#상태와-근거)를 보세요.
+> **Preview.** 이 릴리스는 `v1-preview` 브랜치의 `v1.0.0-preview.7`입니다. 결과·재작업·비용에 대한 효과는 측정하지 않았고, 1.0 전에 구조가 바뀔 수 있습니다. [상태와 근거](#상태와-근거)를 보세요.
 
 이 판의 파일은 저장소의 `ko/` 아래에 있습니다. 영문판이 원본이며, 두 판의 뜻이 다르면 영문이 기준입니다.
 
@@ -53,16 +53,16 @@ Agent: T-31을 만들었습니다. 등급: Large — DB 스키마·마이그레�
 
 Python 3.8 이상(macOS/Linux는 `python3`; Windows는 아래 명령의 같은 인자를 `python` 또는 `py -3`로 실행), Git, 그리고 Claude Code나 Codex가 필요합니다. 깨끗한 작업 트리에서 시작하세요(변경은 먼저 커밋하거나 stash).
 
-Agent가 샌드박스 안에서 돌면 `.agents/`·`.claude/`에 쓰고 커밋할 수 있어야 합니다. Codex `workspace-write` 샌드박스에서는 `.agents/`와 `.git`이 읽기 전용이니, Codex를 `--add-dir <저장소>/.agents`로 시작하고 Git 쓰기가 거부되면 설치 커밋은 직접 하세요.
+Agent가 샌드박스 안에서 돌면 `.agents/`·`.claude/`에 쓰고 커밋할 수 있어야 합니다. Codex `workspace-write` 샌드박스에서는 `.agents/`와 `.git`이 읽기 전용이니, Codex를 `--add-dir <저장소>/.agents`로 시작하고 Git 쓰기가 거부되면 설치 커밋은 직접 하세요. 이후에도 같습니다. 첫 작업에서 worktree를 만들고 커밋·병합하므로, 거부된 Git 명령은 직접 실행하거나 `.git` 쓰기를 허용하는 Codex 설정을 쓰세요.
 
 **1. 저장소 최상위에서 Agent에게 붙여 넣습니다.**
 
 ```text
-이 저장소에 Adaptive Agentic SDD v1.0.0-preview.6 한국어판을 설치해 줘.
-설치 안내: https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.6/ko/docs/customization.md
+이 저장소에 Adaptive Agentic SDD v1.0.0-preview.7 한국어판을 설치해 줘.
+설치 안내: https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.7/ko/docs/customization.md
 
 1. 태그의 전체 commit SHA를 확인해:
-   git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.6^{}"
+   git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.7^{}"
    아무것도 출력되지 않으면 태그의 commit을 확인하지 못한 것이니 멈추고 알려 줘.
 2. 그 commit의 압축 파일을 내려받아 ko/adaptive-sdd/ 폴더를 .adaptive-sdd/에 바이트 그대로 복사해.
    파일 쓰기 도구가 아니라 복사 명령을 써. 제품 코드는 고치지 마.
@@ -70,7 +70,7 @@ Agent가 샌드박스 안에서 돌면 `.agents/`·`.claude/`에 쓰고 커밋�
 4. 안내의 3절대로 이 저장소를 관찰한 뒤, 값마다 근거를 붙인 .adaptive-sdd/project.json 초안을 보여 줘.
    init은 예시값을 복사한다. 안내가 "사람" 또는 "사람만"으로 표시한 값은 예시값을 그대로 두지 말고 나에게 물어봐.
    아직 파일은 쓰지 마.
-5. 내가 답하면 project.json을 쓰고, --source-tag v1.0.0-preview.6 --source-commit <SHA>로 render한 뒤
+5. 내가 답하면 project.json을 쓰고, --source-tag v1.0.0-preview.7 --source-commit <SHA>로 render한 뒤
    check를 실행하고, local-docs를 골랐으면 tracker.root 아래에 items/와 claims/를 만들고,
    추가되거나 바뀐 파일을 모두 보여 줘.
 ```
@@ -113,9 +113,10 @@ Adaptive SDD로 <한 모듈 안의 작은 변경> 작업 항목을 만들고, �
 
 - **측정하지 않음:** 결과·재작업·비용에 대한 효과는 측정하지 않았습니다. 절차는 한 제품에서 다듬었고, 그것이 다른 곳에서의 효과를 증명하지는 않습니다.
 - **행동 평가:** 첫 도구 간 기준선으로 한국어 사례 12개 × Claude Code·Codex × 3회를 실행했습니다(Claude Code PASS 21 / FAIL 14 / INVALID 1, Codex PASS 22 / FAIL 14) — [기록](../docs/eval-results/2026-10-30/README.md). 문구 수정 두 개를 사후 짝 비교한 결과 전체 개선은 관찰되지 않았습니다 — [기록](../docs/eval-results/2026-10-30-skill-comparison/paired-summary.md). 실패도 채점된 그대로 공개합니다. 기준선과 preview.6 작업 관리 확인에서는 평가 대상 프로젝트 안에서 정답 사례 파일을 읽을 수 있었으므로 깨끗한 근거가 아닙니다. 짝 비교에서는 그 파일을 제거했습니다.
-- **이번 릴리스:** Windows·Python 3.12.2에서 실행 테스트 65개가 모두 통과했고, 두 번들 manifest(각 66개 파일)가 일치했으며, 리뷰한 후보(`277cfc5`)의 압축본이 두 판 × 두 작업 관리 방식 모두에서 `init`, `render`, `check`, `check-evals`(사례 77개)를 통과했습니다. 읽기 전용 독립 리뷰(Codex `gpt-6-astra`, high)는 출시 차단 문제를 찾지 않았고, 지적 사항은 고친 뒤 재확인했습니다. 이 README로 한 첫 사용 점검 두 번 중 Claude Code Agent는 설치, Small 작업 하나, 설치 되돌리기까지 끝냈고, Codex는 설치까지 했지만 샌드박스가 Git 쓰기를 막아 작업 단계에 가지 못했습니다. 바뀐 문구의 제한된 행동 확인은 약한 근거로 [기록](../docs/eval-results/2026-10-31-tracker-neutral/README.md)했습니다. POSIX 실행과 실제 GitHub tracker 작업은 하지 않았습니다.
-- **모델 routing:** 일반 Trivial/Small 작업은 금지된 모델이 아니면 [routing 적격 규칙](adaptive-sdd/workflow/skills/_shared/execution-routing.md#두-축-routing)에 따라 현재 모델로 수행합니다. Medium 이상·독립 리뷰·위임에는 해당 모델의 관찰 근거가 필요하며 이름이나 선언만으로는 부족합니다([첫 사용 기록](../docs/eval-results/2026-10-31-first-use/README.md)).
-- **macOS 후속 점검(미출시 후보):** `python3`를 사용한 보조 walkthrough에서 설치, Small 작업, Undo를 완료했습니다. 88개 테스트에서 생성 명령의 `python` 요구로 subtest 2건이 실패했고, 프로세스 한정 호환 alias를 제공하면 88개가 모두 통과했습니다. 사전 정보 없는 독립 첫 사용 평가는 아닙니다([기록](../docs/eval-results/2026-10-31-macos-first-use/README.md)).
+- **이번 릴리스:** Windows·Python 3.12.2에서 실행 테스트 89개가 모두 통과했고, 두 번들 manifest(각 66개 파일)가 일치했으며, 리뷰한 후보(`0a65db9`)의 압축본이 두 판 × 두 작업 관리 방식 모두에서 `init`, `render`, `check`, `check-evals`(사례 83개)를 통과했습니다. 읽기 전용 독립 리뷰(Codex `gpt-6-astra`, high)는 출시 차단 문제 없이 P2 1건을 지적했고 README 샌드박스 안내에서 고쳤습니다. 선택 사항인 P3 문구 제안 2건은 반영하지 않았습니다.
+- **macOS 호환성:** 이번 릴리스는 생성되는 POSIX 검사 명령이 `python3`를 쓰도록 고쳤습니다. 같은 Mac에서 `python` 명령 없이 수정 커밋 `4986f1e`를 다시 실행해 테스트 89개가 모두 통과했습니다([보고](https://github.com/seok-jun/adaptive-agentic-sdd/pull/6#issuecomment-6541138071)). 앞선 보조 walkthrough에서는 설치, Small 작업, Undo를 완료했으며, 최초 실패와 호환 alias를 사용한 진단은 [기록](../docs/eval-results/2026-10-31-macos-first-use/README.md)에 있습니다. 사전 정보 없는 독립 첫 사용 평가는 아닙니다. 실제 GitHub tracker 작업은 실행하지 않았습니다.
+- **모델 routing(c′ 정책 완화):** 저장소 소유자가 승인한 변경으로, [routing 적격 규칙](adaptive-sdd/workflow/skills/_shared/execution-routing.md#두-축-routing)을 따르는 일반 Trivial/Small 작업의 현재 모델·수동 선택 경로에서는 역량을 입증하는 근거를 요구하지 않습니다. 그 밖의 현재 모델·수동 선택 경로에는 최신 호스트 근거나 관찰 결과를 인용해 사람이 확인한 범위 한정 평가가 필요합니다. 자동 전환·위임·대체 경로에는 여전히 PASS가 필요합니다. 역량 표가 비어 있는 Codex 첫 사용 실행에서 Small 작업을 처음부터 끝까지 완료했습니다([기록](../docs/eval-results/2026-10-31-first-use/README.md)). 이것이 결과·재작업·비용에 대한 효과를 입증하지는 않습니다.
+- **Runner v2:** 평가 대상 번들에서 정답 파일을 제외합니다. 합성 답변 11개로 한 채점기 보정에서는 두 채점기를 합쳐 132/132개 항목이 일치했습니다([기록](../docs/eval-results/2026-10-31-grader-calibration/README.md)). c′ 행동 확인 결과는 PASS 5 / FAIL 9 / INVALID 2였고, 채점된 14회에서 `must_not` 위반은 없었습니다. 모든 Codex 평가 실행에서 파일을 읽지 못했고 정상 진행 사례에 Issue ID가 없어 약한 근거입니다. 이번 릴리스에서는 runner를 고치지 않았고 조건을 새로 고정한 실행도 하지 않았습니다([기록](../docs/eval-results/2026-10-31-routing-cprime/README.md)).
 - **보장이 아님:** Agent와 사람을 위한 안내이며, 보안 경계나 Agent 실행기가 아닙니다.
 
 검사와 리뷰의 전체 이력은 [CHANGELOG.md](../CHANGELOG.md)에 있습니다.
