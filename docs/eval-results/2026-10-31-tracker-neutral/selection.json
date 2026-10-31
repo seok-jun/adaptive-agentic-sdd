@@ -1,0 +1,35 @@
+{
+  "purpose": "Bounded behavior check of the preview.6 tracker-neutral wording (skill-evals.md: changed execution instructions need a check limited to the changed decisions). Not an adoption comparison and not an effect measurement.",
+  "fixed_at": "2026-10-31",
+  "base_commit": "1b99d2187ab4d3650e716f1abf0c498b2c229ca0",
+  "evaluated_target": "ko/adaptive-sdd at base_commit; identified by the MANIFEST.json sha256 recorded in results",
+  "case_source": "ko/adaptive-sdd/workflow/skills/<skill>/evals/cases.json",
+  "selection_rule": "Existing cases whose expected behavior touches an operation whose wording moved: work-item creation with Priority/grade values, Epic without a grade, the closing reference, product-complete on the declared merge target, and claim acquisition. Chosen before any run; not changed after runs start.",
+  "cases": {
+    "managing-issues": [
+      "MI-S01-convenience-bug",
+      "MI-S08-optional-epic-unresolved-investigation"
+    ],
+    "finishing-issues": [
+      "FI-S03-closing-reference",
+      "FI-S20-declared-merge-target"
+    ],
+    "parallel-development": [
+      "PD-S01-clean-claim"
+    ]
+  },
+  "agents": [
+    "claude-code",
+    "codex"
+  ],
+  "runs_per_case": 1,
+  "total_runs": 10,
+  "retry_policy": "No automatic retry. An environment failure is INVALID, not FAIL.",
+  "isolation": "Fresh disposable project per run, installed from the evaluated bundle with the example project.json and a local-docs tracker folder. No real tracker, remote or product data.",
+  "grading": "Cross-graded with tests/run_behavior_evals.py: Claude answers graded by Codex, Codex answers graded by Claude.",
+  "known_limits": [
+    "One run per case per agent: a smoke check of the changed wording, not a reliability estimate.",
+    "The runner installs a local-docs tracker, so the GitHub adapter rows are covered by static tests only.",
+    "The runner writes a fixed 'uncommitted preview.5 working tree' label into each result's commit field; base_commit and the manifest hash above identify the evaluated bundle."
+  ]
+}
