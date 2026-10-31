@@ -1,8 +1,43 @@
-# Adaptive Agentic SDD — Adaptive SDD for AI Coding Agents
+# Adaptive Agentic SDD — 1.0 preview
 
-**English** | 한국어: the 1.0 preview's [`ko/`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v1-preview/ko) (the Korean edition of v0.2 is no longer published)
+**Short for small changes, deep for risky ones.** Risk-adaptive spec-driven development (SDD) for Claude Code or Codex on existing codebases.
 
-> **1.0 preview available.** The next-generation methodology is on branch [`v1-preview`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v1-preview), with a Korean edition under `ko/`. Its newest tag is the top pre-release on the [Releases page](https://github.com/seok-jun/adaptive-agentic-sdd/releases); install from that tag and follow the guide in the same tag. It is not a replacement for v0.2, and its effect has not been measured. This `main` branch still carries v0.2.
+[![Release](https://img.shields.io/github/v/release/seok-jun/adaptive-agentic-sdd?include_prereleases&label=release)](https://github.com/seok-jun/adaptive-agentic-sdd/releases)
+
+**English** | [한국어](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.7/ko/README.md)
+
+Adaptive SDD scales planning, review and verification to a change's risk, so small fixes need less process and risky changes get deeper checks. A link fix gets a self-check. A database migration gets written analysis, two independent design reviews and a human merge.
+
+> **Preview.** The 1.0 preview is `v1.0.0-preview.7`. Its effect on outcomes, rework or cost has not been measured, and its structure may change before 1.0. See [Status and evidence](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v1.0.0-preview.7#status-and-evidence).
+
+## How depth scales
+
+Every execution work item gets one of four grades (an optional Epic that groups work items has none). The grade comes from risk, not from file count, and the agent cannot lower an automatic escalation on its own.
+
+| Grade | When | Design documents | Review before code | Review of the change |
+| --- | --- | --- | --- | --- |
+| **Trivial** | No change to runtime behavior, contracts, tests, build or workflow meaning (typos, links, comments) | None | Self-check of the Trivial conditions | Targeted check + self-review |
+| **Small** | Not Trivial, within one module, no escalation condition | None; the work item is the spec | Self-review of boundaries and verifiability | Self-review against the acceptance criteria |
+| **Medium** | Two or more modules, or a shared contract the project designates | SDD: four short documents, or one page if the project chooses `condensed` | Bounded self-review; independent review when marked `REQUIRED` | Independent review if `REQUIRED`, otherwise self-review |
+| **Large** | Security, personal data, DB schema/migration, background retry/schedule, billing or quota | SDD: four documents | AS-IS and PLAN each get Review A plus a blind Review B whose model a human chooses by default (a project can opt into one review, or let the agent choose the B model) | One independent code review; a human merges or explicitly orders that merge |
+
+For each changed file that affects verification, the first check is the tests of the module that owns it, and checks widen only on evidence; a documentation-only Trivial change gets a targeted check that fits it. The required checks run on the final candidate, and a PASS is reused only when its inputs did not change. Definitions: [grades](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.7/adaptive-sdd/workflow/process/sdd/grade.md), [review gates](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.7/adaptive-sdd/workflow/process/verification.md#review-gate-by-grade).
+
+## Get started
+
+Follow the [1.0 preview Quick start](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v1.0.0-preview.7#quick-start) for prerequisites, the installation prompt and verification steps. The [Korean edition](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.7/ko/README.md) has the corresponding instructions.
+
+See the [Releases page](https://github.com/seok-jun/adaptive-agentic-sdd/releases) and the [preview.7 CHANGELOG](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.7/CHANGELOG.md) for release history and changes.
+
+---
+
+## v0.2 (legacy, this branch)
+
+v0.2 is kept for existing users and is not maintained alongside 1.0.
+
+**Adaptive Agentic SDD — Adaptive SDD for AI Coding Agents**
+
+**English** | 한국어: the 1.0 preview's [`ko/`](https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.0-preview.7/ko/README.md) (the Korean edition of v0.2 is no longer published)
 
 > **Stop overengineering SDD.** Scale planning, review, and verification with the risk of each change.
 
@@ -14,11 +49,11 @@ Adaptive Agentic SDD combines observed AS-IS analysis, bounded exploration, risk
 
 > Apply the minimum process that reliably prevents costly mistakes, not the maximum process the tooling can support.
 
-## 5-minute Quick Start
+### 5-minute Quick Start
 
 **No new CLI. No mandatory tracker. Start with three files and your existing coding agent.**
 
-### Option A — Give this repository to your agent
+#### Option A — Give this repository to your agent
 
 If your coding agent can read GitHub repositories or URLs, paste this:
 
@@ -40,7 +75,7 @@ Do not invent missing capabilities or rules.
 Keep the bootstrap minimal and preserve existing repository instructions.
 ```
 
-### Option B — Copy the minimal starter
+#### Option B — Copy the minimal starter
 
 Copy and adapt these three files into your repository:
 
@@ -73,14 +108,14 @@ Implement issue #123 using Adaptive SDD.
 
 The workflow starts lean and increases analysis, review, and verification only when the change risk requires it.
 
-## Start here
+### Start here
 
 - Adopting the workflow: [Bootstrap](docs/bootstrap.md).
 - Running a task: [Developer guide](docs/developer-guide.md).
 - Canonical lifecycle: [Workflow](docs/workflow.md).
 - Grade definitions and required depth: [Risk grades](docs/risk-grades.md).
 
-## Workflow at a glance
+### Workflow at a glance
 
 [![Risk-adaptive workflow overview, with separate review and final authorization gates](assets/workflow-overview-en.svg)](assets/workflow-overview-en.svg)
 
@@ -88,7 +123,7 @@ The workflow starts lean and increases analysis, review, and verification only w
 
 The overview is a reading aid, not a substitute for the lifecycle contract. The detailed diagram shows separate Large AS-IS and PLAN reviews, evidence blockers, optional Blind Audit, and final Human authorization. Both are editable SVGs; [diagram maintenance](assets/README.md) explains their scope.
 
-## What changed in v0.2
+### What changed in v0.2
 
 The portable runtime layer adds:
 
@@ -109,7 +144,7 @@ The pre-merge hardening connects those principles to execution:
 
 The [restricted-environment verification draft](docs/restricted-environment-verification.md) is optional and **not an implemented or operationally validated API/DB automation capability**.
 
-## Core principles
+### Core principles
 
 1. **Work-item-first.** The current work item defines goal, scope, acceptance criteria, dependencies, and fixed decisions. The tracker is replaceable.
 2. **Observed AS-IS.** Current mainline code and direct runtime evidence describe current behavior; stale plans do not.
@@ -124,7 +159,7 @@ The [restricted-environment verification draft](docs/restricted-environment-veri
 
 Capture real trade-offs; do not invent alternatives just to fill a template. See [Trade-off Capture](docs/trade-off-capture.md).
 
-## Portable runtime architecture
+### Portable runtime architecture
 
 ```text
 AGENTS.md: routing + always-on guards
@@ -134,13 +169,13 @@ AGENTS.md: routing + always-on guards
 
 The [starter](starter/AGENTS.md) is an adoption snapshot, not a universal drop-in configuration. Replace placeholders, reconcile local policy, and keep its local contract internally consistent. Do not assume copying the Skill also copies all methodology documents.
 
-## Portable core vs project-local policy
+### Portable core vs project-local policy
 
 Keep work-item boundaries, risk grading, bounded exploration, verification mapping, revision-aware review/approval, and evidence-based completion portable.
 
 Keep module names, environment quirks, actual commands, organization-specific approval systems, model/provider routing, credentials, and business vocabulary local. Do not make every grade use separate SDD files, independent review, or Blind Audit.
 
-## Repository structure
+### Repository structure
 
 ```text
 assets/       editable overview and detailed workflow SVGs
@@ -150,7 +185,7 @@ templates/   work item, design, PR, QA, review briefing, verification handoff
 examples/    fictional grade walkthroughs, review identity, completion evidence
 ```
 
-## Optional practice aids
+### Optional practice aids
 
 - [Review-target identity](examples/review-identity/README.md): snapshot coverage and `identical / head-only / changed` comparisons.
 - [Verification handoff](templates/verification-handoff.md): planned expectations, returned observations, judgments, and correction/rerun history; remains **DRAFT / OPTIONAL**.
@@ -159,7 +194,7 @@ examples/    fictional grade walkthroughs, review identity, completion evidence
 
 These templates and fictional examples explain the existing policies. They do not claim operational validation or require additional artifacts for every task.
 
-## Status
+### Status
 
 **v0.2 — Portable Working Methodology**
 
