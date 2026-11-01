@@ -3,6 +3,8 @@ name: finishing-issues
 description: 구현을 마친 이 프로젝트의 Issue 작업을 종료한다. 최종 diff 검토, business 문서 동기화, 검증·CI gate, SDD 정리, PR 종료 구문, merge 확인, lane 해제에 사용한다. 구현이 종료 준비되기 전에는 사용하지 않는다.
 ---
 
+preview.8 외부 적용: 먼저 `W/activation.md`의 선택·소유·경로 계약을 적용한다. 아래 고정 사본·생성 hard guard 참조는 그 계약의 호환 의미를 따른다. 미선택 작업에는 이 스킬을 적용하지 않는다.
+
 실행 입력은 절대 경로 `P`(프로젝트 저장소 최상위), `W`(고정 절차 사본 `W`), `M`(고정 공통 원칙 `M`)이다. 현재 폴더나 W의 상위 폴더로 P·M을 추측하지 않는다. P의 hard guard와 적용 선언을 따르고, Issue·댓글·라벨·PR이라는 말은 `W/../project/tracker.md`가 선언한 `W/tracker/` 방식으로 바꿔 읽는다. 낯선 용어는 [용어집](../../glossary.md)에서 찾는다.
 
 # Finishing Issues

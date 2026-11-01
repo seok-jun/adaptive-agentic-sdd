@@ -3,6 +3,8 @@ name: implementing-issues
 description: Investigates, designs and implements an approved work item (Issue) of this project, received by Issue number or an explicit reference. Use for requests to progress, implement, work on or wrap up an existing Issue; it connects the SDD, boundary and verification procedures of the current phase. Do not use when only writing a new Issue.
 ---
 
+For preview.8 external adoption, first apply `W/activation.md` for selection, ownership and paths. Pinned-copy and generated hard-guard references below use its compatibility meanings. Do not apply this skill to an unselected task.
+
 The execution inputs are the absolute paths `P` (top level of the project repository), `W` (the pinned procedure copy `W`) and `M` (the pinned common principles `M`). Do not guess P or M from the current folder or from W's parent folder. Follow P's hard guard and application declaration, and read the words Issue, comment, label and PR as the `W/tracker/` method declared in `W/../project/tracker.md`. Look up unfamiliar terms in the [Glossary](../../glossary.md).
 
 # Implementing Issues
@@ -49,6 +51,8 @@ At start, problem discovery, stop and handoff, apply the relevant section of `W/
 
 ## Investigation and entry into product edits
 
+Before the first file edit of every grade (including design documents), read M `supports/ordered-changes.md` and link the files, symbols and order of changes to the baseline requirements and verification means in a short list in the response or planning tool. Reference mappings in an existing plan and supplement only what is missing, while keeping the files, symbols and order in the list. One sentence is enough for a simple change; no separate plan file, ID, table, extra review or approval stage is required. Reuse the same version already checked in the same run.
+
 1. Distinguish whether the current request is a read-only investigation or a product edit, and check the dependencies and blockers needed for that phase. Keep the access permissions and human-judgment conditions of the investigation itself. An open conclusion upstream only makes the implementation, integration or deployment that uses it wait; it does not block the start of the investigation.
 2. A read-only investigation does not require an edit claim. Several readers of the same path are not an edit conflict. Before first creating, editing or deleting P work files of an execution Issue, such as SDD, tests and code, secure a lane and claim with `parallel-development`. Apply the current phase's instructions, dependencies and boundaries. Do not require a PASS of a not-yet-written AS-IS/PLAN for a claim made in order to write the SDD. Keep the existing exceptions for work tracking records and for the Epic management document itself.
 3. Before editing product code, check the Issue's required body, the match between Priority/grade and labels, the allowed/forbidden edit paths, the acceptance criteria and the current implementation dependencies, and satisfy the implementation start conditions in `W/process/sdd/entry.md` and the `parallel-development` claim. If any one is missing, do not edit product code.
@@ -73,6 +77,8 @@ For upstream and related analysis, check the baseline revision, scope, premises 
 For Large, the publication and review mode (P's `review.large_mode`), A/B, finding levels, blind isolation, reconfirmation and repeated stalls are decided in one place: `design-review.md`. At each phase, check the evidence of the current review target and `Open questions and phase dependencies` in `W/process/sdd/issue.md`, and proceed only with the work whose needed conclusion is available. Do not substitute a past PASS for missing or stale evidence. Before a re-review, first apply the "review target keep conditions" of the same source, and do not add this procedure to Medium or below or to the default CODE review.
 
 Before editing product files, connect the baseline requirements and acceptance criteria to verification according to `verification.md`, and secure the grade's `Independent Review` verdict. For Medium and above, the Human Decision Contract follows `W/process/sdd/to-be.md`, and the implementation specification follows `W/process/sdd/agent-spec.md`. An acceptance criterion that cannot be proven, or required verification outside the allowed boundary, is `BLOCKED`. Do not make the optional Device QA/Runtime QA a gate for implementation, PR or merge.
+
+Apply the minimum requirements in M `core.md`, `Human judgment`, as well. Stop and ask only for work that depends on that judgment; if the execution environment cannot ask a human, keep that work stopped and record the question as unresolved.
 
 For human judgment, directly check `Human judgment points` in P's application declaration. For a new important product or design decision or a change to the settled scope, stop the affected work with `[HUMAN DECISION REQUIRED]`, reflect the decision the human stated in the Human View and the needed Issue body, then resume. Do not presume a human decision from the existence of a file, agreement between Agents, or a review PASS. Keep handling execution details within the settled meaning and invariants.
 

@@ -3,6 +3,8 @@ name: managing-issues
 description: 이 프로젝트의 작업 항목(Issue)을 생성·분류·우선순위 재조정·본문 재작성하고 선택적 Epic의 작업 구성·의존성을 조율할 때 사용한다. Priority/실행 grade 판정, 작업 경계, Mermaid 흐름 판단, UI/UX HTML Visual Spec 연결에 쓴다. 코드 구현에는 사용하지 않는다.
 ---
 
+preview.8 외부 적용: 먼저 `W/activation.md`의 선택·소유·경로 계약을 적용한다. 아래 고정 사본·생성 hard guard 참조는 그 계약의 호환 의미를 따른다. 미선택 작업에는 이 스킬을 적용하지 않는다.
+
 실행 입력은 절대 경로 `P`(프로젝트 저장소 최상위), `W`(고정 절차 사본 `W`), `M`(고정 공통 원칙 `M`)이다. 현재 폴더나 W의 상위 폴더로 P·M을 추측하지 않는다. P의 hard guard(`P/AGENTS.md`의 `## 항상 적용 hard guard`)와 적용 선언(`W/../project/sdd-workflow.md`)을 적용한다. Issue·댓글·라벨·PR이라는 말은 `W/../project/tracker.md`가 선언한 작업 관리 방식(`W/tracker/`)의 해당 기능으로 바꿔 읽는다. 낯선 용어는 [용어집](../../glossary.md)에서 찾는다.
 
 # Managing Issues

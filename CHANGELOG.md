@@ -1,6 +1,24 @@
 # Changelog
 
-## Unreleased
+## 1.0.0-preview.8 — release candidate (2026-11-01)
+
+Not published. This is a meaning change to adoption and activation, not a wording-only release.
+
+- Public M is an optional starting reference. After adoption, continued adaptation of project W/P under project authority is recommended; continued M use, revision tracking and upstream updates are user choices. M's existing rules apply when that edition is selected, not as permanent conformance conditions for every derivative.
+- Add `tools/agentics.py` in both editions: explicit selection before any method read, per-area portable connections, an external user-owned source allowlist, selected project-W commit/origin checks, path containment, P source references and work-record declarations. Resolution is read-only and does not fetch, execute or silently substitute a method. It works with a project W that has no public M dependency.
+- Add a task-scoped activation contract, update the four starter skill entries, and document editable external project application documents and P's retained facts/common rules/authority. Keep one representative method per task; use a fresh session for a new task/area/method. Fresh-session is a caller assertion, not a host-enforced guarantee.
+- Rewrite both adoption guides and Quick starts, preserve the old installer guide separately, add the design proposal and release checklist, and correct the contribution guide's outdated English-bundle status. Existing installer behavior is retained for explicit legacy use. Existing product installations are not migrated by this release preparation.
+- Executable validation: 111 tests passed on Windows, including 22 new resolver tests and the existing 89 regression tests. Both 69-file bundle manifests and all three 3-file methodology manifests match. Four read-only Claude review calls (CLI-reported `claude-opus-5-5`) found four initial P2s, all fixed; subsequent bounded reviews found no new P1/P2. Full scope and limits are in [release preparation](docs/releases/preview.8.md). No new behavior/effect experiment or native host loader test was run.
+
+### Earlier W clarification carried into this candidate
+
+The following changes and 89-test/Claude record predate the activation redesign; their bounded review is not evidence for the new architecture. M was unchanged in that earlier change only.
+
+- Connect W's first file edit (including design documents, in every grade) to M's existing ordered-change support. Reuse existing mappings and allow one sentence for a simple change; no extra plan file, review or approval stage is introduced.
+- Make W's unresolved baseline/requirement handling explicitly consume M's human-judgment minimum. Preserve separately declared project authority for observation reports/candidates without granting new authority or weakening project-specific human confirmation.
+- Update both W editions and bundle manifests; M is unchanged. The historical verification guard hash remains pinned, with only the exact reviewed human-judgment clarification normalized for the preservation check. These changes repair consumption of existing M requirements; they do not establish behavioral compliance or an effect on outcomes, rework or cost.
+
+- Validation: 89 executable tests passed on Windows, both 66-file bundle manifests matched, and all M source copies remained unchanged. A three-turn read-only Claude review (requested `opus`/high; CLI-reported `claude-opus-5-5`) compared the supplied M/W text and diffs. Its wording findings were corrected; its final conclusion found no blocking defect in that bounded scope. The reviewer did not execute the tests or audit the entire repository. No new behavior experiment was run.
 
 ## 1.0.0-preview.7 — 2026-10-31
 

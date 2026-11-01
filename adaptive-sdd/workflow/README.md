@@ -1,5 +1,7 @@
 # Execution procedure (W)
 
+> Recommended preview.8 path: explicitly select an external, project-owned and editable W for each task. Read the [task selection contract](activation.md) first. The installed-copy, generated-document and pinned M/W descriptions below describe the explicitly chosen legacy `install.py` path. For external adoption, use the path, ownership and lifetime contract in activation.md.
+
 This folder is the **common execution procedure** from Issue through implementation, verification and closing. It was carried over from a procedure refined over long operation in one product, with only the product-specific parts removed. Facts, paths, commands and permissions that differ by product are not kept in this folder; they are kept in the **P project documents** generated at installation.
 
 ## M/W/P structure and paths

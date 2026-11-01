@@ -45,6 +45,22 @@ def without_closing_reference_wording(text):
     return text.replace(new, old, 1)
 
 
+# M already requires this stop-and-ask behavior. Account for only the reviewed
+# clarification; preserve the historical digest for all other verification rules.
+HUMAN_JUDGMENT_CLARIFICATION = (
+    'M `core.md`의 `사람 판단` 1에 따라 그 판단에 의존하는 작업을 멈추고 묻는다. '
+    '의존하지 않는 작업은 계속할 수 있으며, 물을 수 없는 실행 환경이면 그 작업을 멈춘 채 질문을 미결로 기록한다.',
+    '그 판단에 의존하는 진행은 기존 gate를 따른다.',
+)
+
+
+def without_human_judgment_clarification(text):
+    new, old = HUMAN_JUDGMENT_CLARIFICATION
+    assert text.count(new) == 1, new
+    assert old not in text, old
+    return text.replace(new, old, 1)
+
+
 def normalize(text):
     text = historical_paths(text)
     # Ignore relocated link destinations, not the contract text.
@@ -86,6 +102,8 @@ class SelectiveReadingTests(unittest.TestCase):
             text = (BUNDLE / path).read_text(encoding="utf-8")
             if path == 'workflow/process/design-review.md':
                 text = without_profile_additions(text)
+            if path == 'workflow/process/verification.md':
+                text = without_human_judgment_clarification(text)
             if path == 'workflow/process/sdd/completion.md':
                 text = without_closing_reference_wording(text)
             self.assertEqual(hashlib.sha256(historical_paths(text).encode("utf-8")).hexdigest(), digest)

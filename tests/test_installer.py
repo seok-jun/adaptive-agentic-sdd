@@ -545,7 +545,7 @@ class EditionTests(unittest.TestCase):
 
     def test_same_file_set_and_identical_shared_files(self):
         self.assertEqual(bundle_files(EN_SOURCE), bundle_files(SOURCE))
-        for rel in ("tools/install.py", "tools/review_snapshot.py", "LICENSE"):
+        for rel in ("tools/install.py", "tools/review_snapshot.py", "tools/agentics.py", "LICENSE"):
             with self.subTest(rel=rel):
                 self.assertEqual((EN_SOURCE / rel).read_bytes(), (SOURCE / rel).read_bytes())
         # The English bundle's M is the canonical root methodology, byte for byte.
