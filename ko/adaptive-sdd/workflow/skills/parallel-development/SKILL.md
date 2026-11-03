@@ -112,7 +112,11 @@ P가 선언한 게시 저장소·branch에 AS-IS·PLAN 검토 후보를 올릴 �
 ### Merged local worktree cleanup
 
 1. PR이 병합됐고 worktree가 깨끗한지 확인한다. 미커밋·미병합이면 지우지 않고 멈춘다.
-2. 먼저 "산출물 없음" 예외를 판정한다. 그 lane에서 로컬 빌드 도구를 실행하지 않았다는 작업 근거가 있고, `git status --porcelain --untracked-files=all --ignored`가 비어 있어 추적·미추적·무시 파일과 사용자 파일이 하나도 없음을 확인했으면 빌드 정리를 건너뛰고 이유·근거를 남긴다. 하나라도 확인되지 않았거나 산출물이 있으면 이 예외를 쓰지 않는다. 예외가 아니면 등록 제거 전에 P 적용 문서 `build.md`의 정리 명령을 확인한다. 선언이 없으면 정리를 건너뛴 이유를 남긴다. 있으면 `W/skills/_shared/build-preflight.md`를 적용(같은 실행의 JDK 재사용)하고 worktree에서 그 정리 명령을 실행해 기록한다.
+2. 빌드 정리는 먼저 "산출물 없음" 예외를 판정해 처리한다.
+   - **예외:** 그 lane에서 로컬 빌드 도구를 실행하지 않았다는 작업 근거가 있고, `git status --porcelain --untracked-files=all --ignored`가 비어 있어 추적·미추적·무시 파일과 사용자 파일이 하나도 없음을 확인했으면 빌드 정리를 건너뛰고 이유·근거를 남긴다. 하나라도 확인되지 않았거나 산출물이 있으면 이 예외를 쓰지 않는다.
+   - **예외가 아니면:** 등록 제거 전에 P 적용 문서 `build.md`의 정리 명령을 확인한다.
+     - 선언이 없으면 정리를 건너뛴 이유를 남긴다.
+     - 있으면 `W/skills/_shared/build-preflight.md`를 적용(같은 실행의 JDK 재사용)하고 worktree에서 그 정리 명령을 실행해 기록한다.
 3. preflight가 `BLOCKED: JDK unavailable`이면 등록 제거로 넘어가지 않고 그 상태로 멈춘다. JDK는 찾았지만 빌드 정리가 실패했거나 정리 뒤에도 미커밋 변경이 남으면 `CLEANUP_BLOCKED`로 멈춘다.
 4. Windows worktree root는 P가 선언한 `worktree root` 형태의 짧은 경로를 유지한다. 제거 전에 이 명령에만 적용되는 `core.longpaths=true`가 유효한지 확인하고 결과를 남긴다. 긴 경로 지원을 확인할 수 없으면 `CLEANUP_BLOCKED`로 멈춘다.
 5. 기본 clone에서 강제 옵션 없이 worktree를 제거한다. Windows에서는 `git -c core.longpaths=true worktree remove <exact-path>`를 쓴다.

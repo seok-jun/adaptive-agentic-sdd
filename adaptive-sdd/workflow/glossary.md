@@ -81,7 +81,7 @@ One-line explanations of terms that appear often in the W documents. Each docume
 | --- | --- |
 | Targeted verification | Narrow verification that runs the changed module or tests first |
 | Broad verification | The wide required verification run on the final candidate |
-| PASS reuse | Reusing an earlier run's result only for the same candidate and the same inputs. If an input changes, run again |
+| PASS reuse | Reusing a verification PASS when there is evidence that the inputs verified by its command are unchanged; review evidence belongs to the reviewed candidate ([source](process/verification.md#verification-sequencing-and-pass-validity)) |
 | Preflight | The step that checks the execution environment, such as the JDK, before builds and tests |
 | Observation | Application records and actual problem records kept at start, handoff and closing |
 | Not observed / not collected | Not seen within the checked scope (not zero) / not collected because there is no source |
