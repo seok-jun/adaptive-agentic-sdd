@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+Agent readability (no rule meaning change):
+
+- Wording and structure fixes from an agent-perspective review and a three-turn Claude/Codex `gpt-6-astra` discussion; edits were made by Codex `gpt-6.1-sol`/high and reviewed item by item by Claude. Both editions are updated unless noted, and both `MANIFEST.json` files are regenerated.
+  - Glossary "PASS reuse" now matches `verification.md`: a verification PASS is reused when the inputs its command verified are unchanged, and review evidence belongs to the reviewed candidate. The glossary still adds no rules.
+  - `implementing-issues` Implement step 5 and `parallel-development` merged-worktree cleanup step 2 are split so the core action comes first (first verification: the directly related test class or owning-module tests); step numbers and conditions are unchanged.
+  - `observations.md` and `finishing-issues` state non-blocking rules as "record, then continue (no new gate)", with detail kept in `observations.md` and links from `finishing-issues`. Required actions, output strings and stop conditions are unchanged.
+  - Korean edition only: general English phrases in `execution-routing.md` are given Korean wording with the English term at first use; identifiers, statuses and glossary terms are unchanged.
+- Not changed: `process/sdd/*.md`, `verification.md`, `design-review.md` and `sdd/completion.md`, whose wording is pinned by `tests/test_sdd_structure.py`; `methodology/core.md`. A Small entry card was discussed and deferred. Similar summaries in `observations.md` (evidence reuse) and `core.md` (PASS reuse) were reported but not edited.
+- Checks: the 89 repository tests pass (one transient error in one run, not reproduced in three reruns). No behavior evaluation was run, so no effect on agent behavior is claimed.
+
 ## 1.0.0-preview.7 — 2026-10-31
 
 Follows preview.6 (`9e6961678a33c5e5da0e7b3e6c48ed96f6994110`). Earlier tags are unchanged.
