@@ -74,7 +74,7 @@ SDD를 쓰는 설계, Medium 구현 진입, 별도 IMPLEMENT 문맥에서는 해
 | Medium | 필요한 SDD·검증 계획을 쓰고 충돌이 없으면 추가 승인 없이 구현한다. SDD 배치는 P의 `sdd.medium_artifacts` 값을 따른다. |
 | Large | AS-IS 작성 → 그 단계의 유효한 설계 리뷰 → PLAN 작성 → 그 단계의 유효한 설계 리뷰 → 구현 순서로 진행한다. |
 
-Large의 게시·리뷰 방식(P의 `review.large_mode`)·A/B·지적 등급·blind 격리·재확인·반복 정체는 `design-review.md` 한 곳에서 판정한다. 각 단계에서 현재 검토 대상의 근거와 `W/process/sdd/issue.md`의 `미결 사항과 단계별 의존성`을 확인하고, 결론이 필요한 작업만 진행한다. 빠지거나 낡은(stale) 근거를 과거 PASS로 대신하지 않는다. 재검토 전에는 같은 원본의 "검토 대상 유지 조건"부터 적용하며, 이 절차를 Medium 이하나 기본 CODE 리뷰에 더하지 않는다.
+Large의 게시·리뷰 방식(P의 `review.large_mode`)·A/B·지적 등급·blind 격리·재확인·반복 정체는 `design-review.md` 한 곳에서 판정한다. 각 단계에서 현재 검토 대상의 근거와 `W/process/sdd/issue.md`의 `미결 사항과 단계별 의존성`을 확인하고, 필요한 결론이 확보된 작업은 진행하고, 결론이 아직 없는 경우 그 결론에 의존하는 작업만 기다린다. 빠지거나 낡은(stale) 근거를 과거 PASS로 대신하지 않는다. 재검토 전에는 같은 원본의 "검토 대상 유지 조건"부터 적용하며, 이 절차를 Medium 이하나 기본 CODE 리뷰에 더하지 않는다.
 
 제품 파일을 고치기 전에 `verification.md`에 따라 기준 요구와 완료 기준을 검증에 연결하고 등급별 `Independent Review` 판정을 확보한다. Medium 이상의 Human Decision Contract는 `W/process/sdd/to-be.md`, 구현 명세는 `W/process/sdd/agent-spec.md`를 따른다. 증명할 수 없는 완료 기준이나 허용 경계 밖의 필수 검증은 `BLOCKED`다. 선택 사항인 Device QA/Runtime QA를 구현·PR·병합의 관문으로 만들지 않는다.
 

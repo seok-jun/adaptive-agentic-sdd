@@ -1,7 +1,7 @@
 {
   "skill": "parallel-development",
   "setting": "가상 프로젝트 '도서 대출 서비스'(Java/Spring, Gradle, JDK 21 선언). 모듈: loan-service/**, member-core/**, notification/**. 공유 contract: common-contract/**. root·integration 전용: build.gradle, settings.gradle. 작업 관리: 로컬 문서(tracker_root의 items/T-<번호>.md, claims/T-<번호>.claim).",
-  "note": "공개용 가상 사례다. 제품에서 검증된 사례의 기대 행동을 가상 프로젝트로 옮겼다. 제품 원본 사례는 제품이 소유한다. PD-S06의 멈춤 문구는 preview.5에서 Skill의 `BLOCKED: declared base fetch failed`에 맞춰 정정했다(2026-10-30 첫 행동 평가에서 발견한 사례 결함).",
+  "note": "공개용 가상 사례다. 제품에서 검증된 사례의 기대 행동을 가상 프로젝트로 옮겼다. 제품 원본 사례는 제품이 소유한다. PD-S06의 멈춤 문구는 preview.5에서 Skill의 `BLOCKED: declared base fetch failed`에 맞춰 정정했다(2026-10-30 첫 행동 평가에서 발견한 사례 결함). 공개 검수 회귀 사례 PD-R01/PD-R02는 합성 명세이며 모델 행동 실행은 미확인이다.",
   "cases": [
     {
       "id": "PD-S01-clean-claim",
@@ -65,8 +65,8 @@
       "prompt": "현재 다른 작업 branch가 checkout된 Windows clone에서 새 작업 branch와 worktree를 만들어라.",
       "fixture": "현재 HEAD는 이전 작업 branch이고 local main은 origin/main보다 오래됐다. 새 작업은 claim 가능하고 이름 충돌이 없다.",
       "must": [
-        "생성 직전에 git fetch origin main을 성공시킨다",
-        "fetch된 origin/main SHA를 확인하고 기록한다",
+        "생성 직전에 git fetch origin refs/heads/main을 성공시킨다",
+        "git rev-parse --verify 'FETCH_HEAD^{commit}'로 이번 fetch의 SHA를 확인해 기록한다",
         "확인한 SHA를 explicit base로 새 branch와 worktree를 만든다",
         "생성된 worktree에서 CLAIM 절차를 수행한다"
       ],
@@ -101,6 +101,32 @@
       "must_not": [
         "origin/main이나 현재 HEAD를 임의 기준으로 쓴다",
         "다른 checkout에 묶인 S의 lock을 재사용한다"
+      ]
+    },
+    {
+      "id": "PD-R01-fresh-fetch-narrow-refmap",
+      "prompt": "새 lane의 기준을 고르고 이후 병합을 확인해줘.",
+      "fixture": "합성 사례: remote fetch mapping은 다른 branch만 추적한다. origin/main은 오래됐지만 refs/heads/main fetch는 성공하고 FETCH_HEAD에는 새 main tip이 있다. 최신 tip에는 작업 병합이 포함됐다.",
+      "must": [
+        "새 lane 기준과 병합 조상 확인에 직후 fetch한 commit을 사용한다",
+        "fetch한 tip과 실제 병합 결과 SHA를 구분한다"
+      ],
+      "must_not": [
+        "fetch 성공만으로 오래된 origin/main을 사용한다"
+      ]
+    },
+    {
+      "id": "PD-R02-competing-claim-ownership",
+      "prompt": "local-docs claim을 확보하고 실패하면 이번 시도를 해제해줘.",
+      "fixture": "합성 사례: 사전 확인과 배타적 생성 사이 다른 agent가 이 Issue claim을 확보했다. 그 claim 파일·owner·진행 상태는 유효하다. 소유자가 정상 해제하는 분기에서는 옛 lock 제거 뒤 후속 소유자가 확보할 수 있다.",
+      "must": [
+        "owner/status 변경 전에 배타적 claim을 확보한다",
+        "획득 실패 시 기존 claim과 경쟁 소유자 메타데이터를 모두 보존한다",
+        "자기 해제는 잠금 중 소유 확인·기록·자기 메타데이터 정리 후 일치하는 lock을 마지막에 제거한다"
+      ],
+      "must_not": [
+        "승리한 소유자 상태를 지우거나 삭제한다",
+        "후속 소유자가 확보할 수 있는 잠금 해제 뒤 메타데이터를 정리한다"
       ]
     }
   ]

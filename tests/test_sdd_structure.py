@@ -61,6 +61,17 @@ def without_human_judgment_clarification(text):
     return text.replace(new, old, 1)
 
 
+def without_review_profile_dispatch(text):
+    """1.0 corrects only the Large design-review cell to honor existing profile modes.
+    Reverse that exact correction for the historical guard digest; keep every other byte pinned.
+    """
+    new = 'AS-IS/PLAN 각각의 필수 리뷰는 P의 Execution Profile과 Design review 모드를 따른다(기본: Review A + 사람이 선택한 Review B)'
+    old = 'AS-IS/PLAN 각각 Review A Contract Review + Human-selected Review B Blind Audit 필요'
+    assert text.count(new) == 1, new
+    assert old not in text, old
+    return text.replace(new, old, 1)
+
+
 def normalize(text):
     text = historical_paths(text)
     # Ignore relocated link destinations, not the contract text.
@@ -103,7 +114,7 @@ class SelectiveReadingTests(unittest.TestCase):
             if path == 'workflow/process/design-review.md':
                 text = without_profile_additions(text)
             if path == 'workflow/process/verification.md':
-                text = without_human_judgment_clarification(text)
+                text = without_review_profile_dispatch(without_human_judgment_clarification(text))
             if path == 'workflow/process/sdd/completion.md':
                 text = without_closing_reference_wording(text)
             self.assertEqual(hashlib.sha256(historical_paths(text).encode("utf-8")).hexdigest(), digest)

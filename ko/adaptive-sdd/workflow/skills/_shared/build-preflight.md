@@ -20,7 +20,7 @@ required 빌드 검증이면 resolve한 JDK가 아니라 **빌드 도구가 실�
 
 ## 기기·에뮬레이터
 
-`build.md`가 기기 절차를 선언한 경우에만 그 절차를 따른다. 선언이 없으면 기기·에뮬레이터 작업을 하지 않으며, 그 작업이 필요하면 `BLOCKED: device procedure undeclared`로 해당 작업만 멈춘다. 기기 확인 결과는 구현·병합·완료 gate가 아니다.
+`build.md`가 기기 절차를 선언한 경우에만 그 절차를 따른다. 선언이 없으면 기기·에뮬레이터 작업을 하지 않으며, 그 작업이 필요하면 `BLOCKED: device procedure undeclared`로 해당 작업만 멈춘다. 선택 기기 확인은 구현·병합·완료 gate가 아니다. P의 빌드 선언이나 Issue의 Verification Strategy가 기기 확인을 명시적으로 요구하면 `W/process/verification.md`의 필수 검증 계약을 적용한다.
 
 ## Process/run scope
 

@@ -32,13 +32,13 @@
 | 댓글 URL / ID | `items/<ID>.md#<항목 id>` |
 | 댓글 `updated_at` | 항목의 `작성` 시각. 항목은 수정하지 않으므로 작성 시각이 곧 갱신 시각이다 |
 | `[CLAIM]` | `claims/<ID>.claim`을 이미 있으면 실패하는 방식으로 만들고, 같은 내용을 `## 기록`에 남긴다 |
-| `[RELEASE]` | `## 기록`에 `[RELEASE]`를 남긴 뒤 `claims/<ID>.claim`을 지운다 |
+| `[RELEASE]` | 배타적 파일을 보유한 상태에서 이 agent/branch의 소유임을 확인하고 해제를 기록한 뒤 자기 owner/status만 정리하며, 일치하는 `claims/<ID>.claim`을 마지막에 삭제한다. 소유 불일치면 어느 것도 쓰지 않고 claim을 보존한다 |
 | open PR | 아직 선언한 병합 branch에 병합되지 않은 해당 작업의 branch |
 | PR head / base SHA | branch head SHA / 선언한 병합 대상 SHA |
 | PR body의 `Closes #N` | `[IMPLEMENTATION SUMMARY]` 항목의 `closes: <ID>` 줄 |
 | PR mergeability | `git merge-tree --write-tree <code-remote>/<merge-branch> <branch>`(Git 2.38 이상)의 종료 코드 0이면 충돌 없음. 쓸 수 없으면 disposable worktree에서 병합을 시도하고 결과만 기록한 뒤 버린다 |
 | PR merge | P 적용 문서 `tracker.md`의 `병합 방법`(merge·squash·rebase)으로 branch를 선언한 코드 원격의 병합 대상 branch에 병합하고 push한다. 병합 주체는 P의 사람 판단 지점을 따른다. 병합한 쪽이 `## 기록`에 `[MERGED]` 항목(`branch:`, `head:` branch head SHA, `main:` 선언한 병합 branch의 결과 SHA, `method:`)을 남긴다. 병합 방법이 미정이면 `BLOCKED: tracker operation unsupported` |
-| merged 확인 | `git fetch <code-remote> <merge-branch>` 뒤, `merge`면 `git merge-base --is-ancestor <branch head> <code-remote>/<merge-branch>`이 성공해야 한다. `squash`·`rebase`면 원래 branch head가 병합 branch에 없을 수 있으므로 `[MERGED]`의 `main:` SHA가 `<code-remote>/<merge-branch>`의 조상이고 그 commit 메시지가 작업 ID를 담는지 확인한다. 확인한 <code-remote>/<merge-branch> SHA를 기록한다 |
+| merged 확인 | `git fetch <code-remote> refs/heads/<merge-branch>` 직후 `git rev-parse --verify 'FETCH_HEAD^{commit}'`로 `<fetched-merge-sha>`를 확정한다. 하나라도 실패하면 병합 미확인이다. `merge`는 `git merge-base --is-ancestor <branch head> <fetched-merge-sha>`가 성공해야 한다. `squash`·`rebase`는 `[MERGED]`의 `main:` SHA가 `<fetched-merge-sha>`의 조상이고 그 commit 메시지가 작업 ID를 담아야 한다. 최신 tip은 실제 병합 결과 SHA와 구분해 기록한다 |
 | CI | P 적용 문서 `build.md`의 `## 검증 기준`이 정한 로컬 명령. CI가 있으면 같은 문서의 `CI`가 함께 선언 |
 | PR 기반 review candidate publication | P의 게시 저장소·원격·branch에 artifact를 push하고 exact SHA를 기록한다. 제품 claim branch와 구별하며 W design-review 게시 조건을 따른다 |
 | Issue closed (병합 뒤 자동 종료) | GitHub의 자동 종료에 해당하는 동작이 없으므로, merged 확인 뒤 종료 절차를 수행하는 Agent가 `## 메타`의 `status: closed`와 `종료:` 시각을 쓰고 `## 기록`에 `[CLOSED]` 항목(`by-merge: <main SHA>`)을 남긴다. `[IMPLEMENTATION SUMMARY]`의 `closes:`가 이 작업 ID일 때만 한다 |
@@ -118,3 +118,5 @@ forbidden:
 - `tracker_root`에 접근할 수 없거나 쓰기에 실패하면 `BLOCKED: tracker unavailable`로 의존 작업을 멈춘다. 저장소 안이나 다른 임의 위치로 우회 저장하지 않는다.
 - 공유 폴더는 GitHub처럼 작성자 인증·권한을 강제하지 않는다. 작성자 식별은 자기 보고이며, W의 "허용 작성자" 조건은 P가 선언한 식별 값과의 일치로만 확인한다.
 - 로컬 파일은 원격 백업이 없다. P가 `tracker_root`를 git 저장소로 두지 않으면 기록 유실을 복구할 수 없다는 한계를 남긴다.
+
+배타적 claim을 확보한 뒤에만 `## 메타`의 owner/status를 바꾼다. 해제 시 claim의 agent/branch를 다시 확인하고 경쟁 소유자의 상태는 보존한다. 획득 실패는 메타데이터 수정이나 삭제 권한을 주지 않는다.

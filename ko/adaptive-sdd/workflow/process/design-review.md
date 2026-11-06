@@ -40,7 +40,7 @@ unresolved Execution-contract blocker: 0
 
 - 이 문서의 나머지 절에서 "A → B", "Review B 재확인"은 이 독립 리뷰의 재확인으로, "새 독립 Blind Audit B"가 필요한 경우는 "author와 분리된 새 session에서 무효화된 phase 전체를 다시 독립 리뷰"로 바꿔 읽는다. [반복 정체 시 전환](#반복-정체-시-전환)은 그대로 적용한다.
 
-**Review B reviewer 자동 선택(`dual` + `optional`).** Review A PASS 뒤 사람이 B reviewer의 model·reasoning을 골랐으면 그 선택을 `required`와 똑같이 쓴다. 고른 reviewer를 쓸 수 없으면 자동으로 다른 reviewer로 바꾸지 않고 `BLOCKED: selected blind-audit reviewer unavailable`이다. 사람이 고르지 않았으면 Agent가 [execution-routing](../skills/_shared/execution-routing.md)의 자동 선택 규칙으로 고를 수 있다. 이때 후보는 independent reviewer 역할의 fresh qualification PASS, `strong + high` 이상의 `REVIEW` floor, author 및 Review A actor/session과 모두 다른 별도 session을 갖춰야 하며 `frontier`는 기존 escalation 근거 없이 고르지 않는다. 조건을 만족하는 후보가 없으면 그 원본의 `BLOCKED` 상태로 멈춘다. 자동 선택한 사실, 선택 근거, 요청한 model·reasoning을 Review Packet에 남긴다. Blind 입력 격리와 reconciliation은 그대로다.
+**Review B reviewer 자동 선택(`dual` + `optional`).** Review A PASS 뒤 사람이 B reviewer의 model·reasoning을 골랐으면 그 선택을 `required`와 똑같이 쓴다. 고른 reviewer를 쓸 수 없으면 자동으로 다른 reviewer로 바꾸지 않고 `BLOCKED: selected blind-audit reviewer unavailable`이다. 사람이 고르지 않았으면 Agent가 [execution-routing](../skills/_shared/execution-routing.md)의 자동 선택 규칙으로 고를 수 있다. 이때 후보는 independent reviewer 역할의 fresh qualification PASS, `strong + high` 이상의 `REVIEW` floor, author 및 Review A actor/session과 모두 다른 별도 session을 갖춰야 하며 escalation 근거가 있어도 `frontier`는 자동 선택에서 제외한다. 조건을 만족하는 후보가 없으면 그 원본의 `BLOCKED` 상태로 멈춘다. 자동 선택한 사실, 선택 근거, 요청한 model·reasoning을 Review Packet에 남긴다. Blind 입력 격리와 reconciliation은 그대로다.
 
 ## Large 설계 단계
 

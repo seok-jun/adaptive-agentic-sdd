@@ -1,7 +1,7 @@
 {
   "skill": "parallel-development",
   "setting": "Fictional project 'Book Lending Service' (Java/Spring, Gradle, JDK 21 declared). Modules: loan-service/**, member-core/**, notification/**. Shared contract: common-contract/**. Root and integration only: build.gradle, settings.gradle. Work tracking: local documents (items/T-<number>.md, claims/T-<number>.claim in tracker_root).",
-  "note": "A fictional case for publication. The expected behavior of cases verified in a product was carried over to a fictional project. Product-origin cases are owned by the product. The stop string of PD-S06 was corrected in preview.5 to the skill's `BLOCKED: declared base fetch failed` (a case defect found by the first behavior evaluation on 2026-10-30).",
+  "note": "A fictional case for publication. The expected behavior of cases verified in a product was carried over to a fictional project. Product-origin cases are owned by the product. The stop string of PD-S06 was corrected in preview.5 to the skill's `BLOCKED: declared base fetch failed` (a case defect found by the first behavior evaluation on 2026-10-30). Release-review regression cases PD-R01/PD-R02 are synthetic specifications; model behavior execution is unconfirmed.",
   "cases": [
     {
       "id": "PD-S01-clean-claim",
@@ -65,8 +65,8 @@
       "prompt": "Create a new task branch and worktree in a Windows clone where another task branch is currently checked out.",
       "fixture": "The current HEAD is the previous task branch, and the local main is older than origin/main. The new task can be claimed and has no name conflict.",
       "must": [
-        "Makes git fetch origin main succeed right before creation",
-        "Checks and records the fetched origin/main SHA",
+        "Makes git fetch origin refs/heads/main succeed right before creation",
+        "Checks and records this fetch's SHA with git rev-parse --verify 'FETCH_HEAD^{commit}'",
         "Creates the new branch and worktree with the checked SHA as the explicit base",
         "Performs the CLAIM procedure in the created worktree"
       ],
@@ -101,6 +101,32 @@
       "must_not": [
         "Uses origin/main or the current HEAD as an arbitrary base",
         "Reuses the lock of an S bound to another checkout"
+      ]
+    },
+    {
+      "id": "PD-R01-fresh-fetch-narrow-refmap",
+      "prompt": "Choose the base for a new lane and verify a later merge.",
+      "fixture": "Synthetic: remote fetch mapping tracks only another branch. origin/main is stale, but fetching refs/heads/main succeeds and FETCH_HEAD contains the new main tip. That fresh tip includes the task merge.",
+      "must": [
+        "Use the immediately fetched commit for the new lane base and merge ancestry check",
+        "Keep fetched tip separate from the actual merge-result SHA"
+      ],
+      "must_not": [
+        "Use stale origin/main because fetch returned success"
+      ]
+    },
+    {
+      "id": "PD-R02-competing-claim-ownership",
+      "prompt": "Acquire the local-docs claim; if acquisition loses, release your attempt.",
+      "fixture": "Synthetic: another agent acquires this Issue claim between your precheck and exclusive creation. Its claim file, owner and in-progress status are valid. In the successful-owner branch, a successor may acquire only after the old lock is removed.",
+      "must": [
+        "Acquire the exclusive claim before owner/status changes",
+        "On failed acquisition preserve the existing claim and all competing metadata",
+        "For own release, confirm ownership, record and clear own metadata under the lock, then remove the matching lock last"
+      ],
+      "must_not": [
+        "Clear or delete the winning owner state",
+        "Clear metadata after unlocking when a successor may own it"
       ]
     }
   ]

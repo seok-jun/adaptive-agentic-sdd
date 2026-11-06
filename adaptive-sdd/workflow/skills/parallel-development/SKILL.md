@@ -42,8 +42,8 @@ This procedure applies only when creating a new Issue branch or worktree. The ba
 
 1. Check that the current repository and remote are the expected targets, and check the current worktree and branch, the uncommitted change (dirty) state, and branch and worktree path conflicts. Use this local state only for contamination and conflict safety checks, not for choosing the base.
 2. Compare the Issue's allowed edit paths with in-progress `[CLAIM]`s and open PRs, and check the shared and root boundaries reserved for integration work. If they overlap or touch a shared boundary that is not allowed, do not create a branch or worktree; stop with the matching stop condition.
-3. Right before creating the branch or worktree, run `git fetch <code-remote> <base-branch>` in the current shell. If it fails, stop with `BLOCKED: declared base fetch failed`, and do not substitute an existing remote-tracking ref, a local base branch or the current HEAD.
-4. If the fetch succeeds, immediately fix the base SHA with `git rev-parse --verify <code-remote>/<base-branch>` and leave it in the work evidence. If the SHA cannot be confirmed, do not create a branch or worktree.
+3. Right before creating the branch or worktree, run `git fetch <code-remote> refs/heads/<base-branch>` in the current shell. If it fails, stop with `BLOCKED: declared base fetch failed`, and do not substitute an existing remote-tracking ref, a local base branch or the current HEAD.
+4. If the fetch succeeds, immediately fix this fetch result's base SHA with `git rev-parse --verify 'FETCH_HEAD^{commit}'` and leave it in the work evidence. If the SHA cannot be confirmed, do not create a branch or worktree.
 5. Use the confirmed base SHA as the explicit starting point.
    - If there are two or more lanes in the same local clone, create the per-Issue branch and a worktree outside the repository together with `git worktree add <path> -b <branch> <base-sha>`.
    - In an independent cloud clone or sandbox, do not create an additional worktree; create the Issue branch with `git switch -c <branch> <base-sha>` and use the sandbox itself as the lane.
@@ -57,6 +57,8 @@ Do not edit the W and M pinned copies (`W`, `M`) in lane work.
 - Do not choose a different base, or insert a checkout or pull of a local base branch, between the fetch and the creation of the branch or worktree.
 - Two agents do not commit to the same branch at the same time.
 - Do not automatically rebase or recreate an already created branch or worktree in progress because of this rule. Updating an existing lane applies only the Synchronization procedure.
+
+For all claim/release operations, mutate only the claim owned by this agent and branch. Re-query ownership before changing metadata; never clear another lane's claim, assignee or in-progress status. A failed competing claim releases only this attempt's own state. If ownership cannot be isolated, stop edits and leave the conflicting state for coordination. For local-docs, acquire the exclusive claim file before changing owner/status metadata; a failed acquisition changes neither.
 
 ## Claim
 
@@ -102,6 +104,8 @@ When it is newly confirmed that an ordinary lane must change shared or root path
 3. Check the integration rules in the common boundary and lifecycle contract of `W/process/module-boundaries.md` and the actual product boundaries of `W/../project/module-boundaries.md`.
 4. Split it into an integration Issue or a preceding change, and stop or release the lanes that rely on it.
 5. When the shared change is merged, take in the declared integration revision and resume.
+
+For local-docs release, the adapter's exclusive-lock ordering takes precedence: clear only this owner's metadata while still holding its matching claim, then remove that claim last. Do not perform later metadata cleanup after releasing the lock.
 
 ## Release
 

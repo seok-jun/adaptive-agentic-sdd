@@ -62,8 +62,8 @@ fallback은 다음 순서를 바꾸지 않는다. **이미 실행 중이거나 �
 2. phase risk로 minimum capability floor를 고정한다.
 3. current/manual concrete model이면 적격한 경우 일반 Trivial/Small 예외를 먼저 적용하되, 아래 [Model Role Qualification](#model-role-qualification)의 deny와 명시 기록 확인도 포함한다. 그 밖의 current/manual 경로에는 phase floor를 충족하는 최신 host 근거나 사람이 확인한 적용 가능한 범위 평가가 필요하다. 자동 선택에는 계속 기존의 적격 host mapping과 fresh role qualification PASS가 필요하다.
 4. Execution Profile의 explicit model/tier가 현재 model에서 switch를 요구하거나 Agent가 worker/reviewer/fallback concrete model을 자동 선택하면 해당 development role의 **fresh qualification PASS**가 필요하다.
-5. 자동 후보의 tier가 floor 이상이고 fresh role qualification PASS이면 사용한다.
-6. explicit fallback이 없거나 부적격이면 floor 이상인 나머지 fresh host mapping을 낮은 적격 tier부터 결정적으로 탐색하되, 각 자동 후보에 fresh role qualification PASS를 요구한다. `frontier`는 기존 escalation evidence 없이 이 fallback에 포함하지 않는다.
+5. frontier가 아닌 자동 후보의 tier가 floor 이상이고 fresh role qualification PASS이면 사용한다.
+6. explicit fallback이 없거나 부적격이면 floor 이상인 나머지 fresh host mapping을 낮은 적격 tier부터 결정적으로 탐색하되, 각 자동 후보에 fresh role qualification PASS를 요구한다. escalation evidence가 있어도 모든 자동 후보와 fallback에서 `frontier`를 제외하며, 제한적 사용에는 사람의 명시적 선택이 필요하다.
 7. 자동 선택이 필요한데 capability 후보가 모두 역할 부적격이면 `BLOCKED: model role unqualified`, capability 후보 자체를 증명할 수 없으면 `BLOCKED: routing capability unavailable`이다.
 
 Profile과 fallback은 floor 아래로 downgrade할 수 없다. 존재하지 않거나 지원 여부가 확인되지 않은 concrete model/tier를 추정하지 않는다. **아직 진입하지 않은 future phase의 concrete model qualification은 선결 조건으로 미리 요구하지 않는다.** 해당 phase에서 실제 current/manual model을 확인하거나 switch/delegation 후보를 선택하기 직전에 위 규칙으로 적시(just-in-time) 검증한다.

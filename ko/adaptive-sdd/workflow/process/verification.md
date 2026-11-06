@@ -46,7 +46,7 @@ independent review는 구현/문서 author와 다른 reviewer가 수행하고, P
 | Trivial | Trivial 조건과 대상 범위 self-review | targeted validation + diff ↔ 요청 범위 self-review |
 | Small | Issue 경계와 검증 가능성 self-review | diff ↔ 완료 기준 self-review |
 | Medium | SDD와 Verification Strategy bounded self-review. shared contract 또는 여러 모듈의 integration 근거가 필요한 경우 independent review를 `REQUIRED`로 판정 | `Independent Review: REQUIRED`이면 bounded independent review 통과 필요, 아니면 self-review |
-| Large | AS-IS/PLAN 각각 Review A Contract Review + Human-selected Review B Blind Audit 필요 | 기존 bounded independent code review 1회; 명시적 high-risk escalation만 추가 audit 가능 |
+| Large | AS-IS/PLAN 각각의 필수 리뷰는 P의 Execution Profile과 Design review 모드를 따른다(기본: Review A + 사람이 선택한 Review B) | 기존 bounded independent code review 1회; 명시적 high-risk escalation만 추가 audit 가능 |
 
 required review가 미완료이거나 boundary 위반, 완료 기준 미충족, 명백한 안전성·정합성 문제가 unresolved이면 구현 또는 merge를 진행하지 않는다.
 

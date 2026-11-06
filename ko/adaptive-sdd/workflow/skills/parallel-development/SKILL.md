@@ -42,8 +42,8 @@ Issue에 수정 허용/금지 경로가 없으면 새 lane을 만들거나 claim
 
 1. 현재 저장소와 원격이 예상한 대상인지 확인하고, 현재 worktree·branch, 미커밋 변경(dirty) 상태, branch·worktree 경로 충돌을 확인한다. 이 로컬 상태는 오염·충돌 안전 확인에만 쓰고 기준 선택에는 쓰지 않는다.
 2. Issue의 수정 허용 경로를 진행 중인 `[CLAIM]`·열린 PR과 비교하고, 통합 작업 전용인 공유·루트 경계를 확인한다. 겹치거나 허용되지 않은 공유 경계면 branch·worktree를 만들지 않고 해당 멈춤 조건으로 멈춘다.
-3. branch·worktree를 만들기 직전에 현재 셸에서 `git fetch <code-remote> <base-branch>`을 실행한다. 실패하면 `BLOCKED: declared base fetch failed`로 멈추고, 기존 원격 추적 ref·로컬 기준 branch·현재 HEAD로 대신하지 않는다.
-4. fetch가 성공하면 바로 `git rev-parse --verify <code-remote>/<base-branch>`로 기준 SHA를 확정하고 작업 근거에 남긴다. SHA를 확인할 수 없으면 branch·worktree를 만들지 않는다.
+3. branch·worktree를 만들기 직전에 현재 셸에서 `git fetch <code-remote> refs/heads/<base-branch>`을 실행한다. 실패하면 `BLOCKED: declared base fetch failed`로 멈추고, 기존 원격 추적 ref·로컬 기준 branch·현재 HEAD로 대신하지 않는다.
+4. fetch가 성공하면 바로 `git rev-parse --verify 'FETCH_HEAD^{commit}'`로 기준 SHA를 확정하고 작업 근거에 남긴다. SHA를 확인할 수 없으면 branch·worktree를 만들지 않는다.
 5. 확인한 기준 SHA를 명시적 시작점으로 쓴다.
    - 같은 로컬 clone에서 lane이 둘 이상이면 Issue별 branch와 저장소 밖 worktree를 `git worktree add <path> -b <branch> <base-sha>`로 함께 만든다.
    - 독립된 클라우드 clone·sandbox면 추가 worktree를 만들지 않고 `git switch -c <branch> <base-sha>`로 Issue branch를 만든 뒤 sandbox 자체를 lane으로 쓴다.
@@ -57,6 +57,8 @@ W·M 고정 사본(`W`, `M`)은 lane 작업에서 고치지 않는다.
 - fetch와 branch·worktree 생성 사이에 다른 기준을 고르거나 로컬 기준 branch의 checkout·pull을 끼워 넣지 않는다.
 - 두 agent가 같은 branch에 동시에 commit하지 않는다.
 - 이미 만들어져 진행 중인 branch·worktree를 이 규칙 때문에 자동으로 rebase하거나 다시 만들지 않는다. 기존 lane 갱신은 Synchronization 절차만 적용한다.
+
+모든 claim/release 조작은 이 agent와 branch가 소유한 claim에만 적용한다. 메타데이터 변경 전에 소유권을 다시 확인하고 다른 lane의 claim·담당자·진행 상태를 지우지 않는다. 경쟁 claim 실패 시 이번 시도가 소유한 상태만 해제한다. 소유권을 분리할 수 없으면 편집을 멈추고 충돌 상태를 보존해 조율한다. local-docs에서는 owner/status 변경 전에 배타적 claim 파일을 확보하며 획득 실패 시 둘 다 바꾸지 않는다.
 
 ## Claim
 
@@ -102,6 +104,8 @@ P가 선언한 게시 저장소·branch에 AS-IS·PLAN 검토 후보를 올릴 �
 3. `W/process/module-boundaries.md`의 공통 경계·수명 계약과 `W/../project/module-boundaries.md`의 실제 제품 경계에서 통합 규칙을 확인한다.
 4. 통합 Issue나 선행 변경으로 분리하고, 그에 기대는 lane을 멈추거나 release한다.
 5. 공유 변경이 병합되면 선언한 통합 revision을 반영하고 재개한다.
+
+local-docs 해제는 어댑터의 배타적 잠금 순서를 우선한다. 자기 claim을 보유한 상태에서 자기 메타데이터만 정리한 뒤 claim을 마지막에 제거한다. 잠금을 해제한 뒤 메타데이터를 뒤늦게 정리하지 않는다.
 
 ## Release
 

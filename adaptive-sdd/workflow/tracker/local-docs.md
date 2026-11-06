@@ -32,13 +32,13 @@ Parallel lanes work in different worktrees and branches. If claims and work reco
 | Comment URL / ID | `items/<ID>.md#<entry id>` |
 | Comment `updated_at` | The entry's `written` time. Entries are never edited, so the written time is the update time |
 | `[CLAIM]` | Create `claims/<ID>.claim` in a way that fails if it already exists, and record the same content in `## Records` |
-| `[RELEASE]` | Record `[RELEASE]` in `## Records`, then delete `claims/<ID>.claim` |
+| `[RELEASE]` | While holding the exclusive file, confirm it belongs to this agent/branch, record the release and clear only its own owner/status metadata, then delete the matching `claims/<ID>.claim` last. On an ownership mismatch, do none of these writes and preserve the claim |
 | open PR | The task's branch that has not yet been merged into the declared merge branch |
 | PR head / base SHA | Branch head SHA / SHA of the declared merge target |
 | `Closes #N` in the PR body | The `closes: <ID>` line of the `[IMPLEMENTATION SUMMARY]` entry |
 | PR mergeability | Exit code 0 of `git merge-tree --write-tree <code-remote>/<merge-branch> <branch>` (Git 2.38 or later) means no conflicts. If that cannot be used, try the merge in a disposable worktree, record only the result and discard it |
 | PR merge | Merge the branch into the merge target branch of the declared code remote with the `Merge method` (merge, squash, rebase) of the P project document `tracker.md`, and push. Who merges follows P's human judgment points. The merging side records a `[MERGED]` entry in `## Records` (`branch:`, `head:` branch head SHA, `main:` the resulting SHA of the declared merge branch, `method:`). If the merge method is not set, `BLOCKED: tracker operation unsupported` |
-| Merged check | After `git fetch <code-remote> <merge-branch>`, for `merge`, `git merge-base --is-ancestor <branch head> <code-remote>/<merge-branch>` must succeed. For `squash` and `rebase`, the original branch head may not be in the merge branch, so check that the `main:` SHA of `[MERGED]` is an ancestor of `<code-remote>/<merge-branch>` and that its commit message contains the task ID. Record the confirmed <code-remote>/<merge-branch> SHA |
+| Merged check | Run `git fetch <code-remote> refs/heads/<merge-branch>` and immediately capture `git rev-parse --verify 'FETCH_HEAD^{commit}'` as `<fetched-merge-sha>`. If either fails, merge is unconfirmed. For `merge`, `git merge-base --is-ancestor <branch head> <fetched-merge-sha>` must succeed. For `squash`/`rebase`, `[MERGED]`'s `main:` SHA must be an ancestor of `<fetched-merge-sha>` and its commit message must contain the task ID. Record the fresh tip separately from the actual merge-result SHA |
 | CI | The local commands set by `## Verification baseline` of the P project document `build.md`. If there is CI, the `CI` entry of the same document declares it too |
 | PR-based review candidate publication | Push the artifacts to P's publication repository, remote and branch and record the exact SHA. Distinguish it from the product claim branch and follow the publication conditions of W design-review |
 | Issue closed (automatic closing after merge) | There is no counterpart to GitHub's automatic closing, so after the merged check the Agent performing the closing procedure writes `status: closed` and the `closed:` time in `## Meta` and records a `[CLOSED]` entry (`by-merge: <main SHA>`) in `## Records`. Do this only when `closes:` of `[IMPLEMENTATION SUMMARY]` is this task ID |
@@ -118,3 +118,5 @@ forbidden:
 - If `tracker_root` cannot be accessed or a write fails, stop the dependent work with `BLOCKED: tracker unavailable`. Do not save elsewhere inside the repository or in another arbitrary location.
 - A shared folder does not enforce author authentication and permissions as GitHub does. Author identification is self-reported, and W's "allowed authors" condition is checked only by matching the identification values P declared.
 - Local files have no remote backup. If P does not keep `tracker_root` as a git repository, record the limit that lost records cannot be recovered.
+
+Acquire the exclusive claim before updating `## Meta` owner/status. Releasing a claim requires rechecking its agent/branch identity and preserves every competing owner's state; an unsuccessful acquisition grants no metadata-write or deletion authority.

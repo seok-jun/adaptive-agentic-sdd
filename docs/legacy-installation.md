@@ -1,9 +1,9 @@
-# Legacy installation guide (preview.7 model)
+# Legacy installation guide (explicit legacy use)
 
 
-For the historical preview.7 bundle, use `docs/customization.md` from that exact commit. For this 1.0 bundle, use `docs/legacy-installation.md` from its reviewed commit; the legacy installer remains usable when explicitly selected, with the ordinary upgrade review. The preview.7 tag examples below reproduce that historical installation and must not be paired with a 1.0 bundle.
+For the historical preview.7 bundle, use `docs/customization.md` from that exact commit. For this 1.0 bundle, use `docs/legacy-installation.md` from its reviewed commit; the legacy installer remains usable when explicitly selected, with the ordinary upgrade review. The examples below use the target release tag and its verified commit; never pair a different release tag with the selected bundle.
 
-This is the legacy installer contract retained for existing users. For external adoption, use [the current guide](customization.md). This guide describes the `v1.0.0-preview.7` installation model. Verify the tag's full commit SHA and pin the copy and the guide to that commit. For an earlier preview, use the guide inside that tag (for example `https://github.com/seok-jun/adaptive-agentic-sdd/blob/<tag>/docs/customization.md`; tags before preview.5 have a Korean guide only, at `ko/docs/customization.md`). The English bundle (`adaptive-sdd/`) and this guide are canonical; the Korean edition of this guide is [`ko/docs/legacy-installation.md`](../ko/docs/legacy-installation.md).
+This is the legacy installer contract retained for existing users. For external adoption, use [the current guide](customization.md). This guide describes the retained installer model, including explicit legacy use of 1.0. Verify the tag's full commit SHA and pin the copy and the guide to that commit. For an earlier preview, use the guide inside that tag (for example `https://github.com/seok-jun/adaptive-agentic-sdd/blob/<tag>/docs/customization.md`; tags before preview.5 have a Korean guide only, at `ko/docs/customization.md`). The English bundle (`adaptive-sdd/`) and this guide are canonical; the Korean edition of this guide is [`ko/docs/legacy-installation.md`](../ko/docs/legacy-installation.md).
 
 The generated default check/check-evals commands use literal path quoting for PowerShell on Windows and for POSIX sh elsewhere. Run them in the named shell. The project manages the quoting of custom commands.
 
@@ -36,10 +36,10 @@ This document explains how to place a copy of the methodology in a project, gene
 
 In-repository installation is the default. If you choose external installation, change the destination of the file copy below to `.adaptive-sdd/` under a dedicated installation path outside the product checkout, and use the explicit root options in the next section. OS junctions and hard links are not needed.
 
-Verify and pin this release's full commit SHA with `git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/v1.0.0-preview.7^{}"`. Keep the verified SHA even if the `v1-preview` branch moves later. Download the source archive of that commit and copy `adaptive-sdd/` to the project's `.adaptive-sdd/` **byte for byte**. Do not rewrite the files with a text editor or an Agent's file-writing tool. Windows PowerShell example:
+Choose an actually published target tag, substitute it for `<published-tag>`, and verify its full commit SHA with `git ls-remote https://github.com/seok-jun/adaptive-agentic-sdd "refs/tags/<published-tag>^{}"`. The command expects an annotated tag; if it returns no peeled commit, stop and verify the tag and commit explicitly instead of guessing. For an unpublished candidate use its independently reviewed full commit without a tag. Keep the verified SHA even if a branch moves later. Download the source archive of that commit and copy `adaptive-sdd/` to the project's `.adaptive-sdd/` **byte for byte**. Do not rewrite the files with a text editor or an Agent's file-writing tool. Windows PowerShell example:
 
 ```powershell
-$sourceCommit = "<full commit SHA verified for v1.0.0-preview.7>"
+$sourceCommit = "<reviewed full commit SHA for the selected target>"
 if ($sourceCommit -notmatch '^[0-9a-f]{40}$') { throw "Set sourceCommit to the reviewed full commit SHA." }
 $zip = Join-Path $env:TEMP "adaptive-sdd-$sourceCommit.zip"
 Invoke-WebRequest "https://github.com/seok-jun/adaptive-agentic-sdd/archive/$sourceCommit.zip" -OutFile $zip
@@ -58,7 +58,7 @@ POSIX sh example (bash/zsh):
 ```sh
 (
 set -eu
-sourceCommit='<full commit SHA verified for v1.0.0-preview.7>'
+sourceCommit='<reviewed full commit SHA for the selected target>'
 if ! printf '%s\n' "$sourceCommit" | LC_ALL=C grep -Eq '^[0-9a-f]{40}$'; then
   printf '%s\n' 'Set sourceCommit to the reviewed full commit SHA.' >&2
   exit 1
@@ -77,7 +77,7 @@ cp -R "$src/adaptive-sdd/." .adaptive-sdd/
 )
 ```
 
-Use the version-appropriate legacy guide from the same archive (path mapping above), or the commit-pinned address in section 3. In `<verified SHA>` below, put exactly the SHA you selected when downloading the archive. Do not specify `--source-tag` for an unreleased commit. Only when you use a published tag, verify the correspondence between that tag and the commit and record them together.
+Use the version-appropriate legacy guide from the same archive (path mapping above), or the commit-pinned address in section 3. In `<verified SHA>` below, put exactly the SHA you selected when downloading the archive. Do not specify `--source-tag` for an unreleased commit. Only when you use a published tag, verify the correspondence between that tag and the commit and record them together. Replace `<verified-tag>` in render examples with that exact tag; for an unpublished candidate omit the entire `--source-tag <verified-tag>` pair.
 
 ## 2. Creating project values
 
@@ -87,7 +87,7 @@ M, W and P are the ownership divisions for common principles, execution procedur
 
 ```text
 python3 -I -B <external-install-path>/.adaptive-sdd/tools/install.py init --project-root <product-checkout> --harness-root <external-install-path>
-python3 -I -B <external-install-path>/.adaptive-sdd/tools/install.py render --project-root <product-checkout> --harness-root <external-install-path> --source-tag v1.0.0-preview.7 --source-commit <verified SHA>
+python3 -I -B <external-install-path>/.adaptive-sdd/tools/install.py render --project-root <product-checkout> --harness-root <external-install-path> --source-tag <verified-tag> --source-commit <verified SHA>
 python3 -I -B <external-install-path>/.adaptive-sdd/tools/install.py check --project-root <product-checkout> --harness-root <external-install-path>
 ```
 
@@ -189,7 +189,7 @@ Do not write to the file yet.
 
 ```text
 Write .adaptive-sdd/project.json as just decided, and generate with the commands below. Do not modify the pinned copy.
-python3 -I -B .adaptive-sdd/tools/install.py render --project-root . --source-tag v1.0.0-preview.7 --source-commit <verified SHA>
+python3 -I -B .adaptive-sdd/tools/install.py render --project-root . --source-tag <verified-tag> --source-commit <verified SHA>
 python3 -I -B .adaptive-sdd/tools/install.py check --project-root .
 If using the local-docs method, create the items/ and claims/ folders under tracker.root.
 Show me the generated AGENTS.md, CLAUDE.md and .gitattributes blocks and the .adaptive-sdd/project/ documents.
@@ -324,7 +324,7 @@ Starting shape of the adapter:
 2. Copy the archive's `methodology/` contents (`core.md`, `adaptation.md`, `supports/`, `manifest.json`) to `.adaptive-sdd/methodology/` and `LICENSE` to `.adaptive-sdd/LICENSE`, **byte for byte**. Keep the LICENSE (MIT) with the copy because it requires the copyright and permission notice to be retained. Do not rewrite the files with a text editor or an Agent's file-writing tool; a BOM or CRLF would change the hashes. Windows PowerShell example:
 
 ```powershell
-$sourceCommit = "<full commit SHA verified for v1.0.0-preview.7>"
+$sourceCommit = "<reviewed full commit SHA for the selected target>"
 if ($sourceCommit -notmatch '^[0-9a-f]{40}$') { throw "Set sourceCommit to the reviewed full commit SHA." }
 $zip = "adaptive-sdd-$sourceCommit.zip"
 Invoke-WebRequest "https://github.com/seok-jun/adaptive-agentic-sdd/archive/$sourceCommit.zip" -OutFile $zip
@@ -359,7 +359,7 @@ cd .adaptive-sdd/methodology && sha256sum core.md adaptation.md supports/ordered
 
 On macOS, use `shasum -a 256` instead of `sha256sum`.
 
-5. Record the verified `v1.0.0-preview.7` tag, full commit SHA and manifest hash in the adapter's "Pin" section. For an unreleased commit, record no tag. A tag or branch name alone cannot stand in for the source (`core.md` "Application and improvement observation").
+5. Record the selected verified release tag, full commit SHA and manifest hash in the adapter's "Pin" section. For an unreleased commit, record no tag. A tag or branch name alone cannot stand in for the source (`core.md` "Application and improvement observation").
 
 ### Line endings and entry file
 

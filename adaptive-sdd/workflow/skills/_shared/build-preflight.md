@@ -20,7 +20,7 @@ For required build verification, check with the build tool's version command (`g
 
 ## Devices and emulators
 
-Follow the device procedure only if `build.md` declares one. If none is declared, do not do device or emulator work; if that work is needed, stop only that work with `BLOCKED: device procedure undeclared`. Device check results are not an implementation, merge or completion gate.
+Follow the device procedure only if `build.md` declares one. If none is declared, do not do device or emulator work; if that work is needed, stop only that work with `BLOCKED: device procedure undeclared`. Optional device checks are not an implementation, merge or completion gate. If P's build declaration or the Issue's Verification Strategy explicitly requires a device check, apply the required verification contract in `W/process/verification.md`.
 
 ## Process/run scope
 

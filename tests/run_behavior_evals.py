@@ -1,6 +1,6 @@
 """Historical runner, superseded by run_behavior_evals_v2.py; not clean behavioral evidence.
 
-Kept for the 2026-10-30/31 experiment contract. New runs require a fresh workdir.
+Kept for the 2026-10-30/31 experiment contract. New runs require fresh workdir and output directories.
 
 Implements workflow/process/skill-evals.md "Cross-agent behavior eval" for a case selection that was
 fixed in advance (docs/eval-results/<date>/selection.json). Each run uses a fresh disposable project
@@ -12,7 +12,7 @@ repository) for inspection, because skill-evals.md forbids storing conversation 
 
 Usage (example):
   python -I -B tests/run_behavior_evals.py --selection docs/eval-results/2026-10-30/selection.json \
-      --workdir <scratch dir> --out docs/eval-results/2026-10-30 [--only-case ID] [--runs N]
+      --workdir <new scratch dir> --out <new results dir> [--only-case ID] [--runs N]
 Requires the `claude` and `codex` CLIs on PATH, signed in. Every call is a paid model call.
 """
 import argparse
@@ -165,12 +165,29 @@ def main():
                          "failed, and rerun once the runs that failed for environment reasons; reuses --workdir/base")
     args = ap.parse_args()
 
-    selection = json.loads(pathlib.Path(args.selection).read_text(encoding="utf-8"))
-    runs = args.runs or selection["runs_per_case"]
     bundle = pathlib.Path(args.bundle).resolve()
     workdir = pathlib.Path(args.workdir).resolve()
-    if ROOT in workdir.parents or workdir == ROOT:
+    if ROOT in workdir.parents or workdir == ROOT or workdir in ROOT.parents:
         raise SystemExit("--workdir must be outside the repository (raw answers are not stored in it)")
+    out = pathlib.Path(args.out).resolve()
+    if not args.resume and (out == workdir or workdir in out.parents or out in workdir.parents):
+        raise SystemExit("--out and --workdir must not overlap")
+    if out == ROOT or out in ROOT.parents or out == ROOT / ".git" or ROOT / ".git" in out.parents:
+        raise SystemExit("--out must not replace the repository or its metadata")
+    if not args.resume and (workdir.exists() or out.exists()):
+        raise SystemExit("new runs require fresh --workdir and --out paths; existing paths are preserved")
+    selection = json.loads(pathlib.Path(args.selection).read_text(encoding="utf-8"))
+    runs = args.runs or selection["runs_per_case"]
+    args.out = str(out)
+    if not args.resume:
+        # Atomically reserve each new run directory before preparation or model calls.
+        # A competing creator wins; leave their contents and any newly reserved empty
+        # workdir intact instead of attempting recursive cleanup.
+        try:
+            workdir.mkdir(parents=True, exist_ok=False)
+            out.mkdir(parents=True, exist_ok=False)
+        except FileExistsError:
+            raise SystemExit("new runs require fresh --workdir and --out paths; another creator won")
     base = workdir / "base"
     if args.resume:
         # Same inputs as the first attempt: the base project (and its pinned bundle) from that run.

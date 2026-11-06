@@ -46,7 +46,7 @@ An independent review is performed by a reviewer different from the implementati
 | Trivial | Self-review of the Trivial conditions and target scope | targeted validation + self-review of diff ↔ requested scope |
 | Small | Self-review of the Issue boundaries and verifiability | Self-review of diff ↔ acceptance criteria |
 | Medium | Bounded self-review of the SDD and Verification Strategy. If a shared contract or integration evidence across several modules is needed, decide independent review as `REQUIRED` | If `Independent Review: REQUIRED`, a bounded independent review must pass; otherwise self-review |
-| Large | Review A Contract Review + Human-selected Review B Blind Audit required for each of AS-IS/PLAN | One existing bounded independent code review; only an explicit high-risk escalation may add an additional audit |
+| Large | Required review for each AS-IS/PLAN follows P's execution profile and the Design review mode (default: Review A plus human-selected Review B) | One existing bounded independent code review; only an explicit high-risk escalation may add an additional audit |
 
 If a required review is incomplete, or a boundary violation, unmet acceptance criteria, or an obvious safety or consistency problem is unresolved, do not proceed with implementation or merge.
 
