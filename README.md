@@ -8,7 +8,7 @@
 
 Adaptive SDD scales planning, review and verification to a change's risk, so small fixes need less process and risky changes get deeper checks. A link fix gets a self-check. A database migration gets written analysis, two independent design reviews and a human merge.
 
-> **Preview.** This is the `v1.0.0-preview.8` release candidate (not yet published) on the `v1-preview` branch. Its effect on outcomes, rework or cost has not been measured, and its structure may change before 1.0. See [Status and evidence](#status-and-evidence).
+> **1.0 release candidate.** This working tree is being prepared for `v1.0.0`; it has not been published as that release. Its effect on outcomes, rework or cost has not been measured. See [Status and evidence](#status-and-evidence).
 
 ## How depth scales
 
@@ -51,7 +51,7 @@ Agent: Created T-31. Grade: Large — DB schema/migration (automatic escalation)
 
 ## Quick start
 
-**Use M to start; own and evolve your W and P afterward.** Continued M use and updates are optional. The recommended preview.8 path keeps an editable project workflow outside P and loads it only for a selected task. P keeps product facts, common rules and authority. Its only method connection is `.agentics/<area>.yaml`.
+**Use M to start; own and evolve your W and P afterward.** Continued M use and updates are optional. The recommended external adoption path keeps an editable project workflow outside P and loads it only for a selected task. P keeps product facts, common rules and authority. Its only method connection is `.agentics/<area>.yaml`.
 
 1. Follow the [adoption guide](docs/customization.md) to prepare an external project-owned W, reference P's real sources and choose record ownership. This is agent-assisted setup, not an unattended installer.
 2. Review and commit W, map its name in your user-side allowlist, and place its commit in the area connection. This commit identifies **your W**, not an obligatory upstream M revision.
@@ -94,9 +94,9 @@ The full history of checks and reviews is in [CHANGELOG.md](CHANGELOG.md).
 
 ## Versions
 
-- Preview.8 preparation changes adoption and activation semantics. See the [candidate checklist](docs/releases/preview.8.md); historical evaluations below do not validate the new activation path.
+- Version 1.0 adopts the project-owned external W and explicit task activation model prepared in preview.8. See the [release preparation and verification](docs/releases/1.0.0.md); historical evaluations do not validate the new activation path.
 
-- Preview tags are `v1.0.0-preview.N` on the `v1-preview` branch. Published tags are never moved; fixes come as new tags. Legacy installations pin a copy by tag, commit SHA and manifest hash; external adoption pins the selected project W commit.
+- The intended stable tag is `v1.0.0`; earlier previews use `v1.0.0-preview.N`. Published tags are never moved; fixes come as new version tags. Legacy installations pin a copy by tag, commit SHA and manifest hash; external adoption pins the selected project W commit.
 - Project W evolves under project authority. M updates are optional; do not overwrite customized W. Legacy installations use their own [migration/upgrade guide](docs/legacy-installation.md#upgrading).
 - The earlier v0.2 methodology is on `main` and tag [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0). v1 is not an automatic upgrade from v0.2.
 

@@ -3,7 +3,7 @@ name: implementing-issues
 description: Investigates, designs and implements an approved work item (Issue) of this project, received by Issue number or an explicit reference. Use for requests to progress, implement, work on or wrap up an existing Issue; it connects the SDD, boundary and verification procedures of the current phase. Do not use when only writing a new Issue.
 ---
 
-For preview.8 external adoption, first apply `W/activation.md` for selection, ownership and paths. Pinned-copy and generated hard-guard references below use its compatibility meanings. Do not apply this skill to an unselected task.
+For external adoption, first apply `W/activation.md` for selection, ownership and paths. Pinned-copy and generated hard-guard references below use its compatibility meanings. Do not apply this skill to an unselected task.
 
 The execution inputs are the absolute paths `P` (top level of the project repository), `W` (the pinned procedure copy `W`) and `M` (the pinned common principles `M`). Do not guess P or M from the current folder or from W's parent folder. Follow P's hard guard and application declaration, and read the words Issue, comment, label and PR as the `W/tracker/` method declared in `W/../project/tracker.md`. Look up unfamiliar terms in the [Glossary](../../glossary.md).
 

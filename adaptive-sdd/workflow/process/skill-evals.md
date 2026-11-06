@@ -61,7 +61,7 @@ Decision record format:
 
 ### 1. Static checks
 
-The following command does not run an LLM.
+For legacy installation, the following command does not run an LLM. External adoption uses the project-declared check under [activation](../activation.md).
 
 ```bash
 python3 -I -B .adaptive-sdd/tools/install.py check-evals --project-root .
@@ -73,7 +73,7 @@ Checked items: the format of W case files (`id` and `prompt` required) and dupli
 
 ### 2. Deterministic routing/packet checks
 
-A tool that deterministically verifies the routing and packet contracts with synthetic fixtures is not included in this preview. If P declares such a tool, link its result here; if not, record it as not run. Do not turn not run into PASS.
+A tool that deterministically verifies the routing and packet contracts with synthetic fixtures is not included in this release. If P declares such a tool, link its result here; if not, record it as not run. Do not turn not run into PASS.
 
 #### Packet serialization and measurement
 

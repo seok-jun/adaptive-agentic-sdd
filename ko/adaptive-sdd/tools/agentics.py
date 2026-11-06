@@ -160,7 +160,7 @@ def resolve(product, area, config_path, selected, task=None, fresh_session=False
         require(isinstance(fact, dict) and set(fact) == {"path", "revision", "kind"},
                 "product source requires path, revision, kind")
         require(fact["kind"] in ("fact", "approved-rule", "authority"), "unknown product source kind")
-        require(fact["revision"] == "task-start", "preview.8 resolves product sources at task-start")
+        require(fact["revision"] == "task-start", "product sources must resolve at task-start")
         require(within(product, fact["path"]).is_file(), "product source unavailable")
     records = profile.get("records")
     require(isinstance(records, dict), "declare work record ownership and location")

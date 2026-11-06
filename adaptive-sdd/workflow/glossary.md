@@ -1,6 +1,6 @@
 # Glossary
 
-For preview.8 external adoption, the [task selection contract](activation.md) defines M/W/P and task snapshots. Pinned-copy and installer hard-guard definitions below are specific to legacy installation.
+For external adoption, the [task selection contract](activation.md) defines M/W/P and task snapshots. Pinned-copy, project.json settings and installer hard-guard definitions below are specific to legacy installation.
 
 One-line explanations of terms that appear often in the W documents. Each document remains the source of its rules. This glossary only explains meaning; it adds or changes no rule. If a term reads differently here than in a document, follow the document.
 

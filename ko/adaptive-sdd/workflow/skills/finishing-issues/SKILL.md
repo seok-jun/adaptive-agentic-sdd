@@ -3,7 +3,7 @@ name: finishing-issues
 description: 구현을 마친 이 프로젝트의 Issue 작업을 종료한다. 최종 diff 검토, business 문서 동기화, 검증·CI gate, SDD 정리, PR 종료 구문, merge 확인, lane 해제에 사용한다. 구현이 종료 준비되기 전에는 사용하지 않는다.
 ---
 
-preview.8 외부 적용: 먼저 `W/activation.md`의 선택·소유·경로 계약을 적용한다. 아래 고정 사본·생성 hard guard 참조는 그 계약의 호환 의미를 따른다. 미선택 작업에는 이 스킬을 적용하지 않는다.
+외부 적용: 먼저 `W/activation.md`의 선택·소유·경로 계약을 적용한다. 아래 고정 사본·생성 hard guard 참조는 그 계약의 호환 의미를 따른다. 미선택 작업에는 이 스킬을 적용하지 않는다.
 
 실행 입력은 절대 경로 `P`(프로젝트 저장소 최상위), `W`(고정 절차 사본 `W`), `M`(고정 공통 원칙 `M`)이다. 현재 폴더나 W의 상위 폴더로 P·M을 추측하지 않는다. P의 hard guard와 적용 선언을 따르고, Issue·댓글·라벨·PR이라는 말은 `W/../project/tracker.md`가 선언한 `W/tracker/` 방식으로 바꿔 읽는다. 낯선 용어는 [용어집](../../glossary.md)에서 찾는다.
 
@@ -102,7 +102,7 @@ business 동기화, 현재 SDD 삭제 또는 위 조건에 따른 보존, 링크
 
 1. 병합 직전과 병합 뒤 종료 확인 시점에 필요한 메타데이터를 새로 읽고, 실제로 PR이 병합되고 Issue가 닫혔는지 확인한다.
 2. 정리 전에 관측 시작 기록·SUMMARY·필요한 원본을 오래 보존되는 위치에서 다시 조회한다. 결과와 조회 공백은 `observations.md`의 제품 완료 관측으로 SUMMARY에 남긴다. 로컬 worktree를 이후 관측의 유일한 원본으로 남기지 않는다.
-3. `observations.md`의 [종료 관측 점검](../../process/observations.md#종료-관측-점검)을 적용한다. 이 preview의 `observation-check unavailable reason=not-shipped` 결과와 필요한 최초 출력·재실행 이유를 준비하고 계속한다(새 관문 아님).
+3. `observations.md`의 [종료 관측 점검](../../process/observations.md#종료-관측-점검)을 적용한다. 이 릴리스의 `observation-check unavailable reason=not-shipped` 결과와 필요한 최초 출력·재실행 이유를 준비하고 계속한다(새 관문 아님).
 4. 위 점검 결과와, P가 선언한 병합 대상 branch에 실제로 병합된 PR의 종료 구문·병합 SHA로 `[PRODUCT COMPLETE]`를 한 번 기록한다. 첫 줄 태그 다음에 선언한 작업 관리 방식 형식의 `product-complete:` JSON을 둔다(GitHub은 `{"schema_version":1,"issue":N,"pull_request":PR,"merge_commit":"40자리 SHA"}`). 제품 완료와 로컬 정리·담당 해제는 별개이며, 같은 수명 주기의 완료 기록을 중복으로 만들지 않는다.
 5. `parallel-development`의 Release·Merged local worktree cleanup을 실행한다. 등록 제거 전에는 이번 실행이 만든 것인지, 생성 파일인지 어느 쪽으로도 증명되지 않은 미추적 진단·정체불명 파일이 없는지 확인한다. 그런 파일은 사용자 상태로 보존하고 등록 제거·RELEASE를 멈춰 lane 해제 미완료로 보고한다.
 6. "산출물 없음" 예외, 빌드 정리, 등록·실제 폴더 각각의 부재 확인, 허용된 잔여 정리와 담당 해제 순서는 그 원본을 따른다. 현재 claim·환경 근거를 다시 쓰고, 강제 정리나 대량 파일의 개별 삭제 반복문으로 보호 정책을 우회하지 않는다.

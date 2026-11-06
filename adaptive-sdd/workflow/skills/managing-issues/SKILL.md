@@ -3,7 +3,7 @@ name: managing-issues
 description: Use when creating, classifying, reprioritizing or rewriting the body of this project's work items (Issues), and when coordinating the work breakdown and dependencies of an optional Epic. Use for deciding Priority/execution grade, work boundaries, whether a Mermaid flow is needed, and linking a UI/UX HTML Visual Spec. Do not use for code implementation.
 ---
 
-For preview.8 external adoption, first apply `W/activation.md` for selection, ownership and paths. Pinned-copy and generated hard-guard references below use its compatibility meanings. Do not apply this skill to an unselected task.
+For external adoption, first apply `W/activation.md` for selection, ownership and paths. Pinned-copy and generated hard-guard references below use its compatibility meanings. Do not apply this skill to an unselected task.
 
 The execution inputs are the absolute paths `P` (top level of the project repository), `W` (the pinned procedure copy `W`) and `M` (the pinned common principles `M`). Do not guess P or M from the current folder or from W's parent folder. Apply P's hard guard (`## Always-applied hard guard` in `P/AGENTS.md`) and its application declaration (`W/../project/sdd-workflow.md`). Read the words Issue, comment, label and PR as the matching feature of the work tracking method (`W/tracker/`) declared in `W/../project/tracker.md`. Look up unfamiliar terms in the [Glossary](../../glossary.md).
 

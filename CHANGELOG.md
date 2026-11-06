@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.0 — unpublished release candidate
+
+- Prepare the stable release from the integrated preview.8 candidate `51a0104`; preview.8 was not tagged. Current usage guidance is labeled 1.0 while historical evidence remains version-scoped.
+- Correct external-adoption/legacy references and prevent historical demo/evaluation setup from replacing existing user paths. Four safety regressions added; 115 executable tests pass on Windows.
+- File-by-file pre-publication review is incomplete: the remaining skills/templates group and corrected files await Claude review after a session allowance limit. See [release preparation](docs/releases/1.0.0.md) for current coverage, findings and verification limits. This is not a publication or efficacy claim.
+
+
 ## 1.0.0-preview.8 — release candidate (2026-11-01)
 
 Not published. This is a meaning change to adoption and activation, not a wording-only release.

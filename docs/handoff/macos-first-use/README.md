@@ -2,7 +2,9 @@
 
 실행 기록: [macOS 보조 walkthrough 결과](../../eval-results/2026-10-31-macos-first-use/README.md). 설치 → Small 작업 → Undo는 완료했으며, `python` 명령 부재와 우회, 사전 정보 노출 및 실행 환경의 한계를 구분해 기록했다. 독립적인 첫 사용 평가 결과는 아니다.
 
-지금까지 모든 검증은 Windows 한 대에서만 했다. 이 점검은 macOS 노트북에서 두 가지를 확인한다.
+아래는 2026-10-31에 완료한 과거 핸즈오프이며 현재 1.0 릴리스의 실행 지시가 아니다. 버전·브랜치·줄 번호는 당시 기준이다. 2026-11-06 안전 수정으로 setup.sh는 기존 폴더를 삭제하지 않고 거부한다.
+
+기록 작성 당시까지 모든 검증은 Windows 한 대에서만 했다. 이 점검은 macOS 노트북에서 두 가지를 확인한다.
 
 1. 저장소 테스트가 macOS(POSIX)에서 통과하는가.
 2. 처음 쓰는 사람처럼 Agent가 README만 보고 **설치 → 첫 Small 작업 → 설치 되돌리기**를 끝낼 수 있는가.
@@ -35,13 +37,13 @@ Windows에서는 88개가 통과했다. 마지막 15줄을 그대로 남긴다. 
 
 ## 2. 일회용 샘플 저장소 만들기
 
-이 폴더의 `setup.sh`가 `~/adaptive-sdd-mac-test` 아래에 샘플 저장소(일부러 심은 페이지 계산 버그 포함), 로컬 bare `origin`, `tracker/`, `wt/`, 그리고 Agent에게 줄 `prompt.md`를 만든다. 다시 실행하면 그 폴더를 지우고 새로 만든다.
+이 폴더의 `setup.sh`가 `~/adaptive-sdd-mac-test` 아래에 샘플 저장소(일부러 심은 페이지 계산 버그 포함), 로컬 bare `origin`, `tracker/`, `wt/`, 그리고 Agent에게 줄 `prompt.md`를 만든다. 기존 폴더가 있으면 중단하며 삭제하지 않는다. 재실행에는 새 폴더를 지정한다.
 
 ```bash
 bash ~/aasdd-src/docs/handoff/macos-first-use/setup.sh
 ```
 
-위치나 SHA를 바꾸려면 `bash setup.sh <폴더> <SHA>`. 폴더는 `$HOME` 아래여야 한다.
+위치나 SHA를 바꾸려면 `bash setup.sh <폴더> <SHA>`. 폴더는 실제 경로 기준 `$HOME` 아래의 아직 존재하지 않는 폴더여야 하며 부모 폴더는 미리 존재해야 한다.
 
 ## 3. Agent 실행
 

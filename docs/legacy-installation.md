@@ -1,6 +1,9 @@
 # Legacy installation guide (preview.7 model)
 
-This is the legacy installer contract retained for existing users. For preview.8 external adoption, use [the current guide](customization.md). This guide describes the `v1.0.0-preview.7` installation model. Verify the tag's full commit SHA and pin the copy and the guide to that commit. For an earlier preview, use the guide inside that tag (for example `https://github.com/seok-jun/adaptive-agentic-sdd/blob/<tag>/docs/customization.md`; tags before preview.5 have a Korean guide only, at `ko/docs/customization.md`). The English bundle (`adaptive-sdd/`) and this guide are canonical; the Korean edition of this guide is [`ko/docs/legacy-installation.md`](../ko/docs/legacy-installation.md).
+
+For the historical preview.7 bundle, use `docs/customization.md` from that exact commit. For this 1.0 bundle, use `docs/legacy-installation.md` from its reviewed commit; the legacy installer remains usable when explicitly selected, with the ordinary upgrade review. The preview.7 tag examples below reproduce that historical installation and must not be paired with a 1.0 bundle.
+
+This is the legacy installer contract retained for existing users. For external adoption, use [the current guide](customization.md). This guide describes the `v1.0.0-preview.7` installation model. Verify the tag's full commit SHA and pin the copy and the guide to that commit. For an earlier preview, use the guide inside that tag (for example `https://github.com/seok-jun/adaptive-agentic-sdd/blob/<tag>/docs/customization.md`; tags before preview.5 have a Korean guide only, at `ko/docs/customization.md`). The English bundle (`adaptive-sdd/`) and this guide are canonical; the Korean edition of this guide is [`ko/docs/legacy-installation.md`](../ko/docs/legacy-installation.md).
 
 The generated default check/check-evals commands use literal path quoting for PowerShell on Windows and for POSIX sh elsewhere. Run them in the named shell. The project manages the quoting of custom commands.
 
@@ -74,7 +77,7 @@ cp -R "$src/adaptive-sdd/." .adaptive-sdd/
 )
 ```
 
-Use `docs/customization.md` from the same archive, or the commit-pinned address in section 3. In `<verified SHA>` below, put exactly the SHA you selected when downloading the archive. Do not specify `--source-tag` for an unreleased commit. Only when you use a published tag, verify the correspondence between that tag and the commit and record them together.
+Use the version-appropriate legacy guide from the same archive (path mapping above), or the commit-pinned address in section 3. In `<verified SHA>` below, put exactly the SHA you selected when downloading the archive. Do not specify `--source-tag` for an unreleased commit. Only when you use a published tag, verify the correspondence between that tag and the commit and record them together.
 
 ## 2. Creating project values
 
@@ -162,7 +165,7 @@ Git and SDD publication remotes in the local-docs method follow the declarations
 
 ## 3. Order of work for the Agent
 
-This guide is not in the copy, so give the Agent its address as well: `https://raw.githubusercontent.com/seok-jun/adaptive-agentic-sdd/<commit-sha>/docs/customization.md`. Replace `<commit-sha>` with the SHA used for the archive, and put that address in `<guide URL>` below as well. For an Agent that cannot access the web, paste the guide from the same archive, or place it in a temporary location outside the repository and give its path.
+This guide is not in the copy, so give the Agent its address as well: `https://raw.githubusercontent.com/seok-jun/adaptive-agentic-sdd/<commit-sha>/<version-appropriate-guide-path>`. Replace `<version-appropriate-guide-path>` using the mapping at the top of this guide, and replace `<commit-sha>` with the SHA used for the archive, and put that address in `<guide URL>` below as well. For an Agent that cannot access the web, paste the guide from the same archive, or place it in a temporary location outside the repository and give its path.
 
 **① Observe.** Collect facts only, without changing code.
 
@@ -334,7 +337,7 @@ Remove-Item .adaptive-sdd/methodology -Recurse -Force -ErrorAction SilentlyConti
 Copy-Item "$src/methodology" .adaptive-sdd/methodology -Recurse
 Copy-Item "$src/LICENSE" .adaptive-sdd/LICENSE
 ```
-3. Use `docs/customization.md` from the same archive, or its commit-pinned URL in section 3. Keep the archive, guide, and recorded source commit aligned; do not substitute a later branch tip or an older tag's guide.
+3. Use the version-appropriate legacy guide from the same archive (path mapping above), or its commit-pinned URL in section 3. Keep the archive, guide, and recorded source commit aligned; do not substitute a later branch tip or an older tag's guide.
 4. Compare the hashes. The sha256 of each of the three documents must equal the value in `manifest.json`. The **manifest hash** is the sha256 of the `manifest.json` file itself.
 
 Windows PowerShell:

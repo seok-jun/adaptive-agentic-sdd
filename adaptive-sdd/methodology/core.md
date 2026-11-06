@@ -1,13 +1,13 @@
-# Minimal working methodology (1.0 preview)
+# Minimal working methodology (1.0)
 
 This public M is a starting point users may consult when shaping project W and P. Continuing to adapt W and P to the project is recommended. Continued M use, adoption of updates and revision tracking are user choices, not obligations. The requirements below apply within the scope that selects this edition of M; they are not permanent conformance conditions for every derived W or P. Changing a derived W does not automatically change host or product authority. A derived W that removes these requirements no longer selects this edition of M; P authority, approvals and delegations still apply.
 
-This document is the 1.0 preview of a working methodology that a project activates explicitly. Its effect has not yet been verified, and its structure may change. It is not a port of, or an equivalent replacement for, the whole of the earlier public methodology (v0.2).
+This document is version 1.0 of a working methodology that a project activates explicitly. Its effect has not yet been verified, and its structure may change. It is not a port of, or an equivalent replacement for, the whole of the earlier public methodology (v0.2).
 
 Follow the current host's permissions and the project's product requirements, approval conditions, write scope, and required verification first. However, the three requirements in `Human judgment` below cannot be waived by host or project rules. The methodology grants no new permissions, budget, or model calls. If a conflict cannot be resolved, stop the activation or the edit and record the evidence.
 
 1. Confirm the task goal, the current code, and the information, execution tools, and verification environment you need. Do not wait for a failure when you already know a condition is needed.
-2. Before changing anything, connect each requirement's target and verification method to a short, observable list of files, symbols, and order. Reuse connections that an existing plan already makes; details follow `supports/ordered-changes.md`. This is the default support of the current preview; do not remove it because of a single success or a model name.
+2. Before changing anything, connect each requirement's target and verification method to a short, observable list of files, symbols, and order. Reuse connections that an existing plan already makes; details follow `supports/ordered-changes.md`. This is the default support of this edition; do not remove it because of a single success or a model name.
 3. Implement within the allowed scope and actually run the checks the project defines. Do not reuse past results as a PASS for the current run.
 4. Compare the requirements at the revision the project approved or designated as the baseline against the final change and check evidence. Also look for missing targets and for final verification that was narrowed or left gaps. The model's judgment of success and the actual adoption of the result are separate. Distinguish unverified, implementation defect, environment failure, and unknown cause.
 

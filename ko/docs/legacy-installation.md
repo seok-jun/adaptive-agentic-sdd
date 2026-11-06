@@ -1,8 +1,11 @@
 # 설치와 커스터마이징 안내 (1.0 preview.7)
 
-> 기존 설치 모델 유지용 문서다. preview.8 새 적용은 [현재 가이드](customization.md)를 따른다.
 
-이 안내는 `v1.0.0-preview.7`을 다룬다. 태그의 전체 commit SHA를 확인하고 사본과 안내를 그 commit으로 고정한다. 이전 preview는 그 태그 안의 안내(`https://github.com/seok-jun/adaptive-agentic-sdd/blob/<태그>/ko/docs/customization.md`)를 따른다. 영문 번들(`adaptive-sdd/`)과 [영문 안내](../../docs/customization.md)가 원본이다.
+과거 preview.7 번들은 해당 commit의 `ko/docs/customization.md`를 사용한다. 이 1.0 번들은 검토한 commit의 `ko/docs/legacy-installation.md`를 사용하며, 명시적으로 선택한 기존 설치기는 통상적인 업그레이드 검토 후 계속 사용할 수 있다. 아래 preview.7 태그 예시는 과거 설치 재현용이며 1.0 번들과 짝지으면 안 된다.
+
+> 기존 설치 모델 유지용 문서다. 새 외부 적용은 [현재 가이드](customization.md)를 따른다.
+
+이 안내는 `v1.0.0-preview.7`을 다룬다. 태그의 전체 commit SHA를 확인하고 사본과 안내를 그 commit으로 고정한다. 이전 preview는 그 태그 안의 안내(`https://github.com/seok-jun/adaptive-agentic-sdd/blob/<태그>/ko/docs/customization.md`)를 따른다. 영문 번들(`adaptive-sdd/`)과 [영문 안내](../../docs/legacy-installation.md)가 원본이다.
 
 생성된 기본 check/check-evals 명령은 Windows에서는 PowerShell, 그 외에서는 POSIX sh의 경로 리터럴 인용을 사용한다. 표시된 셸에서 실행한다. 사용자 지정 명령의 인용은 프로젝트가 관리한다.
 
@@ -76,7 +79,7 @@ cp -R "$src/ko/adaptive-sdd/." .adaptive-sdd/
 )
 ```
 
-같은 압축 파일의 `ko/docs/customization.md` 또는 3절의 commit 고정 주소를 사용한다. 아래 `<확인한 SHA>`에는 압축 파일을 받을 때 선택한 SHA를 그대로 넣는다. 미출시 commit에는 `--source-tag`를 지정하지 않는다. 공개 태그를 사용할 때만 그 태그와 commit의 대응을 확인해 함께 기록한다.
+같은 압축 파일의 버전별 기존 설치 안내(위 경로 대응 참고) 또는 3절의 commit 고정 주소를 사용한다. 아래 `<확인한 SHA>`에는 압축 파일을 받을 때 선택한 SHA를 그대로 넣는다. 미출시 commit에는 `--source-tag`를 지정하지 않는다. 공개 태그를 사용할 때만 그 태그와 commit의 대응을 확인해 함께 기록한다.
 
 ## 2. 프로젝트 값 만들기
 
@@ -164,7 +167,7 @@ python3 -I -B .adaptive-sdd/tools/install.py init --project-root .
 
 ## 3. Agent에게 시키는 순서
 
-이 안내는 사본에 없으므로 Agent에게 주소를 함께 준다: `https://raw.githubusercontent.com/seok-jun/adaptive-agentic-sdd/<commit-sha>/ko/docs/customization.md`. `<commit-sha>`를 압축 파일에 사용한 SHA로 바꾸고 아래 `<주소>`에도 그 주소를 넣는다. 웹에 접근하지 못하는 Agent에게는 같은 압축 파일의 안내를 붙여 주거나 저장소 밖 임시 위치에 두고 경로를 준다.
+이 안내는 사본에 없으므로 Agent에게 주소를 함께 준다: `https://raw.githubusercontent.com/seok-jun/adaptive-agentic-sdd/<commit-sha>/<version-appropriate-guide-path>`. `<version-appropriate-guide-path>`는 위 버전별 경로 대응으로 채우고 `<commit-sha>`를 압축 파일에 사용한 SHA로 바꾸고 아래 `<주소>`에도 그 주소를 넣는다. 웹에 접근하지 못하는 Agent에게는 같은 압축 파일의 안내를 붙여 주거나 저장소 밖 임시 위치에 두고 경로를 준다.
 
 **① 관찰.** 코드를 고치지 않고 사실만 모은다.
 

@@ -231,7 +231,7 @@ If even one acceptance criterion failed or is unverified, do not describe the wh
 
 ### Trivial Issue fast-track
 
-Use `SDD grade: Trivial` only when all the common non-behavioral change conditions of W `process/sdd/grade.md`, verified against the lock, are met. Product-specific application follows `docs/sdd-workflow.md`.
+Use `SDD grade: Trivial` only when all the common non-behavioral change conditions in the selected W's `process/sdd/grade.md` are met. Product-specific application follows `W/../project/sdd-workflow.md`.
 
 - Do not create a separate SDD or an independent review.
 - Read only the target files and direct verification evidence, and do not search the whole repository.

@@ -1,6 +1,6 @@
 # v1.0.0-preview.8 release preparation
 
-Status: locally prepared candidate on `release/preview.8-agentics`, not published. No tag has been created or moved by this work. The candidate identity is the commit containing this preparation record; resolve it with `git rev-parse HEAD`.
+Historical status: superseded by [1.0.0 preparation](1.0.0.md). The integrated preview.8 candidate was `51a0104` on `release/preview.8-agentics`; it was not tagged or published. The verification below belongs to that candidate, not later 1.0 changes. The publication handoff below is preserved history, not the current release procedure.
 
 ## Behavior change
 

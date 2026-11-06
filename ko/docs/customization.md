@@ -1,8 +1,8 @@
-# 프로젝트 소유 W 적용 — preview.8
+# 프로젝트 소유 W 적용 — 1.0
 
 M은 출발점으로 제시한 공개 방법론이다. 이를 적용한 뒤 W·P를 프로젝트에 맞게 계속 발전시키는 것을 권장한다. M의 지속 사용·revision 추적·업데이트 수용은 사용자 선택이며 의무가 아니다. [English](../../docs/customization.md).
 
-preview.8은 **읽기 전용 resolver와 Agent 지원 적용 절차**를 제공한다. 자동 이전기나 세션 관리기는 아니다. 출시 전에는 검토한 후보 commit을 쓰며 미공개 preview.8 태그가 조회된다고 가정하지 않는다.
+1.0은 **읽기 전용 resolver와 Agent 지원 적용 절차**를 제공한다. 자동 이전기나 세션 관리기는 아니다. 출시 전에는 검토한 후보 commit을 쓰며 미공개 v1.0.0 태그가 조회된다고 가정하지 않는다.
 
 ## 구조와 책임
 
@@ -48,7 +48,7 @@ work-records/                  선택한 tracker/저장소; 공개 배포본과 
 ```text
 검토한 공개 방법론을 출발점으로 외부 프로젝트 소유 W를 구성해줘.
 P의 사실·공통 규칙·권한은 P에 유지하고 W를 프로젝트에 맞게 수정해줘.
-공개 M의 지속 사용이나 동기화를 전제하지 말고 preview.8 적용 가이드를 따라줘.
+공개 M의 지속 사용이나 동기화를 전제하지 말고 1.0 적용 가이드를 따라줘.
 방법 선택과 미결 권한·기록 위치를 사용 전에 보여줘.
 P에는 선택한 .agentics/<영역>.yaml만 만들고 아직 W를 활성화하지 마.
 ```
@@ -79,7 +79,7 @@ placeholder는 실제 SHA로 바꾼다. `methodology`는 프로젝트 방법 이
 }
 ```
 
-허용 목록은 로컬 Git `insteadOf` URL 치환 이후의 유효 origin을 쓴다. resolver는 origin 문자열·HEAD·profile 식별·checkout 청결을 비교한다. 원격 진위나 서명이 아닌 로컬 일관성 검사다. 최초 로더 배포·저장소 획득·허용 목록의 신뢰는 사용자가 정한다. 원격 fetch나 연결 데이터의 명령 실행은 없다. P와 W는 전체 로컬 clone이어야 한다. lazy-fetch 환경 변수를 지원하지 않는 이전 Git에서도 status 전에 partial/promisor clone을 거부한다. 클라우드는 같은 승인 origin/commit을 자체 root에 준비하고 같은 이름에 매핑한다. W의 symlink·submodule·assume-unchanged/skip-worktree/sparse 항목·미추적·ignored 파일은 지원하지 않는다. 전용 clean W checkout을 쓰고 기록은 밖에 둔다. P는 dirty일 수 있으며 무관한 변경을 보존한다. 입구는 추적된 파일이어야 하고 W/지원 디렉터리에는 추적 파일이 있어야 한다. Git 호출은 wrapper의 저장소·index·명령줄 설정 재지정 환경 변수를 무시하고 사용자 config 위치는 유지한다. W의 편집기 폴더나 `.DS_Store`도 차단되므로 전용 checkout을 깨끗하게 유지한다. preview.8은 기존 commit이 있는 SHA-1 저장소를 지원하며 unborn·SHA-256 저장소는 지원하지 않는다.
+허용 목록은 로컬 Git `insteadOf` URL 치환 이후의 유효 origin을 쓴다. resolver는 origin 문자열·HEAD·profile 식별·checkout 청결을 비교한다. 원격 진위나 서명이 아닌 로컬 일관성 검사다. 최초 로더 배포·저장소 획득·허용 목록의 신뢰는 사용자가 정한다. 원격 fetch나 연결 데이터의 명령 실행은 없다. P와 W는 전체 로컬 clone이어야 한다. lazy-fetch 환경 변수를 지원하지 않는 이전 Git에서도 status 전에 partial/promisor clone을 거부한다. 클라우드는 같은 승인 origin/commit을 자체 root에 준비하고 같은 이름에 매핑한다. W의 symlink·submodule·assume-unchanged/skip-worktree/sparse 항목·미추적·ignored 파일은 지원하지 않는다. 전용 clean W checkout을 쓰고 기록은 밖에 둔다. P는 dirty일 수 있으며 무관한 변경을 보존한다. 입구는 추적된 파일이어야 하고 W/지원 디렉터리에는 추적 파일이 있어야 한다. Git 호출은 wrapper의 저장소·index·명령줄 설정 재지정 환경 변수를 무시하고 사용자 config 위치는 유지한다. W의 편집기 폴더나 `.DS_Store`도 차단되므로 전용 checkout을 깨끗하게 유지한다. 1.0은 기존 commit이 있는 SHA-1 저장소를 지원하며 unborn·SHA-256 저장소는 지원하지 않는다.
 
 ## 외부 프로필
 
@@ -104,7 +104,7 @@ placeholder는 실제 SHA로 바꾼다. `methodology`는 프로젝트 방법 이
 }
 ```
 
-실제 P 원본 경로를 쓰며 예시 이름의 문서를 새로 만들 필요는 없다. 경로는 각 root 기준 상대 경로이며 traversal·symlink는 거부한다. kind는 `fact`, `approved-rule`, `authority`다. preview.8은 `task-start`만 구현하며 P HEAD와 dirty 여부를 출력한다. 실제 읽은 원본 revision/content identity는 Agent가 기록한다. HEAD만으로 dirty 내용을 식별하지 못한다. 파일 존재·기록 선언만으로 실제 읽기·tracker 접근·쓰기 권한·수행을 증명하지 않는다. 의존 편집 전에 확인한다. profile이 입구를 선택하므로 공개 M을 계속 따르는 대신 프로젝트 입구로 교체할 수 있다. `paths.workflow`는 필수 상대 디렉터리이고 `paths.supports`는 상대 디렉터리 또는 null이다. resolver는 절대 `workflow_dir`와 `methodology_dir`(null 가능)를 출력한다. 제공된 시작본에는 복사한 지원이 필요하며 M 호출부를 제거한 커스텀 W는 null로 선택할 수 있다. 공개 M은 요구하지 않는다.
+실제 P 원본 경로를 쓰며 예시 이름의 문서를 새로 만들 필요는 없다. 경로는 각 root 기준 상대 경로이며 traversal·symlink는 거부한다. kind는 `fact`, `approved-rule`, `authority`다. 1.0은 `task-start`만 구현하며 P HEAD와 dirty 여부를 출력한다. 실제 읽은 원본 revision/content identity는 Agent가 기록한다. HEAD만으로 dirty 내용을 식별하지 못한다. 파일 존재·기록 선언만으로 실제 읽기·tracker 접근·쓰기 권한·수행을 증명하지 않는다. 의존 편집 전에 확인한다. profile이 입구를 선택하므로 공개 M을 계속 따르는 대신 프로젝트 입구로 교체할 수 있다. `paths.workflow`는 필수 상대 디렉터리이고 `paths.supports`는 상대 디렉터리 또는 null이다. resolver는 절대 `workflow_dir`와 `methodology_dir`(null 가능)를 출력한다. 제공된 시작본에는 복사한 지원이 필요하며 M 호출부를 제거한 커스텀 W는 null로 선택할 수 있다. 공개 M은 요구하지 않는다.
 
 ## 명시적 작업 활성화
 
@@ -116,11 +116,11 @@ python3 -I -B <trusted-distribution>/ko/adaptive-sdd/tools/agentics.py --selecte
 
 `--task`는 tracker ID일 필요가 없는 호출자 지정 label이다. Issue 생성 전에는 `new-item` 같은 임시 label을 쓰고 실제 ID와의 대응을 기록한다. `#31` 같은 ID는 `issue-31` 같은 안전한 label로 연결한다. 연결은 이 resolver만 파싱하며 일반 YAML parser가 다른 타입으로 추론해도 이름·버전은 문자열이다.
 
-`--selected`가 없으면 연결/config/W를 읽지 않고 INACTIVE다. 선택 후 실패는 BLOCKED(exit 2)이며 다른 방법으로 대체하지 않는다. READY(exit 0)는 연결 확인 성공이다. 입구·해당 P 원본·W 절차를 읽고 기록 접근·권한을 확인한 뒤 편집한다. `--fresh-session`은 호출자 선언이며 호스트 문맥 검사나 초기화 기능이 아니다.
+`--selected`가 없으면 연결/config/W를 읽지 않고 INACTIVE다. 선택 후 실패는 BLOCKED(exit 2)이며 다른 방법으로 대체하지 않는다. READY(exit 0)는 연결 확인 성공이며 실행이나 준수의 증거는 아니다. 입구·해당 P 원본·W 절차를 읽고 기록 접근·권한을 확인한 뒤 편집한다. `--fresh-session`은 호출자 선언이며 호스트 문맥 검사나 초기화 기능이 아니다.
 
 시작본의 [작업 선택 계약](../adaptive-sdd/workflow/activation.md)이 W 상대 문서·로컬 채택 M 지원·기존 hard guard/pin 참조의 호환 의미를 정한다. 설치 AGENTS 구간이나 기존 lock을 요구하지 않는다. W와 호출부를 함께 수정한다. 현재 gate를 우회하려고 작업에서 선택한 W를 수정하지 않는다. 의도적인 W 변경은 commit하고 이후 작업에서 선택한다.
 
-네이티브 스킬 설치는 필요 없다. 사용자가 확인된 입구 읽기를 직접 요청할 수 있다. 개인 로더 스킬은 선택·연결 확인만 담는다. Claude Code는 `disable-model-invocation: true`, Codex는 `agents/openai.yaml`의 `policy.allow_implicit_invocation: false`로 암시 호출을 막는다. 이미 읽은 지침 삭제 기능은 아니다. [Claude 공식 문서](https://code.claude.com/docs/en/skills), [Codex 공식 문서](https://learn.chatgpt.com/docs/build-skills), 2026-11-01 확인. preview.8은 네이티브 로더를 설치하거나 실증했다고 주장하지 않는다.
+네이티브 스킬 설치는 필요 없다. 사용자가 확인된 입구 읽기를 직접 요청할 수 있다. 개인 로더 스킬은 선택·연결 확인만 담는다. Claude Code는 `disable-model-invocation: true`, Codex는 `agents/openai.yaml`의 `policy.allow_implicit_invocation: false`로 암시 호출을 막는다. 이미 읽은 지침 삭제 기능은 아니다. [Claude 공식 문서](https://code.claude.com/docs/en/skills), [Codex 공식 문서](https://learn.chatgpt.com/docs/build-skills), 2026-11-06 확인. 1.0은 네이티브 로더를 설치하거나 실증했다고 주장하지 않는다.
 
 종료 증거 보존 후 해당 작업의 방법론 범위를 끝낸다. 다음 작업·대표 영역·방법론은 새 세션에서 시작한다. 종료 메시지나 스킬 비활성화로 기존 지침을 지울 수 없다. P 권한은 계속 유효하다. 선택 후 로드/접근 실패는 의존 작업을 막지만 미선택 방법론은 일반 작업을 막지 않는다.
 
@@ -138,3 +138,5 @@ W는 자체 리뷰 절차를 따른다. 진행 작업은 기존 snapshot을 유�
 4. 영역 연결을 추가하고 새 세션에서 선택/미선택 동작을 확인한다. 위치만 밖으로 옮기면 자동 활성화가 남으므로 이전 완료가 아니다.
 
 매번 편집 전 M 절차를 강제하는 기존 P overlay도 분류·재배치 대상이다. 이 출시 준비는 기존 제품 저장소를 이전하지 않는다.
+
+외부 적용에서 선택적인 snapshot 도구를 사용하면 검토한 배포본의 `ko/adaptive-sdd/tools/review_snapshot.py`를 사용하거나 그 파일을 W 저장소의 `tools/`로 복사한다. 기존 외부 설치의 `.agentics/adaptive-sdd.json`도 이전 목록에 포함하고 활성 참조가 없음을 확인한 뒤 기존 설치 생성물로 정리한다.

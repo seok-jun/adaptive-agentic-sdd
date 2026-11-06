@@ -1,6 +1,6 @@
 # 실행 절차(W)
 
-> preview.8 권장 경로: 프로젝트가 소유하고 수정하는 외부 W를 작업별로 선택한다. 먼저 [작업 선택 계약](activation.md)을 읽는다. 아래 설치 사본·생성 문서·고정 M/W 설명은 `install.py`를 명시적으로 선택한 기존 설치 경로의 규칙이다. 외부 적용 경로에는 activation.md의 경로·소유·수명 계약을 적용한다.
+> 권장 외부 적용 경로: 프로젝트가 소유하고 수정하는 외부 W를 작업별로 선택한다. 먼저 [작업 선택 계약](activation.md)을 읽는다. 아래 설치 사본·생성 문서·고정 M/W 설명은 `install.py`를 명시적으로 선택한 기존 설치 경로의 규칙이다. 외부 적용 경로에는 activation.md의 경로·소유·수명 계약을 적용한다.
 
 이 폴더는 Issue부터 구현·검증·종료까지의 **공통 실행 절차**다. 한 제품에서 오래 운영하며 다듬은 절차를 제품 종속 부분만 덜어내 옮겼다. 제품마다 다른 사실·경로·명령·권한은 이 폴더에 두지 않고, 설치할 때 생성하는 **P 적용 문서**에 둔다.
 
@@ -50,7 +50,7 @@ W 문서에 나오는 `docs/domains/**`(business 문서), `docs/sdd/{feature}/`(
 
 실행 grade는 Trivial·Small·Medium·Large다. Epic은 선택적 관리 단위이며 생성·분해·전체 완료 조율은 `managing-issues`에서 수행한다. 하위 실행 Issue는 각각의 grade를 따르고 분해 리뷰를 조사 착수 조건으로 요구하지 않는다. 정책 원본은 [Epic 관리 단위](process/sdd/epic.md#epic-관리-단위)다.
 
-관측 재검토 스킬(`reviewing-observations`)은 다음 preview에서 옮긴다. 그 전까지 관측 재검토는 M의 `adaptation.md` 절차를 직접 따른다.
+관측 재검토 스킬(`reviewing-observations`)은 후속 릴리스에서 옮긴다. 그 전까지 관측 재검토는 M의 `adaptation.md` 절차를 직접 따른다.
 
 ## 상세 규칙의 원본
 

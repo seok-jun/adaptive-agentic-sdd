@@ -1,4 +1,6 @@
-"""Bounded cross-agent behavior evaluation runner (maintainer tool, not a unit test).
+"""Historical runner, superseded by run_behavior_evals_v2.py; not clean behavioral evidence.
+
+Kept for the 2026-10-30/31 experiment contract. New runs require a fresh workdir.
 
 Implements workflow/process/skill-evals.md "Cross-agent behavior eval" for a case selection that was
 fixed in advance (docs/eval-results/<date>/selection.json). Each run uses a fresh disposable project
@@ -48,8 +50,8 @@ def run(cmd, cwd, stdin_text, timeout=TIMEOUT):
 
 
 def prepare_base(bundle, base):
-    if base.exists():
-        shutil.rmtree(base)
+    if base.exists() or base.is_symlink():
+        raise ValueError("refusing to replace an existing evaluation base")
     base.mkdir(parents=True)
     shutil.copytree(bundle, base / ".adaptive-sdd", ignore=shutil.ignore_patterns("__pycache__"))
     subprocess.run(["git", "init", "-q"], cwd=base, check=True)

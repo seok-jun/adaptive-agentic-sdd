@@ -1,6 +1,6 @@
 # Task selection and project ownership
 
-This is the entry contract for the preview.8 external adoption path. The older `install.py` path remains a separately chosen legacy installation; its generated blocks are not created by this path.
+This is the entry contract for the external adoption path. The older `install.py` path remains a separately chosen legacy installation; its generated blocks are not created by this path.
 
 ## Before reading procedures
 
@@ -19,6 +19,8 @@ P owns product facts, business decisions, architecture, required tests, common r
 In this path the absolute `P`, `W` and `M` inputs are the resolver result's `product`, `workflow_dir` and `methodology_dir`. This satisfies the skills' explicit-path requirement without guessing from the current folder or entry. The supplied starter declares `paths.workflow: workflow` and `paths.supports: methodology` in its profile. A customized W that no longer uses those supports may set supports to null and remove its M callers; M is then absent. References to M in the unchanged starter mean locally adopted supports, not the live public repository. These adopted documents may be adapted or removed together with their W callers. The starter retains their rules until the owner changes them; merely calling a rule a preference does not grant authority to waive it. No upstream lookup is required. `W/../project/<name>.md` is an external, project-owned application document: method choices plus references to P facts and authority. It may be edited directly in this adoption path. Do not run the legacy renderer over it.
 
 For this path, legacy references to the installer's named hard-guard section mean the actual P common instructions (when present), plus [task-guard.md](task-guard.md), which must be read for this selected starter task. They do not require creating that heading or any AGENTS block. References to an immutable/pinned W mean the selected task snapshot, not a ban on project customization. `W/../install.lock.json` in starter observations is replaced by the resolver's W commit and task-start product revision. No legacy lock or generated-file check is required. A legacy instruction to report a common issue means proposing a change in the project W; it does not authorize upstream filing. This entry defines these compatibility meanings before any reused W skill is read.
+
+In external adoption, W eval cases are project-owned and may evolve with W under its change process. The immutable common-case wording and `install.py check-evals` command in reused procedures apply only to legacy installation. Use the static check declared in `W/../project/skill-evals.md`; if none is declared, record it as not run, never PASS. This mapping does not waive any required verification or permit changing expected results merely to pass a check.
 
 ## Task boundaries
 

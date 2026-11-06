@@ -1,8 +1,8 @@
-# Project-owned W adoption — preview.8
+# Project-owned W adoption — 1.0
 
 M is the public methodology offered as a starting point. After applying it, keep adapting W and P to your project. Continuing to use M, tracking its revisions or accepting its updates is the user's choice, not a requirement. [한국어](../ko/docs/customization.md).
 
-Preview.8 provides a **read-only resolver plus an agent-assisted adoption procedure**. It is not an automatic migration or session manager. Before publication, use a reviewed candidate commit; do not assume an unpublished preview.8 tag resolves.
+Version 1.0 provides a **read-only resolver plus an agent-assisted adoption procedure**. It is not an automatic migration or session manager. Before publication, use a reviewed candidate commit; do not assume an unpublished v1.0.0 tag resolves.
 
 ## Structure and responsibility
 
@@ -48,7 +48,7 @@ Suggested setup request:
 ```text
 Use this reviewed public methodology as a starting point for an external project-owned W.
 Keep P facts, common rules and authority in P. Adapt W to this project; do not assume
-continued upstream M use or synchronization. Follow the preview.8 adoption guide.
+continued upstream M use or synchronization. Follow the 1.0 adoption guide.
 Show procedure choices and unresolved authority/record-location decisions before using them.
 Create only the selected .agentics/<area>.yaml connection in P. Do not activate W yet.
 ```
@@ -79,7 +79,7 @@ Place this user-owned allowlist **outside P**. Replace example paths/origin with
 }
 ```
 
-The allowlist uses the effective origin after any local Git `insteadOf` URL rewriting. The resolver compares the exact origin string, HEAD, profile identity and checkout cleanliness. This checks local consistency, not remote authenticity or a signature. Trust in loader deployment, source acquisition and allowlist comes from the user. No remote fetch or connection-provided command is executed. P and W must be full local clones; partial/promisor clones are rejected before status checks, including on older supported Git versions that ignore the lazy-fetch environment flag. A cloud session provisions the same approved origin/commit under its own root and maps the same name. Symlinks, submodules, assume-unchanged/skip-worktree/sparse entries, untracked and ignored W files are unsupported: use a dedicated clean W checkout with records elsewhere. P itself may be dirty; preserve unrelated changes. The entry must be tracked, and W/support directories must contain tracked files. Git calls ignore wrapper-provided repository/index/command-line-config environment redirects while retaining user config locations. An editor folder or `.DS_Store` in W also blocks resolution; keep the dedicated checkout clean. Preview.8 supports SHA-1 repositories with an existing commit, not unborn or SHA-256 repositories.
+The allowlist uses the effective origin after any local Git `insteadOf` URL rewriting. The resolver compares the exact origin string, HEAD, profile identity and checkout cleanliness. This checks local consistency, not remote authenticity or a signature. Trust in loader deployment, source acquisition and allowlist comes from the user. No remote fetch or connection-provided command is executed. P and W must be full local clones; partial/promisor clones are rejected before status checks, including on older supported Git versions that ignore the lazy-fetch environment flag. A cloud session provisions the same approved origin/commit under its own root and maps the same name. Symlinks, submodules, assume-unchanged/skip-worktree/sparse entries, untracked and ignored W files are unsupported: use a dedicated clean W checkout with records elsewhere. P itself may be dirty; preserve unrelated changes. The entry must be tracked, and W/support directories must contain tracked files. Git calls ignore wrapper-provided repository/index/command-line-config environment redirects while retaining user config locations. An editor folder or `.DS_Store` in W also blocks resolution; keep the dedicated checkout clean. Version 1.0 supports SHA-1 repositories with an existing commit, not unborn or SHA-256 repositories.
 
 ## External profile
 
@@ -104,7 +104,7 @@ The allowlist uses the effective origin after any local Git `insteadOf` URL rewr
 }
 ```
 
-Use real P source paths; creating these exact example documents is not required. Paths are relative to their respective roots; traversal and symlinks are rejected. Kinds are `fact`, `approved-rule`, `authority`. Preview.8 implements only `task-start`: the resolver reports P HEAD and dirty state. The agent records the actual source revision/content identity read; HEAD alone does not identify dirty content. File existence and complete record declarations do not prove actual reading, tracker access, write authority or rule execution. Check these before dependent edits. The profile selects the entry, so project owners can replace the starter instead of following public M indefinitely. `paths.workflow` is a required relative directory; `paths.supports` is a relative directory or null. The resolver emits absolute `workflow_dir` and `methodology_dir` (nullable). The supplied starter needs the copied supports; a customized W with no M callers may select null. No upstream M is required.
+Use real P source paths; creating these exact example documents is not required. Paths are relative to their respective roots; traversal and symlinks are rejected. Kinds are `fact`, `approved-rule`, `authority`. Version 1.0 implements only `task-start`: the resolver reports P HEAD and dirty state. The agent records the actual source revision/content identity read; HEAD alone does not identify dirty content. File existence and complete record declarations do not prove actual reading, tracker access, write authority or rule execution. Check these before dependent edits. The profile selects the entry, so project owners can replace the starter instead of following public M indefinitely. `paths.workflow` is a required relative directory; `paths.supports` is a relative directory or null. The resolver emits absolute `workflow_dir` and `methodology_dir` (nullable). The supplied starter needs the copied supports; a customized W with no M callers may select null. No upstream M is required.
 
 ## Explicit task activation
 
@@ -120,7 +120,7 @@ Without `--selected`, INACTIVE is returned without reading connection/config/W. 
 
 The starter's [activation contract](../adaptive-sdd/workflow/activation.md) explains W-relative documents, locally adopted M supports and compatibility meanings for legacy hard-guard/pin references. It does not require an installer-generated AGENTS section or legacy lock. Customize W and its callers together; do not modify the selected W snapshot mid-task to bypass its gates. Commit deliberate W changes and select that commit for later tasks.
 
-Native skill installation is not required: the user can explicitly ask the agent to read the resolved entry. An optional personal loader skill should contain only selection/resolution instructions. Claude Code supports `disable-model-invocation: true`; Codex supports `policy.allow_implicit_invocation: false` in `agents/openai.yaml`. These suppress implicit invocation, not already-loaded instructions. [Claude documentation](https://code.claude.com/docs/en/skills), [Codex documentation](https://learn.chatgpt.com/docs/build-skills), checked 2026-11-01. Preview.8 does not install or claim to test a native loader.
+Native skill installation is not required: the user can explicitly ask the agent to read the resolved entry. An optional personal loader skill should contain only selection/resolution instructions. Claude Code supports `disable-model-invocation: true`; Codex supports `policy.allow_implicit_invocation: false` in `agents/openai.yaml`. These suppress implicit invocation, not already-loaded instructions. [Claude documentation](https://code.claude.com/docs/en/skills), [Codex documentation](https://learn.chatgpt.com/docs/build-skills), checked 2026-11-06. Version 1.0 does not install or claim to test a native loader.
 
 After retaining closing evidence, end the task's method scope. Start another task, representative area or method in a fresh session. A close message or disabling a skill cannot erase prior instructions. P authority remains in force. Selected load/access failure blocks dependent work; unselected methods never block ordinary work.
 
@@ -138,3 +138,5 @@ The [legacy guide](legacy-installation.md) and `install.py` remain for existing 
 4. Add the area connection and check selected/unselected behavior in fresh sessions. Moving storage alone leaves automatic activation intact and is not a completed migration.
 
 Existing P overlays that require M procedures before every edit also need classification and relocation. Preparing this release does not migrate any existing product repository.
+
+For the optional snapshot helper in external adoption, use `adaptive-sdd/tools/review_snapshot.py` from the reviewed distribution or copy it into `tools/` in the W repository. Include the legacy external connection `.agentics/adaptive-sdd.json` in the migration inventory and retire it as an installer-owned file only after active references no longer need it.

@@ -61,7 +61,7 @@
 
 ### 1. 정적 검사
 
-다음 명령은 LLM을 실행하지 않는다.
+기존 설치에서는 다음 명령으로 LLM 호출 없이 검사한다. 외부 적용은 [활성화 계약](../activation.md)에 따라 프로젝트가 선언한 검사를 쓴다.
 
 ```bash
 python3 -I -B .adaptive-sdd/tools/install.py check-evals --project-root .
@@ -73,7 +73,7 @@ python3 -I -B .adaptive-sdd/tools/install.py check-evals --project-root .
 
 ### 2. 결정적 routing/packet 검사
 
-routing·packet 계약을 합성 fixture로 결정적으로 검증하는 도구는 이 preview에 포함하지 않는다. P가 그런 도구를 선언하면 그 결과를 여기에 연결하고, 없으면 미실행으로 기록한다. 미실행을 PASS로 바꾸지 않는다.
+routing·packet 계약을 합성 fixture로 결정적으로 검증하는 도구는 이 릴리스에 포함하지 않는다. P가 그런 도구를 선언하면 그 결과를 여기에 연결하고, 없으면 미실행으로 기록한다. 미실행을 PASS로 바꾸지 않는다.
 
 #### Packet 직렬화와 측정
 
