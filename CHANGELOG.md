@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.0.1 — 2026-11-07
 
 - Add a bilingual compact route for routine Trivial/Small work: reuse unchanged inputs, keep start facts in CLAIM, and avoid repeating the full summary at closure. Required verification, escalation, merge authority and claim ownership checks remain.
 - Treat helper scripts, caches and build outputs as scoped writes; prefer stdin/memory and task-specific scratch. Document host sandbox probes and bounded sandbox-account/toolchain setup. Optional model/cost metadata no longer triggers host transcript searches in routine work.

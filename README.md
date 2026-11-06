@@ -8,7 +8,7 @@
 
 Adaptive SDD scales planning, review and verification to a change's risk, so small fixes need less process and risky changes get deeper checks. A link fix gets a self-check. A database migration gets written analysis, two independent design reviews and a human merge.
 
-> **1.0 stable release.** See the [v1.0.0 release](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.0.0) for the reviewed distribution. Its effect on outcomes, rework or cost has not been measured. See [Status and evidence](#status-and-evidence).
+> **1.0.1 stable release.** See the [v1.0.1 release](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.0.1) for the reviewed distribution. Its effect on outcomes, rework or cost has not been measured. See [Status and evidence](#status-and-evidence).
 
 ## How depth scales
 
@@ -94,9 +94,11 @@ The full history of checks and reviews is in [CHANGELOG.md](CHANGELOG.md).
 
 ## Versions
 
+- Patch 1.0.1 adds a compact Trivial/Small route and explicit scratch/output boundaries. See [patch verification and limits](docs/releases/1.0.1.md). Existing project workflows are not automatically updated.
+
 - Version 1.0 adopts the project-owned external W and explicit task activation model prepared in preview.8. See the [release notes and verification](docs/releases/1.0.0.md); historical evaluations do not validate the new activation path.
 
-- The stable tag is `v1.0.0`; earlier previews use `v1.0.0-preview.N`. Published tags are never moved; fixes come as new version tags. Legacy installations pin a copy by tag, commit SHA and manifest hash; external adoption pins the selected project W commit.
+- The stable tag is `v1.0.1`; earlier previews use `v1.0.0-preview.N`. Published tags are never moved; fixes come as new version tags. Legacy installations pin a copy by tag, commit SHA and manifest hash; external adoption pins the selected project W commit.
 - Project W evolves under project authority. M updates are optional; do not overwrite customized W. Legacy installations use their own [migration/upgrade guide](docs/legacy-installation.md#upgrading).
 - The earlier v0.2 methodology is preserved at tag [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0). v1 is not an automatic upgrade from v0.2.
 
