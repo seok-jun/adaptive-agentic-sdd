@@ -144,3 +144,5 @@ W는 자체 리뷰 절차를 따른다. 진행 작업은 기존 snapshot을 유�
 ## Task별 임시 출력과 호스트 통제
 
 작업에 쓰기 허용한 root와 별도의 task별 scratch/cache/output 경로를 선언한다. 제품, 외부 W, 기록, scratch의 권한은 서로 다르며 W는 선택한 작업 중 읽기 전용이다. 임시 경로와 언어별 캐시/컴파일 출력을 그 경로로 설정하고 기존 host sandbox에서 다른 쓰기를 제한한다. OS 임시 경로가 기본 허용되는 host는 해당 허용도 확인한다. 먼저 무해한 외부 쓰기 거부와 내부 쓰기 성공을 실제 확인하고, 실패하면 격리된 실행 환경을 준비하거나 강제를 미확인으로 명시한다. 이 배포본은 OS sandbox를 설치하지 않으며 resolver READY가 파일 접근을 강제하지 않는다. 일반 Trivial/Small은 선택한 W의 `workflow/process/small-work.md`를 사용한다.
+
+sandbox가 다른 OS 계정으로 실행되면 구현 전에 그 계정에서 Git 접근과 선언한 compiler/runtime을 확인한다. Git이 소유권 신뢰 오류를 내면 실제 프로젝트/시험 저장소를 확인하고 세션별 Git 설정에 그 정확한 경로만 등록한다. wildcard나 사용자 전체 신뢰 설정의 암묵적 변경은 하지 않는다. 접근할 수 없는 도구는 sandbox를 끄는 대신 허가된 읽기 위치에 준비한다.

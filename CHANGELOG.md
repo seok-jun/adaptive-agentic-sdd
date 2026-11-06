@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Add a bilingual compact route for routine Trivial/Small work: reuse unchanged inputs, keep start facts in CLAIM, and avoid repeating the full summary at closure. Required verification, escalation, merge authority and claim ownership checks remain.
+- Treat helper scripts, caches and build outputs as scoped writes; prefer stdin/memory and task-specific scratch. Document host sandbox probes and bounded sandbox-account/toolchain setup. Optional model/cost metadata no longer triggers host transcript searches in routine work.
+- Add three synthetic policy regression cases per edition. These are specifications, not live behavior scores. Published `v1.0.0` remains immutable.
+- Five-language Codex `gpt-6.1-sol`/high trials completed after two preserved environment-blocked attempts; independent outcome checks passed for all five. See [trial scope and limitations](docs/eval-results/2026-11-06-small-route/README.md).
+
 ## 1.0.0 — 2026-11-06
 
 - Release the stable version from the integrated preview.8 candidate `51a0104`; preview.8 was not tagged. Current usage guidance is labeled 1.0 while historical evidence remains version-scoped.
