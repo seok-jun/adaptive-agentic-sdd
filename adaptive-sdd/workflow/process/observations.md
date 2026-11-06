@@ -1,5 +1,7 @@
 # Application and improvement observations
 
+For routine Trivial/Small reading and record grouping, use the [compact route](small-work.md). Start facts may live in the existing CLAIM, and final updates in the existing closing record, without repeating the full SUMMARY. Do not omit required verification, actual incidents or lost evidence. Use already available model/cost metadata; do not search host transcript/config directories merely to fill optional telemetry. Leave absent values unconfirmed/not collected and continue.
+
 Observations are linked to the existing start, handoff, SUMMARY and closing records. Read only applicable points below, and reuse check results for the same run and version. Record observation gaps there and continue (no new gate).
 
 | When it applies | Section to read |

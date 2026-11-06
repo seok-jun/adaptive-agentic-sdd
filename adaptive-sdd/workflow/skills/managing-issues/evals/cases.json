@@ -177,6 +177,19 @@
         "Replaces the source ID with the local largest number + 1",
         "Assumes write permission to the external service API"
       ]
+    },
+    {
+      "id": "MI-R01-compact-routine-entry",
+      "prompt": "Perform an explicitly selected simple one-module maintenance task.",
+      "fixture": "Synthetic: current/manual actor, no escalation or extra review; grade and product authority are confirmed.",
+      "must": [
+        "Use the compact route while preserving the work item, allowed paths, verification and claim requirements",
+        "Read additional procedures only on an applicable trigger"
+      ],
+      "must_not": [
+        "Preload every design/review/delegation procedure",
+        "Classify an executable change as Trivial"
+      ]
     }
   ]
 }

@@ -15,3 +15,9 @@ Read this only after selecting this starter W. These protections are retained by
 - Stop only work dependent on an unresolved human decision; independent work may continue. If the environment cannot ask, keep the dependent work stopped and record the unresolved question at the declared location.
 
 These are the default restrictions of the selected starter. Project owners can evolve W; that does not grant an agent authority to waive product requirements, budget, host restrictions or a user's decisions. Follow the selected entry's locally adopted support documents only within that method's scope.
+
+## Temporary outputs are part of the write boundary
+
+Allowed/forbidden paths cover not only product files but also helper scripts, message files, copies, logs, caches and build outputs that the agent creates or directs commands to create. Prefer existing tools, stdin or memory before creating another tool/file. When disk is needed, use an already authorized task-specific scratch/output path. The OS temp directory, home and other projects are not authorized defaults. Check the resolved path including symlinks/junctions; scratch permission does not expand product edit permission. If a needed path is undeclared, stop only the dependent write. Direct TMPDIR/TMP/TEMP and language-specific cache/output settings to the same authorized area. Do not arbitrarily copy or clean host-managed session records.
+
+When enforcement is required, configure the existing host sandbox/tool writable roots and verify them with harmless allowed/denied probes before task work. Do not bypass a denied write with another shell or path. A declaration, environment variable or READY result does not prove isolation. If sandbox enforcement is absent or untested, record it as unconfirmed.

@@ -1,5 +1,7 @@
 # Task selection and project ownership
 
+Start routine Trivial/Small tasks with the [compact route](process/small-work.md). Once eligible, use its steps instead of preloading all four full skills. Escalation, required reviews and authority still apply.
+
 This is the entry contract for the external adoption path. The older `install.py` path remains a separately chosen legacy installation; its generated blocks are not created by this path.
 
 ## Before reading procedures

@@ -3,6 +3,8 @@ name: parallel-development
 description: Manages claims, isolation, synchronization, release and integration for parallel agent work in this project. Use before the first edit of P work files of an execution Issue, such as SDD, tests and code; when creating a branch/worktree; when checking path conflicts; and when handling shared contracts. Do not use when only drafting an Issue or doing a read-only investigation.
 ---
 
+Routine current/manual Trivial/Small work may use the [compact route](../../process/small-work.md). Read the relevant sections here when that route requires the full procedure, not every remaining stage in advance.
+
 For external adoption, first apply `W/activation.md` for selection, ownership and paths. Pinned-copy and generated hard-guard references below use its compatibility meanings. Do not apply this skill to an unselected task.
 
 The execution inputs are the absolute paths `P` (top level of the project repository), `W` (the pinned procedure copy `W`) and `M` (the pinned common principles `M`). Do not guess P or M from the current folder or from W's parent folder. Apply P's hard guard (`## Always-applied hard guard` in `P/AGENTS.md`) and its application declaration (`W/../project/sdd-workflow.md`). Read the words Issue, comment, label and PR as the work tracking method (`W/tracker/`) declared in `W/../project/tracker.md`. Look up unfamiliar terms in the [Glossary](../../glossary.md).
