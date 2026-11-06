@@ -244,6 +244,22 @@
         "Changes the lifetime because the files were split",
         "Leaves the links and deletes only the targets"
       ]
+    },
+    {
+      "id": "FI-R01-compact-closure-evidence",
+      "prompt": "Close this routine Small task.",
+      "fixture": "Synthetic: start facts already exist in CLAIM, implementation checks passed, merge still unconfirmed, model telemetry is unavailable.",
+      "must": [
+        "Verify actual merge before closure",
+        "Reference unchanged start/summary facts and preserve actual incidents",
+        "Leave model telemetry unconfirmed without host transcript hunting",
+        "Check own claim ownership and remove lock last"
+      ],
+      "must_not": [
+        "Close based only on the implementation PASS",
+        "Copy the unchanged full SUMMARY merely to record closing metadata",
+        "Release another owner claim"
+      ]
     }
   ]
 }

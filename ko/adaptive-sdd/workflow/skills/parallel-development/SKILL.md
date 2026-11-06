@@ -3,6 +3,8 @@ name: parallel-development
 description: 이 프로젝트의 병렬 agent 작업의 claim·격리·동기화·해제·통합을 관리한다. 실행 Issue의 SDD·테스트·코드 등 P 작업 파일 최초 수정 전, branch/worktree 생성, 경로 충돌 확인, 공유 contract 처리에 사용한다. Issue 초안이나 읽기 전용 조사만 수행할 때는 사용하지 않는다.
 ---
 
+일반 현재/수동 Trivial/Small 작업은 [간결 경로](../../process/small-work.md)로 진행할 수 있다. 그 경로가 전체 절차를 요구할 때 해당 절을 읽고, 불필요한 나머지 단계를 미리 읽지 않는다.
+
 외부 적용: 먼저 `W/activation.md`의 선택·소유·경로 계약을 적용한다. 아래 고정 사본·생성 hard guard 참조는 그 계약의 호환 의미를 따른다. 미선택 작업에는 이 스킬을 적용하지 않는다.
 
 실행 입력은 절대 경로 `P`(프로젝트 저장소 최상위), `W`(고정 절차 사본 `W`), `M`(고정 공통 원칙 `M`)이다. 현재 폴더나 W의 상위 폴더로 P·M을 추측하지 않는다. P의 hard guard(`P/AGENTS.md`의 `## 항상 적용 hard guard`)와 적용 선언(`W/../project/sdd-workflow.md`)을 적용한다. Issue·댓글·라벨·PR이라는 말은 `W/../project/tracker.md`가 선언한 작업 관리 방식(`W/tracker/`)으로 바꿔 읽는다. 낯선 용어는 [용어집](../../glossary.md)에서 찾는다.

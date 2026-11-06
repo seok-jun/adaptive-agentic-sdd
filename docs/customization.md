@@ -140,3 +140,9 @@ The [legacy guide](legacy-installation.md) and `install.py` remain for existing 
 Existing P overlays that require M procedures before every edit also need classification and relocation. This release does not migrate any existing product repository.
 
 For the optional snapshot helper in external adoption, use `adaptive-sdd/tools/review_snapshot.py` from the reviewed distribution or copy it into `tools/` in the W repository. Include the legacy external connection `.agentics/adaptive-sdd.json` in the migration inventory and retire it as an installer-owned file only after active references no longer need it.
+
+## Task-local outputs and host controls
+
+Declare authorized write roots and a task-specific scratch/cache/output location. Product, external W, records and scratch have different permissions; selected W stays read-only during the task. Point temporary paths and language cache/compiler outputs there, and use the existing host sandbox to restrict other writes. Check any host default that also permits OS temp paths. First verify a harmless outside write is denied and an inside write succeeds; if it fails, provision an isolated runtime or explicitly report enforcement as unconfirmed. This distribution does not install an OS sandbox and resolver READY does not enforce file access. Routine Trivial/Small tasks use the selected W's `workflow/process/small-work.md`.
+
+When the sandbox runs as a different OS account, verify Git access and the declared compiler/runtime under that account before implementation. If Git reports dubious ownership, confirm the exact test/project repositories and configure only those trusted paths in a session-specific Git config; do not use a wildcard or silently change the user-wide trust policy. Provision inaccessible toolchains in an authorized readable location rather than disabling the sandbox.
