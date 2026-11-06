@@ -4,12 +4,13 @@ Status: locally prepared candidate on `release/preview.8-agentics`, not publishe
 
 ## Behavior change
 
+- M improvement selection now considers cause, expected benefit and cost, reuse of existing measures, mechanical checks or execution controls for decidable conditions, and guidance/review for remaining interpretation. Useful partial coverage is sufficient to consider adoption; required protections, verification and existing authority remain in place. This principle adds no new document, classification table or approval step.
 - Public M is an optional starting reference. Continued adaptation of derived project W/P to their project is recommended; continued M use, update tracking and conformance are not obligations.
 - Recommended adoption keeps editable W outside P, P originals/authority inside P, and only a portable area connection in P. Explicit task selection precedes method loading.
 - `tools/agentics.py` performs read-only local resolution. It does not scaffold W, migrate products, fetch sources, execute a workflow, install host skills or reset sessions.
 - Existing `install.py` users retain the legacy contract. Storage-only relocation does not remove old automatic activation; follow the reviewed migration steps.
 
-## Verification
+## Verification of the original local candidate (before the 2026-11-06 integration)
 
 - Windows / Python 3.12.2 / Git 2.39.1.windows.1: `python -I -B -m unittest discover -s tests` — 111 tests passed (22 resolver tests plus 89 existing regressions). The suite's printed synthetic ERROR/INVALID cases are expected fixture assertions, not live agent calls.
 - Both editions' real starter trees resolve in disposable Git repositories without legacy installation. Resolver tests also cover no-read unselected mode, custom W with no M dependency, changed W commit selection, another P checkout, fail-closed inputs, duplicate keys and preservation of P files.
@@ -20,7 +21,15 @@ Status: locally prepared candidate on `release/preview.8-agentics`, not publishe
 - Review scope: actual supplied code/tests, both activation/guard/core editions, READMEs and adoption guides; the first pass also included the design proposal and release record. Claude executed no tests and did not audit every repository file. Final narrow passes covered only their changed source areas. Source/manifest consistency and the complete executable suite were checked separately by Codex.
 - Remaining optional observation: a multiline Git config value can cause a conservative false rejection in the full-clone check; it cannot select another source or bypass the check. Native host activation and effect on outcomes/rework/cost remain untested. Git/host documentation was read for invocation and locking semantics; documentation support is not behavioral evidence.
 
-The pre-existing uncommitted W clarifications are included and reviewed as part of the final candidate. Historical preview.7 behavior evaluations and the earlier bounded M/W review do not validate preview.8 activation.
+The pre-existing uncommitted W clarifications are included and reviewed as part of the original local candidate. Historical preview.7 behavior evaluations and the earlier bounded M/W review do not validate preview.8 activation.
+
+## Integration verification — 2026-11-06
+
+- Integrated remote `v1-preview` at `09aa2ac` (readability change `ff6e7a3` and its merge) with local preview.8 candidate `fa7e3b6`. The remote readability changes do not change rule meaning; they and the local adoption changes are retained. Only the two bundle manifests conflicted; they were regenerated from the combined file sets and final bytes.
+- Added the improvement-selection principle to canonical English M, the English bundle and Korean M. This is guidance for choosing improvements, not evidence of improved agent behavior.
+- `python -X utf8 -I -B -m unittest discover -s tests`: 111 tests passed. All five manifests matched their files and canonical JSON serialization; shared Python tools remained byte-identical across editions. A reverse-application check confirmed all remote workflow readability edits are present.
+- Independent read-only Claude review (CLI-reported `claude-opus-5-5`) found no P1 or rule-text regression and one P2: release records did not distinguish the integration from earlier verification. This dated section and the historical heading address that finding. Claude also checked the newly added link anchors; it did not run tests. Its scope was the integration diff, M editions and release records, not a full repository audit. Optional M terminology and Korean wording suggestions were incorporated. A bounded follow-up review of both M editions and the release records confirmed the P2 resolved and found no unresolved or new P1/P2.
+- No behavior/effect experiment, product migration, push, tag or publication was performed in this integration.
 
 ## Publication handoff
 

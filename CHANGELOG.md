@@ -4,6 +4,8 @@
 
 Not published. This is a meaning change to adoption and activation, not a wording-only release.
 
+- Integration verification (2026-11-06): see `docs/releases/preview.8.md` for the fresh 111-test run and bounded Claude review. Earlier validation statements below describe the pre-integration candidate.
+- M improvement selection: choose by cause, expected benefit and cost; consider existing mechanical checks or execution controls for decidable conditions and guidance/review for remaining interpretation. Useful partial coverage is allowed without weakening required protections or verification. No new document, classification table or approval step is required. This guidance changes improvement selection, not project authority or automatic activation.
 - Public M is an optional starting reference. After adoption, continued adaptation of project W/P under project authority is recommended; continued M use, revision tracking and upstream updates are user choices. M's existing rules apply when that edition is selected, not as permanent conformance conditions for every derivative.
 - Add `tools/agentics.py` in both editions: explicit selection before any method read, per-area portable connections, an external user-owned source allowlist, selected project-W commit/origin checks, path containment, P source references and work-record declarations. Resolution is read-only and does not fetch, execute or silently substitute a method. It works with a project W that has no public M dependency.
 - Add a task-scoped activation contract, update the four starter skill entries, and document editable external project application documents and P's retained facts/common rules/authority. Keep one representative method per task; use a fresh session for a new task/area/method. Fresh-session is a caller assertion, not a host-enforced guarantee.
@@ -19,6 +21,16 @@ The following changes and 89-test/Claude record predate the activation redesign;
 - Update both W editions and bundle manifests; M is unchanged. The historical verification guard hash remains pinned, with only the exact reviewed human-judgment clarification normalized for the preservation check. These changes repair consumption of existing M requirements; they do not establish behavioral compliance or an effect on outcomes, rework or cost.
 
 - Validation: 89 executable tests passed on Windows, both 66-file bundle manifests matched, and all M source copies remained unchanged. A three-turn read-only Claude review (requested `opus`/high; CLI-reported `claude-opus-5-5`) compared the supplied M/W text and diffs. Its wording findings were corrected; its final conclusion found no blocking defect in that bounded scope. The reviewer did not execute the tests or audit the entire repository. No new behavior experiment was run.
+
+### Readability merge from v1-preview (no rule meaning change)
+
+- Wording and structure fixes from an agent-perspective review and a three-turn Claude/Codex `gpt-6-astra` discussion; edits were made by Codex `gpt-6.1-sol`/high and reviewed item by item by Claude. Both editions are updated unless noted, and both `MANIFEST.json` files are regenerated.
+  - Glossary "PASS reuse" now matches `verification.md`: a verification PASS is reused when the inputs its command verified are unchanged, and review evidence belongs to the reviewed candidate. The glossary still adds no rules.
+  - `implementing-issues` Implement step 5 and `parallel-development` merged-worktree cleanup step 2 are split so the core action comes first (first verification: the directly related test class or owning-module tests); step numbers and conditions are unchanged.
+  - `observations.md` and `finishing-issues` state non-blocking rules as "record, then continue (no new gate)", with detail kept in `observations.md` and links from `finishing-issues`. Required actions, output strings and stop conditions are unchanged.
+  - Korean edition only: general English phrases in `execution-routing.md` are given Korean wording with the English term at first use; identifiers, statuses and glossary terms are unchanged.
+- Not changed: `process/sdd/*.md`, `verification.md`, `design-review.md` and `sdd/completion.md`, whose wording is pinned by `tests/test_sdd_structure.py`; `methodology/core.md`. A Small entry card was discussed and deferred. Similar summaries in `observations.md` (evidence reuse) and `core.md` (PASS reuse) were reported but not edited.
+- Checks: the 89 repository tests pass (one transient error in one run, not reproduced in three reruns). No behavior evaluation was run, so no effect on agent behavior is claimed.
 
 ## 1.0.0-preview.7 — 2026-10-31
 

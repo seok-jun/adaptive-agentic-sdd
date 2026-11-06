@@ -114,7 +114,11 @@ For handoff, stop, or cleanup after merge, first record the uncommitted and unpu
 ### Merged local worktree cleanup
 
 1. Check that the PR is merged and the worktree is clean. If there are uncommitted or unmerged changes, do not delete it; stop.
-2. First decide the "no artifacts" exception. If there is work evidence that no local build tool was run in that lane, and you confirmed that `git status --porcelain --untracked-files=all --ignored` is empty, so there are no tracked, untracked or ignored files and no user files at all, skip the build cleanup and leave the reason and evidence. If any of these was not confirmed, or there are artifacts, do not use this exception. If it is not the exception, check the cleanup command in P's application document `build.md` before removing the registration. If none is declared, leave the reason the cleanup was skipped. If one is declared, apply `W/skills/_shared/build-preflight.md` (reusing the JDK from the same run), run that cleanup command in the worktree and record it.
+2. Handle build cleanup by first deciding the "no artifacts" exception.
+   - **Exception:** If there is work evidence that no local build tool was run in that lane, and you confirmed that `git status --porcelain --untracked-files=all --ignored` is empty, so there are no tracked, untracked or ignored files and no user files at all, skip the build cleanup and leave the reason and evidence. If any of these was not confirmed, or there are artifacts, do not use this exception.
+   - **Otherwise:** Check the cleanup command in P's application document `build.md` before removing the registration.
+     - If none is declared, leave the reason the cleanup was skipped.
+     - If one is declared, apply `W/skills/_shared/build-preflight.md` (reusing the JDK from the same run), run that cleanup command in the worktree and record it.
 3. If preflight is `BLOCKED: JDK unavailable`, do not move on to removing the registration; stop in that state. If the JDK was found but the build cleanup failed, or uncommitted changes remain after the cleanup, stop with `CLEANUP_BLOCKED`.
 4. Keep the Windows worktree root as a short path in the `worktree root` form P declared. Before removal, check that `core.longpaths=true`, applied only to this command, is in effect, and leave the result. If long path support cannot be confirmed, stop with `CLEANUP_BLOCKED`.
 5. Remove the worktree from the main clone without a force option. On Windows, use `git -c core.longpaths=true worktree remove <exact-path>`.

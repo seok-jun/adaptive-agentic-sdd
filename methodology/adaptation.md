@@ -11,6 +11,10 @@ Adaptation means choosing the support needed now while keeping project controls 
 
 When a connection tool's recommendation feature is used, its classification depends on the observations the caller provides. The tool does not independently verify causes or evidence, and it does not run follow-up work. If the current observation comes from a state different from the current work state, it is not used for that judgment. A new log ID or timestamp alone is not new information. Only a caller who has confirmed substantive information that narrows the failure cause or changes the next action marks it as new information. Check results of the recommendation rules and improvement in model behavior are different evidence.
 
+## Choosing an improvement approach
+
+Choose an improvement approach based on the cause, expected benefit and cost, first considering reuse or repair of existing measures. Consider mechanical checks or execution controls for conditions that can be evaluated clearly against identifiable inputs and targets at the relevant time; use guidance and review for the interpretation that remains. Complete coverage is not a prerequisite: assess whether the improvement is useful within its stated limits, without weakening required protections or verification. Distinguish human decisions from automated enforcement of an already decided policy, and follow existing authority for changes. Explain the choice and remaining limits in the existing improvement candidate. This principle does not add a new document, classification table or approval step.
+
 ## Using observations for the next judgment
 
 A manual improvement review reads existing closing summaries and event evidence using the closing state, scope, and query means defined by the project connection. It does not assume a particular hosting service, comments, or a particular closing marker. Do not retroactively write empty events or normal-step records for tasks without problem records. The absence of records proves neither flawlessness nor non-performance. Also distinguish whether collection is possible from whether the meaning analysis of events is complete.
