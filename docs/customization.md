@@ -2,7 +2,7 @@
 
 M is the public methodology offered as a starting point. After applying it, keep adapting W and P to your project. Continuing to use M, tracking its revisions or accepting its updates is the user's choice, not a requirement. [한국어](../ko/docs/customization.md).
 
-Version 1.0 provides a **read-only resolver plus an agent-assisted adoption procedure**. It is not an automatic migration or session manager. Before publication, use a reviewed candidate commit; do not assume an unpublished v1.0.0 tag resolves.
+Version 1.0 provides a **read-only resolver plus an agent-assisted adoption procedure**. It is not an automatic migration or session manager. Start from the published `v1.0.0` tag and verify its commit before deriving your project W.
 
 ## Structure and responsibility
 
@@ -137,6 +137,6 @@ The [legacy guide](legacy-installation.md) and `install.py` remain for existing 
 3. Remove only verified installer-owned method blocks/entries through a normal product PR. Preserve user text and team common rules. Do not run the old renderer afterward; it recreates those files. Retire old copies only when no active task/reference needs them.
 4. Add the area connection and check selected/unselected behavior in fresh sessions. Moving storage alone leaves automatic activation intact and is not a completed migration.
 
-Existing P overlays that require M procedures before every edit also need classification and relocation. Preparing this release does not migrate any existing product repository.
+Existing P overlays that require M procedures before every edit also need classification and relocation. This release does not migrate any existing product repository.
 
 For the optional snapshot helper in external adoption, use `adaptive-sdd/tools/review_snapshot.py` from the reviewed distribution or copy it into `tools/` in the W repository. Include the legacy external connection `.agentics/adaptive-sdd.json` in the migration inventory and retire it as an installer-owned file only after active references no longer need it.

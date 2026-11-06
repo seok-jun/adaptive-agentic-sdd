@@ -1,11 +1,11 @@
 # Changelog
 
-## 1.0.0 — unpublished release candidate
+## 1.0.0 — 2026-11-06
 
-- Prepare the stable release from the integrated preview.8 candidate `51a0104`; preview.8 was not tagged. Current usage guidance is labeled 1.0 while historical evidence remains version-scoped.
+- Release the stable version from the integrated preview.8 candidate `51a0104`; preview.8 was not tagged. Current usage guidance is labeled 1.0 while historical evidence remains version-scoped.
 - Correct external-adoption/legacy references and make the historical demo and new evaluator runs refuse existing paths. Six safety regressions added; 117 executable tests pass on Windows.
 - Resolve contradictory required-device, Large-profile and frontier routing wording; use fresh fetched SHAs, preserve competing claim ownership, and add three bilingual policy regression specifications (86 cases per edition, not behavior results).
-- File-by-file pre-publication review is complete across 223 files: independent GPT-6.1 Sol / xhigh reviewers completed the Claude-interrupted remainder and re-reviewed corrections; no unresolved P1/P2 remains in scope. See [release preparation](docs/releases/1.0.0.md) for current coverage, findings and verification limits. This is not a publication or efficacy claim.
+- File-by-file pre-publication review is complete across 223 files: independent GPT-6.1 Sol / xhigh reviewers completed the Claude-interrupted remainder and re-reviewed corrections; no unresolved P1/P2 remains in scope. See [release record](docs/releases/1.0.0.md) for current coverage, findings and verification limits. These checks do not establish effectiveness.
 
 
 ## 1.0.0-preview.8 — release candidate (2026-11-01)
