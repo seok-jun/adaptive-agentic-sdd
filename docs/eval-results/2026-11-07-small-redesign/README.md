@@ -38,4 +38,4 @@ Per-run values are in [`results.json`](results.json).
 - Wall time is noisy because the six runs shared one machine.
 - File and word counts are an upper bound. A file counts as read when the agent's commands name it, but agents sometimes read only matching lines. Command output is the more direct measure of what the agent took in.
 - Input tokens fall less than command output because each step resends the conversation so far.
-- The fixed reading set is still about 23k words for a one-line fix, and wall time did not improve. Shortening that reading set is not part of this release.
+- The fixed reading set is still about 23k words for a one-line fix, and wall time did not improve. Command output fell by a third without a change in wall time, so these runs do not show reading volume as the main driver of time or cost.
