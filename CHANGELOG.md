@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Add `try/setup.py`: one command creates a disposable, offline sandbox (sample product, project-owned W with filled project documents, local remotes, local-docs records and allowlist) and confirms resolver READY. English and Korean editions; the distribution bundles are unchanged.
+- README quick start leads with the sandbox and an animated demo shortened from two real Codex runs ([record and limits](docs/eval-results/2026-11-07-try-sandbox/README.md)).
+
 ## 1.0.1 — 2026-11-07
 
 - Add a bilingual compact route for routine Trivial/Small work: reuse unchanged inputs, keep start facts in CLAIM, and avoid repeating the full summary at closure. Required verification, escalation, merge authority and claim ownership checks remain.

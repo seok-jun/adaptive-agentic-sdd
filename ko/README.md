@@ -25,6 +25,21 @@ flowchart LR
 
 ## 빠른 시작
 
+### 1분 체험
+
+```bash
+git clone https://github.com/seok-jun/adaptive-agentic-sdd
+python3 adaptive-agentic-sdd/try/setup.py --lang ko
+```
+
+clone 옆에 `adaptive-sdd-try/` 폴더가 생기고, 그 안에 작은 예제 제품, 팀 워크플로, 로컬 Git 원격, 작업 기록 폴더가 만들어집니다. 그 폴더 밖에는 아무것도 쓰지 않고 네트워크도 쓰지 않습니다. `adaptive-sdd-try/START-HERE.md`를 열고 거기 적힌 명령으로 Claude Code나 Codex를 시작한 뒤, 미리 심어 둔 세 과제 중 하나를 맡겨 보세요. README 깨진 링크(Trivial), 페이지네이션 버그(Small), 비밀번호 저장(Large)입니다. Windows에서는 `python`을 쓰세요.
+
+![체험 샌드박스에서 실제 Codex 실행: 페이지네이션 수정은 Small로 판정돼 병합되고, 비밀번호 저장은 Large로 판정돼 사람의 결정을 기다리며 멈춤](../docs/assets/demo.svg)
+
+실제 Codex 실행 두 건을 줄인 것입니다(영문판). [실행 기록과 한계](../docs/eval-results/2026-11-07-try-sandbox/README.md)를 참고하세요.
+
+### 내 프로젝트에 적용
+
 **1. 프로젝트에서 Claude Code나 Codex를 열고 다음을 붙여 넣습니다.**
 
 ```text
