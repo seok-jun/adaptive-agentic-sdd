@@ -21,9 +21,20 @@ Independent checks after the runs:
 - A fresh clone of the Small sandbox's origin `main` passed all product tests, and `page([1, 2, 3, 4], 1, 3)` returned `[1, 2, 3]`.
 - Files modified after the prompt, excluding Git metadata and bare remotes: Small — `product/catalog/search.py`, `product/tests/test_search.py`, `records/items/TRY-1.md`; Large — `records/items/TRY-1.md` only. The selected W checkouts stayed clean and the distribution checkout had no agent changes.
 
+## macOS check
+
+A separate Claude Code session on a Mac verified commit `bb81b27` (this change) without editing it: macOS 12.7.6, Python 3.14.10, Git 2.37.1 (Apple Git-137.1), x86_64.
+
+- `python3 adaptive-agentic-sdd/try/setup.py` (README default) and `--lang ko` both printed product tests passed and resolver READY.
+- Rerunning the default command exited 1 with the existing-target refusal; a hash of every path, size, modification time and mode under the target was identical before and after.
+- Both `START-HERE.md` files showed POSIX (`sh`) commands, no PowerShell syntax, and every referenced path existed.
+- The full suite ran 123 tests, OK, with no `/var` → `/private/var` path failures; the clone stayed clean afterwards.
+
+No agent task was run on the Mac.
+
 ## Limits
 
 - The Large stop follows a rule the sandbox's product authority document states explicitly (password storage is undecided and needs human decisions). The run shows the workflow honoring a declared product rule, not the agent independently discovering the risk.
 - Codex reported host enforcement of P's narrower write paths as unconfirmed: the sandbox writable roots were broader than the task paths, and no denied-write probe was run.
-- One run per task on Windows with one model. Durations were not measured precisely (a few minutes each). No Claude Code run, Korean edition run, Trivial task run or macOS/Linux run was made.
+- One agent run per task, on Windows, with one model. Durations were not measured precisely (a few minutes each). No Claude Code run, Korean edition agent run or Trivial task run was made. Sandbox setup and the test suite were checked on Windows and macOS (above); Linux was not run.
 - Raw CLI logs contain local paths and remain local; this summary and the demo transcript were prepared from them and from the sandbox records.
