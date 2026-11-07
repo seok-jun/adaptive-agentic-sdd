@@ -30,7 +30,14 @@ git clone https://github.com/seok-jun/adaptive-agentic-sdd
 python3 adaptive-agentic-sdd/try/setup.py
 ```
 
-This creates `adaptive-sdd-try/` next to the clone: a tiny product, a team workflow, local Git remotes and a records folder. It writes nothing outside that folder and uses no network. Open `adaptive-sdd-try/START-HERE.md`, start Claude Code or Codex with the command shown there, and give it one of three planted tasks: a broken README link (Trivial), a pagination bug (Small) or password storage (Large). Use `python` on Windows and `--lang ko` for the Korean edition.
+On Windows, use `python` (`python3` there often opens the Microsoft Store):
+
+```powershell
+git clone https://github.com/seok-jun/adaptive-agentic-sdd
+python adaptive-agentic-sdd/try/setup.py
+```
+
+Setup takes about a minute. It creates `adaptive-sdd-try/` in your current folder: a tiny product, a team workflow, local Git remotes and a records folder. It writes nothing outside that folder and uses no network. Open `adaptive-sdd-try/START-HERE.md`, start Claude Code or Codex with the command shown there, and give it one of three planted tasks: a broken README link (Trivial), a pagination bug (Small) or password storage (Large). A task takes the agent a few minutes; allow it to run `git commit`, `merge` and `push` to the local remotes so it can finish. Add `--lang ko` for the Korean edition.
 
 ![Real Codex runs in the try sandbox: the pagination fix is graded Small and merged; password storage is graded Large and stops for human decisions](docs/assets/demo.svg)
 
@@ -47,7 +54,7 @@ and help me adopt Adaptive SDD for this project. Ask me before each write.
 
 The agent walks you through the [adoption guide](docs/customization.md). It is agent-assisted setup, not an unattended installer. Requires Python 3.8+ and Git 2.36+.
 
-**2. What you end up with.** Your product repository gains one three-line file. The workflow lives in a separate repository your team owns and edits.
+**2. What you end up with.** Your product repository gains one three-line file. The workflow itself, a few dozen Markdown files of skills, procedures and project choices, lives in a separate repository your team owns and edits.
 
 ```text
 your-product/                 your existing repository (P)

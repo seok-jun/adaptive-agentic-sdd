@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- First-use fixes from two zero-context newcomer runs (Codex and Claude Code): the README quick start shows a separate Windows command (`python`, since `python3` often opens the Microsoft Store), says the sandbox is created in the current folder, and sets expectations (about a minute of setup, a few minutes per task, a workflow of a few dozen Markdown files). START-HERE.md asks to allow local `git commit`/`merge`/`push`, summarizes the selection prompt, and explains "current/manual" and "compact route" in plain words. The distribution is unchanged.
+
 ## 1.0.2 — 2026-11-07
 
 - Add `try/setup.py`: one command creates a disposable, offline sandbox (sample product, project-owned W with filled project documents, local remotes, local-docs records and allowlist) and confirms resolver READY. English and Korean editions; the distribution bundles are unchanged.

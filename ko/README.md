@@ -32,7 +32,14 @@ git clone https://github.com/seok-jun/adaptive-agentic-sdd
 python3 adaptive-agentic-sdd/try/setup.py --lang ko
 ```
 
-clone 옆에 `adaptive-sdd-try/` 폴더가 생기고, 그 안에 작은 예제 제품, 팀 워크플로, 로컬 Git 원격, 작업 기록 폴더가 만들어집니다. 그 폴더 밖에는 아무것도 쓰지 않고 네트워크도 쓰지 않습니다. `adaptive-sdd-try/START-HERE.md`를 열고 거기 적힌 명령으로 Claude Code나 Codex를 시작한 뒤, 미리 심어 둔 세 과제 중 하나를 맡겨 보세요. README 깨진 링크(Trivial), 페이지네이션 버그(Small), 비밀번호 저장(Large)입니다. Windows에서는 `python`을 쓰세요.
+Windows에서는 `python`을 쓰세요(Windows의 `python3`는 Microsoft Store를 여는 경우가 많습니다).
+
+```powershell
+git clone https://github.com/seok-jun/adaptive-agentic-sdd
+python adaptive-agentic-sdd/try/setup.py --lang ko
+```
+
+설정은 1분 정도 걸립니다. 지금 있는 폴더에 `adaptive-sdd-try/`가 생기고, 그 안에 작은 예제 제품, 팀 워크플로, 로컬 Git 원격, 작업 기록 폴더가 만들어집니다. 그 폴더 밖에는 아무것도 쓰지 않고 네트워크도 쓰지 않습니다. `adaptive-sdd-try/START-HERE.md`를 열고 거기 적힌 명령으로 Claude Code나 Codex를 시작한 뒤, 미리 심어 둔 세 과제 중 하나를 맡겨 보세요. README 깨진 링크(Trivial), 페이지네이션 버그(Small), 비밀번호 저장(Large)입니다. 과제 하나는 Agent가 몇 분 동안 진행합니다. 끝까지 마치도록 로컬 원격에 대한 `git commit`, `merge`, `push`를 허용해 주세요.
 
 ![체험 샌드박스에서 실제 Codex 실행: 페이지네이션 수정은 Small로 판정돼 병합되고, 비밀번호 저장은 Large로 판정돼 사람의 결정을 기다리며 멈춤](../docs/assets/demo.svg)
 
@@ -49,7 +56,7 @@ https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.2/ko/docs/customizati
 
 Agent가 [적용 가이드](docs/customization.md)를 따라 함께 설정합니다. Agent 지원 구성이며 무인 설치기가 아닙니다. Python 3.8+와 Git 2.36+가 필요합니다.
 
-**2. 설치 후 구조.** 제품 저장소에는 세 줄짜리 파일 하나만 추가됩니다. 절차는 팀이 소유하고 수정하는 별도 저장소에 둡니다.
+**2. 설치 후 구조.** 제품 저장소에는 세 줄짜리 파일 하나만 추가됩니다. 워크플로 자체(스킬, 절차, 프로젝트 선택을 담은 Markdown 파일 수십 개)는 팀이 소유하고 수정하는 별도 저장소에 둡니다.
 
 ```text
 your-product/                 기존 제품 저장소(P)

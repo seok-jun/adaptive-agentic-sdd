@@ -141,7 +141,7 @@ class TrySetupTests(unittest.TestCase):
                 self.assertNotIn("Adaptive", (product / "AGENTS.md").read_text(encoding="utf-8"))
                 start = (target / "START-HERE.md").read_text(encoding="utf-8")
                 for expected in ("Trivial", "Small", "Large", "READY", "new-item", "default",
-                                 "try-team", "codex --help", "--add-dir",
+                                 "try-team", "codex --help", "--add-dir", "git commit", "git push",
                                  str(ROOT / "adaptive-sdd/tools/agentics.py"), product.as_posix()):
                     self.assertIn(expected, start)
 
