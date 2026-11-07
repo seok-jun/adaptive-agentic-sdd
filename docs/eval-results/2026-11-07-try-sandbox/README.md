@@ -1,15 +1,15 @@
 # Try-sandbox demo runs — 2026-11-07
 
-Two real agent runs in sandboxes created by `try/setup.py` (English edition). They are the source of the shortened transcript in [`docs/assets/demo.svg`](../../assets/demo.svg). This is a demonstration, not an evaluation: one run per task, no comparison, no grader.
+Real agent runs in sandboxes created by `try/setup.py` (English edition). The two Codex runs below are the source of the shortened transcript in [`docs/assets/demo.svg`](../../assets/demo.svg). This is a demonstration, not an evaluation: one run per task, no comparison, no grader.
 
-## Setup
+## Codex runs on Windows: setup
 
 - Distribution checkout: `60cf771` plus the uncommitted `try/setup.py` from this change. Each task used a fresh sandbox; setup reported product tests passing and resolver READY.
 - Agent: Codex CLI 0.163.0, requested `gpt-6-astra` / `high` (`codex exec`, workspace-write sandbox on Windows). Served model identity was not separately verified.
 - Prompt: the selection prompt from the sandbox's `START-HERE.md`, with its last line replaced by one task.
 - Deviations from START-HERE: Codex started in the sandbox root (not `product/`) with `--skip-git-repo-check`, because the root is not a Git repository; the checkout was also passed with `--add-dir`. A session-specific Git config trusted only the sandbox's four repositories (Windows sandbox account ownership check). `TMP`/`TEMP`/`TMPDIR` pointed to the sandbox's `scratch/`. One earlier attempt per task stopped immediately with Codex's "not inside a trusted directory" check, before reading any file.
 
-## Results
+## Codex runs on Windows: results
 
 | Task | Grade recorded | Outcome |
 | --- | --- | --- |
@@ -30,11 +30,21 @@ A separate Claude Code session on a Mac verified commit `bb81b27` (this change) 
 - Both `START-HERE.md` files showed POSIX (`sh`) commands, no PowerShell syntax, and every referenced path existed.
 - The full suite ran 123 tests, OK, with no `/var` → `/private/var` path failures; the clone stayed clean afterwards.
 
-No agent task was run on the Mac.
+## Claude Code run on macOS
+
+In a fresh, untouched English sandbox from the macOS check, a new Claude Code session (host-reported model Opus 5.5, `claude-opus-5-5`; requested model and reasoning settings unconfirmed; auto permission mode) received the START-HERE selection prompt with the same Small task. The agent's own read-only report afterwards, with the commands it was asked to print:
+
+- Resolver exit 0, READY. Grade Small, priority P2. Records: CLAIM, IMPLEMENTATION SUMMARY, MERGED, CLOSED, PRODUCT COMPLETE, LOCAL CLEANUP, RELEASE; status closed.
+- It reproduced the bug (`[1, 2]`), ran the new tests against a scratch copy of the original `search.py` (`FAILED (failures=1)`; only the tail of that output was kept), then passed 4 catalog and all 5 product tests on both the branch (`222f4aa`) and the merge result (`a535f83`). The merge commit changed `catalog/search.py` and `tests/test_search.py` only.
+- Git 2.37 has no `merge-tree --write-tree`, so it used the local-docs adapter's fallback: a trial merge in a disposable worktree under the task scratch, removed afterwards. Its first `git merge --no-ff -F -` failed on Git 2.37 (`could not read file '-'`) without changing `main`; it retried with `-m` and recorded the incident in `[MERGED]`.
+- All writes it directed were inside the sandbox (product, local remote, records, `scratch/TRY-1`, which it left in place). The host stored one oversized tool output under its own session folder. Host sandbox enforcement was not configured or tested.
+- About 5–7 minutes in total by the agent's estimate; the recorded item lifetime was about 2 minutes.
+
+This report was not independently re-verified from this machine.
 
 ## Limits
 
 - The Large stop follows a rule the sandbox's product authority document states explicitly (password storage is undecided and needs human decisions). The run shows the workflow honoring a declared product rule, not the agent independently discovering the risk.
 - Codex reported host enforcement of P's narrower write paths as unconfirmed: the sandbox writable roots were broader than the task paths, and no denied-write probe was run.
-- One agent run per task, on Windows, with one model. Durations were not measured precisely (a few minutes each). No Claude Code run, Korean edition agent run or Trivial task run was made. Sandbox setup and the test suite were checked on Windows and macOS (above); Linux was not run.
+- One run per agent and task: Codex on Windows (Small and Large) and Claude Code on macOS (Small only). Durations were not measured precisely. No Korean edition agent run, Trivial task run or Claude Code Large run was made. Sandbox setup and the test suite were checked on Windows and macOS (above); Linux was not run.
 - Raw CLI logs contain local paths and remain local; this summary and the demo transcript were prepared from them and from the sandbox records.
