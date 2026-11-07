@@ -1,0 +1,41 @@
+name: Bug report
+description: A script, test, link or rule in this repository is broken or contradicts itself.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For "the agent did something unexpected" during a trial, the Try / first-use feedback form fits better.
+        Do not paste private code, company names, credentials or unsanitized logs (see CONTRIBUTING.md).
+
+  - type: input
+    id: where
+    attributes:
+      label: File, command or document
+      placeholder: "e.g. try/setup.py, adaptive-sdd/tools/agentics.py, ko/README.md#..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Commands you ran and their output (shortened).
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual result
+    validations:
+      required: true
+
+  - type: input
+    id: env
+    attributes:
+      label: OS, Python, Git and version or commit
+      placeholder: "e.g. Windows 11, Python 3.12, Git 2.39, v1.0.1"
+    validations:
+      required: true

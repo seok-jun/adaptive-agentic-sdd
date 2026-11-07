@@ -1,0 +1,67 @@
+name: Try / first-use feedback
+description: Tell us where the try sandbox or your first task got stuck, or what felt heavy. (한국어로 써도 됩니다.)
+title: "[Feedback]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for trying Adaptive Agentic SDD. Short reports are welcome; the step, agent and OS help most.
+        Do not paste private code, company names, credentials or unsanitized logs (see CONTRIBUTING.md).
+
+  - type: dropdown
+    id: path
+    attributes:
+      label: What were you doing?
+      options:
+        - Try sandbox (try/setup.py)
+        - Adopting in my own project
+        - Reading the README / docs only
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: step
+    attributes:
+      label: Where did it stop or feel wrong?
+      options:
+        - Setup script did not finish / no READY
+        - Starting the agent from START-HERE.md
+        - The grade the agent chose (Trivial / Small / Medium / Large)
+        - The agent stopped when it should have continued
+        - The agent continued when it should have stopped
+        - Too much process for the change
+        - Merge / close / cleanup
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+      description: The task you gave, the agent's last message (shortened), and what you expected instead.
+    validations:
+      required: true
+
+  - type: input
+    id: agent
+    attributes:
+      label: Agent and model
+      placeholder: "e.g. Claude Code 2.x / Opus, Codex CLI 0.16x / gpt-..."
+    validations:
+      required: true
+
+  - type: input
+    id: env
+    attributes:
+      label: OS, Python and Git versions
+      placeholder: "e.g. macOS 14, Python 3.12, Git 2.43"
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Adaptive SDD version or commit
+      placeholder: "e.g. v1.0.1 or main at abc1234"
