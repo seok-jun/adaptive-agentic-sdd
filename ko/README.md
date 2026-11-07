@@ -8,7 +8,7 @@ AI 코딩 Agent(Claude Code나 Codex)가 변경마다 먼저 위험도로 등급
 
 [English](../README.md) | **한국어**
 
-> **정식 릴리스: [v1.0.2](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.0.2).** 기존 코드베이스용입니다. 결과·재작업·비용에 대한 효과는 아직 측정하지 않았습니다. [상태와 근거](#상태와-근거)를 보세요.
+> **정식 릴리스: [v1.1.0](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.1.0).** 기존 코드베이스용입니다. 결과·재작업·비용에 대한 효과는 아직 측정하지 않았습니다. [상태와 근거](#상태와-근거)를 보세요.
 
 이 판의 파일은 저장소의 `ko/` 아래에 있습니다. 영문판이 원본이며, 두 판의 뜻이 다르면 영문이 기준입니다.
 
@@ -50,7 +50,7 @@ python adaptive-agentic-sdd/try/setup.py --lang ko
 **1. 프로젝트에서 Claude Code나 Codex를 열고 다음을 붙여 넣습니다.**
 
 ```text
-https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.2/ko/docs/customization.md 를 읽고
+https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.1.0/ko/docs/customization.md 를 읽고
 이 프로젝트에 Adaptive SDD를 적용하도록 도와줘. 파일을 쓰기 전에 매번 물어봐.
 ```
 
@@ -150,12 +150,12 @@ Agent: T-31을 만들었습니다. 등급: Large — DB 스키마·마이그레�
 
 새 경로는 AGENTS/CLAUDE 구간이나 P 스킬을 쓰지 않습니다. 연결은 활성화가 아닙니다. 가이드에 구조도·스키마·커스터마이징·[이전 절차](docs/customization.md#업데이트와-이전)가 있습니다. 기존 `install.py` 설치는 [기존 계약](docs/legacy-installation.md)으로 유지하며 자동 이전하지 않습니다.
 
-제공된 시작본을 그대로 선택했을 때, 작업 항목에 등급과 완료 기준이 있고, 첫 수정 전에 claim을 잡았고, 소유 모듈 테스트를 먼저 실행한 뒤 최종 후보에서 필수 검사가 통과했고, `[IMPLEMENTATION SUMMARY]`에 결정·검증·남은 위험이 남았고, 변경 요청이 작업 항목에 연결되면 병합 준비가 끝납니다. 병합 주체는 설정을 따릅니다. Agent가 실제 병합을 확인하고 작업 항목을 닫고 `[PRODUCT COMPLETE]`를 기록하면 완료입니다. 프로젝트 필요와 실제 작업 관찰에 맞춰 W를 발전시키며 공개 M은 선택적 참고로 남습니다.
+제공된 시작본을 그대로 선택했을 때, 작업 항목에 등급과 완료 기준이 있고, 첫 수정 전에 claim을 잡았고, 소유 모듈 테스트를 먼저 실행한 뒤 최종 후보에서 필수 검사가 통과했고, `[IMPLEMENTATION SUMMARY]`에 결정·검증·남은 위험이 남았고, 변경 요청이 작업 항목에 연결되면 병합 준비가 끝납니다. 병합 주체는 설정을 따릅니다. Agent가 실제 병합을 확인하고 작업 항목을 닫고 제품 완료를 기록하면(`[PRODUCT COMPLETE]`, Trivial/Small은 종료 기록의 한 항목) 완료입니다. 프로젝트 필요와 실제 작업 관찰에 맞춰 W를 발전시키며 공개 M은 선택적 참고로 남습니다.
 
 ## 들어 있는 것
 
 - **스킬 4개:** `managing-issues`(작업 항목 생성·등급), `parallel-development`(claim과 격리된 worktree), `implementing-issues`(등급별 설계와 구현), `finishing-issues`(검증·종료·정리).
-- **일반 작업용 간결 경로:** Trivial·Small 작업은 스킬 4개를 미리 모두 읽지 않고 [짧은 절차 하나](adaptive-sdd/workflow/process/small-work.md)를 따릅니다. 필수 검증·claim·병합 권한은 그대로 유지합니다.
+- **일반 작업용 간결 경로:** Trivial·Small 작업은 스킬 4개를 미리 모두 읽지 않고, 읽을 문서가 정해져 있고 기록이 세 개(claim, 요약, 종료)인 [절차 하나](adaptive-sdd/workflow/process/small-work.md)를 따릅니다. 필수 검증·claim·병합 권한은 Medium과 같습니다.
 - **작업 관리:** GitHub Issue·PR, 또는 저장소 밖 공유 폴더의 작업 문서. 절차는 특정 도구에 묶이지 않는 용어를 쓰고, 각 [어댑터](adaptive-sdd/workflow/tracker/)가 대응시킵니다. 다른 도구용 어댑터는 아직 없습니다.
 - **사람 판단 경계:** 범위 축소, 위임, Large 병합, 새 제품 결정은 Agent가 정하지 않고 멈춰서 묻습니다([core.md](adaptive-sdd/methodology/core.md)).
 - **읽기 전용 작업 resolver**(`tools/agentics.py`, Python 표준 라이브러리와 Git): 영역 선택·사용자 출처 매핑·W commit을 확인합니다. 기존 설치기는 별도로 선택하는 기존 모델에 남습니다.
@@ -164,6 +164,7 @@ Agent: T-31을 만들었습니다. 등급: Large — DB 스키마·마이그레�
 ## 상태와 근거
 
 - **측정하지 않음:** 결과·재작업·비용에 대한 효과는 측정하지 않았습니다. 절차는 한 제품에서 다듬었고, 그것이 다른 곳에서의 효과를 증명하지는 않습니다.
+- **1.1.0 Small 전후 비교:** 같은 Small 과제를 버전마다 Codex로 3회씩 실행해 6회 모두 병합과 claim 해제까지 마쳤습니다. 재정의 후 기록은 7개에서 3개로, Agent가 받은 명령 출력은 3분의 1 줄었습니다. 입력 토큰은 8% 줄었고 소요 시간 차이는 보이지 않았습니다. 과제 하나, Agent 하나의 결과입니다 — [기록](../docs/eval-results/2026-11-07-small-redesign/README.md).
 - **1.0.1 일반 작업 시험:** 합성 단일 모듈 Small 작업 다섯 개(Python, JavaScript, TypeScript, Java, Go)를 Codex로 실행해 구현, 필수 검사, 로컬 병합, 종료, claim 해제까지 마쳤고, 독립 clone으로 동작과 범위를 확인했습니다. 첫 시도는 다섯 중 셋이 완료됐고, 나머지 둘은 환경 문제로 멈춘 뒤 범위를 정한 수정 후 완료했습니다. 속도·비용 비교는 아닙니다 — [기록](../docs/eval-results/2026-11-06-small-route/README.md).
 - **행동 평가:** 첫 도구 간 기준선으로 한국어 사례 12개 × Claude Code·Codex × 3회를 실행했습니다(Claude Code PASS 21 / FAIL 14 / INVALID 1, Codex PASS 22 / FAIL 14) — [기록](../docs/eval-results/2026-10-30/README.md). 문구 수정 두 개를 사후 짝 비교한 결과 전체 개선은 관찰되지 않았습니다 — [기록](../docs/eval-results/2026-10-30-skill-comparison/paired-summary.md). 실패도 채점된 그대로 공개합니다. 기준선과 preview.6 작업 관리 확인에서는 평가 대상 프로젝트 안에서 정답 사례 파일을 읽을 수 있었으므로 깨끗한 근거가 아닙니다. 짝 비교에서는 그 파일을 제거했습니다.
 - **보장이 아님:** Agent와 사람을 위한 안내이며, 보안 경계나 Agent 실행기가 아닙니다.
@@ -182,10 +183,11 @@ Agent: T-31을 만들었습니다. 등급: Large — DB 스키마·마이그레�
 
 ## 버전
 
+- 1.1.0은 Small이 Medium의 안전장치를 유지하면서 Trivial 수준의 기록만 남기게 합니다. 읽을 문서가 정해져 있고 일반 기록은 세 개입니다. 워크플로 문서를 외부 적용 방식에 맞추고 첫 사용 수정도 포함합니다. [릴리스 기록](../docs/releases/1.1.0.md)을 참고하세요. 기존 프로젝트 워크플로는 자동 갱신되지 않습니다.
 - 1.0.2 패치는 1분 체험 샌드박스, README 빠른 시작과 데모, 이슈 양식을 더하고 평가 실행기가 Claude Code 세션 기록을 남기게 합니다. 배포본은 1.0.1과 같습니다. [릴리스 기록](../docs/releases/1.0.2.md)을 참고하세요.
 - 1.0.1 패치는 Trivial/Small 간결 경로와 명시적 임시·출력 경계를 추가합니다. [패치 검증과 한계](../docs/releases/1.0.1.md)를 참고하세요. 기존 프로젝트 워크플로는 자동 갱신되지 않습니다.
 - 1.0은 preview.8에서 준비한 프로젝트 소유 외부 W와 명시적 작업 활성화 모델을 채택합니다. [릴리스와 검증 기록](../docs/releases/1.0.0.md)을 참고하세요. 과거 평가는 새 활성화 경로의 검증이 아닙니다.
-- 정식 태그는 `v1.0.2`이며 과거 preview는 `v1.0.0-preview.N`을 사용합니다. 공개한 태그는 옮기지 않고, 수정은 새 버전 태그로 냅니다. 기존 설치 사본은 태그·commit SHA·manifest 해시로 고정하며 외부 적용은 선택한 프로젝트 W commit으로 식별합니다.
+- 정식 태그는 `v1.1.0`이며 과거 preview는 `v1.0.0-preview.N`을 사용합니다. 공개한 태그는 옮기지 않고, 수정은 새 버전 태그로 냅니다. 기존 설치 사본은 태그·commit SHA·manifest 해시로 고정하며 외부 적용은 선택한 프로젝트 W commit으로 식별합니다.
 - W는 프로젝트 권한으로 발전시킵니다. M 업데이트는 선택이며 수정한 W를 덮어쓰지 않습니다. 기존 설치는 [자체 이전/업그레이드 안내](docs/legacy-installation.md)를 따릅니다.
 - 이전 v0.2 방법론(영문)은 태그 [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0)에 있습니다. v1은 v0.2에서 자동으로 업그레이드되지 않습니다.
 

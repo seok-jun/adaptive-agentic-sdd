@@ -2,6 +2,8 @@
 
 Real agent runs in sandboxes created by `try/setup.py` (English edition). The two Codex runs below are the source of the shortened transcript in [`docs/assets/demo.svg`](../../assets/demo.svg). This is a demonstration, not an evaluation: one run per task, no comparison, no grader.
 
+These runs used the workflow before 1.1.0, so the Small run below wrote seven records. From 1.1.0 a normal Small task writes three; see the [before/after runs](../2026-11-07-small-redesign/README.md).
+
 ## Codex runs on Windows: setup
 
 - Distribution checkout: `60cf771` plus the uncommitted `try/setup.py` from this change. Each task used a fresh sandbox; setup reported product tests passing and resolver READY.

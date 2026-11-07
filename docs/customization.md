@@ -2,7 +2,7 @@
 
 M is the public methodology offered as a starting point. After applying it, keep adapting W and P to your project. Continuing to use M, tracking its revisions or accepting its updates is the user's choice, not a requirement. [한국어](../ko/docs/customization.md).
 
-Version 1.0 provides a **read-only resolver plus an agent-assisted adoption procedure**. It is not an automatic migration or session manager. Start from the published `v1.0.2` tag and verify its commit before deriving your project W.
+Version 1.0 provides a **read-only resolver plus an agent-assisted adoption procedure**. It is not an automatic migration or session manager. Start from the published `v1.1.0` tag and verify its commit before deriving your project W.
 
 ## Structure and responsibility
 
