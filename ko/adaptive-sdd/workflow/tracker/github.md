@@ -15,7 +15,7 @@ CLAIM은 `agent`, `branch`, `allowed`, `forbidden` 소유권 payload와 시작 �
 3. 확인 뒤에만 같은 `CLOSED.release`를 `state: released`와 실제 해제 시각으로 갱신하며 준비 사실도 보존한다. 이것이 해당 CLAIM의 최종 해제 기록으로 `[RELEASE]`에 해당하며 CLAIM 댓글을 삭제하지 않는다.
 4. CLOSED와 Issue metadata를 다시 읽는다. 일치하는 최종 해제와 자기 활성 metadata의 부재를 관측한 뒤에만 성공을 보고한다. 갱신 실패나 읽을 수 없는 결과는 해제 미확인이며 제품 완료를 보존하고 세 기록을 넘더라도 정정/해제 미완료를 남긴다.
 
-나중 독자는 정확한 CLAIM ID/URL과 agent/branch로 해제 기록을 연결한다. 일치하는 최종 `state: released` 기록이 없으면 CLAIM은 활성 상태다. 누락·prepared·미완료·읽을 수 없는 해제 기록은 해제를 입증하지 않는다. 같은 agent/branch여도 이전 claim의 해제는 후속 claim을 해제하지 않는다. 충돌 확인은 활성 claim의 allowed/forbidden 경로와 소유 metadata 재조회를 사용하며 metadata가 남거나 확인 불가이면 소유권이 완전히 정리됐다고 보지 않는다. 과거 CLAIM/RELEASE 댓글과 CLOSED의 사실/시각은 갱신 때도 보존한다.
+나중 독자는 정확한 CLAIM ID/URL과 agent/branch로 해제 기록을 연결한다. CLAIM을 끝내는 기록은 두 가지다. 간결 경로 `CLOSED.release`의 최종 `state: released`, 또는 작업이 간결 경로를 벗어난 경우(예: 격상) 그 CLAIM 뒤이자 같은 agent/branch의 다음 CLAIM 전에 남긴 전체 절차의 `[RELEASE]` 댓글이다. 격상된 작업의 `[RELEASE]` 댓글에는 간결 경로 CLAIM ID/URL을 적는다. 둘 중 일치하는 기록이 없으면 CLAIM은 활성 상태다. 누락·prepared·미완료·읽을 수 없는 해제 기록은 해제를 입증하지 않는다. 같은 agent/branch여도 이전 claim의 해제는 후속 claim을 해제하지 않는다. 충돌 확인은 활성 claim의 allowed/forbidden 경로와 소유 metadata 재조회를 사용하며 metadata가 남거나 확인 불가이면 소유권이 완전히 정리됐다고 보지 않는다. 과거 CLAIM/RELEASE 댓글과 CLOSED의 사실/시각은 갱신 때도 보존한다.
 
 이 문서는 W 절차의 Issue·댓글·라벨·assignee·PR·closing reference 표현을 **GitHub Issue와 PR**로 실현하는 방법이다. W는 특정 도구에 묶이지 않는 용어를 쓰며(workflow README 참조), 이 표는 각 용어의 GitHub 실현이다. P 적용 문서 `tracker.md`가 이 방식을 선언하고 저장소(`owner/name`)와 허용 작성자를 정한다.
 

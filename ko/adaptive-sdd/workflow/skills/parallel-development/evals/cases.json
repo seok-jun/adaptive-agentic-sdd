@@ -211,6 +211,22 @@
         "자기 metadata 제거 확인 실패에도 released를 쓰거나 경쟁자 metadata를 지운다",
         "갱신이나 재조회가 실패했는데 해제 성공을 보고한다"
       ]
+    },
+    {
+      "id": "PD-R08-compact-github-escalated-release",
+      "prompt": "GitHub tracker에서 간결 경로로 claim한 Small 작업이 Medium으로 격상되어 전체 절차로 해제되었다. 나중 독자로서 그 claim이 아직 활성인지 판정해라.",
+      "fixture": "합성 GitHub 경로. 간결 경로 CLAIM C1(agent A, branch b)이 있다. 작업이 Medium으로 격상되었고, 전체 절차가 자기 metadata 제거 확인 뒤 C1 다음에 C1을 명시한 A/b의 [RELEASE] R1을 남겼으며 CLOSED.release는 없다. A/b의 후속 CLAIM C2에는 해제가 없다. 변형: R1이 C2 뒤에 있다.",
+      "must": [
+        "R1이 agent/branch가 일치하고 C1 뒤이자 A/b의 다음 CLAIM 전에 있으며 C1을 명시하므로 C1을 해제된 것으로 본다",
+        "뒤따르는 해제가 없으므로 C2를 활성으로 본다",
+        "변형에서는 R1이 후속 CLAIM C2 뒤에 있으므로 C1에 적용하지 않고 C1을 해제가 아니라 미확인으로 보고한다",
+        "충돌 확인에 활성 claim의 allowed/forbidden 경로와 재조회한 자기 metadata를 쓴다"
+      ],
+      "must_not": [
+        "간결 경로 CLOSED.release가 없다는 이유만으로 C1을 활성으로 본다",
+        "agent/branch가 같다는 이유만으로 R1을 C2에 적용한다",
+        "CLAIM/RELEASE 이력을 삭제하거나 고친다"
+      ]
     }
   ]
 }

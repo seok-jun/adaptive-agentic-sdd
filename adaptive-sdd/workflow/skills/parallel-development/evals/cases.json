@@ -211,6 +211,22 @@
         "Writes released despite failed owned-metadata removal verification or clears competitor metadata",
         "Reports successful release after update or readback failure"
       ]
+    },
+    {
+      "id": "PD-R08-compact-github-escalated-release",
+      "prompt": "A Small task on the GitHub tracker was claimed on the compact route, escalated to Medium, and released under the full procedure. Later, decide as a reader whether that claim is still active.",
+      "fixture": "Synthetic GitHub route. Compact CLAIM C1 (agent A, branch b) exists. The task escalated to Medium; the full procedure posted [RELEASE] R1 for A/b after C1, naming C1, after verified removal of owned metadata, and there is no CLOSED.release. A later CLAIM C2 for A/b has no release. Variant: R1 is posted after C2.",
+      "must": [
+        "Treats C1 as released by R1 because R1 matches agent/branch, follows C1, precedes any later CLAIM for A/b and names C1",
+        "Treats C2 as active because no release follows it",
+        "In the variant, does not apply R1 to C1 because it follows the later CLAIM C2; reports C1 as unconfirmed rather than released",
+        "Uses active claims' allowed/forbidden paths and re-queried owned metadata for conflict checks"
+      ],
+      "must_not": [
+        "Treats C1 as active only because no compact CLOSED.release exists",
+        "Applies R1 to C2 merely because agent/branch match",
+        "Deletes or edits CLAIM/RELEASE history"
+      ]
     }
   ]
 }

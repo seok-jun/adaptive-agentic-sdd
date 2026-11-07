@@ -66,9 +66,9 @@
     "workflow/skills/managing-issues/SKILL.md": "d626c1d827ee5713df3c922bb890a0845a795e7e5f4a9f528fd319bbc7fd0f1a",
     "workflow/skills/managing-issues/evals/cases.json": "f88062b8e0eef698d612878ac43469226e924e9206c0dcae0a8825e9584aaee8",
     "workflow/skills/parallel-development/SKILL.md": "c06bee7156ac26c5652a3e346310999e8381b9f9c7d67633332075c4ff14dba5",
-    "workflow/skills/parallel-development/evals/cases.json": "938cfd9272fcd02e09ee6855b6a8eca242ff747d33cd664005f893f9aa757848",
+    "workflow/skills/parallel-development/evals/cases.json": "24a427bb94cb1e5868614073f84c2e27822acdcda6dd55fe1d877f706eb8aa42",
     "workflow/task-guard.md": "b0a820d51f7a65ad13a62ea1c923c5def7d3e774b7719aca21d81b266de29ae2",
-    "workflow/tracker/github.md": "4cc77c291b746d558754288f95709fcb5b824e5bf3e093189ed767c80d5bbd3e",
+    "workflow/tracker/github.md": "fe7a46e307d81c33533b2c1f5c6aa77a1bae03b745efeb95278b156c250aa014",
     "workflow/tracker/local-docs.md": "3351fe564229fac0ef053626359429ca3447ce7cf3fbf45e3a2385ec191c47be"
   },
   "schema": 1
