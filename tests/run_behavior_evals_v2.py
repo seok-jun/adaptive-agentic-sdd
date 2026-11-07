@@ -455,7 +455,7 @@ def codex_catalog(work, model):
 def model_command(agent, setting, grader, work):
     if agent == 'claude':
         cmd = [executable(agent), '-p', '--restricted', '--strict-mcp-config',
-               '--mcp-config', '{"mcpServers":{}}', '--no-chrome', '--no-session-persistence',
+               '--mcp-config', '{"mcpServers":{}}', '--no-chrome',
                '--model', setting['model'], '--effort', setting['effort'],
                '--output-format', 'stream-json', '--verbose', '--permission-mode', 'dontAsk']
         if grader:

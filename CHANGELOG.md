@@ -4,6 +4,7 @@
 
 - Add `try/setup.py`: one command creates a disposable, offline sandbox (sample product, project-owned W with filled project documents, local remotes, local-docs records and allowlist) and confirms resolver READY. English and Korean editions; the distribution bundles are unchanged.
 - README quick start leads with the sandbox and an animated demo shortened from two real Codex runs ([record and limits](docs/eval-results/2026-11-07-try-sandbox/README.md)).
+- The current behavior and paired-skill eval runners no longer pass `--no-session-persistence` to Claude Code, so headless runs leave local session records that usage accounting can count. Each run is still a fresh `-p` session; isolation flags are unchanged. The historical `run_behavior_evals.py` keeps the recorded baseline invocation.
 
 ## 1.0.1 — 2026-11-07
 

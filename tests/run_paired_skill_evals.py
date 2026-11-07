@@ -245,7 +245,7 @@ def inspect_grader(stdout, case):
 def claude_cmd(model, effort):
     return [shutil.which('claude'), '-p', '--restricted', '--setting-sources', 'project',
             '--strict-mcp-config', '--mcp-config', '{"mcpServers":{}}',
-            '--no-chrome', '--no-session-persistence', '--model', model, '--effort', effort,
+            '--no-chrome', '--model', model, '--effort', effort,
             '--output-format', 'stream-json', '--verbose', '--tools', 'Read,Grep,Glob',
             '--allowedTools', 'Read,Grep,Glob', '--permission-mode', 'dontAsk']
 

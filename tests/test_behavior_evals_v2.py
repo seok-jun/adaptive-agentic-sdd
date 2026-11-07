@@ -283,6 +283,8 @@ class BehaviorV2Tests(unittest.TestCase):
                         self.assertIn('read-only', argv)
                     else:
                         self.assertEqual(argv[argv.index('--tools') + 1], '' if grader else 'Read,Grep,Glob')
+                        # Sessions are kept so local usage accounting can count headless runs.
+                        self.assertNotIn('--no-session-persistence', argv)
 
     def test_grader_directory_empty_and_raw_material_private(self):
         case = dict(self.case, setting='setting', fixture='fixture', prompt='request')
