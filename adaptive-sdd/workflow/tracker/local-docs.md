@@ -1,5 +1,33 @@
 # Work tracking: local documents
 
+## Trivial/Small compact grouping
+
+For Trivial/Small on the [compact route](../process/small-work.md), the exception here replaces only the body duplication and separate-record requirements below. Store priority/grade/status once in Meta; combine the body headings while retaining all required facts. Set values at creation, read back the saved item and keep any duplicated values consistent. Confirm supported storage outside lanes, declared author and backup limits once at setup, then check for changes; Failures and limits still apply.
+
+Normally append three entries: `[CLAIM]` (ownership plus start), `[IMPLEMENTATION SUMMARY]` (implementation/verification plus observations), and `[CLOSED]` (closing observations plus the separately labelled fields below). All retain unique ID, written time and author; re-read immediately before append and verify the ID afterward. Never edit an earlier entry; failures/corrections use new entries with the original reference and `supersedes` where replacing a value, even beyond three records.
+
+The CLAIM entry and exclusive claim file contain the same ownership payload, `agent`, `branch`, `allowed`, `forbidden`, alongside the start facts.
+
+| CLOSED field | Preserved meaning |
+| --- | --- |
+| `merged` | `[MERGED]`: `branch`, task `head`, `main` (actual merge-result SHA), `method`, merge time/evidence; `fetched-tip` is a separate freshly captured SHA |
+| `closed` | `[CLOSED]`: matching SUMMARY `closes`, `by-merge` (merge-result SHA), confirmed `status: closed` and `closed:` time in Meta, after actual merge verification |
+| `product-complete` | `[PRODUCT COMPLETE]` JSON: `{"schema_version":1,"issue":"<ID>","pull_request":null,"branch":"<branch>","head":"<branch head SHA>","merge_commit":"<merge-result SHA>"}`; retain completion time independently of cleanup |
+| `cleanup` | Actual cleanup result and time, or remaining paths/state/blocker/resume condition |
+| `release` | `[RELEASE]` ownership check and preparation time, not proof of future claim deletion |
+
+Use this order for compact closure and release:
+
+1. Verify the merge identity and matching SUMMARY `closes`. Fetch the declared target and immediately capture FETCH_HEAD. For merge, verify task-head ancestry; for squash/rebase, verify that the observed merge-result SHA is an ancestor of the fresh tip and its commit message contains the task ID. Never substitute the fetched tip or original task head for the squash/rebase result. Until CLOSED exists, use this observed identity wherever the mapping below consumes `[MERGED].main`; it will be stored as `CLOSED.merged.main` with method and verification evidence.
+2. After successful merge verification and a matching `closes`, write `status: closed` and the actual `closed:` time in Meta. Read back both saved values to confirm closure.
+3. Establish product completion from the required evidence. Retain the adapter PRODUCT COMPLETE JSON and actual completion time independently of cleanup.
+4. Perform required authorized cleanup while retaining the matching exclusive claim.
+5. On successful cleanup, re-check the claim's agent/branch and append grouped CLOSED. Include the actual earlier merge, Meta closure, product-completion and cleanup times/evidence, plus ownership verification and release preparation. Re-read immediately before append and verify the new entry ID afterward.
+6. Under that claim, clear only owned metadata and read back to verify removal. Do not clear a competitor's metadata or clear metadata after unlocking.
+7. Delete the matching claim last and verify its absence. The release field is preparation, not deletion proof. Report release success only after observed absence; no fourth success record is required.
+
+If required cleanup fails, append CLOSED with the established product completion and actual earlier times, cleanup/release incomplete, and remaining paths/state/blocker/resume condition. Retain the claim and ownership metadata. If metadata clearing, claim deletion or absence verification fails, preserve product completion, report release incomplete and append a referenced correction with the remaining state; keep any remaining matching claim and never erase a competing claim. Do not claim retained ownership if deletion succeeded but absence could not be verified. Corrections may exceed three entries; never rewrite earlier entries.
+
 This document describes how the Issue, comment, label, assignee, PR and closing-reference expressions in the W procedures are realized as **work documents in a shared folder outside the repository**. The P project document `tracker.md` declares this method and sets `tracker_root` (an absolute path) and the ID format. When reading W documents, translate them with the mapping table below. A tracker operation that is not in the mapping table is not run; stop with `BLOCKED: tracker operation unsupported`.
 
 ## Why a shared folder outside the repository

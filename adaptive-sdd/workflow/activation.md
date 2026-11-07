@@ -1,6 +1,6 @@
 # Task selection and project ownership
 
-Start routine Trivial/Small tasks with the [compact route](process/small-work.md). Once eligible, use its steps instead of preloading all four full skills. Escalation, required reviews and authority still apply.
+After explicit selection and connection checks, route routine Trivial/Small work directly to the [compact route](process/small-work.md). It owns the closed reading set, work item and three records; once eligible, use it instead of the full step routing below. Actual P requirements, required checks, escalation, human decisions and authority remain.
 
 This is the entry contract for the external adoption path. The older `install.py` path remains a separately chosen legacy installation; its generated blocks are not created by this path.
 
@@ -37,3 +37,5 @@ At completion, retain the closing evidence at the declared location and end the 
 Read [task-guard.md](task-guard.md) before the skills.
 
 Read `profile.json` in the external workflow repository root for P source references and record ownership, then the relevant external application documents in `W/../project/`. Follow the step routing in `README.md`. If the owner customized the entry, follow the entry selected by the profile, within the same P authority and explicit selection boundaries.
+
+For Trivial/Small on the compact route, the Read next directions above use the closed set in `small-work.md`: still read the selected profile, applicable project declarations and actual P originals, without recursively following common skill links.

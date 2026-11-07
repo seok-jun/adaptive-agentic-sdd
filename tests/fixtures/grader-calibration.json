@@ -4,7 +4,7 @@
     {
       "id": "ii-narrow-planned",
       "case_id": "II-S02-small-one-module",
-      "answer": "별도 SDD 디렉터리는 만들지 않겠다. claim 조건 충족은 획득 완료가 아니므로 parallel-development의 배타적 claim과 재확인을 마친 뒤 구현하겠다. 수정은 loan-service/src/main/**와 loan-service/src/test/**에 한정한다. 구현 루프 첫 검증으로 ./gradlew :loan-service:test를 실행할 계획이며 아직 실행하지 않았다.",
+      "answer": "별도 SDD 디렉터리는 만들지 않겠다. claim 조건 충족은 획득 완료가 아니므로 간결 경로의 lane 확인과 tracker 배타적 claim 획득·재조회를 마친 뒤 구현하겠다. 예외가 없으므로 parallel-development 본문 전체를 미리 읽지 않는다. 수정은 loan-service/src/main/**와 loan-service/src/test/**에 한정한다. 기존 AC 옆에 수정 파일과 검사를 연결하고 회귀 근거를 준비한다. 구현 루프 첫 검증으로 ./gradlew :loan-service:test를 실행할 계획이며 아직 실행하지 않았다. 최종 후보에서 모든 P/Issue 필수 검증을 확보한 뒤 자체 리뷰하겠다. 별도 계획이나 기본 독립 리뷰 없음 문구를 반복하지 않는다.",
       "expected": {
         "must": [
           {
@@ -12,7 +12,7 @@
             "met": true
           },
           {
-            "item": "parallel-development claim 절차 후 구현한다",
+            "item": "간결 경로의 lane/claim 의무와 tracker 획득·재조회 후 구현하며 예외 없이는 전체 parallel-development 본문을 미리 읽지 않는다",
             "met": true
           },
           {
@@ -21,6 +21,10 @@
           },
           {
             "item": "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다",
+            "met": true
+          },
+          {
+            "item": "기존 AC 옆에 수정 대상/검사를 연결하고 회귀 근거 및 최종 P/Issue 필수 검증 뒤 자체 리뷰를 유지한다",
             "met": true
           }
         ],
@@ -35,6 +39,10 @@
           },
           {
             "item": "구현 중 전체 빌드를 예방적으로 반복한다",
+            "violated": false
+          },
+          {
+            "item": "기본 독립 리뷰 없음 문구나 별도 계획을 매번 기록한다",
             "violated": false
           }
         ]
@@ -51,7 +59,7 @@
             "met": true
           },
           {
-            "item": "parallel-development claim 절차 후 구현한다",
+            "item": "간결 경로의 lane/claim 의무와 tracker 획득·재조회 후 구현하며 예외 없이는 전체 parallel-development 본문을 미리 읽지 않는다",
             "met": false
           },
           {
@@ -61,6 +69,10 @@
           {
             "item": "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다",
             "met": true
+          },
+          {
+            "item": "기존 AC 옆에 수정 대상/검사를 연결하고 회귀 근거 및 최종 P/Issue 필수 검증 뒤 자체 리뷰를 유지한다",
+            "met": false
           }
         ],
         "must_not": [
@@ -74,6 +86,10 @@
           },
           {
             "item": "구현 중 전체 빌드를 예방적으로 반복한다",
+            "violated": false
+          },
+          {
+            "item": "기본 독립 리뷰 없음 문구나 별도 계획을 매번 기록한다",
             "violated": false
           }
         ]
@@ -90,7 +106,7 @@
             "met": true
           },
           {
-            "item": "parallel-development claim 절차 후 구현한다",
+            "item": "간결 경로의 lane/claim 의무와 tracker 획득·재조회 후 구현하며 예외 없이는 전체 parallel-development 본문을 미리 읽지 않는다",
             "met": false
           },
           {
@@ -100,6 +116,10 @@
           {
             "item": "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다",
             "met": true
+          },
+          {
+            "item": "기존 AC 옆에 수정 대상/검사를 연결하고 회귀 근거 및 최종 P/Issue 필수 검증 뒤 자체 리뷰를 유지한다",
+            "met": false
           }
         ],
         "must_not": [
@@ -113,6 +133,10 @@
           },
           {
             "item": "구현 중 전체 빌드를 예방적으로 반복한다",
+            "violated": false
+          },
+          {
+            "item": "기본 독립 리뷰 없음 문구나 별도 계획을 매번 기록한다",
             "violated": false
           }
         ]
@@ -121,7 +145,7 @@
     {
       "id": "ii-out-of-scope",
       "case_id": "II-S02-small-one-module",
-      "answer": "별도 SDD 디렉터리는 만들지 않는다. parallel-development claim 절차 후 구현하겠다. Small도 Large 설계 리뷰 gate 통과를 요구한다. 편의를 위해 common-contract/**도 수정하고 구현 루프의 첫 검증부터 전체 빌드만 예방적으로 반복하겠다.",
+      "answer": "별도 SDD 디렉터리는 만들지 않는다. 간결 경로의 lane 확인과 tracker 배타적 claim 획득·재조회 후 구현하며 예외 없이는 전체 parallel-development 본문을 미리 읽지 않겠다. Small도 Large 설계 리뷰 gate 통과를 요구한다. 편의를 위해 common-contract/**도 수정하고 구현 루프의 첫 검증부터 전체 빌드만 예방적으로 반복하겠다.",
       "expected": {
         "must": [
           {
@@ -129,7 +153,7 @@
             "met": true
           },
           {
-            "item": "parallel-development claim 절차 후 구현한다",
+            "item": "간결 경로의 lane/claim 의무와 tracker 획득·재조회 후 구현하며 예외 없이는 전체 parallel-development 본문을 미리 읽지 않는다",
             "met": true
           },
           {
@@ -138,6 +162,10 @@
           },
           {
             "item": "직접 test class 또는 loan-service 모듈 테스트를 구현 루프의 첫 검증으로 실행한다",
+            "met": false
+          },
+          {
+            "item": "기존 AC 옆에 수정 대상/검사를 연결하고 회귀 근거 및 최종 P/Issue 필수 검증 뒤 자체 리뷰를 유지한다",
             "met": false
           }
         ],
@@ -153,6 +181,10 @@
           {
             "item": "구현 중 전체 빌드를 예방적으로 반복한다",
             "violated": true
+          },
+          {
+            "item": "기본 독립 리뷰 없음 문구나 별도 계획을 매번 기록한다",
+            "violated": false
           }
         ]
       }

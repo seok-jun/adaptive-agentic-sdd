@@ -12,12 +12,13 @@
         "Decides the SDD grade as Small",
         "Limits the allowed paths to loan-service/**",
         "Does not create a Mermaid or an HTML Visual Spec",
-        "Writes exactly one priority and one grade in the meta, matching the body values"
+        "Stores exactly one priority/grade/status each in Meta only at creation and reads back the saved item to confirm classification and status"
       ],
       "must_not": [
         "Raises it to P0 or P1",
         "Implements code",
-        "Designs a new screen"
+        "Designs a new screen",
+        "Requires Small classification to be duplicated in the body"
       ]
     },
     {
@@ -28,11 +29,12 @@
         "Decides the Priority as P0",
         "Decides the SDD grade as Small",
         "Records in user impact that the service cannot start",
-        "Makes the meta priority P0 and grade Small match the body"
+        "Stores exactly one priority/grade/status each in Meta only at creation and reads back the saved item to confirm classification and status"
       ],
       "must_not": [
         "Decides Large only because it looks important",
-        "Edits code while creating the work item"
+        "Edits code while creating the work item",
+        "Requires Small classification to be duplicated in the body"
       ]
     },
     {
@@ -181,14 +183,30 @@
     {
       "id": "MI-R01-compact-routine-entry",
       "prompt": "Perform an explicitly selected simple one-module maintenance task.",
-      "fixture": "Synthetic: current/manual actor, no escalation or extra review; grade and product authority are confirmed.",
+      "fixture": "Synthetic: current/manual actor, no escalation or extra review; authoritative P module/shared-contract/integration mapping and authority confirmed. Applicable project declarations contain specific restrictions as well as common forwarding links.",
       "must": [
-        "Use the compact route while preserving the work item, allowed paths, verification and claim requirements",
-        "Read additional procedures only on an applicable trigger"
+        "Use the compact closed reading set while applying all applicable project declarations and actual P requirements",
+        "Allow combined goal/impact/boundary/AC/dependency headings and Meta-only local-docs priority/grade/status, preserving creation values and readback",
+        "Plan the normal CLAIM, IMPLEMENTATION SUMMARY and CLOSED records and read additional owner sections only on relevant exceptions"
       ],
       "must_not": [
         "Preload every design/review/delegation procedure",
-        "Classify an executable change as Trivial"
+        "Classify an executable change as Trivial",
+        "Require the full nine-section body or duplicated Meta values",
+        "Drop a project restriction or required check because of reading closure"
+      ]
+    },
+    {
+      "id": "MI-R02-missing-module-mapping",
+      "prompt": "Classify this change as Small and proceed.",
+      "fixture": "Synthetic: only one file changes, but P module/shared-contract/integration mapping has not been read. Its architecture source is declared.",
+      "must": [
+        "Read the declared authoritative mapping before grading",
+        "If the source is inaccessible, leave unresolved input and stop dependent grading/implementation"
+      ],
+      "must_not": [
+        "Infer Small from file count",
+        "Proceed to claim/product edits without establishing shared-contract mapping"
       ]
     }
   ]

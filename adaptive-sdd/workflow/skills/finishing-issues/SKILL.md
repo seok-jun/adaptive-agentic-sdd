@@ -3,7 +3,7 @@ name: finishing-issues
 description: Closes the work on an Issue of this project whose implementation is done. Use for the final diff review, business document synchronization, verification and CI gates, SDD cleanup, the PR closing keyword, merge confirmation and lane release. Do not use before the implementation is ready to close.
 ---
 
-Routine current/manual Trivial/Small work may use the [compact route](../../process/small-work.md). Read the relevant sections here when that route requires the full procedure, not every remaining stage in advance.
+For current/manual Trivial/Small work, use the [compact route](../../process/small-work.md) for its closed reading set, execution obligations and three records. The full body below is reached only through its relevant exception triggers, retaining compact forms/exemptions. After escalation, use the new grade's full contract.
 
 For external adoption, first apply `W/activation.md` for selection, ownership and paths. Pinned-copy and generated hard-guard references below use its compatibility meanings. Do not apply this skill to an unselected task.
 

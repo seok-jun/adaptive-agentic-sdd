@@ -2,7 +2,7 @@
 
 M은 출발점으로 제시한 공개 방법론이다. 이를 적용한 뒤 W·P를 프로젝트에 맞게 계속 발전시키는 것을 권장한다. M의 지속 사용·revision 추적·업데이트 수용은 사용자 선택이며 의무가 아니다. [English](../../docs/customization.md).
 
-1.0은 **읽기 전용 resolver와 Agent 지원 적용 절차**를 제공한다. 자동 이전기나 세션 관리기는 아니다. 공개된 `v1.0.2` 태그에서 시작하고 프로젝트 W를 파생하기 전에 그 commit을 확인한다.
+1.0은 **읽기 전용 resolver와 Agent 지원 적용 절차**를 제공한다. 자동 이전기나 세션 관리기는 아니다. 공개된 `v1.1.0` 태그에서 시작하고 프로젝트 W를 파생하기 전에 그 commit을 확인한다.
 
 ## 구조와 책임
 
@@ -36,7 +36,7 @@ work-records/                  선택한 tracker/저장소; 공개 배포본과 
 
 ## 최초 적용
 
-1. 신뢰하는 배포 출처의 전체 Git commit으로 사본을 얻고 검토한다. 내려받은 manifest가 자기 파일과 맞는 것만으로 출처를 증명하지 않는다. 로더도 실행 코드이므로 배포 출처를 확인한다. Python 3.8+와 Git 2.36+가 필요하다. POSIX는 `python3`, Windows는 `python`/`py -3`를 쓴다.
+1. 신뢰하는 배포 출처의 전체 Git commit으로 사본을 얻고 검토한다. 내려받은 manifest가 자기 파일과 맞는 것만으로 출처를 증명하지 않는다. 로더도 실행 코드이므로 배포 출처를 확인한다. Python 3.8+와 Git 2.36+가 필요하다. POSIX는 `python3`, Windows는 `python`/`py -3`를 쓴다. local-docs tracker를 쓰면 Git 2.38+를 권장한다. 병합 가능 여부 확인에 `git merge-tree --write-tree`를 쓰며, 이전 Git은 일회용 worktree에서 시험 병합하는 방식으로 대신한다.
 2. P 밖에 프로젝트 소유 Git 저장소를 만든다. `ko/adaptive-sdd/workflow/`·`methodology/`·`LICENSE`를 시작점으로 복사한다(영문은 `adaptive-sdd/`). `install.py init/render`를 실행하거나 생성 입구를 P에 복사하지 않는다.
 3. W를 수정하고 소비 단계 전에 외부 `project/*.md` 적용 문서를 준비한다. 시작본의 아홉 역할은 `agent-instruction-policy`, `build`, `execution-routing`, `issue-priority`, `issue-writing-guide`, `module-boundaries`, `sdd-workflow`, `skill-evals`, `tracker`다. `templates/project/*.md.tmpl`은 필드 체크리스트로 참고하며 승인된 설정으로 쓰지 않는다. 이 경로의 적용 문서는 직접 수정 가능하다.
 4. 제품 사실·필수 테스트·승인 권한·위임·모델 금지는 P의 승인 원본과 연결한다. 등급·리뷰 깊이·방법론 routing·추가 방법론 판단 지점은 W에 둔다. P 문서가 없으면 코드/CI 관찰·추론·규칙 제안을 구분한다. 확정된 제품 결정은 일반 제품 변경으로 P에 기록하며 방법론 적용이 승인 권한을 만들지 않는다.

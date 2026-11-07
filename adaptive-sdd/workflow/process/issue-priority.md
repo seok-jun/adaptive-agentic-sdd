@@ -1,5 +1,9 @@
 # Common issue priority and classification rules
 
+## Trivial/Small compact item exception
+
+For Trivial/Small on the [compact route](small-work.md), combine goal, impact, boundaries, AC and dependencies in a short body instead of the nine-section skeleton below; retain every required fact and checkable condition. Local-docs stores priority/grade/status only in Meta; other trackers use their declared representation. Set exactly one priority and grade at creation where supported, otherwise immediately afterward, and read back; duplicated values must agree, including after changes. Priority plus one user-impact sentence suffices: insufficient P1/P2 evidence means P2; uncertain current impact means P3. A designated task needs no whole-queue comparison; project queue conditions and ordering apply when actually selecting next work. Evidence and visuals follow the compact substitutions and explicit P requirements.
+
 This document is the source of the Priority decision, handling of insufficient evidence, and body/label rules applied in common to projects. Priority is the handling order by current user impact; SDD grade is the depth of procedure by change size and risk. Neither replaces the other. The project owns the core features, the current stage, the concrete application conditions and the verification commands.
 
 ```mermaid

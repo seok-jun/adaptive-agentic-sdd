@@ -2,13 +2,13 @@
 
 **Spec-driven development that knows a typo from a migration.**
 
-Your AI coding agent (Claude Code or Codex) grades every change by risk first, then runs only the process that risk needs. A link fix gets a self-check. A database migration gets written analysis, two independent design reviews and a human merge.
+Your AI coding agent (Claude Code or Codex) grades every change by risk first, then runs only the process that risk needs. A link fix gets a self-check. A database migration gets a written analysis and plan, two independent reviews of each, and a human merge.
 
 [![Release](https://img.shields.io/github/v/release/seok-jun/adaptive-agentic-sdd?label=release)](https://github.com/seok-jun/adaptive-agentic-sdd/releases) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 **English** | [한국어](ko/README.md)
 
-> **Stable: [v1.0.2](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.0.2).** For existing codebases. Its effect on outcomes, rework or cost has not been measured yet; see [Status and evidence](#status-and-evidence).
+> **Stable: [v1.1.0](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.1.0).** For existing codebases. Its effect on outcomes, rework or cost has not been measured yet; see [Status and evidence](#status-and-evidence).
 
 **[Quick start](#quick-start) · [How depth scales](#how-depth-scales) · [What you get](#what-you-get) · [Evidence](#status-and-evidence)**
 
@@ -18,7 +18,7 @@ flowchart LR
   G -->|docs, links, comments| T["Trivial<br/>targeted check + self-review"]
   G -->|one module| S["Small<br/>the work item is the spec"]
   G -->|several modules or a shared contract| M["Medium<br/>short SDD, independent review if REQUIRED"]
-  G -->|security, personal data, schema, billing| L["Large<br/>full SDD, two design reviews,<br/>human merge"]
+  G -->|security, personal data, schema, billing| L["Large<br/>full SDD, two reviews each<br/>of analysis and plan, human merge"]
 ```
 
 ## Quick start
@@ -30,7 +30,14 @@ git clone https://github.com/seok-jun/adaptive-agentic-sdd
 python3 adaptive-agentic-sdd/try/setup.py
 ```
 
-This creates `adaptive-sdd-try/` next to the clone: a tiny product, a team workflow, local Git remotes and a records folder. It writes nothing outside that folder and uses no network. Open `adaptive-sdd-try/START-HERE.md`, start Claude Code or Codex with the command shown there, and give it one of three planted tasks: a broken README link (Trivial), a pagination bug (Small) or password storage (Large). Use `python` on Windows and `--lang ko` for the Korean edition.
+On Windows, use `python` (`python3` there often opens the Microsoft Store):
+
+```powershell
+git clone https://github.com/seok-jun/adaptive-agentic-sdd
+python adaptive-agentic-sdd/try/setup.py
+```
+
+Setup takes about a minute. It creates `adaptive-sdd-try/` in your current folder: a tiny product, a team workflow, local Git remotes and a records folder. It writes nothing outside that folder and uses no network. Open `adaptive-sdd-try/START-HERE.md`, start Claude Code or Codex with the command shown there, and give it one of three planted tasks: a broken README link (Trivial), a pagination bug (Small) or password storage (Large). A task takes the agent a few minutes; allow it to run `git commit`, `merge` and `push` to the local remotes and to edit files in `records/` so it can finish. Add `--lang ko` for the Korean edition.
 
 ![Real Codex runs in the try sandbox: the pagination fix is graded Small and merged; password storage is graded Large and stops for human decisions](docs/assets/demo.svg)
 
@@ -41,13 +48,13 @@ Shortened from two real Codex runs; see the [run record and its limits](docs/eva
 **1. Paste this into Claude Code or Codex, opened in your project:**
 
 ```text
-Read https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.2/docs/customization.md
+Read https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.1.0/docs/customization.md
 and help me adopt Adaptive SDD for this project. Ask me before each write.
 ```
 
 The agent walks you through the [adoption guide](docs/customization.md). It is agent-assisted setup, not an unattended installer. Requires Python 3.8+ and Git 2.36+.
 
-**2. What you end up with.** Your product repository gains one three-line file. The workflow lives in a separate repository your team owns and edits.
+**2. What you end up with.** Your product repository gains one three-line file. The workflow itself, a few dozen Markdown files of skills, procedures and project choices, lives in a separate repository your team owns and edits. Below, P is the product repository and W the workflow repository.
 
 ```text
 your-product/                 your existing repository (P)
@@ -131,6 +138,8 @@ For each changed file that affects verification, the first check is the tests of
 
 ## Setup in detail
 
+Three names are used below: **P** is your product repository, **W** is the workflow repository your project owns, and **M** is the methodology published in this repository.
+
 **Use M to start; own and evolve your W and P afterward.** Continued M use and updates are optional. The recommended external adoption path keeps an editable project workflow outside P and loads it only for a selected task. P keeps product facts, common rules and authority. Its only method connection is `.agentics/<area>.yaml`.
 
 1. Follow the [adoption guide](docs/customization.md) to prepare an external project-owned W, reference P's real sources and choose record ownership. This is agent-assisted setup, not an unattended installer.
@@ -139,12 +148,12 @@ For each changed file that affects verification, the first check is the tests of
 
 The new path writes no AGENTS/CLAUDE blocks or product-local skills. A connection does not activate a method. See the guide's structure diagram, schemas, customization and [migration procedure](docs/customization.md#updates-and-migration). Existing `install.py` installations remain supported under the [legacy contract](docs/legacy-installation.md); they do not automatically migrate.
 
-When using the supplied starter unchanged, it is ready to merge when the work item has a grade and acceptance criteria, a claim was taken before the first edit, the owning module's tests ran first and the required checks passed on the final candidate, an `[IMPLEMENTATION SUMMARY]` records decisions, verification and remaining risks, and the change request links back to the work item. Who merges follows your settings. It is done after the agent confirms the actual merge, closes the work item and records `[PRODUCT COMPLETE]`. Adapt the selected W based on project needs and observed work; upstream M remains an optional reference.
+When using the supplied starter unchanged, it is ready to merge when the work item has a grade and acceptance criteria, a claim was taken before the first edit, the owning module's tests ran first and the required checks passed on the final candidate, an `[IMPLEMENTATION SUMMARY]` records decisions, verification and remaining risks, and the change request links back to the work item. Who merges follows your settings. It is done after the agent confirms the actual merge, closes the work item and records product completion (`[PRODUCT COMPLETE]`, or a field of the closing record for Trivial/Small). Adapt the selected W based on project needs and observed work; upstream M remains an optional reference.
 
 ## What you get
 
 - **Four skills:** `managing-issues` (create and grade work items), `parallel-development` (claims and isolated worktrees), `implementing-issues` (design and implementation by grade), `finishing-issues` (verification, closing and cleanup).
-- **A compact route for routine work:** Trivial and Small tasks follow [one short procedure](adaptive-sdd/workflow/process/small-work.md) instead of preloading all four skills, without dropping required checks, claims or merge authority.
+- **A compact route for routine work:** Trivial and Small tasks follow [one procedure](adaptive-sdd/workflow/process/small-work.md) with a fixed reading set and three records (claim, summary, close) instead of preloading all four skills. Required checks, claims and merge authority stay the same as Medium.
 - **Work tracking:** GitHub Issues and PRs, or work documents in a shared folder outside the repository. The procedures use tracker-neutral terms; each [adapter](adaptive-sdd/workflow/tracker/) maps them. Other trackers have no adapter yet.
 - **Human-judgment boundaries:** the agent stops and asks instead of deciding scope reductions, delegations, Large merges or new product decisions ([core.md](adaptive-sdd/methodology/core.md)).
 - **A read-only task resolver** (`tools/agentics.py`, Python standard library and Git) for explicit area selection, user-owned source mapping and W commit checks. The older installer is retained only for the separately chosen legacy model.
@@ -155,6 +164,7 @@ Repository layout: `adaptive-sdd/` is the canonical English distribution and ado
 ## Status and evidence
 
 - **Not measured:** no effect on outcomes, rework or cost has been measured. The procedures were refined in one product; that does not prove they work elsewhere.
+- **1.1.0 Small before/after runs:** three Codex runs per version of one planted Small task all completed through merge and claim release. After the redesign, records fell from 7 to 3 and command output returned to the agent by a third; input tokens fell 8% and wall time showed no difference. One task, one agent — [record](docs/eval-results/2026-11-07-small-redesign/README.md).
 - **1.0.1 routine-work trial:** five synthetic one-module Small tasks (Python, JavaScript, TypeScript, Java, Go) run with Codex completed implementation, required checks, local merge, closure and claim release, and independent clones confirmed behavior and scope. Three of five first attempts completed; the other two stopped on environment problems and completed after bounded fixes. This is not a speed or cost comparison — [record](docs/eval-results/2026-11-06-small-route/README.md).
 - **Behavior evaluations:** a first cross-agent baseline ran 12 Korean cases × Claude Code and Codex × 3 runs (Claude Code 21 PASS / 14 FAIL / 1 INVALID, Codex 22 PASS / 14 FAIL) — [record](docs/eval-results/2026-10-30/README.md). A post-hoc paired check of two wording fixes found no overall improvement — [record](docs/eval-results/2026-10-30-skill-comparison/paired-summary.md). Failures are published as they were graded. In the baseline and in the preview.6 tracker check, the answer-key files were readable inside the evaluated projects, so those two runs are not clean evidence; the paired check removed them.
 - **Not a guarantee:** this is guidance for agents and people, not a security boundary or an agent runner.
@@ -173,10 +183,11 @@ The full history of checks and reviews is in [CHANGELOG.md](CHANGELOG.md).
 
 ## Versions
 
+- Minor 1.1.0 makes Small keep Medium's safeguards with Trivial's paperwork: a fixed reading set and three normal records. It also aligns the workflow docs with external adoption and includes first-use fixes. See [release record](docs/releases/1.1.0.md). Existing project workflows are not automatically updated.
 - Patch 1.0.2 adds the one-command try sandbox, the README quick start and demo, issue forms, and keeps Claude Code session records in eval runners; the distribution is unchanged from 1.0.1. See [release record](docs/releases/1.0.2.md).
 - Patch 1.0.1 adds a compact Trivial/Small route and explicit scratch/output boundaries. See [patch verification and limits](docs/releases/1.0.1.md). Existing project workflows are not automatically updated.
 - Version 1.0 adopts the project-owned external W and explicit task activation model prepared in preview.8. See the [release notes and verification](docs/releases/1.0.0.md); historical evaluations do not validate the new activation path.
-- The stable tag is `v1.0.2`; earlier previews use `v1.0.0-preview.N`. Published tags are never moved; fixes come as new version tags. Legacy installations pin a copy by tag, commit SHA and manifest hash; external adoption pins the selected project W commit.
+- The stable tag is `v1.1.0`; earlier previews use `v1.0.0-preview.N`. Published tags are never moved; fixes come as new version tags. Legacy installations pin a copy by tag, commit SHA and manifest hash; external adoption pins the selected project W commit.
 - Project W evolves under project authority. M updates are optional; do not overwrite customized W. Legacy installations use their own [migration/upgrade guide](docs/legacy-installation.md#upgrading).
 - The earlier v0.2 methodology is preserved at tag [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0). v1 is not an automatic upgrade from v0.2.
 

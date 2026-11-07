@@ -1,13 +1,15 @@
 # Application and improvement observations
 
-For routine Trivial/Small reading and record grouping, use the [compact route](small-work.md). Start facts may live in the existing CLAIM, and final updates in the existing closing record, without repeating the full SUMMARY. Do not omit required verification, actual incidents or lost evidence. Use already available model/cost metadata; do not search host transcript/config directories merely to fill optional telemetry. Leave absent values unconfirmed/not collected and continue.
+For Trivial/Small on the [compact route](small-work.md), separately labelled fields in CLAIM, IMPLEMENTATION SUMMARY and CLOSED satisfy the start, summary and closing observations below. CLAIM needs task, W commit, base, current requirement sources and record location; detailed document/support/interval inventories are only for methodology evaluation. Actual handoffs use brief state, blocker, resume condition and references. Preserve real incidents with first failure, evidence, owner and action/result; attach source/scope/limitations only to figures/events actually reported. Re-query durable evidence once before cleanup and expose loss. Required verification remains.
+
+This compact route is exempt from prior closed-observation searches/absence statements, routine authoring-model lines, a next-method judgment at every close, and the unavailable observation-check placeholder. These obligations remain for Medium and above. Directly linked defects/dependencies remain ordinary inputs; open the relevant sections only for explicit model/methodology evaluation or judgment needed for actual recurring problems. Use only already provided metadata, never host transcript/config searches. Preserve actual check/re-run initial output, reason, final output and loss, and protected-data rules. No empty lists, missing-cost inventories, normal-step records or new completion gate are required.
 
 Observations are linked to the existing start, handoff, SUMMARY and closing records. Read only applicable points below, and reuse check results for the same run and version. Record observation gaps there and continue (no new gate).
 
 | When it applies | Section to read |
 | --- | --- |
 | Start, handoff and closing of every execution grade | The row for the current point in [Application and improvement observation](#methodology-application-and-improvement-observations) and the common interpretation rules |
-| Writing a SUMMARY | [Recording the authoring model](#recording-the-authoring-model), the lookup location for the current host |
+| Writing a SUMMARY | [Recording the authoring model](#recording-the-authoring-model); the lookup location for the current host only outside the compact route |
 | Finding an actual problem, handing off an incident, gathering at closing | [Recording problems found and linking them to closure](#recording-problems-found-and-linking-them-to-closure) |
 | Product completion and cleanup | [Closing observation check](#closing-observation-check) |
 | When token diagnostic is ENABLED | The separate [token-diagnostic](token-diagnostic.md) |
@@ -42,8 +44,8 @@ The Agent of the next related work compares the earlier source's methodology ver
 
 Collection gaps and missing external documents are not a new gate on existing product completion. Implementation and verification failures are handled by the existing rules. An Issue that changes this linkage itself must verify the linkage acceptance criteria it specifies. If existing records provide the same linkage, or if the recording burden or repeated non-use is confirmed, review keeping or reducing the duplicate records within existing permissions.
 
+The common source is identified by the selected W commit and the product revision at task start, both from the resolver result. On the legacy `install.py` path it is the pinned information (tag, commit, manifest hash) in `W/../install.lock.json`.
 
-The common source uses the pinned information (tag, commit, manifest hash) in `W/../install.lock.json`.
 ### Recording the authoring model
 
 The `[IMPLEMENTATION SUMMARY]` of every grade leaves one line with the model of the Agent that wrote the SUMMARY.
@@ -57,7 +59,7 @@ Model: requested <model>/<reasoning> (source: session record|config file|Human-s
 - Do not substitute the value of earlier work, another actor or a reviewer. If the model changes during the work, record the time of change and the new value by span.
 - If the model line is missing or `unconfirmed`, record available model information by the rules above and continue (no new gate).
 
-The lookup location for each host is as follows. Session records also contain the conversation body, so extract only the field in question and do not read or print whole lines.
+On the [compact route](small-work.md) for Trivial/Small work, use only model information the session already has or a human specified, write `unconfirmed` for the rest, and do not open the host locations below. For other work, the lookup location for each host is as follows. Session records also contain the conversation body, so extract only the field in question and do not read or print whole lines.
 
 - Codex: `model`/`effort` in the `turn_context` entries of the current session record (default location `~/.codex/sessions/**/rollout-*.jsonl`) are the requested values. If the current session record cannot be identified, leave `model`/`model_reasoning_effort` from `~/.codex/config.toml` with source `config file`, and leave whether it matches the session as `unconfirmed`. This record has no model value actually served by the server, so actually served is `unconfirmed`.
 - Claude Code: the assistant response `message.model` in the current session transcript (default location `~/.claude/projects/<project>/<session>.jsonl`) is the actually served value. If the requested reasoning setting cannot be confirmed from this record, leave it as `unconfirmed`.

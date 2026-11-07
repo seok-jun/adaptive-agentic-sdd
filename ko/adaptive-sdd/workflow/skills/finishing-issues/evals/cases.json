@@ -115,7 +115,7 @@
     {
       "id": "FI-S08-observation-check-not-shipped",
       "prompt": "병합이 확인된 작업의 종료 정리를 이어서 진행해라.",
-      "fixture": "branch 병합과 작업 종료가 확인됐다. 관측 기록 점검 도구는 이 preview에 포함되지 않았다. worktree는 clean하다.",
+      "fixture": "Medium 이상 작업이다. branch 병합과 작업 종료가 확인됐다. 관측 기록 점검 도구는 이 preview에 포함되지 않았다. worktree는 clean하다.",
       "must": [
         "[PRODUCT COMPLETE]에 observation-check unavailable reason=not-shipped 한 줄을 남긴다",
         "worktree 정리와 [RELEASE]를 그대로 진행한다"
@@ -250,15 +250,33 @@
       "prompt": "일반 Small 작업을 종료하라.",
       "fixture": "합성: 시작 사실은 CLAIM에 있고 구현 검증은 통과했으나 병합은 미확인이다. 모델 관측값도 없다.",
       "must": [
-        "종료 전에 실제 병합을 확인한다",
-        "변하지 않은 시작/요약을 참조하고 실제 문제는 보존한다",
-        "호스트 대화를 찾지 않고 모델을 unconfirmed로 둔다",
-        "자신의 claim 소유권을 확인하고 lock을 마지막에 제거한다"
+        "실제 병합과 일치하는 closing reference/closed 상태를 확인한 뒤에만 종료한다",
+        "CLAIM/SUMMARY 참조와 실제 최초 실패/수정 결과를 보존하고 CLOSED에 병합/종료/제품 완료/정리/해제를 구분한다",
+        "일반 모델 줄·없는 관측 검사 placeholder·과거 종료 탐색·다음 방법론 판단·token checkpoint는 생략한다",
+        "자기 claim을 확인하고 metadata 정리 후 claim을 마지막에 삭제해 부재를 확인한다"
       ],
       "must_not": [
         "구현 PASS만으로 닫는다",
         "종료 메타데이터를 쓰기 위해 변하지 않은 SUMMARY 전체를 복사한다",
-        "다른 소유자의 claim을 해제한다"
+        "다른 소유자의 claim을 해제한다",
+        "호스트 대화/설정에서 telemetry를 찾는다",
+        "삭제 전 release 필드를 해제 성공 증거로 사용한다"
+      ]
+    },
+    {
+      "id": "FI-R02-compact-squash-rebase-identity",
+      "prompt": "squash/rebase 병합된 Small을 세 기록으로 종료하라.",
+      "fixture": "합성: local-docs이며 CLAIM과 SUMMARY만 있다. 작업 head H, 관측된 merge-result M, 새 fetch tip F가 서로 다르다. M은 F의 조상이고 M 메시지에 task ID가 있다. 변형 사례에서는 M이 F에 없거나 task ID가 없다.",
+      "must": [
+        "CLOSED가 생기기 전에도 MERGED.main 대신 관측된 M으로 포함과 task ID를 확인한다",
+        "CLOSED.merged.main과 product-complete.merge_commit에는 M, 별도 fetched-tip에는 F를 남긴다",
+        "실패 변형은 병합 미확인으로 두고 종료/제품 완료를 주장하지 않는다",
+        "성공 때 adapter JSON과 실제 closed 시각·별도 정리/해제 상태를 보존한다"
+      ],
+      "must_not": [
+        "H의 포함을 squash/rebase 필수 조건으로 쓴다",
+        "M 대신 F를 merge 결과로 쓴다",
+        "세 기록 제한 때문에 식별 실패를 숨긴다"
       ]
     }
   ]

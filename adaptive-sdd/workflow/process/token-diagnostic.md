@@ -1,5 +1,7 @@
 # Token diagnostic
 
+For Trivial/Small on the [compact route](small-work.md), the checkpoint obligation below is exempt even when mode is ENABLED. Apply it only for an explicitly requested cost evaluation of this task with mode ENABLED. Medium and above retain the existing activation conditions. If authoritative values are unavailable, skip without estimation or searches; missing instrumentation does not block product completion.
+
 Read only when `Token diagnostic mode` in `W/../project/sdd-workflow.md` is `ENABLED`. General application and incident observations follow [observations](observations.md) and are not disabled by this mode.
 
 | Actual lifecycle event | Section to read |

@@ -1,5 +1,33 @@
 # 작업 관리 방식: 로컬 문서
 
+## Trivial/Small 간결 묶음
+
+Trivial/Small [간결 경로](../process/small-work.md)에서는 아래 본문 중복과 개별 기록 의무만 이 예외로 대체한다. priority/grade/status는 메타에 한 번만 저장하고 본문 제목은 합치되 필요한 사실은 모두 유지한다. 생성 시 값을 설정하고 저장 결과를 다시 읽으며 중복 값은 일치시킨다. lane 밖의 지원 저장소·선언 작성자·백업 한계는 설정 때 한 번 확인하고 이후 변경 여부만 확인한다. Failures and limits는 계속 적용한다.
+
+정상 경로는 `[CLAIM]`(소유권+시작), `[IMPLEMENTATION SUMMARY]`(구현/검증+관측), `[CLOSED]`(종료 관측+아래 구분 필드)의 세 항목이다. 모두 고유 ID·작성 시각·작성자를 유지하고 추가 직전 재조회·직후 ID 확인을 한다. 이전 항목은 수정하지 않는다. 실패/정정은 원본 참조와 값 대체 시 `supersedes`를 가진 새 항목으로 남기며 세 기록을 넘을 수 있다.
+
+CLAIM 기록과 배타적 claim 파일은 시작 사실과 함께 같은 소유권 payload인 `agent`, `branch`, `allowed`, `forbidden`을 담는다.
+
+| CLOSED 필드 | 보존하는 의미 |
+| --- | --- |
+| `merged` | `[MERGED]`: `branch`, 작업 `head`, `main`(실제 merge-result SHA), `method`, 병합 시각/근거. `fetched-tip`은 새로 고정한 별도 SHA |
+| `closed` | `[CLOSED]`: SUMMARY의 일치하는 `closes`, `by-merge`(merge-result SHA), 실제 병합 확인 후 메타의 `status: closed`와 `종료:` 시각 확인 |
+| `product-complete` | `[PRODUCT COMPLETE]` JSON: `{"schema_version":1,"issue":"<ID>","pull_request":null,"branch":"<branch>","head":"<branch head SHA>","merge_commit":"<merge-result SHA>"}`. 완료 시각을 정리와 독립적으로 보존 |
+| `cleanup` | 실제 정리 결과와 시각 또는 남은 경로/상태/차단 사유/재개 조건 |
+| `release` | `[RELEASE]` 소유권 확인과 준비 시각. 이후 claim 삭제의 증거가 아님 |
+
+간결 종료와 해제는 다음 순서를 따른다.
+
+1. 병합 식별과 SUMMARY의 일치하는 `closes`를 확인한다. 선언 대상을 fetch하고 FETCH_HEAD를 즉시 고정한다. merge는 작업 head의 포함을 확인한다. squash/rebase는 관측된 merge-result SHA가 새 tip의 조상이며 해당 commit 메시지에 작업 ID가 있는지 확인한다. fetched tip이나 원래 task head를 squash/rebase 결과로 대입하지 않는다. CLOSED가 생기기 전에는 아래 매핑이 `[MERGED].main`을 소비하는 곳에서 이 관측 식별을 사용하며 나중에 method·검증 근거와 함께 `CLOSED.merged.main`에 저장한다.
+2. 병합 검증 성공과 일치하는 `closes` 확인 후 메타에 `status: closed`와 실제 `종료:` 시각을 쓴다. 저장된 두 값을 다시 읽어 종료를 확인한다.
+3. 필수 근거에서 제품 완료를 확정한다. adapter PRODUCT COMPLETE JSON과 실제 완료 시각은 정리와 독립적으로 유지한다.
+4. 일치하는 배타적 claim을 유지한 상태에서 허가된 필수 정리를 수행한다.
+5. 정리 성공 후 claim의 agent/branch를 재확인하고 묶음 CLOSED를 추가한다. 앞서 발생한 병합·메타 종료·제품 완료·정리의 실제 시각/근거와 소유권 확인·해제 준비를 담는다. 추가 직전 다시 읽고 직후 새 항목 ID를 확인한다.
+6. 해당 claim 아래 자기 metadata만 정리하고 다시 읽어 제거를 확인한다. 경쟁자 metadata를 지우거나 unlock 뒤 metadata를 정리하지 않는다.
+7. 일치하는 claim을 마지막으로 삭제하고 부재를 확인한다. release 필드는 준비이며 삭제 증거가 아니다. 실제 부재 확인 뒤에만 해제 성공을 보고하며 네 번째 성공 기록은 필요 없다.
+
+필수 정리 실패 시 확정된 제품 완료와 앞서 발생한 실제 시각, 정리/해제 미완료, 남은 경로/상태/차단 사유/재개 조건을 CLOSED에 추가한다. claim과 소유 metadata는 유지한다. metadata 정리·claim 삭제·부재 확인이 실패하면 제품 완료를 보존하고 해제 미완료로 보고하며 남은 상태를 원본 참조가 있는 정정 항목에 추가한다. 남아 있는 자기 claim은 유지하고 경쟁 claim은 지우지 않는다. 삭제는 성공했지만 부재를 확인하지 못했다면 소유권이 유지됐다고 단정하지 않는다. 정정은 세 항목을 넘을 수 있으며 이전 항목을 고치지 않는다.
+
 이 문서는 W 절차의 Issue·댓글·라벨·assignee·PR·closing reference 표현을 **저장소 밖 공유 폴더의 작업 문서**로 실현하는 방법이다. P 적용 문서 `tracker.md`가 이 방식을 선언하고 `tracker_root`(절대 경로)와 ID 형식을 정한다. W 문서를 읽을 때 아래 대응표로 바꿔 읽는다. 대응표에 없는 작업 관리 작업은 실행하지 않고 `BLOCKED: tracker operation unsupported`로 멈춘다.
 
 ## 왜 저장소 밖 공유 폴더인가

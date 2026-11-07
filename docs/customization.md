@@ -2,7 +2,7 @@
 
 M is the public methodology offered as a starting point. After applying it, keep adapting W and P to your project. Continuing to use M, tracking its revisions or accepting its updates is the user's choice, not a requirement. [한국어](../ko/docs/customization.md).
 
-Version 1.0 provides a **read-only resolver plus an agent-assisted adoption procedure**. It is not an automatic migration or session manager. Start from the published `v1.0.2` tag and verify its commit before deriving your project W.
+Version 1.0 provides a **read-only resolver plus an agent-assisted adoption procedure**. It is not an automatic migration or session manager. Start from the published `v1.1.0` tag and verify its commit before deriving your project W.
 
 ## Structure and responsibility
 
@@ -36,7 +36,7 @@ Records may instead use an existing tracker or an explicitly chosen P path; a ne
 
 ## First adoption
 
-1. Obtain and review the distribution from a trusted source at a full Git commit. Matching a downloaded manifest to itself is not source authentication. Review the loader's provenance too: it is executable code. Python 3.8+ and Git 2.36+ are required; use `python3` on POSIX or `python`/`py -3` on Windows.
+1. Obtain and review the distribution from a trusted source at a full Git commit. Matching a downloaded manifest to itself is not source authentication. Review the loader's provenance too: it is executable code. Python 3.8+ and Git 2.36+ are required; use `python3` on POSIX or `python`/`py -3` on Windows. With the local-docs tracker, Git 2.38+ is recommended: its mergeability check uses `git merge-tree --write-tree`, and older Git falls back to a trial merge in a disposable worktree.
 2. Create a separate project-owned Git repository outside P. Copy `adaptive-sdd/workflow/`, `adaptive-sdd/methodology/` and `adaptive-sdd/LICENSE` as a starting point (Korean: `ko/adaptive-sdd/`). Do not run `install.py init/render` or copy its generated entries into P.
 3. Adapt W and create external `project/*.md` application documents before their consuming steps. The starter's nine roles are `agent-instruction-policy`, `build`, `execution-routing`, `issue-priority`, `issue-writing-guide`, `module-boundaries`, `sdd-workflow`, `skill-evals`, `tracker`. Use `templates/project/*.md.tmpl` as a field checklist, not approved settings. These documents are directly editable in this path.
 4. Keep product facts, required tests, approval authority, delegations and model bans tied to their approved P originals. Put grading, review depth, workflow routing and extra method-specific judgment points in W. Where P documents do not exist, distinguish code/CI observations, inference and proposed rules. Confirmed product decisions enter P through ordinary product changes; method adoption grants no authority to approve them.
