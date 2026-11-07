@@ -8,7 +8,7 @@ Your AI coding agent (Claude Code or Codex) grades every change by risk first, t
 
 **English** | [한국어](ko/README.md)
 
-> **Stable: [v1.0.1](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.0.1).** For existing codebases. Its effect on outcomes, rework or cost has not been measured yet; see [Status and evidence](#status-and-evidence).
+> **Stable: [v1.0.2](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.0.2).** For existing codebases. Its effect on outcomes, rework or cost has not been measured yet; see [Status and evidence](#status-and-evidence).
 
 **[Quick start](#quick-start) · [How depth scales](#how-depth-scales) · [What you get](#what-you-get) · [Evidence](#status-and-evidence)**
 
@@ -41,7 +41,7 @@ Shortened from two real Codex runs; see the [run record and its limits](docs/eva
 **1. Paste this into Claude Code or Codex, opened in your project:**
 
 ```text
-Read https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.1/docs/customization.md
+Read https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.2/docs/customization.md
 and help me adopt Adaptive SDD for this project. Ask me before each write.
 ```
 
@@ -173,9 +173,10 @@ The full history of checks and reviews is in [CHANGELOG.md](CHANGELOG.md).
 
 ## Versions
 
+- Patch 1.0.2 adds the one-command try sandbox, the README quick start and demo, issue forms, and keeps Claude Code session records in eval runners; the distribution is unchanged from 1.0.1. See [release record](docs/releases/1.0.2.md).
 - Patch 1.0.1 adds a compact Trivial/Small route and explicit scratch/output boundaries. See [patch verification and limits](docs/releases/1.0.1.md). Existing project workflows are not automatically updated.
 - Version 1.0 adopts the project-owned external W and explicit task activation model prepared in preview.8. See the [release notes and verification](docs/releases/1.0.0.md); historical evaluations do not validate the new activation path.
-- The stable tag is `v1.0.1`; earlier previews use `v1.0.0-preview.N`. Published tags are never moved; fixes come as new version tags. Legacy installations pin a copy by tag, commit SHA and manifest hash; external adoption pins the selected project W commit.
+- The stable tag is `v1.0.2`; earlier previews use `v1.0.0-preview.N`. Published tags are never moved; fixes come as new version tags. Legacy installations pin a copy by tag, commit SHA and manifest hash; external adoption pins the selected project W commit.
 - Project W evolves under project authority. M updates are optional; do not overwrite customized W. Legacy installations use their own [migration/upgrade guide](docs/legacy-installation.md#upgrading).
 - The earlier v0.2 methodology is preserved at tag [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0). v1 is not an automatic upgrade from v0.2.
 
