@@ -3,7 +3,7 @@ name: finishing-issues
 description: 구현을 마친 이 프로젝트의 Issue 작업을 종료한다. 최종 diff 검토, business 문서 동기화, 검증·CI gate, SDD 정리, PR 종료 구문, merge 확인, lane 해제에 사용한다. 구현이 종료 준비되기 전에는 사용하지 않는다.
 ---
 
-일반 현재/수동 Trivial/Small 작업은 [간결 경로](../../process/small-work.md)로 진행할 수 있다. 그 경로가 전체 절차를 요구할 때 해당 절을 읽고, 불필요한 나머지 단계를 미리 읽지 않는다.
+Trivial/Small 현재/수동 작업은 [간결 경로](../../process/small-work.md)의 닫힌 읽기 집합·실행 의무·세 기록을 따른다. 아래 전체 본문은 그 경로의 예외가 해당 절을 열 때만 적용하며 간결 형식/면제는 유지한다. 격상 후에는 해당 등급의 전체 계약을 따른다.
 
 외부 적용: 먼저 `W/activation.md`의 선택·소유·경로 계약을 적용한다. 아래 고정 사본·생성 hard guard 참조는 그 계약의 호환 의미를 따른다. 미선택 작업에는 이 스킬을 적용하지 않는다.
 

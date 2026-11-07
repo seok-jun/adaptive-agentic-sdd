@@ -3,7 +3,7 @@ name: managing-issues
 description: Use when creating, classifying, reprioritizing or rewriting the body of this project's work items (Issues), and when coordinating the work breakdown and dependencies of an optional Epic. Use for deciding Priority/execution grade, work boundaries, whether a Mermaid flow is needed, and linking a UI/UX HTML Visual Spec. Do not use for code implementation.
 ---
 
-Routine current/manual Trivial/Small work may use the [compact route](../../process/small-work.md). Read the relevant sections here when that route requires the full procedure, not every remaining stage in advance.
+For current/manual Trivial/Small work, use the [compact route](../../process/small-work.md) for its closed reading set, execution obligations and three records. The full body below is reached only through its relevant exception triggers, retaining compact forms/exemptions. After escalation, use the new grade's full contract.
 
 For external adoption, first apply `W/activation.md` for selection, ownership and paths. Pinned-copy and generated hard-guard references below use its compatibility meanings. Do not apply this skill to an unselected task.
 

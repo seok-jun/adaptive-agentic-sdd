@@ -1,5 +1,7 @@
 # Token diagnostic
 
+Trivial/Small [간결 경로](small-work.md)는 mode가 ENABLED여도 아래 checkpoint 의무에서 제외한다. 이 작업 자체의 비용 평가를 명시적으로 요청하고 mode가 ENABLED인 경우에만 적용한다. Medium 이상은 기존 조건을 유지한다. 공식 값이 없으면 추정·탐색 없이 건너뛰며 계측 누락은 제품 완료를 막지 않는다.
+
 `W/../project/sdd-workflow.md`의 `Token diagnostic mode`가 `ENABLED`일 때만 읽는다. 일반 적용·사건 관측은 [observations](observations.md)를 따르며 이 mode로 비활성화되지 않는다.
 
 | 실제 lifecycle event | 읽을 절 |

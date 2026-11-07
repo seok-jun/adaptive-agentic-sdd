@@ -1,6 +1,6 @@
 # Execution procedure (W)
 
-Start routine Trivial/Small tasks with the [compact route](process/small-work.md). Once eligible, use its steps instead of preloading all four full skills. Escalation, required reviews and authority still apply.
+After explicit selection and connection checks, route routine Trivial/Small work directly to the [compact route](process/small-work.md). It owns the closed reading set, work item and three records; once eligible, use it instead of the full step routing below. Actual P requirements, required checks, escalation, human decisions and authority remain.
 
 > Recommended external adoption path: explicitly select an external, project-owned and editable W for each task. Read the [task selection contract](activation.md) first. The table below describes this path; the legacy `install.py` path is described after it.
 

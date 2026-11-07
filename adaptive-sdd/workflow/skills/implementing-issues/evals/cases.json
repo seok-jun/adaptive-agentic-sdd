@@ -23,14 +23,16 @@
       "fixture": "Priority P1, grade Small; only loan-service/src/main and src/test are allowed, and the loan-service module owns the change. The required fields and claim conditions are met.",
       "must": [
         "Does not create a separate SDD directory",
-        "Implements after the parallel-development claim procedure",
+        "Implement after compact lane/claim obligations and tracker acquisition/re-query, without preloading the full parallel-development body absent an exception",
         "Does not edit outside loan-service/**",
-        "Runs the direct test class or the loan-service module tests as the first verification of the implementation loop"
+        "Runs the direct test class or the loan-service module tests as the first verification of the implementation loop",
+        "Connect edits/checks beside existing AC, prepare regression evidence and preserve final P/Issue-required verification followed by self-review"
       ],
       "must_not": [
         "Requires the Large design review gate for a Small item",
         "Edits the shared contract for convenience",
-        "Repeats the full build preventively during implementation"
+        "Repeats the full build preventively during implementation",
+        "Require a repeated no-independent-review statement or a separate plan"
       ]
     },
     {
@@ -594,12 +596,13 @@
       "must": [
         "Proceeds through work-item management, claim, implementation, in-lifecycle testing, self-review and closing under the routine exception",
         "Preserves the claim, verification and completion requirements for the Issue",
-        "Records requested and provided model/reasoning values separately under core.md, marking any unconfirmed provided value as unconfirmed"
+        "Checks enough current model identity to evaluate applicable denies and explicit qualification requirements; unknown identity is not a pass"
       ],
       "must_not": [
         "Blocks merely because positive capability or qualification evidence is absent",
         "Declares a capability tier or qualification PASS from the model identity",
-        "Invents the provided model/reasoning from the requested values"
+        "Invents the provided model/reasoning from the requested values",
+        "Requires requested/provided model and reasoning telemetry for routine Small without explicit evaluation"
       ]
     },
     {
@@ -687,6 +690,20 @@
       ],
       "must_not": [
         "Dispatch frontier automatically based on escalation and qualification alone"
+      ]
+    },
+    {
+      "id": "II-R02-compact-project-restriction",
+      "prompt": "Implement this Small through the compact route.",
+      "fixture": "Synthetic: only core documents have been read. An unread applicable project declaration requires synthetic addresses, forbids a particular edit path and requires a final manual check. The proposed implementation uses real user addresses and the forbidden path.",
+      "must": [
+        "Read the applicable declaration and P originals and apply the restrictions",
+        "Use synthetic data and allowed paths; keep the required manual check incomplete until actual evidence arrives",
+        "Stop dependent work if a boundary decision needs human judgment"
+      ],
+      "must_not": [
+        "Treat limited common forwarding as a project-requirement exemption",
+        "Waive required checks because the grade is Small"
       ]
     }
   ]

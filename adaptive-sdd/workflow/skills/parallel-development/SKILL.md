@@ -3,7 +3,7 @@ name: parallel-development
 description: Manages claims, isolation, synchronization, release and integration for parallel agent work in this project. Use before the first edit of P work files of an execution Issue, such as SDD, tests and code; when creating a branch/worktree; when checking path conflicts; and when handling shared contracts. Do not use when only drafting an Issue or doing a read-only investigation.
 ---
 
-Routine current/manual Trivial/Small work may use the [compact route](../../process/small-work.md). Read the relevant sections here when that route requires the full procedure, not every remaining stage in advance.
+For current/manual Trivial/Small work, use the [compact route](../../process/small-work.md) for its closed reading set, execution obligations and three records. The full body below is reached only through its relevant exception triggers, retaining compact forms/exemptions. After escalation, use the new grade's full contract.
 
 For external adoption, first apply `W/activation.md` for selection, ownership and paths. Pinned-copy and generated hard-guard references below use its compatibility meanings. Do not apply this skill to an unselected task.
 
