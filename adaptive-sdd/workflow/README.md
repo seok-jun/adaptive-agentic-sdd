@@ -2,23 +2,25 @@
 
 Start routine Trivial/Small tasks with the [compact route](process/small-work.md). Once eligible, use its steps instead of preloading all four full skills. Escalation, required reviews and authority still apply.
 
-> Recommended external adoption path: explicitly select an external, project-owned and editable W for each task. Read the [task selection contract](activation.md) first. The installed-copy, generated-document and pinned M/W descriptions below describe the explicitly chosen legacy `install.py` path. For external adoption, use the path, ownership and lifetime contract in activation.md.
+> Recommended external adoption path: explicitly select an external, project-owned and editable W for each task. Read the [task selection contract](activation.md) first. The table below describes this path; the legacy `install.py` path is described after it.
 
-This folder is the **common execution procedure** from Issue through implementation, verification and closing. It was carried over from a procedure refined over long operation in one product, with only the product-specific parts removed. Facts, paths, commands and permissions that differ by product are not kept in this folder; they are kept in the **P project documents** generated at installation.
+This folder is the **common execution procedure** from Issue through implementation, verification and closing. It was carried over from a procedure refined over long operation in one product, with only the product-specific parts removed. Facts, paths, commands and permissions that differ by product are not kept in this folder; they are kept in the **project application documents** in `W/../project/` and in P's own sources.
 
 ## M/W/P structure and paths
 
-| root | Location in an installed project | Owner | Edited? |
+| root | Location (external adoption) | Owner | Edited? |
 | --- | --- | --- | --- |
-| `P` | Top level of the project repository | Project | According to project rules |
-| `W` | `W/` | Common (this folder) | Not edited. Replaced as a whole when the version is upgraded |
-| `M` | `M/` | Common methodology (`core.md`, `adaptation.md`, supports) | Not edited |
+| `P` | The product repository | Project | According to project rules |
+| `W` | This `workflow/` folder in the project-owned workflow repository selected for the task | Project | Yes, through the project's own review and commit. A task uses the selected commit unchanged |
+| `M` | The adopted supports in the same workflow repository (`methodology/` in the starter) | Project, starting from the common methodology | Yes. Adapt or remove them together with the W rules that call them |
 
-M owns the common methodology, W owns the execution procedure, and P owns product facts, settings and permissions. The installation location does not change this division. The default copy is `P/.adaptive-sdd/`; an external installation selects a different storage location with `--harness-root`. S is not a separate layer or a Skill input.
+M is the methodology, W the execution procedure, and P the product facts, settings and permissions. The resolver supplies the absolute P, W and M paths ([activation](activation.md)). S is not a separate layer or a Skill input.
 
-`W/../project/` below is the actual relative path of the project documents installed together with W, and P owns them. The generated entry file also states that location. The installer generates the P project documents under `W/../project/` from the values in `W/../project.json`. When a W document points to `W/../project/<document>`, read that generated output. Do not edit the generated output by hand. To change a value, edit `project.json` and generate again.
+`W/../project/` is the folder of project application documents next to W in the same workflow repository. When a W document points to `W/../project/<document>`, read that document. It may be edited directly, through the project's review.
 
-The `## Always-applied hard guard` of `P/AGENTS.md` in W documents is the section inside the marked block that the installer placed in `AGENTS.md`.
+References in W documents to the `## Always-applied hard guard` of `P/AGENTS.md` mean P's actual common instructions (when present) plus [task-guard.md](task-guard.md). No AGENTS block is created.
+
+**Legacy `install.py` path.** When a project explicitly chose the older installer, W and M are installed copies (default `P/.adaptive-sdd/`, or another location chosen with `--harness-root`). They are not edited and are replaced as a whole on upgrade. The installer generates `W/../project/` from `W/../project.json`: edit the JSON and generate again instead of editing the output. The hard guard is the section inside the marked block the installer placed in `AGENTS.md`.
 
 ## Work tracking
 
