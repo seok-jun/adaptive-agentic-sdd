@@ -23,6 +23,21 @@ flowchart LR
 
 ## Quick start
 
+### Try it in a minute
+
+```bash
+git clone https://github.com/seok-jun/adaptive-agentic-sdd
+python3 adaptive-agentic-sdd/try/setup.py
+```
+
+This creates `adaptive-sdd-try/` next to the clone: a tiny product, a team workflow, local Git remotes and a records folder. It writes nothing outside that folder and uses no network. Open `adaptive-sdd-try/START-HERE.md`, start Claude Code or Codex with the command shown there, and give it one of three planted tasks: a broken README link (Trivial), a pagination bug (Small) or password storage (Large). Use `python` on Windows and `--lang ko` for the Korean edition.
+
+![Real Codex runs in the try sandbox: the pagination fix is graded Small and merged; password storage is graded Large and stops for human decisions](docs/assets/demo.svg)
+
+Shortened from two real Codex runs; see the [run record and its limits](docs/eval-results/2026-11-07-try-sandbox/README.md).
+
+### Adopt in your project
+
 **1. Paste this into Claude Code or Codex, opened in your project:**
 
 ```text
