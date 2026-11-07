@@ -2,7 +2,7 @@
 
 **Spec-driven development that knows a typo from a migration.**
 
-Your AI coding agent (Claude Code or Codex) grades every change by risk first, then runs only the process that risk needs. A link fix gets a self-check. A database migration gets written analysis, two independent design reviews and a human merge.
+Your AI coding agent (Claude Code or Codex) grades every change by risk first, then runs only the process that risk needs. A link fix gets a self-check. A database migration gets a written analysis and plan, two independent reviews of each, and a human merge.
 
 [![Release](https://img.shields.io/github/v/release/seok-jun/adaptive-agentic-sdd?label=release)](https://github.com/seok-jun/adaptive-agentic-sdd/releases) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
@@ -18,7 +18,7 @@ flowchart LR
   G -->|docs, links, comments| T["Trivial<br/>targeted check + self-review"]
   G -->|one module| S["Small<br/>the work item is the spec"]
   G -->|several modules or a shared contract| M["Medium<br/>short SDD, independent review if REQUIRED"]
-  G -->|security, personal data, schema, billing| L["Large<br/>full SDD, two design reviews,<br/>human merge"]
+  G -->|security, personal data, schema, billing| L["Large<br/>full SDD, two reviews each<br/>of analysis and plan, human merge"]
 ```
 
 ## Quick start
@@ -30,7 +30,14 @@ git clone https://github.com/seok-jun/adaptive-agentic-sdd
 python3 adaptive-agentic-sdd/try/setup.py
 ```
 
-This creates `adaptive-sdd-try/` next to the clone: a tiny product, a team workflow, local Git remotes and a records folder. It writes nothing outside that folder and uses no network. Open `adaptive-sdd-try/START-HERE.md`, start Claude Code or Codex with the command shown there, and give it one of three planted tasks: a broken README link (Trivial), a pagination bug (Small) or password storage (Large). Use `python` on Windows and `--lang ko` for the Korean edition.
+On Windows, use `python` (`python3` there often opens the Microsoft Store):
+
+```powershell
+git clone https://github.com/seok-jun/adaptive-agentic-sdd
+python adaptive-agentic-sdd/try/setup.py
+```
+
+Setup takes about a minute. It creates `adaptive-sdd-try/` in your current folder: a tiny product, a team workflow, local Git remotes and a records folder. It writes nothing outside that folder and uses no network. Open `adaptive-sdd-try/START-HERE.md`, start Claude Code or Codex with the command shown there, and give it one of three planted tasks: a broken README link (Trivial), a pagination bug (Small) or password storage (Large). A task takes the agent a few minutes; allow it to run `git commit`, `merge` and `push` to the local remotes and to edit files in `records/` so it can finish. Add `--lang ko` for the Korean edition.
 
 ![Real Codex runs in the try sandbox: the pagination fix is graded Small and merged; password storage is graded Large and stops for human decisions](docs/assets/demo.svg)
 
@@ -47,7 +54,7 @@ and help me adopt Adaptive SDD for this project. Ask me before each write.
 
 The agent walks you through the [adoption guide](docs/customization.md). It is agent-assisted setup, not an unattended installer. Requires Python 3.8+ and Git 2.36+.
 
-**2. What you end up with.** Your product repository gains one three-line file. The workflow lives in a separate repository your team owns and edits.
+**2. What you end up with.** Your product repository gains one three-line file. The workflow itself, a few dozen Markdown files of skills, procedures and project choices, lives in a separate repository your team owns and edits. Below, P is the product repository and W the workflow repository.
 
 ```text
 your-product/                 your existing repository (P)
@@ -130,6 +137,8 @@ Every execution work item gets one of four grades (an optional Epic that groups 
 For each changed file that affects verification, the first check is the tests of the module that owns it, and checks widen only on evidence; a documentation-only Trivial change gets a targeted check that fits it. The required checks run on the final candidate, and a PASS is reused only when its inputs did not change. Definitions: [grades](adaptive-sdd/workflow/process/sdd/grade.md), [review gates](adaptive-sdd/workflow/process/verification.md#review-gate-by-grade).
 
 ## Setup in detail
+
+Three names are used below: **P** is your product repository, **W** is the workflow repository your project owns, and **M** is the methodology published in this repository.
 
 **Use M to start; own and evolve your W and P afterward.** Continued M use and updates are optional. The recommended external adoption path keeps an editable project workflow outside P and loads it only for a selected task. P keeps product facts, common rules and authority. Its only method connection is `.agentics/<area>.yaml`.
 
