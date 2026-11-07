@@ -1,6 +1,6 @@
 # Contributing
 
-Adaptive Agentic SDD is a working methodology. For the 1.0.1 stable release and its verification scope, see [the release record](docs/releases/1.0.1.md).
+Adaptive Agentic SDD is a working methodology. For the 1.0.2 stable release and its verification scope, see [the release record](docs/releases/1.0.2.md).
 
 Contributions are most useful with operational evidence:
 

@@ -8,7 +8,7 @@ AI 코딩 Agent(Claude Code나 Codex)가 변경마다 먼저 위험도로 등급
 
 [English](../README.md) | **한국어**
 
-> **정식 릴리스: [v1.0.1](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.0.1).** 기존 코드베이스용입니다. 결과·재작업·비용에 대한 효과는 아직 측정하지 않았습니다. [상태와 근거](#상태와-근거)를 보세요.
+> **정식 릴리스: [v1.0.2](https://github.com/seok-jun/adaptive-agentic-sdd/releases/tag/v1.0.2).** 기존 코드베이스용입니다. 결과·재작업·비용에 대한 효과는 아직 측정하지 않았습니다. [상태와 근거](#상태와-근거)를 보세요.
 
 이 판의 파일은 저장소의 `ko/` 아래에 있습니다. 영문판이 원본이며, 두 판의 뜻이 다르면 영문이 기준입니다.
 
@@ -43,7 +43,7 @@ clone 옆에 `adaptive-sdd-try/` 폴더가 생기고, 그 안에 작은 예제 �
 **1. 프로젝트에서 Claude Code나 Codex를 열고 다음을 붙여 넣습니다.**
 
 ```text
-https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.1/ko/docs/customization.md 를 읽고
+https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.2/ko/docs/customization.md 를 읽고
 이 프로젝트에 Adaptive SDD를 적용하도록 도와줘. 파일을 쓰기 전에 매번 물어봐.
 ```
 
@@ -173,9 +173,10 @@ Agent: T-31을 만들었습니다. 등급: Large — DB 스키마·마이그레�
 
 ## 버전
 
+- 1.0.2 패치는 1분 체험 샌드박스, README 빠른 시작과 데모, 이슈 양식을 더하고 평가 실행기가 Claude Code 세션 기록을 남기게 합니다. 배포본은 1.0.1과 같습니다. [릴리스 기록](../docs/releases/1.0.2.md)을 참고하세요.
 - 1.0.1 패치는 Trivial/Small 간결 경로와 명시적 임시·출력 경계를 추가합니다. [패치 검증과 한계](../docs/releases/1.0.1.md)를 참고하세요. 기존 프로젝트 워크플로는 자동 갱신되지 않습니다.
 - 1.0은 preview.8에서 준비한 프로젝트 소유 외부 W와 명시적 작업 활성화 모델을 채택합니다. [릴리스와 검증 기록](../docs/releases/1.0.0.md)을 참고하세요. 과거 평가는 새 활성화 경로의 검증이 아닙니다.
-- 정식 태그는 `v1.0.1`이며 과거 preview는 `v1.0.0-preview.N`을 사용합니다. 공개한 태그는 옮기지 않고, 수정은 새 버전 태그로 냅니다. 기존 설치 사본은 태그·commit SHA·manifest 해시로 고정하며 외부 적용은 선택한 프로젝트 W commit으로 식별합니다.
+- 정식 태그는 `v1.0.2`이며 과거 preview는 `v1.0.0-preview.N`을 사용합니다. 공개한 태그는 옮기지 않고, 수정은 새 버전 태그로 냅니다. 기존 설치 사본은 태그·commit SHA·manifest 해시로 고정하며 외부 적용은 선택한 프로젝트 W commit으로 식별합니다.
 - W는 프로젝트 권한으로 발전시킵니다. M 업데이트는 선택이며 수정한 W를 덮어쓰지 않습니다. 기존 설치는 [자체 이전/업그레이드 안내](docs/legacy-installation.md)를 따릅니다.
 - 이전 v0.2 방법론(영문)은 태그 [`v0.2.0`](https://github.com/seok-jun/adaptive-agentic-sdd/tree/v0.2.0)에 있습니다. v1은 v0.2에서 자동으로 업그레이드되지 않습니다.
 
