@@ -144,6 +144,12 @@ class TrySetupTests(unittest.TestCase):
                                  "try-team", "codex --help", "--add-dir", "git commit", "git push",
                                  str(ROOT / "adaptive-sdd/tools/agentics.py"), product.as_posix()):
                     self.assertIn(expected, start)
+                self.assertIn("records/claims/", start)
+                if os.name == "nt":
+                    # Windows agents may use PowerShell or Git Bash; both forms are printed.
+                    self.assertIn("PowerShell:\n& ", start)
+                    self.assertIn("Bash:\n", start)
+                    self.assertIn((ROOT / "adaptive-sdd/tools/agentics.py").as_posix(), start)
 
     def assert_refused(self, target, expected):
         result = self.command([sys.executable, "-I", "-B", SCRIPT, target])

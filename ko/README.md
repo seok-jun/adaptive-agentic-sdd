@@ -2,7 +2,7 @@
 
 **오타와 마이그레이션을 구분하는 스펙 주도 개발.**
 
-AI 코딩 Agent(Claude Code나 Codex)가 변경마다 먼저 위험도로 등급을 매기고, 그 위험에 필요한 절차만 수행합니다. 링크 수정은 자체 점검으로 끝나고, DB 마이그레이션은 분석 문서, 독립 설계 리뷰 두 번, 사람의 병합을 거칩니다.
+AI 코딩 Agent(Claude Code나 Codex)가 변경마다 먼저 위험도로 등급을 매기고, 그 위험에 필요한 절차만 수행합니다. 링크 수정은 자체 점검으로 끝나고, DB 마이그레이션은 분석과 계획 문서를 쓰고, 각각 독립 리뷰를 두 번씩 받은 뒤 사람이 병합합니다.
 
 [![Release](https://img.shields.io/github/v/release/seok-jun/adaptive-agentic-sdd?label=release)](https://github.com/seok-jun/adaptive-agentic-sdd/releases) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](../LICENSE)
 
@@ -20,7 +20,7 @@ flowchart LR
   G -->|문서·링크·주석| T["Trivial<br/>대상 검증 + 자체 리뷰"]
   G -->|한 모듈| S["Small<br/>작업 항목이 곧 스펙"]
   G -->|여러 모듈 또는 공유 계약| M["Medium<br/>짧은 SDD, REQUIRED면 독립 리뷰"]
-  G -->|보안·개인정보·스키마·과금| L["Large<br/>전체 SDD, 설계 리뷰 두 번,<br/>사람이 병합"]
+  G -->|보안·개인정보·스키마·과금| L["Large<br/>전체 SDD, 분석·계획마다<br/>리뷰 두 번, 사람이 병합"]
 ```
 
 ## 빠른 시작
@@ -39,7 +39,7 @@ git clone https://github.com/seok-jun/adaptive-agentic-sdd
 python adaptive-agentic-sdd/try/setup.py --lang ko
 ```
 
-설정은 1분 정도 걸립니다. 지금 있는 폴더에 `adaptive-sdd-try/`가 생기고, 그 안에 작은 예제 제품, 팀 워크플로, 로컬 Git 원격, 작업 기록 폴더가 만들어집니다. 그 폴더 밖에는 아무것도 쓰지 않고 네트워크도 쓰지 않습니다. `adaptive-sdd-try/START-HERE.md`를 열고 거기 적힌 명령으로 Claude Code나 Codex를 시작한 뒤, 미리 심어 둔 세 과제 중 하나를 맡겨 보세요. README 깨진 링크(Trivial), 페이지네이션 버그(Small), 비밀번호 저장(Large)입니다. 과제 하나는 Agent가 몇 분 동안 진행합니다. 끝까지 마치도록 로컬 원격에 대한 `git commit`, `merge`, `push`를 허용해 주세요.
+설정은 1분 정도 걸립니다. 지금 있는 폴더에 `adaptive-sdd-try/`가 생기고, 그 안에 작은 예제 제품, 팀 워크플로, 로컬 Git 원격, 작업 기록 폴더가 만들어집니다. 그 폴더 밖에는 아무것도 쓰지 않고 네트워크도 쓰지 않습니다. `adaptive-sdd-try/START-HERE.md`를 열고 거기 적힌 명령으로 Claude Code나 Codex를 시작한 뒤, 미리 심어 둔 세 과제 중 하나를 맡겨 보세요. README 깨진 링크(Trivial), 페이지네이션 버그(Small), 비밀번호 저장(Large)입니다. 과제 하나는 Agent가 몇 분 동안 진행합니다. 끝까지 마치도록 로컬 원격에 대한 `git commit`, `merge`, `push`와 `records/` 안의 파일 수정을 허용해 주세요.
 
 ![체험 샌드박스에서 실제 Codex 실행: 페이지네이션 수정은 Small로 판정돼 병합되고, 비밀번호 저장은 Large로 판정돼 사람의 결정을 기다리며 멈춤](../docs/assets/demo.svg)
 
@@ -56,7 +56,7 @@ https://github.com/seok-jun/adaptive-agentic-sdd/blob/v1.0.2/ko/docs/customizati
 
 Agent가 [적용 가이드](docs/customization.md)를 따라 함께 설정합니다. Agent 지원 구성이며 무인 설치기가 아닙니다. Python 3.8+와 Git 2.36+가 필요합니다.
 
-**2. 설치 후 구조.** 제품 저장소에는 세 줄짜리 파일 하나만 추가됩니다. 워크플로 자체(스킬, 절차, 프로젝트 선택을 담은 Markdown 파일 수십 개)는 팀이 소유하고 수정하는 별도 저장소에 둡니다.
+**2. 설치 후 구조.** 제품 저장소에는 세 줄짜리 파일 하나만 추가됩니다. 워크플로 자체(스킬, 절차, 프로젝트 선택을 담은 Markdown 파일 수십 개)는 팀이 소유하고 수정하는 별도 저장소에 둡니다. 아래에서 P는 제품 저장소, W는 워크플로 저장소입니다.
 
 ```text
 your-product/                 기존 제품 저장소(P)
@@ -139,6 +139,8 @@ Agent: T-31을 만들었습니다. 등급: Large — DB 스키마·마이그레�
 검증에 영향을 주는 변경 파일마다 그 파일을 소유한 모듈의 테스트를 먼저 실행하고, 근거가 있을 때만 넓힙니다. 문서만 바뀌는 Trivial은 그 변경에 맞는 대상 검증을 합니다. 필수 검사는 최종 후보에서 실행하며, 입력이 바뀌지 않은 PASS만 다시 씁니다. 정의: [등급](adaptive-sdd/workflow/process/sdd/grade.md), [리뷰 관문](adaptive-sdd/workflow/process/verification.md).
 
 ## 자세한 설정
+
+아래에서는 세 이름을 씁니다. **P**는 제품 저장소, **W**는 프로젝트가 소유하는 워크플로 저장소, **M**은 이 저장소에서 공개하는 방법론입니다.
 
 **M으로 시작하고, 이후 W·P는 프로젝트가 소유하고 발전시킵니다.** M의 지속 적용과 업데이트는 선택입니다. 권장 외부 적용 경로는 수정 가능한 프로젝트 W를 P 밖에 두고 선택한 작업에서만 읽습니다. P는 제품 사실·공통 규칙·권한을 보유하고 방법론 연결은 `.agentics/<영역>.yaml`뿐입니다.
 

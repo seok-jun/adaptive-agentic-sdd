@@ -3,6 +3,7 @@
 ## Unreleased
 
 - First-use fixes from two zero-context newcomer runs (Codex and Claude Code): the README quick start shows a separate Windows command (`python`, since `python3` often opens the Microsoft Store), says the sandbox is created in the current folder, and sets expectations (about a minute of setup, a few minutes per task, a workflow of a few dozen Markdown files). START-HERE.md asks to allow local `git commit`/`merge`/`push`, summarizes the selection prompt, and explains "current/manual" and "compact route" in plain words. The distribution is unchanged.
+- From a rerun of both newcomer evaluations: START-HERE.md also asks to allow deleting the claim file in `records/claims/` and, on Windows, prints the resolver command for both PowerShell and Bash. The README defines P, W and M where they are first used, and the summary line and diagram say a Large change gets two independent reviews of both the analysis and the plan, as the grade table already states.
 
 ## 1.0.2 — 2026-11-07
 

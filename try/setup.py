@@ -562,7 +562,20 @@ def resolver_args(target):
 def shell_command(args):
     if os.name == "nt":
         return "& " + " ".join("'" + str(arg).replace("'", "''") + "'" for arg in args)
-    return " ".join(shlex.quote(str(arg)) for arg in args)
+    return posix_command(args)
+
+
+def posix_command(args):
+    # Forward slashes keep Windows paths usable in Git Bash, which some agents use on Windows.
+    return " ".join(shlex.quote(str(arg).replace("\\", "/") if os.name == "nt" else str(arg))
+                    for arg in args)
+
+
+def resolver_command(target):
+    args = resolver_args(target)
+    if os.name == "nt":
+        return "PowerShell:\n" + shell_command(args) + "\nBash:\n" + posix_command(args)
+    return posix_command(args)
 
 
 def start_here(lang, target):
@@ -609,8 +622,8 @@ resolver를 사용하므로 원본 폴더를 유지하세요. 동기화 폴더�
 Product: {product}
 Sandbox root: {root}
 Representative area: default. Task label: new-item.
-Run this reviewed resolver command:
-{shell_command(resolver_args(target))}
+Run this reviewed resolver command in your shell:
+{resolver_command(target)}
 Stop unless it exits 0 with state READY. Read the resolved entry, task guard,
 profile, referenced P originals and applicable project docs. Verify records access
 and P authority before edits. Do not edit the workflow (W).
@@ -623,8 +636,8 @@ My task is: [replace this line with ONE example below]
 제품: {product}
 샌드박스 루트: {root}
 대표 area: default. Task label: new-item.
-검토한 다음 resolver 명령을 실행하세요.
-{shell_command(resolver_args(target))}
+검토한 다음 resolver 명령을 사용하는 셸에 맞게 실행하세요.
+{resolver_command(target)}
 종료 코드 0과 state READY가 아니면 멈추세요. 해결된 entry, task guard, profile,
 참조된 P 원본과 해당 project 문서를 읽으세요. 수정 전에 기록 접근과 P 권한을 확인하세요.
 워크플로(W)는 수정하지 마세요.
@@ -651,9 +664,10 @@ resolver). Codex's `--add-dir` makes the sandbox root writable; Codex can alread
 this checkout. If your Codex version lacks the flag, check `codex --help`. This folder
 layout and READY do not enforce an OS sandbox; verify host permissions.
 
-**Allow Git inside the sandbox.** To finish the Trivial or Small task, the agent runs
-`git commit`, `git merge` and `git push` to the local remotes in `remotes/` (no network).
-If your agent asks for permission, allow these commands; otherwise the task stops before merge.
+**Allow Git and record edits inside the sandbox.** To finish the Trivial or Small task, the
+agent runs `git commit`, `git merge` and `git push` to the local remotes in `remotes/`
+(no network), and deletes its claim file in `records/claims/` when it releases the task.
+If your agent asks for permission, allow these; otherwise the task stops before it finishes.
 Setup takes about a minute; one task usually takes a few minutes of agent time.
 
 Paste this selection prompt, replacing its last line with one task. In short, it tells the
@@ -692,9 +706,10 @@ Codex의 `--add-dir`은 샌드박스 루트를 쓰기 가능하게 하며, 이 c
 설치한 Codex에 이 옵션이 없으면 `codex --help`를 확인하세요. 폴더 구조와 READY만으로
 OS 샌드박스가 강제되지는 않으므로 호스트 권한을 확인하세요.
 
-**샌드박스 안의 Git 명령을 허용하세요.** Trivial이나 Small 작업을 끝내려면 Agent가
-`git commit`, `git merge`, `git push`를 `remotes/`의 로컬 원격에 실행합니다(네트워크 없음).
-Agent가 권한을 물으면 허용하세요. 허용하지 않으면 병합 전에 멈춥니다.
+**샌드박스 안의 Git 명령과 기록 수정을 허용하세요.** Trivial이나 Small 작업을 끝내려면
+Agent가 `git commit`, `git merge`, `git push`를 `remotes/`의 로컬 원격에 실행하고(네트워크 없음),
+작업을 놓을 때 `records/claims/`의 claim 파일을 삭제합니다.
+Agent가 권한을 물으면 허용하세요. 허용하지 않으면 끝까지 마치지 못하고 멈춥니다.
 설정은 1분 정도, 작업 하나는 보통 Agent 시간으로 몇 분 걸립니다.
 
 마지막 줄을 하나의 작업으로 바꾸고 다음 선택 요청을 붙여 넣으세요. 요약하면 워크플로가
