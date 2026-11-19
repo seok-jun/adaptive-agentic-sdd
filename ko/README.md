@@ -43,7 +43,7 @@ python adaptive-agentic-sdd/try/setup.py --lang ko
 
 ![체험 샌드박스에서 실제 Codex 실행: 페이지네이션 수정은 Small로 판정돼 병합되고, 비밀번호 저장은 Large로 판정돼 사람의 결정을 기다리며 멈춤](../docs/assets/demo.svg)
 
-실제 Codex 실행 두 건을 줄인 것입니다(영문판). [실행 기록과 한계](../docs/eval-results/2026-11-07-try-sandbox/README.md)를 참고하세요.
+실제 Codex 실행 두 건을 줄인 것입니다(영문판). [실행 기록과 한계](../docs/eval-results/2026-11-07-try-sandbox/README.md)를 참고하세요. 이 과제들을 고른 배경은 [1분 체험을 만든 과정](https://seok-jun.github.io/ai-agent-diary/series/agent-sdd/023-try-it-in-a-minute/)에 담았습니다.
 
 ### 내 프로젝트에 적용
 
@@ -96,7 +96,7 @@ commit: <W commit 전체 40자 SHA>
 스펙 주도 개발은 GitHub Spec Kit, Kiro 같은 도구로 코딩 Agent에서 널리 쓰이게 됐고, 코드 앞에 스펙과 계획을 둡니다. 모든 변경에 같은 전체 절차를 돌리면 작은 수정이 형식에 묻히고, 건너뛰면 위험한 변경이 리뷰 없이 지나갑니다. Adaptive SDD는 이 판단을 변경마다, 문서로 정한 규칙에 따라 내립니다.
 
 - **절차는 파일 수가 아니라 위험에 비례합니다.** Agent는 자동 격상을 스스로 낮추지 못합니다.
-- **사람이 정할 일에서 Agent가 멈춥니다.** 범위 축소, 위임, Large 병합, 새 제품 결정은 추측하지 않고 묻습니다.
+- **사람이 정할 일에서 Agent가 멈춥니다.** 범위 축소, 위임, Large 병합, 새 제품 결정은 추측하지 않고 묻습니다. 처음에 설계 단계마다 받던 승인을 줄인 이유는 [승인을 늘릴수록 승인이 가벼워졌던 경험](https://seok-jun.github.io/ai-agent-diary/series/agent-sdd/020-approvals-grew-lighter/)에 담았습니다.
 - **제품 저장소가 깨끗하게 유지됩니다.** AGENTS/CLAUDE 구간이나 P 스킬을 추가하지 않습니다. 프로젝트에는 작은 `.agentics/<영역>.yaml` 연결만 남고, 누군가 작업에 선택했을 때만 절차를 읽습니다.
 - **기존 코드베이스에 맞췄습니다.** 소유 모듈 테스트를 먼저 실행하고 근거가 있을 때만 검사를 넓힙니다. 작업은 GitHub Issue·PR이나 공유 폴더로 관리합니다.
 - **근거는 채점된 그대로 공개합니다.** 실패도 포함합니다.
