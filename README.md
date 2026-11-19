@@ -41,7 +41,7 @@ Setup takes about a minute. It creates `adaptive-sdd-try/` in your current folde
 
 ![Real Codex runs in the try sandbox: the pagination fix is graded Small and merged; password storage is graded Large and stops for human decisions](docs/assets/demo.svg)
 
-Shortened from two real Codex runs; see the [run record and its limits](docs/eval-results/2026-11-07-try-sandbox/README.md).
+Shortened from two real Codex runs; see the [run record and its limits](docs/eval-results/2026-11-07-try-sandbox/README.md). For the story behind these tasks, see [how the one-minute trial was designed (in Korean)](https://seok-jun.github.io/ai-agent-diary/series/agent-sdd/023-try-it-in-a-minute/).
 
 ### Adopt in your project
 
@@ -94,7 +94,7 @@ Sessions that do not select the workflow read none of it; team common instructio
 Spec-driven development, made popular for coding agents by tools such as GitHub Spec Kit and Kiro, puts a written spec and plan in front of the code. Running that full process on every change buries small fixes in ceremony; skipping it lets risky changes through unreviewed. Adaptive SDD makes that call for each change, by written rule:
 
 - **Process scales with risk, not file count.** The agent cannot lower an automatic escalation on its own.
-- **The agent stops at human decisions.** Scope cuts, delegation, Large merges and new product decisions are asked, not assumed.
+- **The agent stops at human decisions.** Scope cuts, delegation, Large merges and new product decisions are asked, not assumed. [Why the author moved away from routine design approvals (in Korean)](https://seok-jun.github.io/ai-agent-diary/series/agent-sdd/020-approvals-grew-lighter/).
 - **Your product repository stays clean.** No AGENTS/CLAUDE blocks or product-local skills. The project keeps only a small `.agentics/<area>.yaml` link, and the workflow is read only when someone selects it for a task.
 - **Built for existing codebases.** The owning module's tests run first and checks widen only on evidence. Work is tracked in GitHub Issues and PRs or in a shared folder.
 - **Evidence published as graded,** failures included.
